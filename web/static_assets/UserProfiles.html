@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profiles</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .profile-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .profile-card {
+        width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .profile-card img {
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .profile-card .profile-info {
+        padding: 10px;
+    }
+
+    .profile-card .profile-info h3 {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .profile-card .profile-info p {
+        margin: 5px 0;
+        color: #666;
+    }
+  </style>
+</head>
+<body>
+<div class="profile-container">
+  <!-- Profile 1 -->
+  <div class="profile-card">
+    <img src="profile1.jpg" alt="Profile Picture">
+    <div class="profile-info">
+      <h3>John Doe</h3>
+      <p>Age: 35</p>
+      <p>Gender: Male</p>
+    </div>
+  </div>
+
+  <!-- Profile 2 -->
+  <div class="profile-card">
+    <img src="profile2.jpg" alt="Profile Picture">
+    <div class="profile-info">
+      <h3>Jane Smith</h3>
+      <p>Age: 28</p>
+      <p>Gender: Female</p>
+    </div>
+  </div>
+
+  <!-- Add more profiles as needed -->
+</div>
+</body>
+</html>

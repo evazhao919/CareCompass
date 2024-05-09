@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Our App</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .logo {
+        width: 150px; /* Adjust the width as needed */
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .message {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .btn-start {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-start:hover {
+        background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <img class="logo" src="your-logo.png" alt="App Logo">
+  <div class="message">Welcome to Our App!</div>
+  <button class="btn-start" onclick="startApp()">Get Started</button>
+</div>
+
+<!-- JavaScript to handle button click event -->
+<script>
+  function startApp() {
+      // Redirect to the main page or perform other actions
+      window.location.href = "main-page.html";
+  }
+</script>
+</body>
+</html>

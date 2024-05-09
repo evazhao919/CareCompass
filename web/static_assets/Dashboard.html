@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            width: calc(33.33% - 20px);
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        .dashboard-card h2 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .dashboard-card p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .dashboard-card button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dashboard-card button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Family Member / Patient 1 -->
+        <div class="dashboard-card">
+            <h2>John Doe</h2>
+            <p>Health Summary:</p>
+            <ul>
+                <li>Vital Signs: Normal</li>
+                <li>Medications: 2</li>
+                <li>Upcoming Appointments: 1</li>
+            </ul>
+            <button>Add New Medication</button>
+            <button>Record Vital Signs</button>
+            <button>Schedule Appointment</button>
+        </div>
+
+        <!-- Family Member / Patient 2 -->
+        <div class="dashboard-card">
+            <h2>Jane Smith</h2>
+            <p>Health Summary:</p>
+            <ul>
+                <li>Vital Signs: Normal</li>
+                <li>Medications: 1</li>
+                <li>Upcoming Appointments: 2</li>
+            </ul>
+            <button>Add New Medication</button>
+            <button>Record Vital Signs</button>
+            <button>Schedule Appointment</button>
+        </div>
+
+        <!-- Add more family members / patients as needed -->
+    </div>
+</body>
+</html>
