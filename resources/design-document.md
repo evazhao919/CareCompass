@@ -99,21 +99,20 @@ Set<NotificationModel> notifications;
 ```
 // NotificationModel
 
-String notificationId;
-String userId;
-String medicationNames;
-LocalDateTime medicationsTime;
-LocalDateTime vitalSignsTime; 
+String notificationId;          
+String userId;                
+String reminder; 
+String additionalInfo;
+LocalDateTime reminderTime; 
 ```
 
 ### Medication Management Reminder Endpoints
-
 ### 6.1. Create Medication Record Endpoint
 * POST /medications
 * Body: MedicationModel
 * Description: Create a new medication entry for a patient.
-* Response: Returns the newly created MedicationModel. 
-![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
+* Response: Returns the newly created MedicationModel.
+  ![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
 
 ### 6.2. Delete Medication Endpoint
 + DELETE /medications/:medicationId
@@ -136,8 +135,8 @@ LocalDateTime vitalSignsTime;
 * DELETE /vitals/:vitalSignsId
 * Description: Deletes a specified vital signs record.
 * Response: Success or error message.
-![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
-* 
+  ![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
+*
 ### 6.6.List All Vital Signs Endpoint
 * GET /vital-signs/user/:userId
 * Retrieves all vital signs entries.
@@ -159,7 +158,7 @@ LocalDateTime vitalSignsTime;
 * GET /notification/user/:userId
 * Description: Retrieves all notifications set up for a specific user.
 * Response: List of NotificationModel entries.
-![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
+  ![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
 
 ## 7. Tables
 
@@ -167,7 +166,7 @@ LocalDateTime vitalSignsTime;
 ```
 medicationId // Primary key, string (unique identifier for each medication)
 userId // Partition key, string (patient or caregiver ID)
-medicationTime // Sort key, LocalDateTime (in most cases it is possible for a patient to be taking many different medications at the same time）
+medicationTime // Sort key, LocalDateTime 
 medicationName // string
 medicationInfo //String 
 ```
@@ -195,9 +194,10 @@ additionalNotes // String
 ```
 notificationId // Primary key, string (unique identifier for each notification)
 userId // String 
-medicationName // String 
-medicationTime // LocalDateTime
-vitalSignsTime;  // LocalDateTime
+reminder // String
+additionalInfo // String 
+reminderTime // LocalDateTime
+
 ```
 ### 7.4. `GSI userMedicationsIndex`
 ```
@@ -218,6 +218,12 @@ userId // partition key, string
 medicationName // sort key, String
 medicationTime  // LocalDateTime
 notificationId // string 
+```
+
+### 7.6. `userNotificationsIndex'
+```
+userId // Partition Key, String
+reminderTime //Sort Key, LocalDateTime
 ```
 
 ## 8. Pages
