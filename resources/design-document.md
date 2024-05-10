@@ -99,15 +99,14 @@ Set<NotificationModel> notifications;
 ```
 // NotificationModel
 
-String notificationId;
-String userId;
-String medicationNames;
-LocalDateTime medicationsTime;
-LocalDateTime vitalSignsTime; 
+String notificationId;          
+String userId;                
+String reminder; 
+String additionalInfo;
+LocalDateTime reminderTime; 
 ```
 
 ### Medication Management Reminder Endpoints
-
 ### 6.1. Create Medication Record Endpoint
 * POST /medications
 * Body: MedicationModel
@@ -167,7 +166,7 @@ LocalDateTime vitalSignsTime;
 ```
 medicationId // Primary key, string (unique identifier for each medication)
 userId // Partition key, string (patient or caregiver ID)
-medicationTime // Sort key, LocalDateTime (in most cases it is possible for a patient to be taking many different medications at the same time）
+medicationTime // Sort key, LocalDateTime 
 medicationName // string
 medicationInfo //String 
 ```
@@ -195,9 +194,10 @@ additionalNotes // String
 ```
 notificationId // Primary key, string (unique identifier for each notification)
 userId // String 
-medicationName // String 
-medicationTime // LocalDateTime
-vitalSignsTime;  // LocalDateTime
+reminder // String
+additionalInfo // String 
+reminderTime // LocalDateTime
+
 ```
 ### 7.4. `GSI userMedicationsIndex`
 ```
