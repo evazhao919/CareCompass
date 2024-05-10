@@ -220,7 +220,7 @@ medicationTime  // LocalDateTime
 notificationId // string 
 ```
 
-### 7.6. `userNotificationsIndex'
+### 7.7. `GSI userNotificationsIndex`
 ```
 userId // Partition Key, String
 reminderTime //Sort Key, LocalDateTime
