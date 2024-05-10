@@ -224,8 +224,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
-      Handler: com.nashss.se.musicplaylistservice.lambda.GetPlaylistLambda::handleRequest
+      CodeUri: app
+      Handler: com.devyanan.CareCompass.lambda.GetPlaylistLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -234,7 +234,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        CareCompass:
           Type: Api
           Properties:
             Path: /playlists/{id}
