@@ -224,7 +224,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: app
+      CodeUri: CareCompassLambda
       Handler: com.devyanan.CareCompass.lambda.GetPlaylistLambda::handleRequest
       Runtime: java11
       Architectures:

@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'com.devyanan.CareCompass'
-include('app')
+include('CareCompassLambda')
