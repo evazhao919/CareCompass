@@ -13,25 +13,25 @@ Many discharged patients, especially older adults with long-term care needs, req
 
 ## 3. Use Cases
 
-U1. As a caregiver, I want to create a new medication record, so I can manage the medication schedule efficiently.
+U1. As a caregiver, I would like to create a new medication record, so I can manage the medication schedule efficiently.
 
-U2. As a caregiver, I want to delete a medication record, so I can keep the medication list up-to-date.
+U2. As a caregiver, I would like to delete a medication record, so I can keep the medication list up-to-date.
 
-U3. As a caregiver, I want to view all medications for a specific user, so I can monitor and manage their medication intake.
+U3. As a caregiver, I would like to view all medications for a specific user, so I can monitor and manage their medication intake.
 
-U4. As a caregiver, I want to log a new set of vital signs, so I can track the patient’s health metrics over time.
+U4. As a caregiver, I would like to log a new set of vital signs, so I can track the patient’s health metrics over time.
 
-U5. As a caregiver, I want to delete a specific vital signs record, so I can correct errors or remove outdated information.
+U5. As a caregiver, I would like to delete a specific vital signs record, so I can correct errors or remove outdated information.
 
-U6. As a caregiver, I want to retrieve all vital signs entries for a specific user, so I can review their historical health data.
+U6. As a caregiver, I would like to retrieve all vital signs entries for a specific user, so I can review their historical health data.
 
-U7. As a caregiver, I want to set up new reminders for medication or vital signs monitoring, so I can ensure adherence to health management protocols.
+U7. As a caregiver, I would like to set up new reminders for medication or vital signs monitoring, so I can ensure adherence to health management protocols.
 
-U8. As a caregiver, I want to remove a specified reminder, so I can adjust notifications to current care requirements.
+U8. As a caregiver, I would like to remove a specified reminder, so I can adjust notifications to current care requirements.
 
-U9. As a caregiver, I want to retrieve all notifications set up for a specific user, so I can overview and manage all set reminders and alerts.
+U9. As a caregiver, I would like to retrieve all notifications set up for a specific user, so I can overview and manage all set reminders and alerts.
 
-U10. As a caregiver, I want to receive notifications for medication and vital signs monitoring, so I can maintain the prescribed care schedule and respond promptly to any changes in the patient’s condition.
+U10. As a caregiver, I would like to receive notifications for medication and vital signs monitoring, so I can maintain the prescribed care schedule and respond promptly to any changes in the patient’s condition.
 
 ## 4. Project Scope
 
