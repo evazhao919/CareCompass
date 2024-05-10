@@ -111,8 +111,8 @@ LocalDateTime reminderTime;
 * POST /medications
 * Body: MedicationModel
 * Description: Create a new medication entry for a patient.
-* Response: Returns the newly created MedicationModel. 
-![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
+* Response: Returns the newly created MedicationModel.
+  ![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
 
 ### 6.2. Delete Medication Endpoint
 + DELETE /medications/:medicationId
@@ -135,8 +135,8 @@ LocalDateTime reminderTime;
 * DELETE /vitals/:vitalSignsId
 * Description: Deletes a specified vital signs record.
 * Response: Success or error message.
-![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
-* 
+  ![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
+*
 ### 6.6.List All Vital Signs Endpoint
 * GET /vital-signs/user/:userId
 * Retrieves all vital signs entries.
@@ -158,7 +158,7 @@ LocalDateTime reminderTime;
 * GET /notification/user/:userId
 * Description: Retrieves all notifications set up for a specific user.
 * Response: List of NotificationModel entries.
-![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
+  ![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
 
 ## 7. Tables
 
@@ -218,6 +218,12 @@ userId // partition key, string
 medicationName // sort key, String
 medicationTime  // LocalDateTime
 notificationId // string 
+```
+
+### 7.6. `userNotificationsIndex'
+```
+userId // Partition Key, String
+reminderTime //Sort Key, LocalDateTime
 ```
 
 ## 8. Pages
