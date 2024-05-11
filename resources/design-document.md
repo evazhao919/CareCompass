@@ -31,7 +31,7 @@ U8. As a caregiver, I would like to remove a specified reminder, so I can adjust
 
 U9. As a caregiver, I would like to retrieve all notifications set up for a specific user, so I can overview and manage all set reminders and alerts.
 
-U10. As a caregiver, I would like to receive notifications for medication and vital signs monitoring, so I can maintain the prescribed care schedule and respond promptly to any changes in the patient’s condition.
+U10. As a caregiver, I would like to update notifications for medication and vital signs monitoring, so I can keep the patient's care schedule timely and accurate.
 
 ## 4. Project Scope
 
@@ -68,17 +68,27 @@ and JavaScript for dynamic user interfaces.
 ```
 // MedicationModel
 
-String userId; 
+String userId;
 String medicationName;
+String dosage;
+String routeOfAdministration; 
+String frequency;
+String timeToTake;
+LocalDateTime startDate;
+LocalDateTime endDate;
 String medicationInfo;
-Set<NotificationModel> notifications;
+String notes;
+LocalDate TimetimeAdded;
+String prescribedBy;
 ```
 
 ```
 // VitalSignsMeasurementModel
 
 String userId; 
-LocalDateTime timestamp;
+LocalDateTime actualCheckTime;
+LocalDateTime scheduledTime;
+LocalDateTime timeAdded;
 double temperature;
 int heartRate;
 int pulse;
@@ -93,7 +103,6 @@ String oxygenTherapy;
 String flowDelivered;
 String patientActivity;
 String additionalNotes;
-Set<NotificationModel> notifications;
 ```
 
 ```
@@ -101,7 +110,7 @@ Set<NotificationModel> notifications;
 
 String notificationId;          
 String userId;                
-String reminder; 
+String reminderType; 
 String additionalInfo;
 LocalDateTime reminderTime; 
 ```
@@ -115,13 +124,14 @@ LocalDateTime reminderTime;
   ![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
 
 ### 6.2. Delete Medication Endpoint
-+ DELETE /medications/:medicationId
-* Description: Deletes a specified medication entry.
++ DELETE /medications
++ Body: { "userId": String, "medicationName": String, "String timeToTake": LocalDateTime, e.g }
+* Description: Deletes a specified medication entry based on the userId, medicationName, and medicationTime..
 * Response: Json object return success and message.
 
 ### 6.3. List All Medications Endpoint
 * GET /medications/user/:userId
-* Description: Retrieves all medications.
+* Description: Retrieves all medications for a specific user.
 * Response: List of medications.
 
 ### Vital Signs Tracking Endpoints
@@ -132,14 +142,15 @@ LocalDateTime reminderTime;
 * Response: Returns the newly recorded VitalSignsMeasurementModel.
 
 ### 6.5.Delete Vital Signs Record Endpoint
-* DELETE /vitals/:vitalSignsId
-* Description: Deletes a specified vital signs record.
+* DELETE /vitals
+* Body: { "userId": String, "actualCheckTime": LocalDateTime }
+* Description: Deletes a specified vital signs record based on userId and timestamp.
 * Response: Success or error message.
   ![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
 *
 ### 6.6.List All Vital Signs Endpoint
 * GET /vital-signs/user/:userId
-* Retrieves all vital signs entries.
+* Description: Retrieves all vital signs entries for a specific user.
 * Response: List of vital signs.
 
 ### Notification Management Endpoints
@@ -150,8 +161,8 @@ LocalDateTime reminderTime;
 * Response: Returns the newly created NotificationModel.
 
 ### 6.8 Remove Notification Endpoint
-* DELETE /reminders/:reminderId
-* Description: Removes a specified reminder.
+* DELETE /notifications/:notificationId
+* Description: Removes a specified reminder using the notificationId.
 * Response: JSON object return success and message.
 
 ### 6.9 List All Notifications Endpoint
@@ -164,17 +175,25 @@ LocalDateTime reminderTime;
 
 ### 7.1. `medications`
 ```
-medicationId // Primary key, string (unique identifier for each medication)
-userId // Partition key, string (patient or caregiver ID)
-medicationTime // Sort key, LocalDateTime 
-medicationName // string
-medicationInfo //String 
+userId // String, Partition Key
+medicationName // String, Sort Key
+dosage // String
+routeOfAdministration // String
+frequency // String
+timeToTake // String
+startDate // LocalDateTime
+endDate // LocalDateTime
+medicationInfo // String
+notes // String
+timeAdded // LocalDateTime
+prescribedBy // String
 ```
 ### 7.2. `vitalSigns`
 ```
-vitalSignId // Primary key, string (unique identifier for each vital sign record)
 userId // Partition key, string
-timestamp // Sort key, LocalDateTime
+actualCheckTime // Sort key, LocalDateTime
+scheduledTime // LocalDateTime
+timeAdded // LocalDateTime
 temperature // double
 heartRate // int 
 pulse // int
@@ -192,35 +211,23 @@ additionalNotes // String
 ```
 ## 7.3. `notifications`
 ```
-notificationId // Primary key, string (unique identifier for each notification)
-userId // String 
-reminder // String
+userId // Primary key, string
+notificationId // Sort key, string 
+reminderType // String
 additionalInfo // String 
 reminderTime // LocalDateTime
-
 ```
-### 7.4. `GSI userMedicationsIndex`
-```
-userId // partition key, string
-medicationTime // sort key, LocalDateTime
-medicationName // string 
-notificationId // string 
-```
-### 7.5. `GSI vitalSignsTrackingIndex`
-```
-userId // Partition Key
-timestamp // Sort Key
-```
-
-### 7.6. `GSI medicationNameIndex`
+### 7.5. `GSI medicationNameIndex`
 ```
 userId // partition key, string
 medicationName // sort key, String
-medicationTime  // LocalDateTime
-notificationId // string 
 ```
-
-### 7.7. `GSI userNotificationsIndex`
+### 7.4. `GSI vitalSignsTrackingIndex`
+```
+userId // Partition Key
+actualCheckTime // Sort Key
+```
+### 7.6. `GSI userNotificationsIndex`
 ```
 userId // Partition Key, String
 reminderTime //Sort Key, LocalDateTime
