@@ -73,12 +73,15 @@ String medicationName;
 String dosage;
 String routeOfAdministration; 
 String frequency;
-String timeToTake;
+LocalDateTime timeToTake;
 LocalDateTime startDate;
 LocalDateTime endDate;
+String MeminationStatus;
+String MeductionPriority;
+String medicationForm;
 String medicationInfo;
 String notes;
-LocalDate TimetimeAdded;
+LocalDate timeAdded;
 String prescribedBy;
 ```
 
@@ -102,16 +105,20 @@ int bloodOxygenLevel;
 String oxygenTherapy;
 String flowDelivered;
 String patientActivity;
+double glucoseLevel;
+GlucoseMeasurementContext glucoseContext;
 String additionalNotes;
 ```
 
 ```
 // NotificationModel
-
-String notificationId;          
-String userId;                
+        
+String userId; 
+String notificationId;
+String notificationTitle;                 
 String reminderType; 
-String additionalInfo;
+String reminderContent;
+String additionalNotes;
 LocalDateTime reminderTime; 
 ```
 
@@ -180,9 +187,11 @@ medicationName // String, Sort Key
 dosage // String
 routeOfAdministration // String
 frequency // String
-timeToTake // String
+timeToTake // LocalDateTime
 startDate // LocalDateTime
 endDate // LocalDateTime
+MeminationStatus // String
+MeductionPriority //String
 medicationInfo // String
 notes // String
 timeAdded // LocalDateTime
@@ -212,9 +221,11 @@ additionalNotes // String
 ## 7.3. `notifications`
 ```
 userId // Primary key, string
-notificationId // Sort key, string 
+String notificationId; // Sort key, string 
+notificationTitle // string 
 reminderType // String
-additionalInfo // String 
+reminderContent // String 
+additionalNotes // String 
 reminderTime // LocalDateTime
 ```
 ### 7.5. `GSI medicationNameIndex`
