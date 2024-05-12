@@ -25,8 +25,7 @@ public class VitalSigns {
     private OxygenTherapy oxygenTherapy;
     private FlowDelivered flowDelivered;
     private PatientActivity patientActivity;
-    private double glucoseLevel;
-    private GlucoseMeasurementContext glucoseContext;
+
     private String additionalNotes;
     public enum PatientPosition {
         SUPINE, PRONE, LEFT_LATERAL, RIGHT_LATERAL, SITTING, STANDING
@@ -39,9 +38,6 @@ public class VitalSigns {
     }
     public enum PatientActivity {
         SITTING, STANDING, LAYING_DOWN, POST_EXERCISE,
-    }
-    public enum GlucoseMeasurementContext {
-        FASTING, BEFORE_MEAL, AFTER_MEAL, BEDTIME;
     }
 
     @DynamoDBHashKey(attributeName = "userId")
@@ -186,22 +182,6 @@ public class VitalSigns {
         this.patientActivity = patientActivity;
     }
 
-    public double getGlucoseLevel() {
-        return glucoseLevel;
-    }
-    @DynamoDBAttribute(attributeName = "glucoseLevel")
-    public void setGlucoseLevel(double glucoseLevel) {
-        this.glucoseLevel = glucoseLevel;
-    }
-
-    public GlucoseMeasurementContext getGlucoseContext() {
-        return glucoseContext;
-    }
-    @DynamoDBAttribute(attributeName = "glucoseContext")
-    public void setGlucoseContext(GlucoseMeasurementContext glucoseContext) {
-        this.glucoseContext = glucoseContext;
-    }
-
     @DynamoDBAttribute(attributeName = "additionalNotes")
     public String getAdditionalNotes() {
         return additionalNotes;
@@ -220,12 +200,12 @@ public class VitalSigns {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSigns that = (VitalSigns) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(userId, that.userId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && glucoseContext == that.glucoseContext && Objects.equals(additionalNotes, that.additionalNotes);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel &&  Objects.equals(userId, that.userId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(additionalNotes, that.additionalNotes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, glucoseLevel, glucoseContext, additionalNotes);
+        return Objects.hash(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes);
     }
 
     @Override
@@ -248,8 +228,6 @@ public class VitalSigns {
                 ", oxygenTherapy=" + oxygenTherapy +
                 ", flowDelivered=" + flowDelivered +
                 ", patientActivity=" + patientActivity +
-                ", glucoseLevel=" + glucoseLevel +
-                ", glucoseContext=" + glucoseContext +
                 ", additionalNotes='" + additionalNotes + '\'' +
                 '}';
     }

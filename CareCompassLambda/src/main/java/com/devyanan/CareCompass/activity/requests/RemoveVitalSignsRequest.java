@@ -23,11 +23,9 @@ public class RemoveVitalSignsRequest {
     private VitalSigns.OxygenTherapy oxygenTherapy;
     private VitalSigns.FlowDelivered flowDelivered;
     private VitalSigns.PatientActivity patientActivity;
-    private double glucoseLevel;
-    private VitalSigns.GlucoseMeasurementContext glucoseContext;
     private String additionalNotes;
 
-    public RemoveVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, double glucoseLevel, VitalSigns.GlucoseMeasurementContext glucoseContext, String additionalNotes) {
+    public RemoveVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes) {
         this.userId = userId;
         this.actualCheckTime = actualCheckTime;
         this.scheduledTime = scheduledTime;
@@ -45,8 +43,6 @@ public class RemoveVitalSignsRequest {
         this.oxygenTherapy = oxygenTherapy;
         this.flowDelivered = flowDelivered;
         this.patientActivity = patientActivity;
-        this.glucoseLevel = glucoseLevel;
-        this.glucoseContext = glucoseContext;
         this.additionalNotes = additionalNotes;
     }
 
@@ -70,8 +66,6 @@ public class RemoveVitalSignsRequest {
                 ", oxygenTherapy=" + oxygenTherapy +
                 ", flowDelivered=" + flowDelivered +
                 ", patientActivity=" + patientActivity +
-                ", glucoseLevel=" + glucoseLevel +
-                ", glucoseContext=" + glucoseContext +
                 ", additionalNotes='" + additionalNotes + '\'' +
                 '}';
     }
@@ -98,8 +92,6 @@ public class RemoveVitalSignsRequest {
         private VitalSigns.OxygenTherapy oxygenTherapy;
         private VitalSigns.FlowDelivered flowDelivered;
         private VitalSigns.PatientActivity patientActivity;
-        private double glucoseLevel;
-        private VitalSigns.GlucoseMeasurementContext glucoseContext;
         private String additionalNotes;
         public Builder withUserId(String userId) {
             this.userId = userId;
@@ -169,21 +161,13 @@ public class RemoveVitalSignsRequest {
             this.patientActivity = patientActivity;
             return this;
         }
-        public Builder withGlucoseLevel(double glucoseLevel) {
-            this.glucoseLevel = glucoseLevel;
-            return this;
-        }
-        public Builder withGlucoseContext(VitalSigns.GlucoseMeasurementContext glucoseContext) {
-            this.glucoseContext = glucoseContext;
-            return this;
-        }
         public Builder withAdditionalNotes(String additionalNotes) {
             this.additionalNotes = additionalNotes;
             return this;
         }
 
         public RemoveVitalSignsRequest build() {
-            return new RemoveVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, glucoseLevel, glucoseContext, additionalNotes);
+            return new RemoveVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes);
         }
     }
 }

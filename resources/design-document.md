@@ -109,7 +109,12 @@ double glucoseLevel;
 GlucoseMeasurementContext glucoseContext;
 String additionalNotes;
 ```
-
+```
+// BloodGlucoseMeasurementsModel
+String userId;
+LocalDateTime measurementTime;
+double glucoseLevel;
+GlucoseMeasurementContext glucoseContext;
 ```
 // NotificationModel
         
@@ -121,7 +126,7 @@ String reminderContent;
 String additionalNotes;
 LocalDateTime reminderTime; 
 ```
-
+```
 ### Medication Management Reminder Endpoints
 ### 6.1. Create Medication Record Endpoint
 * POST /medications
@@ -228,7 +233,14 @@ reminderContent // String
 additionalNotes // String 
 reminderTime // LocalDateTime
 ```
-### 7.5. `GSI medicationNameIndex`
+## 7.4. `BloodGlucoseMeasurements`
+```
+userId // String 
+measurementTime // LocalDateTime 
+glucoseLevel // double
+glucoseContext // String
+```
+### 7.4. `GSI medicationNameIndex`
 ```
 userId // partition key, string
 medicationName // sort key, String
