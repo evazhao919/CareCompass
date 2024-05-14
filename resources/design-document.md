@@ -31,7 +31,14 @@ U8. As a caregiver, I would like to remove a specified reminder, so I can adjust
 
 U9. As a caregiver, I would like to retrieve all notifications set up for a specific user, so I can overview and manage all set reminders and alerts.
 
-U10. As a caregiver, I would like to receive notifications for medication and vital signs monitoring, so I can maintain the prescribed care schedule and respond promptly to any changes in the patient’s condition.
+U10. As a caregiver, I would like to update notifications for medication and vital signs monitoring, so I can keep the patient's care schedule timely and accurate.
+
+U11. As a caregiver, I would like to create a new blood glucose measurement to regularly monitor and manage the patient’s glucose levels.
+
+U12. as a caregiver, I would like to delete a blood glucose measurement to correct any errors or when it's no longer needed.
+
+U13. as a caregiver, I would like to view all blood glucose measurements for a specific user to analyze trends and adjust treatments.
+
 
 ## 4. Project Scope
 
@@ -68,17 +75,30 @@ and JavaScript for dynamic user interfaces.
 ```
 // MedicationModel
 
-String userId; 
+String userId;
 String medicationName;
+String dosage;
+String routeOfAdministration; 
+String frequency;
+LocalDateTime timeToTake;
+LocalDateTime startDate;
+LocalDateTime endDate;
+String MedicationStatus;
+String MedicationPriority;
+String medicationForm;
 String medicationInfo;
-Set<NotificationModel> notifications;
+String notes;
+LocalDateTime timeAdded;
+String prescribedBy;
 ```
 
 ```
-// VitalSignsMeasurementModel
+// VitalSignModel
 
 String userId; 
-LocalDateTime timestamp;
+LocalDateTime actualCheckTime;
+LocalDateTime scheduledTime;
+LocalDateTime timeAdded;
 double temperature;
 int heartRate;
 int pulse;
@@ -93,17 +113,26 @@ String oxygenTherapy;
 String flowDelivered;
 String patientActivity;
 String additionalNotes;
-Set<NotificationModel> notifications;
+String comments;
 ```
-
+```
+// BloodGlucoseMeasurementModel
+String userId;
+LocalDateTime measurementTime;
+double glucoseLevel;
+GlucoseMeasurementContext glucoseContext;
+String comments;
+```
 ```
 // NotificationModel
 
-String notificationId;          
-String userId;                
-String reminder; 
-String additionalInfo;
-LocalDateTime reminderTime; 
+String userId;
+String notificationId;
+String notificationTitle;                 
+String reminderType;
+String reminderContent;
+String additionalNotes;
+LocalDateTime reminderTime;
 ```
 
 ### Medication Management Reminder Endpoints
@@ -115,66 +144,104 @@ LocalDateTime reminderTime;
   ![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
 
 ### 6.2. Delete Medication Endpoint
-+ DELETE /medications/:medicationId
-* Description: Deletes a specified medication entry.
++ DELETE /medications/{userId}
+* Description: Deletes a specified medication entry based on the userId, medicationName, and medicationTime..
 * Response: Json object return success and message.
 
 ### 6.3. List All Medications Endpoint
-* GET /medications/user/:userId
-* Description: Retrieves all medications.
-* Response: List of medications.
+* GET /medications/user/{userId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
+* Description: Retrieves all medications for a specific user.
+* Response: List of medications with pagination data.
 
 ### Vital Signs Tracking Endpoints
 ### 6.4.Log Vital Signs Endpoint
 * POST /vitals
-* Body: VitalSignsMeasurementModel
+* Body: VitalSignModel
 * Description: Logs a new set of vital signs for a patient.
 * Response: Returns the newly recorded VitalSignsMeasurementModel.
 
 ### 6.5.Delete Vital Signs Record Endpoint
-* DELETE /vitals/:vitalSignsId
-* Description: Deletes a specified vital signs record.
+* DELETE /vitals/{userId}
+* Description: Deletes a specified vital signs record based on userId and timestamp.
 * Response: Success or error message.
   ![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
 *
 ### 6.6.List All Vital Signs Endpoint
-* GET /vital-signs/user/:userId
-* Retrieves all vital signs entries.
-* Response: List of vital signs.
+* GET /vital-signs/user/{userId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
+* Description: Retrieves all vital signs entries for a specific user.
+* Response: List of vital signs with pagination data.
 
 ### Notification Management Endpoints
 ### 6.7.Add Notification for Medication
-* POST /Notifications
+* POST /notifications
 * Body: NotificationModel
 * Description: Sets up a new reminder for medication or vital signs monitoring.
 * Response: Returns the newly created NotificationModel.
 
 ### 6.8 Remove Notification Endpoint
-* DELETE /reminders/:reminderId
-* Description: Removes a specified reminder.
+* DELETE /notifications/{notificationId}
+* Description: Removes a specified reminder using the notificationId.
 * Response: JSON object return success and message.
 
 ### 6.9 List All Notifications Endpoint
-* GET /notification/user/:userId
-* Description: Retrieves all notifications set up for a specific user.
-* Response: List of NotificationModel entries.
+* GET /notifications/user/{userId} 
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
+* Description: Retrieves all notifications set up for a specific user with pagination, filtering, and sorting.
+* Response: List of NotificationModel entries with pagination data.
   ![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
+
+### 6.10 Update Notifications Endpoint
+* PUT /notifications/{notificationId}
+* Parameters: notificationId (URL Parameter): Unique identifier for the notification to be updated.
+* Description: Updates an existing notification for a patient.
+* Response: Success or error message. (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error).
+
+### 6.11 Create Blood Glucose Measurement Endpoint
+* POST /blood-glucose
+* Body: BloodGlucoseMeasurementModel
+* Description: Logs a new blood glucose measurement for a patient.
+* Response: Returns the newly created BloodGlucoseMeasurementModel.
+
+### 6.12 Delete Blood Glucose Measurement Endpoint
+* DELETE /blood-glucose/{userId}/{measurementTime}
+* Body: { "userId": String, "measurementTime": LocalDateTime }
+* Description: Deletes a specified blood glucose measurement based on userId and timestamp.
+* Response: Success or error message.
+
+### 6.13 List All Blood Glucose Measurements Endpoint
+* GET /blood-glucose/user/{userId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc 
+* Description: Retrieves all blood glucose measurements for a specific user with options for pagination, filtering, and sorting. 
+* Response: List of BloodGlucoseMeasurementModel entries with pagination data.
 
 ## 7. Tables
 
 ### 7.1. `medications`
 ```
-medicationId // Primary key, string (unique identifier for each medication)
-userId // Partition key, string (patient or caregiver ID)
-medicationTime // Sort key, LocalDateTime 
-medicationName // string
-medicationInfo //String 
+userId // String, Partition Key
+medicationName // String, Sort Key
+dosage // String
+routeOfAdministration // String
+frequency // String
+timeToTake // LocalDateTime
+startDate // LocalDateTime
+endDate // LocalDateTime
+medicationStatus // String
+medicationPriority //String
+medicationForm // String 
+medicationInfo // String
+notes // String
+timeAdded // LocalDateTime
+prescribedBy // String
 ```
 ### 7.2. `vitalSigns`
 ```
-vitalSignId // Primary key, string (unique identifier for each vital sign record)
 userId // Partition key, string
-timestamp // Sort key, LocalDateTime
+actualCheckTime // Sort key, LocalDateTime
+scheduledTime // LocalDateTime
+timeAdded // LocalDateTime
 temperature // double
 heartRate // int 
 pulse // int
@@ -189,38 +256,37 @@ oxygenTherapy // String
 flowDelivered // String 
 patientActivity // String 
 additionalNotes // String 
+String comments // String
 ```
 ## 7.3. `notifications`
 ```
-notificationId // Primary key, string (unique identifier for each notification)
-userId // String 
-reminder // String
-additionalInfo // String 
+userId // Primary key, string
+String notificationId; // Sort key, string 
+notificationTitle // string 
+reminderType // String
+reminderContent // String 
+additionalNotes // String 
 reminderTime // LocalDateTime
-
 ```
-### 7.4. `GSI userMedicationsIndex`
+## 7.4. `bloodGlucoseMeasurements`
 ```
-userId // partition key, string
-medicationTime // sort key, LocalDateTime
-medicationName // string 
-notificationId // string 
+userId // String 
+measurementTime // LocalDateTime 
+glucoseLevel // double
+glucoseContext // String
+comments // String 
 ```
-### 7.5. `GSI vitalSignsTrackingIndex`
-```
-userId // Partition Key
-timestamp // Sort Key
-```
-
-### 7.6. `GSI medicationNameIndex`
+### 7.4. `GSI medicationIndex`
 ```
 userId // partition key, string
 medicationName // sort key, String
-medicationTime  // LocalDateTime
-notificationId // string 
 ```
-
-### 7.6. `userNotificationsIndex'
+### 7.4. `GSI vitalSignsIndex`
+```
+userId // Partition Key
+actualCheckTime // Sort Key
+```
+### 7.6. `GSI userNotificationsIndex`
 ```
 userId // Partition Key, String
 reminderTime //Sort Key, LocalDateTime
