@@ -1,5 +1,8 @@
 package com.devyanan.CareCompass.activity.requests;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+@JsonDeserialize(builder = GetPlaylistRequest.Builder.class)
 public class GetPlaylistRequest {
     private final String id;
 
@@ -22,7 +25,7 @@ public class GetPlaylistRequest {
     public static Builder builder() {
         return new Builder();
     }
-
+    @JsonPOJOBuilder
     public static class Builder {
         private String id;
 

@@ -2,6 +2,7 @@ package com.devyanan.CareCompass.activity.requests;
 
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
 
@@ -48,7 +49,7 @@ public class CreateBloodGlucoseMeasurementRequest {
     public static Builder builder() {
         return new Builder();
     }
-
+    @JsonPOJOBuilder
     public static class Builder {
         private String userId;
         private LocalDateTime measurementTime;
