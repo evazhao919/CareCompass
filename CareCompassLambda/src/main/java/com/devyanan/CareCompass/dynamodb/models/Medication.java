@@ -44,7 +44,7 @@ public class Medication {
     }
 
     @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationNameIndex", "vitalSignsTrackingIndex","userNotificationsIndex"}, attributeName = "userId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "userId")
     public String getUserId() {
         return userId;
     }
@@ -53,7 +53,7 @@ public class Medication {
         this.userId = userId;
     }
     @DynamoDBRangeKey(attributeName = "medicationName")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "medicationNameIndex", attributeName = "medicationName")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "medicationIndex", attributeName = "medicationName")
     public String getMedicationName() {
         return medicationName;
     }

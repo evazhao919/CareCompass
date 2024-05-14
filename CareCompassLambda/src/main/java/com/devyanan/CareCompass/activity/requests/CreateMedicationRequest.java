@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = CreateMedicationRequest.class)
+@JsonDeserialize(builder = CreateMedicationRequest.Builder.class)
 public class CreateMedicationRequest {
     private final String userId;
     private final String medicationName;

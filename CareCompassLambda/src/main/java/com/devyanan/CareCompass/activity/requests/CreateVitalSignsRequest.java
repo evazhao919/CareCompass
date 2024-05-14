@@ -1,10 +1,11 @@
 package com.devyanan.CareCompass.activity.requests;
 
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-
+@JsonDeserialize(builder = CreateVitalSignsRequest.Builder.class)
 public class CreateVitalSignsRequest {
     private final String userId;
     private final LocalDateTime actualCheckTime;
@@ -24,8 +25,9 @@ public class CreateVitalSignsRequest {
     private final VitalSigns.FlowDelivered flowDelivered;
     private final VitalSigns.PatientActivity patientActivity;
     private final String additionalNotes;
+    private final String comments;
 
-    public CreateVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes) {
+    public CreateVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
         this.userId = userId;
         this.actualCheckTime = actualCheckTime;
         this.scheduledTime = scheduledTime;
@@ -44,6 +46,7 @@ public class CreateVitalSignsRequest {
         this.flowDelivered = flowDelivered;
         this.patientActivity = patientActivity;
         this.additionalNotes = additionalNotes;
+        this.comments = comments;
     }
 
     public String getUserId() {
@@ -118,6 +121,10 @@ public class CreateVitalSignsRequest {
         return additionalNotes;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
     @Override
     public String toString() {
         return "CreateVitalSignsRequest{" +
@@ -139,6 +146,7 @@ public class CreateVitalSignsRequest {
                 ", flowDelivered=" + flowDelivered +
                 ", patientActivity=" + patientActivity +
                 ", additionalNotes='" + additionalNotes + '\'' +
+                ", comments='" + comments + '\'' +
                 '}';
     }
 
@@ -166,6 +174,7 @@ public class CreateVitalSignsRequest {
         private VitalSigns.FlowDelivered flowDelivered;
         private VitalSigns.PatientActivity patientActivity;
         private String additionalNotes;
+        private String comments;
 
         public Builder withUserId(String userId) {
             this.userId = userId;
@@ -255,9 +264,13 @@ public class CreateVitalSignsRequest {
             this.additionalNotes = additionalNotes;
             return this;
         }
+        public Builder withComments(String comments) {
+            this.comments = comments;
+            return this;
+        }
 
         public CreateVitalSignsRequest build() {
-            return new CreateVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes);
+            return new CreateVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes, comments);
         }
     }
 }

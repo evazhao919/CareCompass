@@ -1,11 +1,12 @@
 package com.devyanan.CareCompass.activity.requests;
 
 import com.devyanan.CareCompass.dynamodb.models.Notification;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-
-public class UpdateNotificationsInfo {
+@JsonDeserialize(builder = UpdateNotificationsRequest.Builder.class)
+public class UpdateNotificationsRequest {
     private final String userId;
     private final String notificationId;
     private final String notificationTitle;
@@ -14,7 +15,7 @@ public class UpdateNotificationsInfo {
     private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public UpdateNotificationsInfo(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+    public UpdateNotificationsRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
         this.userId = userId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
@@ -78,7 +79,7 @@ public class UpdateNotificationsInfo {
         private String reminderContent;
         private String additionalNotes;
         private LocalDateTime reminderTime;
-        public UpdateNotificationsInfo.Builder withUserId(String userId) {
+        public UpdateNotificationsRequest.Builder withUserId(String userId) {
             this.userId = userId;
             return this;
         }
@@ -112,8 +113,8 @@ public class UpdateNotificationsInfo {
             return this;
         }
 
-        public UpdateNotificationsInfo build() {
-            return new UpdateNotificationsInfo(userId,  notificationId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
+        public UpdateNotificationsRequest build() {
+            return new UpdateNotificationsRequest(userId,  notificationId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
         }
     }
 }

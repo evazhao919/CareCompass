@@ -25,6 +25,7 @@ public class VitalSigns {
     private OxygenTherapy oxygenTherapy;
     private FlowDelivered flowDelivered;
     private PatientActivity patientActivity;
+    private String comments;
 
     private String additionalNotes;
     public enum PatientPosition {
@@ -41,7 +42,7 @@ public class VitalSigns {
     }
 
     @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationNameIndex", "vitalSignsTrackingIndex","userNotificationsIndex"}, attributeName = "userId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "userId")
     public String getUserId() {
         return userId;
     }
@@ -50,7 +51,7 @@ public class VitalSigns {
         this.userId = userId;
     }
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "vitalSignsTrackingIndex", attributeName = "actualCheckTime")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "vitalSignsIndex", attributeName = "actualCheckTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
@@ -194,41 +195,25 @@ public class VitalSigns {
             this.additionalNotes = additionalNotes;
         }
     }
+    @DynamoDBAttribute(attributeName = "comments")
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSigns that = (VitalSigns) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel &&  Objects.equals(userId, that.userId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(additionalNotes, that.additionalNotes);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(userId, that.userId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments) && Objects.equals(additionalNotes, that.additionalNotes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes);
-    }
-
-    @Override
-    public String toString() {
-        return "VitalSigns{" +
-                "userId='" + userId + '\'' +
-                ", actualCheckTime=" + actualCheckTime +
-                ", scheduledTime=" + scheduledTime +
-                ", timeAdded=" + timeAdded +
-                ", temperature=" + temperature +
-                ", heartRate=" + heartRate +
-                ", pulse=" + pulse +
-                ", respiratoryRate=" + respiratoryRate +
-                ", systolicPressure=" + systolicPressure +
-                ", diastolicPressure=" + diastolicPressure +
-                ", meanArterialPressure=" + meanArterialPressure +
-                ", weight=" + weight +
-                ", patientPosition=" + patientPosition +
-                ", bloodOxygenLevel=" + bloodOxygenLevel +
-                ", oxygenTherapy=" + oxygenTherapy +
-                ", flowDelivered=" + flowDelivered +
-                ", patientActivity=" + patientActivity +
-                ", additionalNotes='" + additionalNotes + '\'' +
-                '}';
+        return Objects.hash(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, additionalNotes);
     }
 }

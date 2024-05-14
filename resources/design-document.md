@@ -33,6 +33,13 @@ U9. As a caregiver, I would like to retrieve all notifications set up for a spec
 
 U10. As a caregiver, I would like to update notifications for medication and vital signs monitoring, so I can keep the patient's care schedule timely and accurate.
 
+U11. As a caregiver, I would like to create a new blood glucose measurement to regularly monitor and manage the patient’s glucose levels.
+
+U12. as a caregiver, I would like to delete a blood glucose measurement to correct any errors or when it's no longer needed.
+
+U13. as a caregiver, I would like to view all blood glucose measurements for a specific user to analyze trends and adjust treatments.
+
+
 ## 4. Project Scope
 
 ### 4.1. In Scope
@@ -76,17 +83,17 @@ String frequency;
 LocalDateTime timeToTake;
 LocalDateTime startDate;
 LocalDateTime endDate;
-String MeminationStatus;
-String MeductionPriority;
+String MedicationStatus;
+String MedicationPriority;
 String medicationForm;
 String medicationInfo;
 String notes;
-LocalDate timeAdded;
+LocalDateTime timeAdded;
 String prescribedBy;
 ```
 
 ```
-// VitalSignsMeasurementModel
+// VitalSignModel
 
 String userId; 
 LocalDateTime actualCheckTime;
@@ -105,28 +112,29 @@ int bloodOxygenLevel;
 String oxygenTherapy;
 String flowDelivered;
 String patientActivity;
-double glucoseLevel;
-GlucoseMeasurementContext glucoseContext;
 String additionalNotes;
+String comments;
 ```
 ```
-// BloodGlucoseMeasurementsModel
+// BloodGlucoseMeasurementModel
 String userId;
 LocalDateTime measurementTime;
 double glucoseLevel;
 GlucoseMeasurementContext glucoseContext;
+String comments;
+```
 ```
 // NotificationModel
-        
-String userId; 
+
+String userId;
 String notificationId;
 String notificationTitle;                 
-String reminderType; 
+String reminderType;
 String reminderContent;
 String additionalNotes;
-LocalDateTime reminderTime; 
+LocalDateTime reminderTime;
 ```
-```
+
 ### Medication Management Reminder Endpoints
 ### 6.1. Create Medication Record Endpoint
 * POST /medications
@@ -136,52 +144,77 @@ LocalDateTime reminderTime;
   ![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
 
 ### 6.2. Delete Medication Endpoint
-+ DELETE /medications
-+ Body: { "userId": String, "medicationName": String, "String timeToTake": LocalDateTime, e.g }
++ DELETE /medications/{userId}
 * Description: Deletes a specified medication entry based on the userId, medicationName, and medicationTime..
 * Response: Json object return success and message.
 
 ### 6.3. List All Medications Endpoint
-* GET /medications/user/:userId
+* GET /medications/user/{userId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
 * Description: Retrieves all medications for a specific user.
-* Response: List of medications.
+* Response: List of medications with pagination data.
 
 ### Vital Signs Tracking Endpoints
 ### 6.4.Log Vital Signs Endpoint
 * POST /vitals
-* Body: VitalSignsMeasurementModel
+* Body: VitalSignModel
 * Description: Logs a new set of vital signs for a patient.
 * Response: Returns the newly recorded VitalSignsMeasurementModel.
 
 ### 6.5.Delete Vital Signs Record Endpoint
-* DELETE /vitals
-* Body: { "userId": String, "actualCheckTime": LocalDateTime }
+* DELETE /vitals/{userId}
 * Description: Deletes a specified vital signs record based on userId and timestamp.
 * Response: Success or error message.
   ![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
 *
 ### 6.6.List All Vital Signs Endpoint
-* GET /vital-signs/user/:userId
+* GET /vital-signs/user/{userId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
 * Description: Retrieves all vital signs entries for a specific user.
-* Response: List of vital signs.
+* Response: List of vital signs with pagination data.
 
 ### Notification Management Endpoints
 ### 6.7.Add Notification for Medication
-* POST /Notifications
+* POST /notifications
 * Body: NotificationModel
 * Description: Sets up a new reminder for medication or vital signs monitoring.
 * Response: Returns the newly created NotificationModel.
 
 ### 6.8 Remove Notification Endpoint
-* DELETE /notifications/:notificationId
+* DELETE /notifications/{notificationId}
 * Description: Removes a specified reminder using the notificationId.
 * Response: JSON object return success and message.
 
 ### 6.9 List All Notifications Endpoint
-* GET /notification/user/:userId
-* Description: Retrieves all notifications set up for a specific user.
-* Response: List of NotificationModel entries.
+* GET /notifications/user/{userId} 
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
+* Description: Retrieves all notifications set up for a specific user with pagination, filtering, and sorting.
+* Response: List of NotificationModel entries with pagination data.
   ![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
+
+### 6.10 Update Notifications Endpoint
+* PUT /notifications/{notificationId}
+* Parameters: notificationId (URL Parameter): Unique identifier for the notification to be updated.
+* Description: Updates an existing notification for a patient.
+* Response: Success or error message. (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error).
+
+### 6.11 Create Blood Glucose Measurement Endpoint
+* POST /blood-glucose
+* Body: BloodGlucoseMeasurementModel
+* Description: Logs a new blood glucose measurement for a patient.
+* Response: Returns the newly created BloodGlucoseMeasurementModel.
+
+### 6.12 Delete Blood Glucose Measurement Endpoint
+* DELETE /blood-glucose/{userId}/{measurementTime}
+* Body: { "userId": String, "measurementTime": LocalDateTime }
+* Description: Deletes a specified blood glucose measurement based on userId and timestamp.
+* Response: Success or error message.
+
+### 6.13 List All Blood Glucose Measurements Endpoint
+* GET /blood-glucose/user/{userId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc 
+* Description: Retrieves all blood glucose measurements for a specific user with options for pagination, filtering, and sorting. 
+* Response: List of BloodGlucoseMeasurementModel entries with pagination data.
 
 ## 7. Tables
 
@@ -195,8 +228,9 @@ frequency // String
 timeToTake // LocalDateTime
 startDate // LocalDateTime
 endDate // LocalDateTime
-MeminationStatus // String
-MeductionPriority //String
+medicationStatus // String
+medicationPriority //String
+medicationForm // String 
 medicationInfo // String
 notes // String
 timeAdded // LocalDateTime
@@ -222,6 +256,7 @@ oxygenTherapy // String
 flowDelivered // String 
 patientActivity // String 
 additionalNotes // String 
+String comments // String
 ```
 ## 7.3. `notifications`
 ```
@@ -233,19 +268,20 @@ reminderContent // String
 additionalNotes // String 
 reminderTime // LocalDateTime
 ```
-## 7.4. `BloodGlucoseMeasurements`
+## 7.4. `bloodGlucoseMeasurements`
 ```
 userId // String 
 measurementTime // LocalDateTime 
 glucoseLevel // double
 glucoseContext // String
+comments // String 
 ```
-### 7.4. `GSI medicationNameIndex`
+### 7.4. `GSI medicationIndex`
 ```
 userId // partition key, string
 medicationName // sort key, String
 ```
-### 7.4. `GSI vitalSignsTrackingIndex`
+### 7.4. `GSI vitalSignsIndex`
 ```
 userId // Partition Key
 actualCheckTime // Sort Key
@@ -269,3 +305,37 @@ reminderTime //Sort Key, LocalDateTime
 * Development Tools: Docker, Gradle, Git, GitHub.
 * Software Development Practices: Object-Oriented Programming (OOP), Test-Driven Development (TDD).
 * Additional Libraries/Frameworks: Google Guava, Amazon Cognito, Dagger.
+
+
+
+
+具体反馈：
+6.1 创建用药记录端点
+验证：确保输入的剂型、频率格式和日期范围均经过验证。
+增强功能：如果需要一次输入多种药物，请考虑允许批量上传。
+6.2 删除药物端点
+清晰度：指定删除是逻辑删除还是物理删除。对于药物记录等敏感数据，首选逻辑删除。
+审计跟踪：确保出于审计目的跟踪删除，捕获谁删除了记录以及删除时间。
+6.3 列出所有药物端点
+过滤选项：除了日期和排序之外，还可以考虑添加更多过滤器，例如按药物状态（有效、已停产）或按药物名称。
+6.4 记录生命体征端点
+数据完整性：包括检查，以确保在需要时包括生命体征的所有必要组成部分（例如体温和血压）。
+6.5 删除生命体征记录端点
+确认删除：实施确认步骤或软删除机制以防止意外删除。
+6.6 列出所有生命体征端点
+复杂查询：确保系统能够有效地处理复杂查询，尤其是在处理大型数据集时。
+6.7-6.9 通知端点
+实时功能：考虑实施实时通知功能，以便在报告关键值时立即向护理人员发出警报。
+6.10 更新通知端点
+部分更新：如果不是所有字段都需要更新，则支持使用 PATCH 而不是 PUT 进行部分更新。这可以减少带宽和处理时间。
+6.11 创建血糖测量端点
+数据集成：考虑如何将这些数据与其他患者管理系统集成。确保有同步或导出数据的机制。
+6.12 删除血糖测量终点
+数据恢复：在意外删除的情况下提供数据恢复选项，类似于“垃圾箱”或“回收站”概念。
+6.13 列出所有血糖测量终点
+高级分析：直接通过 API 提供对更高级分析的支持，例如一段时间内的平均读数，这对于趋势分析非常有价值。
+未来的增强功能
+WebSockets 或长轮询：对于应用程序中的实时更新，请考虑使用 WebSockets 或长轮询来保持数据实时同步。
+机器学习：在未来阶段，集成机器学习模型以根据历史数据预测患者趋势。
+API网关缓存：为了减少后端系统的负载并提高响应时间，请在API网关级别实现缓存机制。
+实施这些建议将增强 API 的稳健性、安全性和可用性，使其成为更强大的医疗保健协调工具。

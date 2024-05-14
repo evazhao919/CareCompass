@@ -8,12 +8,13 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "BloodGlucoseMeasurements")
-public class BloodGlucoseMeasurements {
+@DynamoDBTable(tableName = "bloodGlucoseMeasurements")
+public class BloodGlucoseMeasurement {
     private String userId;
     private LocalDateTime measurementTime;
     private double glucoseLevel;
     private GlucoseMeasurementContext glucoseContext;
+    private String comments;
     public enum GlucoseMeasurementContext {
         FASTING, BEFORE_MEAL, AFTER_MEAL, BEDTIME;
     }
@@ -49,17 +50,25 @@ public class BloodGlucoseMeasurements {
     public void setGlucoseLevel(double glucoseLevel) {
         this.glucoseLevel = glucoseLevel;
     }
+    @DynamoDBAttribute(attributeName = "comments")
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BloodGlucoseMeasurements that = (BloodGlucoseMeasurements) o;
-        return Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(userId, that.userId) && Objects.equals(measurementTime, that.measurementTime) && glucoseContext == that.glucoseContext;
+        BloodGlucoseMeasurement that = (BloodGlucoseMeasurement) o;
+        return Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(userId, that.userId) && Objects.equals(measurementTime, that.measurementTime) && glucoseContext == that.glucoseContext && Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, measurementTime, glucoseLevel, glucoseContext);
+        return Objects.hash(userId, measurementTime, glucoseLevel, glucoseContext, comments);
     }
 }

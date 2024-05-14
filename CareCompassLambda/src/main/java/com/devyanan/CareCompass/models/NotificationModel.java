@@ -1,12 +1,11 @@
-package com.devyanan.CareCompass.activity.requests;
+package com.devyanan.CareCompass.models;
 
 import com.devyanan.CareCompass.dynamodb.models.Notification;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = RemoveNotificationRequest.Builder.class)
-public class RemoveNotificationRequest {
+import java.util.Objects;
+
+public class NotificationModel {
     private final String userId;
     private final String notificationId;
     private final String notificationTitle;
@@ -15,7 +14,7 @@ public class RemoveNotificationRequest {
     private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public RemoveNotificationRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+    public NotificationModel(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
         this.userId = userId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
@@ -25,24 +24,52 @@ public class RemoveNotificationRequest {
         this.reminderTime = reminderTime;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public String getNotificationTitle() {
+        return notificationTitle;
+    }
+
+    public Notification.ReminderType getReminderType() {
+        return reminderType;
+    }
+
+    public String getReminderContent() {
+        return reminderContent;
+    }
+
+    public String getAdditionalNotes() {
+        return additionalNotes;
+    }
+
+    public LocalDateTime getReminderTime() {
+        return reminderTime;
+    }
+
     @Override
-    public String toString() {
-        return "RemoveNotificationRequest{" +
-                "userId='" + userId + '\'' +
-                ", notificationId='" + notificationId + '\'' +
-                ", notificationTitle='" + notificationTitle + '\'' +
-                ", reminderType=" + reminderType +
-                ", reminderContent='" + reminderContent + '\'' +
-                ", additionalNotes='" + additionalNotes + '\'' +
-                ", reminderTime=" + reminderTime +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NotificationModel that = (NotificationModel) o;
+        return Objects.equals(userId, that.userId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && reminderType == that.reminderType && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(additionalNotes, that.additionalNotes) && Objects.equals(reminderTime, that.reminderTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static RemoveNotificationRequest.Builder builder() {
-        return new RemoveNotificationRequest.Builder();
+    public static Builder builder() {
+        return new Builder();
     }
-    @JsonPOJOBuilder
+
     public static class Builder {
         private String userId;
         private String notificationId;
@@ -60,10 +87,12 @@ public class RemoveNotificationRequest {
             this.notificationId = notificationId;
             return this;
         }
+
         public Builder withNotificationTitle(String notificationTitle) {
-            this.notificationTitle= notificationTitle;
+            this.notificationTitle = notificationTitle;
             return this;
         }
+
         public Builder withReminderType(Notification.ReminderType reminderType) {
             this.reminderType = reminderType;
             return this;
@@ -83,8 +112,9 @@ public class RemoveNotificationRequest {
             this.reminderTime = reminderTime;
             return this;
         }
-        public RemoveNotificationRequest  build() {
-            return new RemoveNotificationRequest (userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+
+        public NotificationModel build() {
+            return new NotificationModel(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
         }
     }
 }
