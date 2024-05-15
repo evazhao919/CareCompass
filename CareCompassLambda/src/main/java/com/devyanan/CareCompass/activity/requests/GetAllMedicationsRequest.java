@@ -2,21 +2,17 @@ package com.devyanan.CareCompass.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-@JsonDeserialize(builder = ViewAllBloodGlucoseMeasurementsRequest.Builder.class)
-public class ViewAllBloodGlucoseMeasurementsRequest {
+
+@JsonDeserialize(builder = GetAllMedicationsRequest.Builder.class)
+public class GetAllMedicationsRequest {
     private final String userId;
 
-    public ViewAllBloodGlucoseMeasurementsRequest(String userId) {
+    public GetAllMedicationsRequest(String userId) {
         this.userId = userId;
     }
-
-    public String getUserId() {
-        return userId;
-    }
-
     @Override
     public String toString() {
-        return "GetUserBloodGlucoseMeasurementRequest{" +
+        return "GetAllMedicationsRequest{" +
                 "userId='" + userId + '\'' +
                 '}';
     }
@@ -33,8 +29,8 @@ public class ViewAllBloodGlucoseMeasurementsRequest {
             this.userId= userId;
             return this;
         }
-        public ViewAllBloodGlucoseMeasurementsRequest build() {
-            return new ViewAllBloodGlucoseMeasurementsRequest(userId);
+        public GetAllMedicationsRequest build() {
+            return new GetAllMedicationsRequest(userId);
         }
     }
 }

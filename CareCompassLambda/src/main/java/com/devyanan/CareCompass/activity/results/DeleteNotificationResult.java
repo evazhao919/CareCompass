@@ -2,9 +2,10 @@ package com.devyanan.CareCompass.activity.results;
 
 import com.devyanan.CareCompass.models.NotificationModel;
 
-public class CreateNotificationResult {
+public class DeleteNotificationResult {
     private final NotificationModel notificationModel;
-    public CreateNotificationResult(NotificationModel notificationModel) {
+
+    public DeleteNotificationResult(NotificationModel notificationModel) {
         this.notificationModel = notificationModel;
     }
 
@@ -14,7 +15,7 @@ public class CreateNotificationResult {
 
     @Override
     public String toString() {
-        return "CreateNotificationResult{" +
+        return "RemoveNotificationResult{" +
                 "notificationModel=" + notificationModel +
                 '}';
     }
@@ -32,8 +33,8 @@ public class CreateNotificationResult {
             return this;
         }
 
-        public CreateNotificationResult build() {
-            return new CreateNotificationResult(notificationModel);
+        public DeleteNotificationResult build() {
+            return new DeleteNotificationResult(notificationModel);
         }
     }
 }

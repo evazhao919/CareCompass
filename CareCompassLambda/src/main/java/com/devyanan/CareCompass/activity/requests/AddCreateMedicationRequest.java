@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = CreateMedicationRequest.Builder.class)
-public class CreateMedicationRequest {
+@JsonDeserialize(builder = AddCreateMedicationRequest.Builder.class)
+public class AddCreateMedicationRequest {
     private final String userId;
     private final String medicationName;
     private final String dosage;
@@ -23,7 +23,7 @@ public class CreateMedicationRequest {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public CreateMedicationRequest(String userId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+    public AddCreateMedicationRequest(String userId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
         this.userId = userId;
         this.medicationName = medicationName;
         this.dosage = dosage;
@@ -219,8 +219,8 @@ public class CreateMedicationRequest {
             return this;
         }
 
-        public CreateMedicationRequest build() {
-            return new CreateMedicationRequest(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+        public AddCreateMedicationRequest build() {
+            return new AddCreateMedicationRequest(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
         }
     }
 }

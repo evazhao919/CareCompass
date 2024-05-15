@@ -4,10 +4,10 @@ import com.devyanan.CareCompass.models.NotificationModel;
 
 import java.util.List;
 
-public class ViewAllNotificationsResult {
+public class GetAllNotificationsResult {
     private final List<NotificationModel> notificationModelList;
 
-    public ViewAllNotificationsResult(List<NotificationModel> notificationModelList) {
+    public GetAllNotificationsResult(List<NotificationModel> notificationModelList) {
         this.notificationModelList = notificationModelList;
     }
 
@@ -33,8 +33,8 @@ public class ViewAllNotificationsResult {
             this.notificationModelList = notificationModelList;
             return this;
         }
-        public ViewAllNotificationsResult build(){
-            return new ViewAllNotificationsResult (notificationModelList);
+        public GetAllNotificationsResult build(){
+            return new GetAllNotificationsResult(notificationModelList);
         }
     }
 }

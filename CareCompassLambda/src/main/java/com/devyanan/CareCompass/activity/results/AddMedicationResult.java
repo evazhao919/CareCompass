@@ -2,14 +2,14 @@ package com.devyanan.CareCompass.activity.results;
 
 import com.devyanan.CareCompass.models.MedicationModel;
 
-public class CreateMedicationResult {
+public class AddMedicationResult {
     private final MedicationModel medicationModel;
 
     public MedicationModel getMedicationModel() {
         return medicationModel;
     }
 
-    public CreateMedicationResult(MedicationModel medicationModel) {
+    public AddMedicationResult(MedicationModel medicationModel) {
         this.medicationModel = medicationModel;
     }
 
@@ -33,8 +33,8 @@ public class CreateMedicationResult {
             return this;
         }
 
-        public CreateMedicationResult build() {
-            return new CreateMedicationResult(medicationModel);
+        public AddMedicationResult build() {
+            return new AddMedicationResult(medicationModel);
         }
     }
 }

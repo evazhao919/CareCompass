@@ -6,14 +6,14 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
 
-@JsonDeserialize(builder = CreateBloodGlucoseMeasurementRequest.class)
-public class CreateBloodGlucoseMeasurementRequest {
+@JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.class)
+public class AddBloodGlucoseMeasurementRequest {
     private final String userId;
     private final LocalDateTime measurementTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
 
-    public CreateBloodGlucoseMeasurementRequest(String userId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
+    public AddBloodGlucoseMeasurementRequest(String userId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
         this.userId = userId;
         this.measurementTime = measurementTime;
         this.glucoseLevel = glucoseLevel;
@@ -76,8 +76,8 @@ public class CreateBloodGlucoseMeasurementRequest {
             return this;
         }
 
-        public CreateBloodGlucoseMeasurementRequest build() {
-            return new CreateBloodGlucoseMeasurementRequest(userId, measurementTime, glucoseLevel, glucoseContext);
+        public AddBloodGlucoseMeasurementRequest build() {
+            return new AddBloodGlucoseMeasurementRequest(userId, measurementTime, glucoseLevel, glucoseContext);
         }
     }
     }

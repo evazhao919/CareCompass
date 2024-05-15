@@ -4,10 +4,10 @@ import com.devyanan.CareCompass.models.VitalSignModel;
 
 import java.util.List;
 
-public class ViewAllVitalSignsResult {
+public class GetAllVitalSignsResult {
     private final List<VitalSignModel> vitalSignModelList;
 
-    public ViewAllVitalSignsResult(List<VitalSignModel> vitalSignModelList) {
+    public GetAllVitalSignsResult(List<VitalSignModel> vitalSignModelList) {
         this.vitalSignModelList = vitalSignModelList;
     }
 
@@ -35,8 +35,8 @@ public class ViewAllVitalSignsResult {
             return this;
         }
 
-        public ViewAllVitalSignsResult build() {
-            return new ViewAllVitalSignsResult(vitalSignModelList);
+        public GetAllVitalSignsResult build() {
+            return new GetAllVitalSignsResult(vitalSignModelList);
         }
     }
 }

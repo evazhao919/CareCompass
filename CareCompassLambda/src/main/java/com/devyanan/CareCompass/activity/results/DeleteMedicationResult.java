@@ -2,10 +2,10 @@ package com.devyanan.CareCompass.activity.results;
 
 import com.devyanan.CareCompass.models.MedicationModel;
 
-public class RemoveMedicationResult {
+public class DeleteMedicationResult {
     private final MedicationModel medicationModel;
 
-    public RemoveMedicationResult(MedicationModel medicationModel) {
+    public DeleteMedicationResult(MedicationModel medicationModel) {
         this.medicationModel = medicationModel;
     }
 
@@ -33,8 +33,8 @@ public class RemoveMedicationResult {
             return this;
         }
 
-        public RemoveMedicationResult build() {
-            return new RemoveMedicationResult(medicationModel);
+        public DeleteMedicationResult build() {
+            return new DeleteMedicationResult(medicationModel);
         }
     }
 }

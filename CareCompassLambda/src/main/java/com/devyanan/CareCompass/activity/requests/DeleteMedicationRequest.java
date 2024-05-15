@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
 
-@JsonDeserialize(builder = RemoveMedicationRequest.Builder.class)
-public class RemoveMedicationRequest {
+@JsonDeserialize(builder = DeleteMedicationRequest.Builder.class)
+public class DeleteMedicationRequest {
     private final String userId;
     private final String medicationName;
     private final String dosage;
@@ -24,7 +24,7 @@ public class RemoveMedicationRequest {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public RemoveMedicationRequest(String userId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+    public DeleteMedicationRequest(String userId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
         this.userId = userId;
         this.medicationName = medicationName;
         this.dosage = dosage;
@@ -161,8 +161,8 @@ public class RemoveMedicationRequest {
             return this;
         }
 
-        public RemoveMedicationRequest build() {
-            return new RemoveMedicationRequest(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+        public DeleteMedicationRequest build() {
+            return new DeleteMedicationRequest(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
         }
     }
 }

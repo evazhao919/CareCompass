@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = RemoveNotificationRequest.Builder.class)
-public class RemoveNotificationRequest {
+@JsonDeserialize(builder = DeleteNotificationRequest.Builder.class)
+public class DeleteNotificationRequest {
     private final String userId;
     private final String notificationId;
     private final String notificationTitle;
@@ -15,7 +15,7 @@ public class RemoveNotificationRequest {
     private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public RemoveNotificationRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+    public DeleteNotificationRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
         this.userId = userId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
@@ -39,8 +39,8 @@ public class RemoveNotificationRequest {
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static RemoveNotificationRequest.Builder builder() {
-        return new RemoveNotificationRequest.Builder();
+    public static DeleteNotificationRequest.Builder builder() {
+        return new DeleteNotificationRequest.Builder();
     }
     @JsonPOJOBuilder
     public static class Builder {
@@ -83,8 +83,8 @@ public class RemoveNotificationRequest {
             this.reminderTime = reminderTime;
             return this;
         }
-        public RemoveNotificationRequest  build() {
-            return new RemoveNotificationRequest (userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+        public DeleteNotificationRequest build() {
+            return new DeleteNotificationRequest(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
         }
     }
 }

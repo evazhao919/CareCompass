@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = RemoveBloodGlucoseMeasurementRequest.Builder.class)
-public class RemoveBloodGlucoseMeasurementRequest {
+@JsonDeserialize(builder = DeleteBloodGlucoseMeasurementRequest.Builder.class)
+public class DeleteBloodGlucoseMeasurementRequest {
     private final String userId;
     private final LocalDateTime measurementTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
 
-    public RemoveBloodGlucoseMeasurementRequest(String userId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
+    public DeleteBloodGlucoseMeasurementRequest(String userId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
         this.userId = userId;
         this.measurementTime = measurementTime;
         this.glucoseLevel = glucoseLevel;
@@ -44,7 +44,7 @@ public class RemoveBloodGlucoseMeasurementRequest {
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
 
-        public RemoveBloodGlucoseMeasurementRequest.Builder withUserId(String userId) {
+        public DeleteBloodGlucoseMeasurementRequest.Builder withUserId(String userId) {
             this.userId = userId;
             return this;
         }
@@ -64,8 +64,8 @@ public class RemoveBloodGlucoseMeasurementRequest {
             return this;
         }
 
-        public RemoveBloodGlucoseMeasurementRequest build() {
-            return new RemoveBloodGlucoseMeasurementRequest(userId, measurementTime, glucoseLevel, glucoseContext);
+        public DeleteBloodGlucoseMeasurementRequest build() {
+            return new DeleteBloodGlucoseMeasurementRequest(userId, measurementTime, glucoseLevel, glucoseContext);
         }
 }
 }

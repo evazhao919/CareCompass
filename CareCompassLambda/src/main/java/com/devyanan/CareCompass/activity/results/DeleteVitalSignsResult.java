@@ -2,10 +2,10 @@ package com.devyanan.CareCompass.activity.results;
 
 import com.devyanan.CareCompass.models.VitalSignModel;
 
-public class RemoveVitalSignsResult {
+public class DeleteVitalSignsResult {
     private final VitalSignModel vitalSignModel;
 
-    public RemoveVitalSignsResult(VitalSignModel vitalSignModel) {
+    public DeleteVitalSignsResult(VitalSignModel vitalSignModel) {
         this.vitalSignModel = vitalSignModel;
     }
 
@@ -33,8 +33,8 @@ public class RemoveVitalSignsResult {
             return this;
         }
 
-        public RemoveVitalSignsResult build() {
-            return new RemoveVitalSignsResult(vitalSignModel);
+        public DeleteVitalSignsResult build() {
+            return new DeleteVitalSignsResult(vitalSignModel);
         }
     }
 }

@@ -4,10 +4,10 @@ import com.devyanan.CareCompass.models.MedicationModel;
 
 import java.util.List;
 
-public class ViewAllMedicationsResult {
+public class GetAllMedicationsResult {
     private final List<MedicationModel> medicationModelList;
 
-    public ViewAllMedicationsResult(List<MedicationModel> medicationModelList) {
+    public GetAllMedicationsResult(List<MedicationModel> medicationModelList) {
         this.medicationModelList = medicationModelList;
     }
 
@@ -33,8 +33,8 @@ public class ViewAllMedicationsResult {
             this.medicationModelList = medicationModelList;
             return this;
         }
-        public ViewAllMedicationsResult  build(){
-            return new ViewAllMedicationsResult (medicationModelList);
+        public GetAllMedicationsResult build(){
+            return new GetAllMedicationsResult(medicationModelList);
         }
     }
 }

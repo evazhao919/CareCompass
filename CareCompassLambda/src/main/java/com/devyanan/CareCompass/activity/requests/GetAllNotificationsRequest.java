@@ -3,16 +3,16 @@ package com.devyanan.CareCompass.activity.requests;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = ViewAllMedicationsRequest.Builder.class)
-public class ViewAllMedicationsRequest {
+@JsonDeserialize(builder = GetAllNotificationsRequest.Builder.class)
+public class GetAllNotificationsRequest {
     private final String userId;
 
-    public ViewAllMedicationsRequest(String userId) {
+    public GetAllNotificationsRequest(String userId) {
         this.userId = userId;
     }
     @Override
     public String toString() {
-        return "GetAllMedicationsRequest{" +
+        return "GetUserNotificationsRequest" +
                 "userId='" + userId + '\'' +
                 '}';
     }
@@ -21,16 +21,16 @@ public class ViewAllMedicationsRequest {
     public static Builder builder() {
         return new Builder();
     }
+
     @JsonPOJOBuilder
     public static class Builder {
         private String userId;
-
         public Builder withUserId(String userId) {
-            this.userId= userId;
+            this.userId = userId;
             return this;
         }
-        public ViewAllMedicationsRequest build() {
-            return new ViewAllMedicationsRequest(userId);
+        public GetAllNotificationsRequest build() {
+            return new GetAllNotificationsRequest(userId);
         }
     }
 }

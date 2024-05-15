@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = CreateVitalSignsRequest.Builder.class)
-public class CreateVitalSignsRequest {
+@JsonDeserialize(builder = AddVitalSignsRequest.Builder.class)
+public class AddVitalSignsRequest {
     private final String userId;
     private final LocalDateTime actualCheckTime;
     private final LocalDateTime scheduledTime;
@@ -27,7 +27,7 @@ public class CreateVitalSignsRequest {
     private final String additionalNotes;
     private final String comments;
 
-    public CreateVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
+    public AddVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
         this.userId = userId;
         this.actualCheckTime = actualCheckTime;
         this.scheduledTime = scheduledTime;
@@ -269,8 +269,8 @@ public class CreateVitalSignsRequest {
             return this;
         }
 
-        public CreateVitalSignsRequest build() {
-            return new CreateVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes, comments);
+        public AddVitalSignsRequest build() {
+            return new AddVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes, comments);
         }
     }
 }

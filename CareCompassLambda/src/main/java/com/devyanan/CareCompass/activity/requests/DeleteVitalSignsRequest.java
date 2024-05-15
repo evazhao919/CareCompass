@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = RemoveVitalSignsRequest.Builder.class)
-public class RemoveVitalSignsRequest {
+@JsonDeserialize(builder = DeleteVitalSignsRequest.Builder.class)
+public class DeleteVitalSignsRequest {
     private String userId;
     private LocalDateTime actualCheckTime;
     private LocalDateTime scheduledTime;
@@ -27,7 +27,7 @@ public class RemoveVitalSignsRequest {
     private String additionalNotes;
     private String comments;
 
-    public RemoveVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
+    public DeleteVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
         this.userId = userId;
         this.actualCheckTime = actualCheckTime;
         this.scheduledTime = scheduledTime;
@@ -75,8 +75,8 @@ public class RemoveVitalSignsRequest {
     }
 
     //CHECKSTYLE:OFF:Builder
-    public static RemoveVitalSignsRequest.Builder builder() {
-        return new RemoveVitalSignsRequest.Builder();
+    public static DeleteVitalSignsRequest.Builder builder() {
+        return new DeleteVitalSignsRequest.Builder();
     }
     @JsonPOJOBuilder
     public static class Builder {
@@ -176,8 +176,8 @@ public class RemoveVitalSignsRequest {
             return this;
         }
 
-        public RemoveVitalSignsRequest build() {
-            return new RemoveVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes,comments);
+        public DeleteVitalSignsRequest build() {
+            return new DeleteVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes,comments);
         }
     }
 }

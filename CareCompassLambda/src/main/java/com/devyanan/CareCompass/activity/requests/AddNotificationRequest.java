@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = CreateNotificationRequest.Builder.class)
-public class CreateNotificationRequest {
+@JsonDeserialize(builder = AddNotificationRequest.Builder.class)
+public class AddNotificationRequest {
     private final String userId;
     private final String notificationId;
     private final String notificationTitle;
@@ -15,7 +15,7 @@ public class CreateNotificationRequest {
     private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public CreateNotificationRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+    public AddNotificationRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
         this.userId = userId;
         this.notificationId = notificationId;
         this. notificationTitle = notificationTitle;
@@ -85,8 +85,8 @@ public class CreateNotificationRequest {
             return this;
         }
 
-        public CreateNotificationRequest build() {
-            return new CreateNotificationRequest(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+        public AddNotificationRequest build() {
+            return new AddNotificationRequest(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
         }
     }
 }
