@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.LocalDateTime;
 @JsonDeserialize(builder = AddCreateMedicationRequest.Builder.class)
 public class AddCreateMedicationRequest {
-    private final String userId;
+    private final String patientId;
     private final String medicationName;
     private final String dosage;
     private final Medication.RouteOfAdministration routeOfAdministration;
@@ -23,8 +23,8 @@ public class AddCreateMedicationRequest {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public AddCreateMedicationRequest(String userId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
-        this.userId = userId;
+    public AddCreateMedicationRequest(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+        this.patientId = patientId;
         this.medicationName = medicationName;
         this.dosage = dosage;
         this.routeOfAdministration = routeOfAdministration;
@@ -41,8 +41,8 @@ public class AddCreateMedicationRequest {
         this.prescribedBy = prescribedBy;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public String getMedicationName() {
@@ -104,7 +104,7 @@ public class AddCreateMedicationRequest {
     @Override
     public String toString() {
         return "CreateMedicationRequest{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", medicationName='" + medicationName + '\'' +
                 ", dosage='" + dosage + '\'' +
                 ", routeOfAdministration=" + routeOfAdministration +
@@ -128,7 +128,7 @@ public class AddCreateMedicationRequest {
     }
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private String medicationName;
         private String dosage;
         private Medication.RouteOfAdministration routeOfAdministration;
@@ -144,8 +144,8 @@ public class AddCreateMedicationRequest {
         private LocalDateTime timeAdded;
         private Medication.PrescriberType prescribedBy;
 
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -220,7 +220,7 @@ public class AddCreateMedicationRequest {
         }
 
         public AddCreateMedicationRequest build() {
-            return new AddCreateMedicationRequest(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+            return new AddCreateMedicationRequest(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
         }
     }
 }

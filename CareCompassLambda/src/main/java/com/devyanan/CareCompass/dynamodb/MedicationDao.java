@@ -31,12 +31,12 @@ public class MedicationDao {
 
         try {
             dynamoDBMapper.save(medication);
-            log.info("Medication added successfully for user: {}", medication.getUserId());
+            log.info("Medication added successfully for user: {}", medication.getPatientId());
         } catch (AmazonDynamoDBException e) {
             log.error("DynamoDB-specific error occurred while adding medication: {}", medication, e);
             throw new CustomDynamoDBException("Failed to add medication to the database due to DynamoDB-specific error", e);
         }catch (Exception e) {
-            log.error("Failed to add medication for user: {}", medication.getUserId(), e);
+            log.error("Failed to add medication for user: {}", medication.getPatientId(), e);
             throw new DatabaseAccessException("Failed to add medication to the database", e);
         }
 
@@ -63,27 +63,27 @@ public class MedicationDao {
         }
     }
 
-    public Medication getSingleMedication(String userId, String medicationName) {
+    public Medication getSingleMedication(String patientId, String medicationName) {
         try{
-        Medication singleMedication = this.dynamoDBMapper.load(Medication.class, userId, medicationName);
+        Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
 
         if (singleMedication == null) {
             metricsPublisher.addCount(MetricsConstants.GETSINGLEMEDICATION_MEDICATIONNOTFOUND_COUNT, 1);
-            log.warn("No medication found for user: {} and medication name: {}", userId, medicationName);
-            throw new MedicationNotFoundException("No medications found for user: " + userId + " and medication name: " + medicationName);
+            log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
+            throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
         }
             metricsPublisher.addCount(MetricsConstants.GETSINGLEMEDICATION_MEDICATIONFOUND_COUNT, 1);
             return singleMedication;
         } catch (Exception e){
-            log.error("Failed to access the database for user: {} and medication name: {}", userId, medicationName, e);
+            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationName, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
 
-    public List<Medication> getAllMedications(String userId){
+    public List<Medication> getAllMedications(String patientId){
        try {
            Medication medication = new Medication();
-           medication.setUserId(userId);
+           medication.setPatientId(patientId);
 
            DynamoDBQueryExpression<Medication> queryExpression = new DynamoDBQueryExpression<Medication>()
                     .withHashKeyValues(medication);
@@ -91,13 +91,13 @@ public class MedicationDao {
 
             if (medicationList.isEmpty()) {
             metricsPublisher.addCount(MetricsConstants.GETALLMEDICATIONS_MEDICATIONNOTFOUND_COUNT, 1);
-            log.warn("No medications found for user: {}", userId);
-            throw new MedicationsNotFoundException("No medications found for user: " + userId);
+            log.warn("No medications found for user: {}", patientId);
+            throw new MedicationsNotFoundException("No medications found for user: " + patientId);
         }
             metricsPublisher.addCount(MetricsConstants.GETALLMEDICATIONS_MEDICATIONFOUND_COUNT, 1);
             return medicationList;
         } catch (Exception e) {
-            log.error("Failed to access the database for user: {}", userId, e);
+            log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }

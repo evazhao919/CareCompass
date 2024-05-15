@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @JsonDeserialize(builder = DeleteMedicationRequest.Builder.class)
 public class DeleteMedicationRequest {
-    private final String userId;
+    private final String patientId;
     private final String medicationName;
     private final String dosage;
     private final Medication.RouteOfAdministration routeOfAdministration;
@@ -24,8 +24,8 @@ public class DeleteMedicationRequest {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public DeleteMedicationRequest(String userId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
-        this.userId = userId;
+    public DeleteMedicationRequest(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+        this.patientId = patientId;
         this.medicationName = medicationName;
         this.dosage = dosage;
         this.routeOfAdministration = routeOfAdministration;
@@ -42,10 +42,70 @@ public class DeleteMedicationRequest {
         this.prescribedBy = prescribedBy;
     }
 
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public String getMedicationName() {
+        return medicationName;
+    }
+
+    public String getDosage() {
+        return dosage;
+    }
+
+    public Medication.RouteOfAdministration getRouteOfAdministration() {
+        return routeOfAdministration;
+    }
+
+    public Medication.FREQUENCY getFrequency() {
+        return frequency;
+    }
+
+    public LocalDateTime getTimeToTake() {
+        return timeToTake;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public Medication.MedicationStatus getMedicationStatus() {
+        return medicationStatus;
+    }
+
+    public Medication.MedicationPriority getMedicationPriority() {
+        return medicationPriority;
+    }
+
+    public Medication.MedicationForm getMedicationForm() {
+        return medicationForm;
+    }
+
+    public String getMedicationInfo() {
+        return medicationInfo;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public LocalDateTime getTimeAdded() {
+        return timeAdded;
+    }
+
+    public Medication.PrescriberType getPrescribedBy() {
+        return prescribedBy;
+    }
+
     @Override
     public String toString() {
         return "RemoveMedicationRequest{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", medicationName='" + medicationName + '\'' +
                 ", dosage='" + dosage + '\'' +
                 ", routeOfAdministration=" + routeOfAdministration +
@@ -70,7 +130,7 @@ public class DeleteMedicationRequest {
 
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private String medicationName;
         private String dosage;
         private Medication.RouteOfAdministration routeOfAdministration;
@@ -86,8 +146,8 @@ public class DeleteMedicationRequest {
         private LocalDateTime timeAdded;
         private Medication.PrescriberType prescribedBy;
 
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -162,7 +222,7 @@ public class DeleteMedicationRequest {
         }
 
         public DeleteMedicationRequest build() {
-            return new DeleteMedicationRequest(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+            return new DeleteMedicationRequest(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
         }
     }
 }

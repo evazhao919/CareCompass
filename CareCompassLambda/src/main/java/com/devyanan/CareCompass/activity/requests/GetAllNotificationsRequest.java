@@ -5,16 +5,20 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = GetAllNotificationsRequest.Builder.class)
 public class GetAllNotificationsRequest {
-    private final String userId;
+    private final String patientId;
 
-    public GetAllNotificationsRequest(String userId) {
-        this.userId = userId;
+    public GetAllNotificationsRequest(String patientId) {
+        this.patientId = patientId;
     }
     @Override
     public String toString() {
         return "GetUserNotificationsRequest" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 '}';
+    }
+
+    public String getPatientId() {
+        return patientId;
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -24,13 +28,13 @@ public class GetAllNotificationsRequest {
 
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        private String patientId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
         public GetAllNotificationsRequest build() {
-            return new GetAllNotificationsRequest(userId);
+            return new GetAllNotificationsRequest(patientId);
         }
     }
 }

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.LocalDateTime;
 @JsonDeserialize(builder = AddVitalSignsRequest.Builder.class)
 public class AddVitalSignsRequest {
-    private final String userId;
+    private final String patientId;
     private final LocalDateTime actualCheckTime;
     private final LocalDateTime scheduledTime;
     private final LocalDateTime timeAdded;
@@ -27,8 +27,8 @@ public class AddVitalSignsRequest {
     private final String additionalNotes;
     private final String comments;
 
-    public AddVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
-        this.userId = userId;
+    public AddVitalSignsRequest(String patientId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
+        this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.scheduledTime = scheduledTime;
         this.timeAdded = timeAdded;
@@ -49,8 +49,8 @@ public class AddVitalSignsRequest {
         this.comments = comments;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public LocalDateTime getActualCheckTime() {
@@ -128,7 +128,7 @@ public class AddVitalSignsRequest {
     @Override
     public String toString() {
         return "CreateVitalSignsRequest{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", actualCheckTime=" + actualCheckTime +
                 ", scheduledTime=" + scheduledTime +
                 ", timeAdded=" + timeAdded +
@@ -156,7 +156,7 @@ public class AddVitalSignsRequest {
     }
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private LocalDateTime actualCheckTime;
         private LocalDateTime scheduledTime;
         private LocalDateTime timeAdded;
@@ -176,8 +176,8 @@ public class AddVitalSignsRequest {
         private String additionalNotes;
         private String comments;
 
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatient(String patientId) {
+            this.patientId = patientId;
             return this;
         }
         public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
@@ -270,7 +270,7 @@ public class AddVitalSignsRequest {
         }
 
         public AddVitalSignsRequest build() {
-            return new AddVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes, comments);
+            return new AddVitalSignsRequest(patientId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes, comments);
         }
     }
 }

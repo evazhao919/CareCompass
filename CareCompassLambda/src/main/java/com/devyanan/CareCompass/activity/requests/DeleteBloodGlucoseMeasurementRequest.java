@@ -7,20 +7,20 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.LocalDateTime;
 @JsonDeserialize(builder = DeleteBloodGlucoseMeasurementRequest.Builder.class)
 public class DeleteBloodGlucoseMeasurementRequest {
-    private final String userId;
+    private final String patientId;
     private final LocalDateTime measurementTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
 
-    public DeleteBloodGlucoseMeasurementRequest(String userId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
-        this.userId = userId;
+    public DeleteBloodGlucoseMeasurementRequest(String patientId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
+        this.patientId = patientId;
         this.measurementTime = measurementTime;
         this.glucoseLevel = glucoseLevel;
         this.glucoseContext = glucoseContext;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public LocalDateTime getMeasurementTime() {
@@ -39,13 +39,13 @@ public class DeleteBloodGlucoseMeasurementRequest {
     }
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private LocalDateTime measurementTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
 
-        public DeleteBloodGlucoseMeasurementRequest.Builder withUserId(String userId) {
-            this.userId = userId;
+        public DeleteBloodGlucoseMeasurementRequest.Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -65,7 +65,7 @@ public class DeleteBloodGlucoseMeasurementRequest {
         }
 
         public DeleteBloodGlucoseMeasurementRequest build() {
-            return new DeleteBloodGlucoseMeasurementRequest(userId, measurementTime, glucoseLevel, glucoseContext);
+            return new DeleteBloodGlucoseMeasurementRequest(patientId, measurementTime, glucoseLevel, glucoseContext);
         }
 }
 }

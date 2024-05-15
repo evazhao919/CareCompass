@@ -4,20 +4,20 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = GetAllBloodGlucoseMeasurementsRequest.Builder.class)
 public class GetAllBloodGlucoseMeasurementsRequest {
-    private final String userId;
+    private final String patientId;
 
-    public GetAllBloodGlucoseMeasurementsRequest(String userId) {
-        this.userId = userId;
+    public GetAllBloodGlucoseMeasurementsRequest(String patientId) {
+        this.patientId = patientId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     @Override
     public String toString() {
         return "GetUserBloodGlucoseMeasurementRequest{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 '}';
     }
 
@@ -27,14 +27,14 @@ public class GetAllBloodGlucoseMeasurementsRequest {
     }
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
 
-        public Builder withUserId(String userId) {
-            this.userId= userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId= patientId;
             return this;
         }
         public GetAllBloodGlucoseMeasurementsRequest build() {
-            return new GetAllBloodGlucoseMeasurementsRequest(userId);
+            return new GetAllBloodGlucoseMeasurementsRequest(patientId);
         }
     }
 }

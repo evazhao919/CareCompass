@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.LocalDateTime;
 @JsonDeserialize(builder = UpdateNotificationsRequest.Builder.class)
 public class UpdateNotificationsRequest {
-    private final String userId;
+    private final String patientId;
     private final String notificationId;
     private final String notificationTitle;
     private final Notification.ReminderType reminderType;
@@ -15,8 +15,8 @@ public class UpdateNotificationsRequest {
     private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public UpdateNotificationsRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
-        this.userId = userId;
+    public UpdateNotificationsRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+        this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
         this.reminderType = reminderType;
@@ -25,8 +25,8 @@ public class UpdateNotificationsRequest {
         this.reminderTime = reminderTime;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public String getNotificationId() {
@@ -56,7 +56,7 @@ public class UpdateNotificationsRequest {
     @Override
     public String toString() {
         return "UpdateNotificationsInfo{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderType=" + reminderType +
@@ -72,15 +72,15 @@ public class UpdateNotificationsRequest {
 
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private String notificationId;
         private String notificationTitle;
         private Notification.ReminderType reminderType;
         private String reminderContent;
         private String additionalNotes;
         private LocalDateTime reminderTime;
-        public UpdateNotificationsRequest.Builder withUserId(String userId) {
-            this.userId = userId;
+        public UpdateNotificationsRequest.Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
         public Builder withNotificationId(String notificationId) {
@@ -114,7 +114,7 @@ public class UpdateNotificationsRequest {
         }
 
         public UpdateNotificationsRequest build() {
-            return new UpdateNotificationsRequest(userId,  notificationId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
+            return new UpdateNotificationsRequest(patientId,  notificationId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
         }
     }
 }

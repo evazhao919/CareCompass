@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MedicationModel {
-    private final String userId;
+    private final String patientId;
     private final String medicationName;
     private final String dosage;
     private final Medication.RouteOfAdministration routeOfAdministration;
@@ -22,8 +22,8 @@ public class MedicationModel {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public MedicationModel(String userId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
-        this.userId = userId;
+    public MedicationModel(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+        this.patientId = patientId;
         this.medicationName = medicationName;
         this.dosage = dosage;
         this.routeOfAdministration = routeOfAdministration;
@@ -40,8 +40,8 @@ public class MedicationModel {
         this.prescribedBy = prescribedBy;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public String getMedicationName() {
@@ -105,12 +105,12 @@ public class MedicationModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MedicationModel that = (MedicationModel) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(medicationName, that.medicationName) && Objects.equals(dosage, that.dosage) && routeOfAdministration == that.routeOfAdministration && frequency == that.frequency && Objects.equals(timeToTake, that.timeToTake) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && medicationStatus == that.medicationStatus && medicationPriority == that.medicationPriority && medicationForm == that.medicationForm && Objects.equals(medicationInfo, that.medicationInfo) && Objects.equals(notes, that.notes) && Objects.equals(timeAdded, that.timeAdded) && prescribedBy == that.prescribedBy;
+        return Objects.equals(patientId, that.patientId) && Objects.equals(medicationName, that.medicationName) && Objects.equals(dosage, that.dosage) && routeOfAdministration == that.routeOfAdministration && frequency == that.frequency && Objects.equals(timeToTake, that.timeToTake) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && medicationStatus == that.medicationStatus && medicationPriority == that.medicationPriority && medicationForm == that.medicationForm && Objects.equals(medicationInfo, that.medicationInfo) && Objects.equals(notes, that.notes) && Objects.equals(timeAdded, that.timeAdded) && prescribedBy == that.prescribedBy;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+        return Objects.hash(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
     }
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
@@ -118,7 +118,7 @@ public class MedicationModel {
     }
 
     public static class Builder {
-        private String userId;
+        private String patientId;
         private String medicationName;
         private String dosage;
         private Medication.RouteOfAdministration routeOfAdministration;
@@ -133,8 +133,8 @@ public class MedicationModel {
         private String notes;
         private LocalDateTime timeAdded;
         private Medication.PrescriberType prescribedBy;
-            public Builder withUserId(String userId) {
-                this.userId = userId;
+            public Builder withPatientId(String patientId) {
+                this.patientId = patientId;
                 return this;
             }
 
@@ -209,7 +209,7 @@ public class MedicationModel {
             }
 
             public MedicationModel build() {
-                return new MedicationModel(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+                return new MedicationModel(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
             }
         }
     }

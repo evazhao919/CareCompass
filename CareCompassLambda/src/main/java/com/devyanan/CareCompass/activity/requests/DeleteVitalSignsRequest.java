@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.LocalDateTime;
 @JsonDeserialize(builder = DeleteVitalSignsRequest.Builder.class)
 public class DeleteVitalSignsRequest {
-    private String userId;
+    private String patientId;
     private LocalDateTime actualCheckTime;
     private LocalDateTime scheduledTime;
     private LocalDateTime timeAdded;
@@ -27,8 +27,8 @@ public class DeleteVitalSignsRequest {
     private String additionalNotes;
     private String comments;
 
-    public DeleteVitalSignsRequest(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
-        this.userId = userId;
+    public DeleteVitalSignsRequest(String patientId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String additionalNotes, String comments) {
+        this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.scheduledTime = scheduledTime;
         this.timeAdded = timeAdded;
@@ -49,10 +49,86 @@ public class DeleteVitalSignsRequest {
         this.comments = comments;
     }
 
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public LocalDateTime getActualCheckTime() {
+        return actualCheckTime;
+    }
+
+    public LocalDateTime getScheduledTime() {
+        return scheduledTime;
+    }
+
+    public LocalDateTime getTimeAdded() {
+        return timeAdded;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public int getHeartRate() {
+        return heartRate;
+    }
+
+    public int getPulse() {
+        return pulse;
+    }
+
+    public int getRespiratoryRate() {
+        return respiratoryRate;
+    }
+
+    public int getSystolicPressure() {
+        return systolicPressure;
+    }
+
+    public int getDiastolicPressure() {
+        return diastolicPressure;
+    }
+
+    public int getMeanArterialPressure() {
+        return meanArterialPressure;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public VitalSigns.PatientPosition getPatientPosition() {
+        return patientPosition;
+    }
+
+    public int getBloodOxygenLevel() {
+        return bloodOxygenLevel;
+    }
+
+    public VitalSigns.OxygenTherapy getOxygenTherapy() {
+        return oxygenTherapy;
+    }
+
+    public VitalSigns.FlowDelivered getFlowDelivered() {
+        return flowDelivered;
+    }
+
+    public VitalSigns.PatientActivity getPatientActivity() {
+        return patientActivity;
+    }
+
+    public String getAdditionalNotes() {
+        return additionalNotes;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
     @Override
     public String toString() {
         return "RemoveVitalSignsRequest{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", actualCheckTime=" + actualCheckTime +
                 ", scheduledTime=" + scheduledTime +
                 ", timeAdded=" + timeAdded +
@@ -80,7 +156,7 @@ public class DeleteVitalSignsRequest {
     }
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private LocalDateTime actualCheckTime;
         private LocalDateTime scheduledTime;
         private LocalDateTime timeAdded;
@@ -99,8 +175,8 @@ public class DeleteVitalSignsRequest {
         private VitalSigns.PatientActivity patientActivity;
         private String additionalNotes;
         private String comments;
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
         public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
@@ -177,7 +253,7 @@ public class DeleteVitalSignsRequest {
         }
 
         public DeleteVitalSignsRequest build() {
-            return new DeleteVitalSignsRequest(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes,comments);
+            return new DeleteVitalSignsRequest(patientId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, additionalNotes,comments);
         }
     }
 }

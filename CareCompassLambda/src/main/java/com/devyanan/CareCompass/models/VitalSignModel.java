@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class VitalSignModel {
-    private final String userId;
+    private final String patientId;
     private final LocalDateTime actualCheckTime;
     private final LocalDateTime scheduledTime;
     private final LocalDateTime timeAdded;
@@ -25,8 +25,8 @@ public class VitalSignModel {
     private final VitalSigns.PatientActivity patientActivity;
     private final String comments;
 
-    public VitalSignModel(String userId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String comments) {
-        this.userId = userId;
+    public VitalSignModel(String patientId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String comments) {
+        this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.scheduledTime = scheduledTime;
         this.timeAdded = timeAdded;
@@ -46,8 +46,8 @@ public class VitalSignModel {
         this.comments = comments;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public LocalDateTime getActualCheckTime() {
@@ -123,12 +123,12 @@ public class VitalSignModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSignModel that = (VitalSignModel) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(userId, that.userId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
+        return Objects.hash(patientId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -136,7 +136,7 @@ public class VitalSignModel {
         return new Builder();
     }
     public static class Builder {
-        private String userId;
+        private String patientId;
         private LocalDateTime actualCheckTime;
         private LocalDateTime scheduledTime;
         private LocalDateTime timeAdded;
@@ -155,8 +155,8 @@ public class VitalSignModel {
         private VitalSigns.PatientActivity patientActivity;
         private String comments;
 
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -246,7 +246,7 @@ public class VitalSignModel {
         }
 
         public VitalSignModel  build() {
-            return new VitalSignModel (userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
+            return new VitalSignModel (patientId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
         }
     }
 }

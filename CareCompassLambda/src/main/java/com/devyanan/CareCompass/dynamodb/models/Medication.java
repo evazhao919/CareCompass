@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "medications")
 public class Medication {
-   private String userId;
+   private String patientId;
    private String medicationName;
    private String dosage;
    private RouteOfAdministration routeOfAdministration;
@@ -43,14 +43,14 @@ public class Medication {
         PILL, CAPSULE, LIQUID, INJECTION, TOPICAL
     }
 
-    @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "userId")
-    public String getUserId() {
-        return userId;
+    @DynamoDBHashKey(attributeName = "patientId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "patientId")
+    public String getPatientId() {
+        return patientId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
     @DynamoDBRangeKey(attributeName = "medicationName")
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = "medicationIndex", attributeName = "medicationName")
@@ -184,18 +184,18 @@ public class Medication {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Medication that = (Medication) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(medicationName, that.medicationName) && Objects.equals(dosage, that.dosage) && routeOfAdministration == that.routeOfAdministration && frequency == that.frequency && Objects.equals(timeToTake, that.timeToTake) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && medicationStatus == that.medicationStatus && medicationPriority == that.medicationPriority && medicationForm == that.medicationForm && Objects.equals(medicationInfo, that.medicationInfo) && Objects.equals(notes, that.notes) && Objects.equals(timeAdded, that.timeAdded) && prescribedBy == that.prescribedBy;
+        return Objects.equals(patientId, that.patientId) && Objects.equals(medicationName, that.medicationName) && Objects.equals(dosage, that.dosage) && routeOfAdministration == that.routeOfAdministration && frequency == that.frequency && Objects.equals(timeToTake, that.timeToTake) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && medicationStatus == that.medicationStatus && medicationPriority == that.medicationPriority && medicationForm == that.medicationForm && Objects.equals(medicationInfo, that.medicationInfo) && Objects.equals(notes, that.notes) && Objects.equals(timeAdded, that.timeAdded) && prescribedBy == that.prescribedBy;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+        return Objects.hash(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
     }
 
     @Override
     public String toString() {
         return "Medication{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", medicationName='" + medicationName + '\'' +
                 ", dosage='" + dosage + '\'' +
                 ", routeOfAdministration=" + routeOfAdministration +

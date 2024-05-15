@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "vitalSigns")
 public class VitalSigns {
-    private String userId;
+    private String patientId;
     private LocalDateTime actualCheckTime;
     private LocalDateTime scheduledTime;
     private LocalDateTime timeAdded;
@@ -41,14 +41,14 @@ public class VitalSigns {
         SITTING, STANDING, LAYING_DOWN, POST_EXERCISE,
     }
 
-    @DynamoDBHashKey(attributeName = "userId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "userId")
-    public String getUserId() {
-        return userId;
+    @DynamoDBHashKey(attributeName = "patientId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "patientId")
+    public String getPatientId() {
+        return patientId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = "vitalSignsIndex", attributeName = "actualCheckTime")
@@ -209,11 +209,11 @@ public class VitalSigns {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSigns that = (VitalSigns) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(userId, that.userId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments) && Objects.equals(additionalNotes, that.additionalNotes);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments) && Objects.equals(additionalNotes, that.additionalNotes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, additionalNotes);
+        return Objects.hash(patientId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, additionalNotes);
     }
 }

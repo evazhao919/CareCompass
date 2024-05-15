@@ -8,20 +8,20 @@ import java.time.LocalDateTime;
 
 @JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.class)
 public class AddBloodGlucoseMeasurementRequest {
-    private final String userId;
+    private final String patientId;
     private final LocalDateTime measurementTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
 
-    public AddBloodGlucoseMeasurementRequest(String userId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
-        this.userId = userId;
+    public AddBloodGlucoseMeasurementRequest(String patientId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
+        this.patientId = patientId;
         this.measurementTime = measurementTime;
         this.glucoseLevel = glucoseLevel;
         this.glucoseContext = glucoseContext;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public LocalDateTime getMeasurementTime() {
@@ -39,7 +39,7 @@ public class AddBloodGlucoseMeasurementRequest {
     @Override
     public String toString() {
         return "CreateBloodGlucoseMeasurementRequest{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", measurementTime=" + measurementTime +
                 ", glucoseLevel=" + glucoseLevel +
                 ", glucoseContext=" + glucoseContext +
@@ -51,13 +51,13 @@ public class AddBloodGlucoseMeasurementRequest {
     }
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private LocalDateTime measurementTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
 
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -77,7 +77,7 @@ public class AddBloodGlucoseMeasurementRequest {
         }
 
         public AddBloodGlucoseMeasurementRequest build() {
-            return new AddBloodGlucoseMeasurementRequest(userId, measurementTime, glucoseLevel, glucoseContext);
+            return new AddBloodGlucoseMeasurementRequest(patientId, measurementTime, glucoseLevel, glucoseContext);
         }
     }
     }

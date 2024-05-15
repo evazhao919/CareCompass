@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.time.LocalDateTime;
 @JsonDeserialize(builder = DeleteNotificationRequest.Builder.class)
 public class DeleteNotificationRequest {
-    private final String userId;
+    private final String patientId;
     private final String notificationId;
     private final String notificationTitle;
     private final Notification.ReminderType reminderType;
@@ -15,8 +15,8 @@ public class DeleteNotificationRequest {
     private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public DeleteNotificationRequest(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
-        this.userId = userId;
+    public DeleteNotificationRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+        this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
         this.reminderType = reminderType;
@@ -25,10 +25,38 @@ public class DeleteNotificationRequest {
         this.reminderTime = reminderTime;
     }
 
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public String getNotificationTitle() {
+        return notificationTitle;
+    }
+
+    public Notification.ReminderType getReminderType() {
+        return reminderType;
+    }
+
+    public String getReminderContent() {
+        return reminderContent;
+    }
+
+    public String getAdditionalNotes() {
+        return additionalNotes;
+    }
+
+    public LocalDateTime getReminderTime() {
+        return reminderTime;
+    }
+
     @Override
     public String toString() {
         return "RemoveNotificationRequest{" +
-                "userId='" + userId + '\'' +
+                "patientId='" + patientId + '\'' +
                 ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderType=" + reminderType +
@@ -44,15 +72,15 @@ public class DeleteNotificationRequest {
     }
     @JsonPOJOBuilder
     public static class Builder {
-        private String userId;
+        private String patientId;
         private String notificationId;
         private String notificationTitle;
         private Notification.ReminderType reminderType;
         private String reminderContent;
         private String additionalNotes;
         private LocalDateTime reminderTime;
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -84,7 +112,7 @@ public class DeleteNotificationRequest {
             return this;
         }
         public DeleteNotificationRequest build() {
-            return new DeleteNotificationRequest(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+            return new DeleteNotificationRequest(patientId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
         }
     }
 }

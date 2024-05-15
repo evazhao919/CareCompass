@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "bloodGlucoseMeasurements")
 public class BloodGlucoseMeasurement {
-    private String userId;
+    private String patientId;
     private LocalDateTime measurementTime;
     private double glucoseLevel;
     private GlucoseMeasurementContext glucoseContext;
@@ -18,13 +18,13 @@ public class BloodGlucoseMeasurement {
     public enum GlucoseMeasurementContext {
         FASTING, BEFORE_MEAL, AFTER_MEAL, BEDTIME;
     }
-    @DynamoDBHashKey(attributeName = "userId")
-    public String getUserId() {
-        return userId;
+    @DynamoDBHashKey(attributeName = "patientId")
+    public String getPatientId() {
+        return patientId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
     @DynamoDBRangeKey(attributeName = "measurementTime")
     public LocalDateTime getMeasurementTime() {
@@ -64,11 +64,11 @@ public class BloodGlucoseMeasurement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BloodGlucoseMeasurement that = (BloodGlucoseMeasurement) o;
-        return Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(userId, that.userId) && Objects.equals(measurementTime, that.measurementTime) && glucoseContext == that.glucoseContext && Objects.equals(comments, that.comments);
+        return Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(patientId, that.patientId) && Objects.equals(measurementTime, that.measurementTime) && glucoseContext == that.glucoseContext && Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, measurementTime, glucoseLevel, glucoseContext, comments);
+        return Objects.hash(patientId, measurementTime, glucoseLevel, glucoseContext, comments);
     }
 }

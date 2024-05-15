@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class NotificationModel {
-    private final String userId;
+    private final String patientId;
     private final String notificationId;
     private final String notificationTitle;
     private final Notification.ReminderType reminderType;
@@ -14,8 +14,8 @@ public class NotificationModel {
     private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public NotificationModel(String userId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
-        this.userId = userId;
+    public NotificationModel(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+        this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
         this.reminderType = reminderType;
@@ -24,8 +24,8 @@ public class NotificationModel {
         this.reminderTime = reminderTime;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPatientId() {
+        return patientId;
     }
 
     public String getNotificationId() {
@@ -57,12 +57,12 @@ public class NotificationModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NotificationModel that = (NotificationModel) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && reminderType == that.reminderType && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(additionalNotes, that.additionalNotes) && Objects.equals(reminderTime, that.reminderTime);
+        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && reminderType == that.reminderType && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(additionalNotes, that.additionalNotes) && Objects.equals(reminderTime, that.reminderTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+        return Objects.hash(patientId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -71,15 +71,15 @@ public class NotificationModel {
     }
 
     public static class Builder {
-        private String userId;
+        private String patientId;
         private String notificationId;
         private String notificationTitle;
         private Notification.ReminderType reminderType;
         private String reminderContent;
         private String additionalNotes;
         private LocalDateTime reminderTime;
-        public Builder withUserId(String userId) {
-            this.userId = userId;
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -114,7 +114,7 @@ public class NotificationModel {
         }
 
         public NotificationModel build() {
-            return new NotificationModel(userId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+            return new NotificationModel(patientId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
         }
     }
 }
