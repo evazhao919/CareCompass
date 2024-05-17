@@ -115,7 +115,7 @@ public class MedicationDao {
             metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_MEDICATION_FOUND_COUNT, 1);
             return results.getResults();
         } catch (Exception e) {
-            //log.error("Failed to access the database for user: {}", patientId, e);
+            log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
