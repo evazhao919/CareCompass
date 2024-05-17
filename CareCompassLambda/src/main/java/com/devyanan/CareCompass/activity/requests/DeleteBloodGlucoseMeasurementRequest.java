@@ -9,15 +9,13 @@ import java.time.LocalTime;
 @JsonDeserialize(builder = DeleteBloodGlucoseMeasurementRequest.Builder.class)
 public class DeleteBloodGlucoseMeasurementRequest {
     private final String patientId;
-    private final String frequency;
     private final LocalTime actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
-    public DeleteBloodGlucoseMeasurementRequest(String patientId, String frequency, LocalTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public DeleteBloodGlucoseMeasurementRequest(String patientId, LocalTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
-        this.frequency = frequency;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
         this.glucoseContext = glucoseContext;
@@ -26,10 +24,6 @@ public class DeleteBloodGlucoseMeasurementRequest {
 
     public String getPatientId() {
         return patientId;
-    }
-
-    public String getFrequency() {
-        return frequency;
     }
 
     public LocalTime getActualCheckTime() {
@@ -52,7 +46,6 @@ public class DeleteBloodGlucoseMeasurementRequest {
     public String toString() {
         return "DeleteBloodGlucoseMeasurementRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", frequency='" + frequency + '\'' +
                 ", actualCheckTime=" + actualCheckTime +
                 ", glucoseLevel=" + glucoseLevel +
                 ", glucoseContext=" + glucoseContext +
@@ -69,18 +62,12 @@ public class DeleteBloodGlucoseMeasurementRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String frequency;
         private LocalTime actualCheckTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
         private String comments;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
-            return this;
-        }
-
-        public Builder withFrequency(String frequency) {
-            this.frequency = frequency;
             return this;
         }
 
@@ -104,7 +91,7 @@ public class DeleteBloodGlucoseMeasurementRequest {
             return this;
         }
         public DeleteBloodGlucoseMeasurementRequest build() {
-            return new DeleteBloodGlucoseMeasurementRequest(patientId, frequency, actualCheckTime, glucoseLevel, glucoseContext, comments);
+            return new DeleteBloodGlucoseMeasurementRequest(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
         }
 }
 }

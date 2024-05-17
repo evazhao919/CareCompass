@@ -11,15 +11,13 @@ import java.util.Objects;
 @JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.Builder.class)
 public class AddBloodGlucoseMeasurementRequest {
     private final String patientId;
-    private final String frequency;
     private final LocalTime actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
-    public AddBloodGlucoseMeasurementRequest(String patientId, String frequency, LocalTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public AddBloodGlucoseMeasurementRequest(String patientId, LocalTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
-        this.frequency = frequency;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
         this.glucoseContext = glucoseContext;
@@ -28,10 +26,6 @@ public class AddBloodGlucoseMeasurementRequest {
 
     public String getPatientId() {
         return patientId;
-    }
-
-    public String getFrequency() {
-        return frequency;
     }
 
     public LocalTime getActualCheckTime() {
@@ -54,7 +48,6 @@ public class AddBloodGlucoseMeasurementRequest {
     public String toString() {
         return "AddBloodGlucoseMeasurementRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", frequency='" + frequency + '\'' +
                 ", actualCheckTime=" + actualCheckTime +
                 ", glucoseLevel=" + glucoseLevel +
                 ", glucoseContext=" + glucoseContext +
@@ -69,7 +62,6 @@ public class AddBloodGlucoseMeasurementRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String frequency;
         private LocalTime actualCheckTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
@@ -77,11 +69,6 @@ public class AddBloodGlucoseMeasurementRequest {
 
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
-            return this;
-        }
-
-        public Builder withFrequency(String frequency) {
-            this.frequency = frequency;
             return this;
         }
 
@@ -106,7 +93,7 @@ public class AddBloodGlucoseMeasurementRequest {
         }
 
         public AddBloodGlucoseMeasurementRequest build() {
-            return new AddBloodGlucoseMeasurementRequest(patientId, frequency, actualCheckTime, glucoseLevel, glucoseContext, comments);
+            return new AddBloodGlucoseMeasurementRequest(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
         }
     }
     }

@@ -103,7 +103,7 @@ dosage // String
 String patientId; 
 LocalDateTime actualCheckTime;
 LocalTime scheduledTimeToCheck;            
-double temperature;              *
+double temperature;              
 int heartRate;
 int pulse;
 int respiratoryRate;
@@ -121,8 +121,7 @@ LocalDateTime timeAdded;
 ```
 ```
 // BloodGlucoseMeasurementModel
-String patientId;
-String frequency;                   *
+String patientId;                   
 LocalTime actualCheckTime;
 double glucoseLevel;
 GlucoseMeasurementContext glucoseContext;
@@ -227,7 +226,7 @@ LocalDateTime reminderTime;
 ```
 patientId // String, Partition Key
 medicationName // String, Sort Key
-dosages // List<MedicationDosage>    or   dosagesAndTime // String 
+dosages // List<MedicationDosage>   ** or   dosagesAndTime // String  or  For some variables, filled in by the user, pairs are attributed inside the drug information
 routeOfAdministration // String
 frequency // String
 timeToTake // LocalDateTime

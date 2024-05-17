@@ -12,7 +12,6 @@ import java.util.Objects;
 public class BloodGlucoseMeasurement {
     private String patientId;
     private LocalTime actualCheckTime;
-    private String frequency;
     private double glucoseLevel;
     private GlucoseMeasurementContext glucoseContext;
     private String comments;
@@ -28,15 +27,6 @@ public class BloodGlucoseMeasurement {
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
-    }
-
-    @DynamoDBAttribute(attributeName = "frequency")
-    public String getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
     }
 
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
@@ -81,11 +71,11 @@ public class BloodGlucoseMeasurement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BloodGlucoseMeasurement that = (BloodGlucoseMeasurement) o;
-        return Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(frequency, that.frequency) && glucoseContext == that.glucoseContext && Objects.equals(comments, that.comments);
+        return Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && glucoseContext == that.glucoseContext && Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, actualCheckTime, frequency, glucoseLevel, glucoseContext, comments);
+        return Objects.hash(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
     }
 }

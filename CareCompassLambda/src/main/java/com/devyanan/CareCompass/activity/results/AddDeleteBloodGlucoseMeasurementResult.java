@@ -2,10 +2,10 @@ package com.devyanan.CareCompass.activity.results;
 
 import com.devyanan.CareCompass.models.BloodGlucoseMeasurementModel;
 
-public class AddGlucoseLevelResult {
+public class AddDeleteBloodGlucoseMeasurementResult {
     private final BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel;
 
-    public AddGlucoseLevelResult(BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel) {
+    public AddDeleteBloodGlucoseMeasurementResult(BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel) {
         this.bloodGlucoseMeasurementModel = bloodGlucoseMeasurementModel;
     }
 
@@ -32,8 +32,8 @@ public class AddGlucoseLevelResult {
             return this;
         }
 
-        public AddGlucoseLevelResult build() {
-            return new AddGlucoseLevelResult(bloodGlucoseMeasurementModel);
+        public AddDeleteBloodGlucoseMeasurementResult build() {
+            return new AddDeleteBloodGlucoseMeasurementResult(bloodGlucoseMeasurementModel);
         }
     }
 }
