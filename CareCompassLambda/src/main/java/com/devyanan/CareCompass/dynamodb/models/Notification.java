@@ -10,9 +10,7 @@ public class Notification {
     private String patientId;
     private String notificationId;
     private String notificationTitle;
-    private ReminderType reminderType;
     private String reminderContent;
-    private String additionalNotes;
     private LocalDateTime reminderTime;
 
     public enum ReminderType {
@@ -45,14 +43,6 @@ public class Notification {
     public void setNotificationTitle(String notificationTitle) {
         this.notificationTitle = notificationTitle;
     }
-    @DynamoDBAttribute(attributeName = "reminderType")
-    public ReminderType getReminderType() {
-        return reminderType;
-    }
-
-    public void setReminderType(ReminderType reminderType) {
-        this.reminderType = reminderType;
-    }
     @DynamoDBAttribute(attributeName = "reminderContent")
     public String getReminderContent() {
         return reminderContent;
@@ -63,18 +53,6 @@ public class Notification {
             this.reminderContent = "";
         } else {
             this.reminderContent = reminderContent;
-        }
-    }
-    @DynamoDBAttribute(attributeName = "additionalNotes")
-    public String getAdditionalNotes() {
-        return additionalNotes;
-    }
-
-    public void setAdditionalNotes(String additionalNotes) {
-        if (additionalNotes == null || additionalNotes.equals("")) {
-            this.additionalNotes = "";
-        } else {
-            this.additionalNotes = additionalNotes;
         }
     }
 
@@ -94,11 +72,11 @@ public class Notification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
-        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && reminderType == that.reminderType && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(additionalNotes, that.additionalNotes) && Objects.equals(reminderTime, that.reminderTime);
+        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(reminderTime, that.reminderTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+        return Objects.hash(patientId, notificationId, notificationTitle, reminderContent, reminderTime);
     }
 }

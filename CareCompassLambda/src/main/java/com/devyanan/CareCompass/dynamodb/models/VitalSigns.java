@@ -13,7 +13,6 @@ public class VitalSigns {
 
     private String patientId;
     private LocalDateTime actualCheckTime;
-    private LocalTime scheduledTimeToCheck;
     private double temperature;
     private int heartRate;
     private int pulse;
@@ -28,7 +27,6 @@ public class VitalSigns {
     private String flowDelivered;
     private String patientActivity;
     private String comments;
-    private LocalDateTime timeAdded;
 
     public enum PatientPosition {
         SUPINE, PRONE, LEFT_LATERAL, RIGHT_LATERAL, SITTING, STANDING
@@ -61,15 +59,7 @@ public class VitalSigns {
     public void setActualCheckTime(LocalDateTime actualCheckTime) {
         this.actualCheckTime = actualCheckTime;
     }
-    @DynamoDBAttribute(attributeName = "scheduledTimeToCheck")
-    @DynamoDBTypeConverted(converter = LocalTimeConverter.class)
-    public LocalTime getScheduledTimeToCheck() {
-        return scheduledTimeToCheck;
-    }
 
-    public void setScheduledTimeToCheck(LocalTime scheduledTimeToCheck) {
-        this.scheduledTimeToCheck = scheduledTimeToCheck;
-    }
     @DynamoDBAttribute(attributeName = "temperature")
     public double getTemperature() {
         return temperature;
@@ -182,26 +172,17 @@ public class VitalSigns {
     public void setComments(String comments) {
         this.comments = comments;
     }
-     @DynamoDBAttribute(attributeName = "timeAdded")
-    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
-    public LocalDateTime getTimeAdded() {
-        return timeAdded;
-    }
-
-    public void setTimeAdded(LocalDateTime timeAdded) {
-        this.timeAdded = timeAdded;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSigns that = (VitalSigns) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTimeToCheck, that.scheduledTimeToCheck) && Objects.equals(patientPosition, that.patientPosition) && Objects.equals(oxygenTherapy, that.oxygenTherapy) && Objects.equals(flowDelivered, that.flowDelivered) && Objects.equals(patientActivity, that.patientActivity) && Objects.equals(comments, that.comments) && Objects.equals(timeAdded, that.timeAdded);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(patientPosition, that.patientPosition) && Objects.equals(oxygenTherapy, that.oxygenTherapy) && Objects.equals(flowDelivered, that.flowDelivered) && Objects.equals(patientActivity, that.patientActivity) && Objects.equals(comments, that.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, actualCheckTime, scheduledTimeToCheck, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, timeAdded);
+        return Objects.hash(patientId, actualCheckTime, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
     }
 }

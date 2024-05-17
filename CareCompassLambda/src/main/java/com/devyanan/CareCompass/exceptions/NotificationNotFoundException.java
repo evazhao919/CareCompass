@@ -1,11 +1,11 @@
 package com.devyanan.CareCompass.exceptions;
 
-public class MedicationsNotFoundException extends DatabaseAccessException {
+public class NotificationNotFoundException extends RuntimeException {
     /**
      * Exception with a message, but no cause.
      * @param message A descriptive message for this exception.
      */
-    public MedicationsNotFoundException(String message) {
+    public NotificationNotFoundException(String message) {
         super(message);
     }
     /**
@@ -13,7 +13,7 @@ public class MedicationsNotFoundException extends DatabaseAccessException {
      * @param message A descriptive message for this exception.
      * @param cause The original throwable resulting in this exception.
      */
-    public MedicationsNotFoundException(String message, Throwable cause) {
+    public NotificationNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }

@@ -10,18 +10,14 @@ public class DeleteNotificationRequest {
     private final String patientId;
     private final String notificationId;
     private final String notificationTitle;
-    private final Notification.ReminderType reminderType;
     private final String reminderContent;
-    private final String additionalNotes;
     private final LocalDateTime reminderTime;
 
-    public DeleteNotificationRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+    public DeleteNotificationRequest(String patientId, String notificationId, String notificationTitle, String reminderContent, LocalDateTime reminderTime) {
         this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
-        this.reminderType = reminderType;
         this.reminderContent = reminderContent;
-        this.additionalNotes = additionalNotes;
         this.reminderTime = reminderTime;
     }
 
@@ -37,16 +33,8 @@ public class DeleteNotificationRequest {
         return notificationTitle;
     }
 
-    public Notification.ReminderType getReminderType() {
-        return reminderType;
-    }
-
     public String getReminderContent() {
         return reminderContent;
-    }
-
-    public String getAdditionalNotes() {
-        return additionalNotes;
     }
 
     public LocalDateTime getReminderTime() {
@@ -59,9 +47,7 @@ public class DeleteNotificationRequest {
                 "patientId='" + patientId + '\'' +
                 ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
-                ", reminderType=" + reminderType +
                 ", reminderContent='" + reminderContent + '\'' +
-                ", additionalNotes='" + additionalNotes + '\'' +
                 ", reminderTime=" + reminderTime +
                 '}';
     }
@@ -75,9 +61,7 @@ public class DeleteNotificationRequest {
         private String patientId;
         private String notificationId;
         private String notificationTitle;
-        private Notification.ReminderType reminderType;
         private String reminderContent;
-        private String additionalNotes;
         private LocalDateTime reminderTime;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
@@ -92,18 +76,9 @@ public class DeleteNotificationRequest {
             this.notificationTitle= notificationTitle;
             return this;
         }
-        public Builder withReminderType(Notification.ReminderType reminderType) {
-            this.reminderType = reminderType;
-            return this;
-        }
 
         public Builder withReminderContent(String reminderContent) {
             this.reminderContent = reminderContent;
-            return this;
-        }
-
-        public Builder withAdditionalNotes(String additionalNotes) {
-            this.additionalNotes = additionalNotes;
             return this;
         }
 
@@ -112,7 +87,7 @@ public class DeleteNotificationRequest {
             return this;
         }
         public DeleteNotificationRequest build() {
-            return new DeleteNotificationRequest(patientId, notificationId, notificationTitle, reminderType, reminderContent, additionalNotes, reminderTime);
+            return new DeleteNotificationRequest(patientId, notificationId, notificationTitle, reminderContent, reminderTime);
         }
     }
 }

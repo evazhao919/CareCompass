@@ -11,7 +11,6 @@ import java.time.LocalTime;
 public class DeleteVitalSignsRequest {
     private final String patientId;
     private final LocalDateTime actualCheckTime;
-    private final LocalTime scheduledTimeToCheck;
     private final double temperature;
     private final int heartRate;
     private final int pulse;
@@ -26,12 +25,10 @@ public class DeleteVitalSignsRequest {
     private final String flowDelivered;
     private final String patientActivity;
     private final String comments;
-    private final LocalDateTime timeAdded;
 
-    public DeleteVitalSignsRequest(String patientId, LocalDateTime actualCheckTime, LocalTime scheduledTimeToCheck, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments, LocalDateTime timeAdded) {
+    public DeleteVitalSignsRequest(String patientId, LocalDateTime actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
-        this.scheduledTimeToCheck = scheduledTimeToCheck;
         this.temperature = temperature;
         this.heartRate = heartRate;
         this.pulse = pulse;
@@ -46,7 +43,6 @@ public class DeleteVitalSignsRequest {
         this.flowDelivered = flowDelivered;
         this.patientActivity = patientActivity;
         this.comments = comments;
-        this.timeAdded = timeAdded;
     }
 
     public String getPatientId() {
@@ -55,10 +51,6 @@ public class DeleteVitalSignsRequest {
 
     public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
-    }
-
-    public LocalTime getScheduledTimeToCheck() {
-        return scheduledTimeToCheck;
     }
 
     public double getTemperature() {
@@ -117,16 +109,11 @@ public class DeleteVitalSignsRequest {
         return comments;
     }
 
-    public LocalDateTime getTimeAdded() {
-        return timeAdded;
-    }
-
     @Override
     public String toString() {
         return "DeleteVitalSignsRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", actualCheckTime=" + actualCheckTime +
-                ", scheduledTimeToCheck=" + scheduledTimeToCheck +
                 ", temperature=" + temperature +
                 ", heartRate=" + heartRate +
                 ", pulse=" + pulse +
@@ -141,7 +128,6 @@ public class DeleteVitalSignsRequest {
                 ", flowDelivered='" + flowDelivered + '\'' +
                 ", patientActivity='" + patientActivity + '\'' +
                 ", comments='" + comments + '\'' +
-                ", timeAdded=" + timeAdded +
                 '}';
     }
 
@@ -154,7 +140,6 @@ public class DeleteVitalSignsRequest {
     public static class Builder {
         private String patientId;
         private LocalDateTime actualCheckTime;
-        private LocalTime scheduledTimeToCheck;
         private double temperature;
         private int heartRate;
         private int pulse;
@@ -169,7 +154,6 @@ public class DeleteVitalSignsRequest {
         private String flowDelivered;
         private String patientActivity;
         private String comments;
-        private LocalDateTime timeAdded;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -177,11 +161,6 @@ public class DeleteVitalSignsRequest {
 
         public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
             this.actualCheckTime = actualCheckTime;
-            return this;
-        }
-
-        public Builder withScheduledTimeToCheck(LocalTime scheduledTimeToCheck) {
-            this.scheduledTimeToCheck = scheduledTimeToCheck;
             return this;
         }
 
@@ -255,13 +234,8 @@ public class DeleteVitalSignsRequest {
             return this;
         }
 
-        public Builder withTimeAdded(LocalDateTime timeAdded) {
-            this.timeAdded = timeAdded;
-            return this;
-        }
-
         public DeleteVitalSignsRequest build() {
-            return new DeleteVitalSignsRequest(patientId, actualCheckTime, scheduledTimeToCheck, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, timeAdded);
+            return new DeleteVitalSignsRequest(patientId, actualCheckTime, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
         }
     }
 }

@@ -14,7 +14,21 @@ public class MetricsConstants {
     public static final String GET_SINGLE_MEDICATION_FOUND_COUNT = "get_single_medication_medication_found_count";
     public static final String GET_ALL_MEDICATIONS_NULL_OR_EMPTY_COUNT = "get_all_medications_null_or_empty_count";
     public static final String GET_ALL_MEDICATIONS_MEDICATION_FOUND_COUNT = "get_all_medications_medication_found_count";
-
+    public static final String ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT = "";
+    public static final String ADD_NOTIFICATION_SUCCESS_COUNT = "";
+    public static final String DELETE_NOTIFICATION_NULL_OR_EMPTY_COUNT = "";
+    public static final String DELETE_NOTIFICATION_SUCCESS_COUNT = "";
+    public static final String GET_SINGLE_NOTIFICATION_FOUND_COUNT = "";
+    public static final String GET_ALL_NOTIFICATIONS_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_ALL_NOTIFICATIONS_NOTIFICATION_FOUND_COUNT = "";
+    public static final String GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID__FOUND_COUNT = "";
+    public static final String ADD_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "";
+    public static final String ADD_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT = "";
+    public static final String ADD_MEDICATION_TOTAL_COUNT = "";
+    public static final String DELETE_MEDICATION_TOTAL_COUNT ="";
+    public static final String GET_SINGLE_MEDICATION_TOTAL_COUNT = "";
+    public static final String GET_ALL_MEDICATIONS_TOTAL_COUNT = "";
 
 
 
