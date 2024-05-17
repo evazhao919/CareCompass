@@ -15,7 +15,7 @@ public class AddVitalSignsResult {
 
     @Override
     public String toString() {
-        return "CreateVitalSignsResult{" +
+        return "AddVitalSignsResult{" +
                 "vitalSignModel=" + vitalSignModel +
                 '}';
     }

@@ -55,7 +55,7 @@ public class DeleteNotificationRequest {
 
     @Override
     public String toString() {
-        return "RemoveNotificationRequest{" +
+        return "DeleteNotificationRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +

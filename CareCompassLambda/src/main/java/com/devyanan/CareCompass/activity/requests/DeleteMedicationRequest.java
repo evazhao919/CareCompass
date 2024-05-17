@@ -5,15 +5,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @JsonDeserialize(builder = DeleteMedicationRequest.Builder.class)
 public class DeleteMedicationRequest {
     private final String patientId;
     private final String medicationName;
+    private final LocalTime timeToTake;
     private final String dosage;
     private final Medication.RouteOfAdministration routeOfAdministration;
     private final Medication.FREQUENCY frequency;
-    private final LocalDateTime timeToTake;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
     private final Medication.MedicationStatus medicationStatus;
@@ -24,7 +25,7 @@ public class DeleteMedicationRequest {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public DeleteMedicationRequest(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+    public DeleteMedicationRequest(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
         this.patientId = patientId;
         this.medicationName = medicationName;
         this.dosage = dosage;
@@ -62,7 +63,7 @@ public class DeleteMedicationRequest {
         return frequency;
     }
 
-    public LocalDateTime getTimeToTake() {
+    public LocalTime getTimeToTake() {
         return timeToTake;
     }
 
@@ -104,7 +105,7 @@ public class DeleteMedicationRequest {
 
     @Override
     public String toString() {
-        return "RemoveMedicationRequest{" +
+        return "DeleteMedicationRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", medicationName='" + medicationName + '\'' +
                 ", dosage='" + dosage + '\'' +
@@ -135,14 +136,14 @@ public class DeleteMedicationRequest {
         private String dosage;
         private Medication.RouteOfAdministration routeOfAdministration;
         private Medication.FREQUENCY frequency;
-        private LocalDateTime timeToTake;
+        private LocalTime timeToTake;
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private Medication.MedicationStatus medicationStatus;
         private Medication.MedicationPriority medicationPriority;
         private Medication.MedicationForm medicationForm;
         private String medicationInfo;
-        private String notes;
+        private  String notes;
         private LocalDateTime timeAdded;
         private Medication.PrescriberType prescribedBy;
 
@@ -171,7 +172,7 @@ public class DeleteMedicationRequest {
             return this;
         }
 
-        public Builder withTimeToTake(LocalDateTime timeToTake) {
+        public Builder withTimeToTake(LocalTime timeToTake) {
             this.timeToTake = timeToTake;
             return this;
         }

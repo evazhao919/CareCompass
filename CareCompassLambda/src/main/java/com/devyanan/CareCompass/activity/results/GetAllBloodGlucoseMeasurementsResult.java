@@ -17,7 +17,7 @@ public class GetAllBloodGlucoseMeasurementsResult {
 
     @Override
     public String toString() {
-        return "ViewAllBloodGlucoseMeasurementsResult{" +
+        return "GetAllBloodGlucoseMeasurementsResult{" +
                 "bloodGlucoseMeasurementModelList=" + bloodGlucoseMeasurementModelList +
                 '}';
     }

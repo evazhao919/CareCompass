@@ -17,7 +17,7 @@ public class GetAllNotificationsResult {
 
     @Override
     public String toString() {
-        return "ViewAllNotificationsResult{" +
+        return "GetAllNotificationsResult{" +
                 "notificationModelList=" + notificationModelList +
                 '}';
     }

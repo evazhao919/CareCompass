@@ -17,7 +17,7 @@ public class GetAllMedicationsResult {
 
     @Override
     public String toString() {
-        return "ViewAllMedicationsResult{" +
+        return "GetAllMedicationsResult{" +
                 "medicationModelList=" + medicationModelList +
                 '}';
     }

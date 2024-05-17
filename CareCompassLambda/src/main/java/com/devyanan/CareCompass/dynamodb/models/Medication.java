@@ -2,18 +2,21 @@ package com.devyanan.CareCompass.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
+import com.devyanan.CareCompass.converters.LocalTimeConverter;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "medications")
 public class Medication {
    private String patientId;
    private String medicationName;
-   private String dosage;
+   private List<MedicationDosage> dosages;
    private RouteOfAdministration routeOfAdministration;
    private FREQUENCY frequency;
-   private LocalDateTime timeToTake;
+   private LocalTime timeToTake;
    private LocalDateTime startDate;
    private LocalDateTime endDate;
    private MedicationStatus medicationStatus;
@@ -61,14 +64,16 @@ public class Medication {
     public void setMedicationName(String medicationName) {
         this.medicationName = medicationName;
     }
+
     @DynamoDBAttribute(attributeName = "dosage")
-    public String getDosage() {
-        return dosage;
+    public List<MedicationDosage> getDosages() {
+        return dosages;
     }
 
-    public void setDosage(String dosage) {
-        this.dosage = dosage;
+    public void setDosages(List<MedicationDosage> dosages) {
+        this.dosages = dosages;
     }
+
     @DynamoDBAttribute(attributeName = "routeOfAdministration")
     public RouteOfAdministration getRouteOfAdministration() {
         return routeOfAdministration;
@@ -86,14 +91,15 @@ public class Medication {
         this.frequency = frequency;
     }
     @DynamoDBAttribute(attributeName = "timeToTake")
-    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
-    public LocalDateTime getTimeToTake() {
+    @DynamoDBTypeConverted(converter = LocalTimeConverter.class)
+    public LocalTime getTimeToTake() {
         return timeToTake;
     }
 
-    public void setTimeToTake(LocalDateTime timeToTake) {
+    public void setTimeToTake(LocalTime timeToTake) {
         this.timeToTake = timeToTake;
     }
+
     @DynamoDBAttribute(attributeName = "startDate")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getStartDate() {
@@ -184,12 +190,12 @@ public class Medication {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Medication that = (Medication) o;
-        return Objects.equals(patientId, that.patientId) && Objects.equals(medicationName, that.medicationName) && Objects.equals(dosage, that.dosage) && routeOfAdministration == that.routeOfAdministration && frequency == that.frequency && Objects.equals(timeToTake, that.timeToTake) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && medicationStatus == that.medicationStatus && medicationPriority == that.medicationPriority && medicationForm == that.medicationForm && Objects.equals(medicationInfo, that.medicationInfo) && Objects.equals(notes, that.notes) && Objects.equals(timeAdded, that.timeAdded) && prescribedBy == that.prescribedBy;
+        return Objects.equals(patientId, that.patientId) && Objects.equals(medicationName, that.medicationName) && Objects.equals(dosages, that.dosages) && routeOfAdministration == that.routeOfAdministration && frequency == that.frequency && Objects.equals(timeToTake, that.timeToTake) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && medicationStatus == that.medicationStatus && medicationPriority == that.medicationPriority && medicationForm == that.medicationForm && Objects.equals(medicationInfo, that.medicationInfo) && Objects.equals(notes, that.notes) && Objects.equals(timeAdded, that.timeAdded) && prescribedBy == that.prescribedBy;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+        return Objects.hash(patientId, medicationName, dosages, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
     }
 
     @Override
@@ -197,7 +203,7 @@ public class Medication {
         return "Medication{" +
                 "patientId='" + patientId + '\'' +
                 ", medicationName='" + medicationName + '\'' +
-                ", dosage='" + dosage + '\'' +
+                ", dosages='" + dosages + '\'' +
                 ", routeOfAdministration=" + routeOfAdministration +
                 ", frequency=" + frequency +
                 ", timeToTake=" + timeToTake +

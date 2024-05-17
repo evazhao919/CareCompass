@@ -15,7 +15,7 @@ public class DeleteVitalSignsResult {
 
     @Override
     public String toString() {
-        return "RemoveVitalSignsResult{" +
+        return "DeleteVitalSignsResult{" +
                 "vitalSignModel=" + vitalSignModel +
                 '}';
     }

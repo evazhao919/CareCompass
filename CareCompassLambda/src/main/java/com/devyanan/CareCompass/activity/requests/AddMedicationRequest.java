@@ -5,14 +5,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-@JsonDeserialize(builder = AddCreateMedicationRequest.Builder.class)
-public class AddCreateMedicationRequest {
+import java.time.LocalTime;
+
+@JsonDeserialize(builder = AddMedicationRequest.Builder.class)
+public class AddMedicationRequest {
     private final String patientId;
     private final String medicationName;
     private final String dosage;
     private final Medication.RouteOfAdministration routeOfAdministration;
     private final Medication.FREQUENCY frequency;
-    private final LocalDateTime timeToTake;
+    private final LocalTime timeToTake;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
     private final Medication.MedicationStatus medicationStatus;
@@ -23,7 +25,7 @@ public class AddCreateMedicationRequest {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public AddCreateMedicationRequest(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+    public AddMedicationRequest(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
         this.patientId = patientId;
         this.medicationName = medicationName;
         this.dosage = dosage;
@@ -61,7 +63,7 @@ public class AddCreateMedicationRequest {
         return frequency;
     }
 
-    public LocalDateTime getTimeToTake() {
+    public LocalTime getTimeToTake() {
         return timeToTake;
     }
 
@@ -129,11 +131,11 @@ public class AddCreateMedicationRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String medicationName;
+        private  String medicationName;
         private String dosage;
         private Medication.RouteOfAdministration routeOfAdministration;
         private Medication.FREQUENCY frequency;
-        private LocalDateTime timeToTake;
+        private LocalTime timeToTake;
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private Medication.MedicationStatus medicationStatus;
@@ -169,7 +171,7 @@ public class AddCreateMedicationRequest {
             return this;
         }
 
-        public Builder withTimeToTake(LocalDateTime timeToTake) {
+        public Builder withTimeToTake(LocalTime timeToTake) {
             this.timeToTake = timeToTake;
             return this;
         }
@@ -219,8 +221,8 @@ public class AddCreateMedicationRequest {
             return this;
         }
 
-        public AddCreateMedicationRequest build() {
-            return new AddCreateMedicationRequest(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
+        public AddMedicationRequest build() {
+            return new AddMedicationRequest(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
         }
     }
 }

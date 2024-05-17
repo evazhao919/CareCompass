@@ -15,7 +15,7 @@ public class DeleteBloodGlucoseMeasurementResult {
 
     @Override
     public String toString() {
-        return "RemoveBloodGlucoseMeasurementResult{" +
+        return "DeleteBloodGlucoseMeasurementResult{" +
                 "bloodGlucoseMeasurementModel=" + bloodGlucoseMeasurementModel +
                 '}';
     }

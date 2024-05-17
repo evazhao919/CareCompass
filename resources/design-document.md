@@ -77,10 +77,10 @@ and JavaScript for dynamic user interfaces.
 
 String patientId;
 String medicationName;
-String dosage;
+List<MedicationDosage> dosages;     or String dosagesAndTime
 String routeOfAdministration; 
 String frequency;
-LocalDateTime timeToTake;
+LocalTime TimeToTake;    
 LocalDateTime startDate;
 LocalDateTime endDate;
 String MedicationStatus;
@@ -88,18 +88,22 @@ String MedicationPriority;
 String medicationForm;
 String medicationInfo;
 String notes;
-LocalDateTime timeAdded;
+LocalDateTime timeAdded;         
 String prescribedBy;
 ```
+```
+// `MedicationDosageModel`
 
+time // LocalTime
+dosage // String
+```
 ```
 // VitalSignModel
 
 String patientId; 
 LocalDateTime actualCheckTime;
-LocalDateTime scheduledTime;
-LocalDateTime timeAdded;
-double temperature;
+LocalTime scheduledTimeToCheck;            
+double temperature;              *
 int heartRate;
 int pulse;
 int respiratoryRate;
@@ -112,16 +116,17 @@ int bloodOxygenLevel;
 String oxygenTherapy;
 String flowDelivered;
 String patientActivity;
-String additionalNotes;
 String comments;
+LocalDateTime timeAdded;            
 ```
 ```
 // BloodGlucoseMeasurementModel
 String patientId;
-LocalDateTime measurementTime;
+String frequency;                   *
+LocalTime actualCheckTime;
 double glucoseLevel;
 GlucoseMeasurementContext glucoseContext;
-String comments;
+String comments;    
 ```
 ```
 // NotificationModel
@@ -222,7 +227,7 @@ LocalDateTime reminderTime;
 ```
 patientId // String, Partition Key
 medicationName // String, Sort Key
-dosage // String
+dosages // List<MedicationDosage>    or   dosagesAndTime // String 
 routeOfAdministration // String
 frequency // String
 timeToTake // LocalDateTime
@@ -236,18 +241,24 @@ notes // String
 timeAdded // LocalDateTime
 prescribedBy // String
 ```
-### 7.2. `vitalSigns`
+
+### 7.2. `MedicationDosage`
 ```
-patientId // Partition key, string
-actualCheckTime // Sort key, LocalDateTime
-scheduledTime // LocalDateTime
-timeAdded // LocalDateTime
-temperature // double
+time // LocalTime
+dosage // String
+```
+
+### 7.3. `vitalSigns`
+```
+patientId // String
+actualCheckTime // LocalDateTime 
+scheduledTimeToCheck // LocalTime           
+temperature // double 
 heartRate // int 
-pulse // int
+pulse // int 
 respiratoryRate // int 
-systolicPressure // int
-diastolicPressure // int
+systolicPressure // int 
+diastolicPressure // int 
 meanArterialPressure // int 
 weight // double 
 patientPosition // String 
@@ -255,10 +266,10 @@ bloodOxygenLevel // int
 oxygenTherapy // String 
 flowDelivered // String 
 patientActivity // String 
-additionalNotes // String 
-String comments // String
+comments // String 
+timeAdded // LocalDateTime 
 ```
-## 7.3. `notifications`
+## 7.4. `notifications`
 ```
 patientId // Primary key, string
 String notificationId; // Sort key, string 
@@ -268,25 +279,26 @@ reminderContent // String
 additionalNotes // String 
 reminderTime // LocalDateTime
 ```
-## 7.4. `bloodGlucoseMeasurements`
+## 7.5. `bloodGlucoseMeasurements`
 ```
 patientId // String 
-measurementTime // LocalDateTime 
+frequency // String 
+actualCheckTime // LocalTime 
 glucoseLevel // double
 glucoseContext // String
 comments // String 
 ```
-### 7.5. `GSI medicationIndex`
+### 7.6. `GSI medicationIndex`
 ```
 patientId // partition key, string
 medicationName // sort key, String
 ```
-### 7.6. `GSI vitalSignsIndex`
+### 7.7. `GSI vitalSignsIndex`
 ```
 patientId // Partition Key
 actualCheckTime // Sort Key
 ```
-### 7.7. `GSI userNotificationsIndex`
+### 7.8. `GSI userNotificationsIndex`
 ```
 patientId // Partition Key, String
 reminderTime //Sort Key, LocalDateTime

@@ -17,7 +17,7 @@ public class GetAllVitalSignsResult {
 
     @Override
     public String toString() {
-        return "ViewAllVitalSignsResult{" +
+        return "GetAllVitalSignsResult{" +
                 "vitalSignModelList=" + vitalSignModelList +
                 '}';
     }

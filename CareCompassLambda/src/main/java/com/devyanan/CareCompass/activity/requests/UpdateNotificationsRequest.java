@@ -55,7 +55,7 @@ public class UpdateNotificationsRequest {
 
     @Override
     public String toString() {
-        return "UpdateNotificationsInfo{" +
+        return "UpdateNotificationsRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
@@ -65,6 +65,7 @@ public class UpdateNotificationsRequest {
                 ", reminderTime=" + reminderTime +
                 '}';
     }
+
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();

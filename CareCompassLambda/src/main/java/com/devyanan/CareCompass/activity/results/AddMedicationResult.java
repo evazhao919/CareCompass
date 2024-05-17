@@ -15,7 +15,7 @@ public class AddMedicationResult {
 
     @Override
     public String toString() {
-        return "CreateMedicationResult{" +
+        return "AddMedicationResult{" +
                 "medicationModel=" + medicationModel +
                 '}';
     }

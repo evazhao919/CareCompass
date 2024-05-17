@@ -18,7 +18,7 @@ public class AddNotificationRequest {
     public AddNotificationRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
         this.patientId = patientId;
         this.notificationId = notificationId;
-        this. notificationTitle = notificationTitle;
+        this.notificationTitle = notificationTitle;
         this.reminderType = reminderType;
         this.reminderContent = reminderContent;
         this.additionalNotes = additionalNotes;

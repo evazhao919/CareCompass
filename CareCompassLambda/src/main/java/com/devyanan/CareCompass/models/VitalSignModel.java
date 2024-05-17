@@ -3,13 +3,13 @@ package com.devyanan.CareCompass.models;
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class VitalSignModel {
     private final String patientId;
     private final LocalDateTime actualCheckTime;
-    private final LocalDateTime scheduledTime;
-    private final LocalDateTime timeAdded;
+    private final LocalTime scheduledTimeToCheck;
     private final double temperature;
     private final int heartRate;
     private final int pulse;
@@ -18,18 +18,18 @@ public class VitalSignModel {
     private final int diastolicPressure;
     private final int meanArterialPressure;
     private final double weight;
-    private final VitalSigns.PatientPosition patientPosition;
+    private final String patientPosition;
     private final int bloodOxygenLevel;
-    private final VitalSigns.OxygenTherapy oxygenTherapy;
-    private final VitalSigns.FlowDelivered flowDelivered;
-    private final VitalSigns.PatientActivity patientActivity;
+    private final String oxygenTherapy;
+    private final String flowDelivered;
+    private final String patientActivity;
     private final String comments;
+    private final LocalDateTime timeAdded;
 
-    public VitalSignModel(String patientId, LocalDateTime actualCheckTime, LocalDateTime scheduledTime, LocalDateTime timeAdded, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String comments) {
+    public VitalSignModel(String patientId, LocalDateTime actualCheckTime, LocalTime scheduledTimeToCheck, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments, LocalDateTime timeAdded) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
-        this.scheduledTime = scheduledTime;
-        this.timeAdded = timeAdded;
+        this.scheduledTimeToCheck = scheduledTimeToCheck;
         this.temperature = temperature;
         this.heartRate = heartRate;
         this.pulse = pulse;
@@ -44,6 +44,7 @@ public class VitalSignModel {
         this.flowDelivered = flowDelivered;
         this.patientActivity = patientActivity;
         this.comments = comments;
+        this.timeAdded = timeAdded;
     }
 
     public String getPatientId() {
@@ -54,12 +55,8 @@ public class VitalSignModel {
         return actualCheckTime;
     }
 
-    public LocalDateTime getScheduledTime() {
-        return scheduledTime;
-    }
-
-    public LocalDateTime getTimeAdded() {
-        return timeAdded;
+    public LocalTime getScheduledTimeToCheck() {
+        return scheduledTimeToCheck;
     }
 
     public double getTemperature() {
@@ -94,7 +91,7 @@ public class VitalSignModel {
         return weight;
     }
 
-    public VitalSigns.PatientPosition getPatientPosition() {
+    public String getPatientPosition() {
         return patientPosition;
     }
 
@@ -102,15 +99,15 @@ public class VitalSignModel {
         return bloodOxygenLevel;
     }
 
-    public VitalSigns.OxygenTherapy getOxygenTherapy() {
+    public String getOxygenTherapy() {
         return oxygenTherapy;
     }
 
-    public VitalSigns.FlowDelivered getFlowDelivered() {
+    public String getFlowDelivered() {
         return flowDelivered;
     }
 
-    public VitalSigns.PatientActivity getPatientActivity() {
+    public String getPatientActivity() {
         return patientActivity;
     }
 
@@ -118,17 +115,21 @@ public class VitalSignModel {
         return comments;
     }
 
+    public LocalDateTime getTimeAdded() {
+        return timeAdded;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSignModel that = (VitalSignModel) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTime, that.scheduledTime) && Objects.equals(timeAdded, that.timeAdded) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(scheduledTimeToCheck, that.scheduledTimeToCheck) && Objects.equals(patientPosition, that.patientPosition) && Objects.equals(oxygenTherapy, that.oxygenTherapy) && Objects.equals(flowDelivered, that.flowDelivered) && Objects.equals(patientActivity, that.patientActivity) && Objects.equals(comments, that.comments) && Objects.equals(timeAdded, that.timeAdded);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
+        return Objects.hash(patientId, actualCheckTime, scheduledTimeToCheck, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, timeAdded);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -138,8 +139,7 @@ public class VitalSignModel {
     public static class Builder {
         private String patientId;
         private LocalDateTime actualCheckTime;
-        private LocalDateTime scheduledTime;
-        private LocalDateTime timeAdded;
+        private LocalTime scheduledTimeToCheck;
         private double temperature;
         private int heartRate;
         private int pulse;
@@ -148,12 +148,13 @@ public class VitalSignModel {
         private int diastolicPressure;
         private int meanArterialPressure;
         private double weight;
-        private VitalSigns.PatientPosition patientPosition;
+        private String patientPosition;
         private int bloodOxygenLevel;
-        private VitalSigns.OxygenTherapy oxygenTherapy;
-        private VitalSigns.FlowDelivered flowDelivered;
-        private VitalSigns.PatientActivity patientActivity;
+        private String oxygenTherapy;
+        private String flowDelivered;
+        private String patientActivity;
         private String comments;
+        private LocalDateTime timeAdded;
 
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
@@ -165,13 +166,8 @@ public class VitalSignModel {
             return this;
         }
 
-        public Builder withScheduledTime(LocalDateTime scheduledTime) {
-            this.scheduledTime = scheduledTime;
-            return this;
-        }
-
-        public Builder withTimeAdded(LocalDateTime timeAdded) {
-            this.timeAdded = timeAdded;
+        public Builder withScheduledTimeToCheck(LocalTime scheduledTimeToCheck) {
+            this.scheduledTimeToCheck = scheduledTimeToCheck;
             return this;
         }
 
@@ -215,7 +211,7 @@ public class VitalSignModel {
             return this;
         }
 
-        public Builder withPatientPosition(VitalSigns.PatientPosition patientPosition) {
+        public Builder withPatientPosition(String patientPosition) {
             this.patientPosition = patientPosition;
             return this;
         }
@@ -225,17 +221,17 @@ public class VitalSignModel {
             return this;
         }
 
-        public Builder withOxygenTherapy(VitalSigns.OxygenTherapy oxygenTherapy) {
+        public Builder withOxygenTherapy(String oxygenTherapy) {
             this.oxygenTherapy = oxygenTherapy;
             return this;
         }
 
-        public Builder withFlowDelivered(VitalSigns.FlowDelivered flowDelivered) {
+        public Builder withFlowDelivered(String flowDelivered) {
             this.flowDelivered = flowDelivered;
             return this;
         }
 
-        public Builder withPatientActivity(VitalSigns.PatientActivity patientActivity) {
+        public Builder withPatientActivity(String patientActivity) {
             this.patientActivity = patientActivity;
             return this;
         }
@@ -245,8 +241,13 @@ public class VitalSignModel {
             return this;
         }
 
-        public VitalSignModel  build() {
-            return new VitalSignModel (patientId, actualCheckTime, scheduledTime, timeAdded, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
+        public Builder withTimeAdded(LocalDateTime timeAdded) {
+            this.timeAdded = timeAdded;
+            return this;
+        }
+
+        public VitalSignModel build() {
+            return new VitalSignModel(patientId, actualCheckTime, scheduledTimeToCheck, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, timeAdded);
         }
     }
 }

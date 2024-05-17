@@ -3,6 +3,7 @@ package com.devyanan.CareCompass.models;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class MedicationModel {
@@ -11,7 +12,7 @@ public class MedicationModel {
     private final String dosage;
     private final Medication.RouteOfAdministration routeOfAdministration;
     private final Medication.FREQUENCY frequency;
-    private final LocalDateTime timeToTake;
+    private final LocalTime timeToTake;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
     private final Medication.MedicationStatus medicationStatus;
@@ -22,7 +23,7 @@ public class MedicationModel {
     private final LocalDateTime timeAdded;
     private final Medication.PrescriberType prescribedBy;
 
-    public MedicationModel(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalDateTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
+    public MedicationModel(String patientId, String medicationName, String dosage, Medication.RouteOfAdministration routeOfAdministration, Medication.FREQUENCY frequency, LocalTime timeToTake, LocalDateTime startDate, LocalDateTime endDate, Medication.MedicationStatus medicationStatus, Medication.MedicationPriority medicationPriority, Medication.MedicationForm medicationForm, String medicationInfo, String notes, LocalDateTime timeAdded, Medication.PrescriberType prescribedBy) {
         this.patientId = patientId;
         this.medicationName = medicationName;
         this.dosage = dosage;
@@ -60,7 +61,7 @@ public class MedicationModel {
         return frequency;
     }
 
-    public LocalDateTime getTimeToTake() {
+    public LocalTime getTimeToTake() {
         return timeToTake;
     }
 
@@ -112,6 +113,7 @@ public class MedicationModel {
     public int hashCode() {
         return Objects.hash(patientId, medicationName, dosage, routeOfAdministration, frequency, timeToTake, startDate, endDate, medicationStatus, medicationPriority, medicationForm, medicationInfo, notes, timeAdded, prescribedBy);
     }
+
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
@@ -123,7 +125,7 @@ public class MedicationModel {
         private String dosage;
         private Medication.RouteOfAdministration routeOfAdministration;
         private Medication.FREQUENCY frequency;
-        private LocalDateTime timeToTake;
+        private LocalTime timeToTake;
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private Medication.MedicationStatus medicationStatus;
@@ -158,7 +160,7 @@ public class MedicationModel {
                 return this;
             }
 
-            public Builder withTimeToTake(LocalDateTime timeToTake) {
+            public Builder withTimeToTake(LocalTime timeToTake) {
                 this.timeToTake = timeToTake;
                 return this;
             }

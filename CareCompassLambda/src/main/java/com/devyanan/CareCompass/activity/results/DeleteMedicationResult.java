@@ -15,7 +15,7 @@ public class DeleteMedicationResult {
 
     @Override
     public String toString() {
-        return "RemoveMedicationResult{" +
+        return "DeleteMedicationResult{" +
                 "medicationModel=" + medicationModel +
                 '}';
     }

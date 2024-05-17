@@ -10,9 +10,10 @@ public class GetAllNotificationsRequest {
     public GetAllNotificationsRequest(String patientId) {
         this.patientId = patientId;
     }
+
     @Override
     public String toString() {
-        return "GetUserNotificationsRequest" +
+        return "GetAllNotificationsRequest{" +
                 "patientId='" + patientId + '\'' +
                 '}';
     }

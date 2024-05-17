@@ -15,7 +15,7 @@ public class DeleteNotificationResult {
 
     @Override
     public String toString() {
-        return "RemoveNotificationResult{" +
+        return "DeleteNotificationResult{" +
                 "notificationModel=" + notificationModel +
                 '}';
     }

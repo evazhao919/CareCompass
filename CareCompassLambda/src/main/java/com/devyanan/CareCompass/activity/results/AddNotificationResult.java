@@ -14,7 +14,7 @@ public class AddNotificationResult {
 
     @Override
     public String toString() {
-        return "CreateNotificationResult{" +
+        return "AddNotificationResult{" +
                 "notificationModel=" + notificationModel +
                 '}';
     }

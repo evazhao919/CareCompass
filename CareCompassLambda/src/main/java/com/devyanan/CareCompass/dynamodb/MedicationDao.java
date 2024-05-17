@@ -24,13 +24,15 @@ public class MedicationDao {
 
     public Medication addMedication(Medication medication){
         if(medication == null || medication.getMedicationName() == null || medication.getMedicationName().isEmpty()){
-            metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_UNSUCCESS_COUNT,1);
-            log.warn("Attempted to add a medication with null or empty name.");
+            metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_NULL_OR_EMPTY_COUNT,1);
+            log.info("Attempted to add a medication with null or empty name.");
             throw new InvalidAttributeValueException("Medication object or name cannot be null or empty.");
         }
 
         try {
+            log.info("Attempting to add a medication: {}", medication);
             dynamoDBMapper.save(medication);
+            metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_SUCCESS_COUNT,1);
             log.info("Medication added successfully for user: {}", medication.getPatientId());
         } catch (AmazonDynamoDBException e) {
             log.error("DynamoDB-specific error occurred while adding medication: {}", medication, e);
@@ -46,12 +48,14 @@ public class MedicationDao {
     public boolean deleteMedication(Medication medication){
         if (medication == null || medication.getMedicationName() == null || medication.getMedicationName().isEmpty()) {
             log.warn("Attempted to delete a null or empty medication object.");
+            metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_NULL_OR_EMPTY_COUNT,1);
             return false;
         }
 
         try {
             log.info("Attempting to delete medication: {}", medication);
             this.dynamoDBMapper.delete(medication);
+            metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_SUCCESS_COUNT,1);
             log.info("Medication deleted successfully: {}", medication);
             return true;
         }catch (AmazonDynamoDBException e) {
@@ -65,14 +69,17 @@ public class MedicationDao {
 
     public Medication getSingleMedication(String patientId, String medicationName) {
         try{
-        Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
+            log.info("Attempting to get medication: {}", medicationName);
+            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_FOUND_COUNT, 1);
 
-        if (singleMedication == null) {
-            metricsPublisher.addCount(MetricsConstants.GETSINGLEMEDICATION_MEDICATIONNOTFOUND_COUNT, 1);
+        if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
             log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
             throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
         }
-            metricsPublisher.addCount(MetricsConstants.GETSINGLEMEDICATION_MEDICATIONFOUND_COUNT, 1);
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_FOUND_COUNT, 1);
+            log.info("Get a single medication successfully: {}", medicationName);
             return singleMedication;
         } catch (Exception e){
             log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationName, e);
@@ -82,6 +89,7 @@ public class MedicationDao {
 
     public List<Medication> getAllMedications(String patientId){
        try {
+           log.info("Attempting to get all medications for user: {}", patientId);
            Medication medication = new Medication();
            medication.setPatientId(patientId);
 
@@ -90,11 +98,11 @@ public class MedicationDao {
            List<Medication> medicationList = dynamoDBMapper.query(Medication.class, queryExpression);
 
             if (medicationList.isEmpty()) {
-            metricsPublisher.addCount(MetricsConstants.GETALLMEDICATIONS_MEDICATIONNOTFOUND_COUNT, 1);
+            metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_NULL_OR_EMPTY_COUNT, 1);
             log.warn("No medications found for user: {}", patientId);
             throw new MedicationsNotFoundException("No medications found for user: " + patientId);
         }
-            metricsPublisher.addCount(MetricsConstants.GETALLMEDICATIONS_MEDICATIONFOUND_COUNT, 1);
+            metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_MEDICATION_FOUND_COUNT, 1);
             return medicationList;
         } catch (Exception e) {
             log.error("Failed to access the database for user: {}", patientId, e);

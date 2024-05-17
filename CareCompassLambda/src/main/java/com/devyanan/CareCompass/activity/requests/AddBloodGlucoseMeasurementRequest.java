@@ -5,27 +5,37 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Objects;
 
-@JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.class)
+@JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.Builder.class)
 public class AddBloodGlucoseMeasurementRequest {
     private final String patientId;
-    private final LocalDateTime measurementTime;
+    private final String frequency;
+    private final LocalTime actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
+    private final String comments;
 
-    public AddBloodGlucoseMeasurementRequest(String patientId, LocalDateTime measurementTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
+    public AddBloodGlucoseMeasurementRequest(String patientId, String frequency, LocalTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
-        this.measurementTime = measurementTime;
+        this.frequency = frequency;
+        this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
         this.glucoseContext = glucoseContext;
+        this.comments = comments;
     }
 
     public String getPatientId() {
         return patientId;
     }
 
-    public LocalDateTime getMeasurementTime() {
-        return measurementTime;
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public LocalTime getActualCheckTime() {
+        return actualCheckTime;
     }
 
     public double getGlucoseLevel() {
@@ -36,15 +46,22 @@ public class AddBloodGlucoseMeasurementRequest {
         return glucoseContext;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
     @Override
     public String toString() {
-        return "CreateBloodGlucoseMeasurementRequest{" +
+        return "AddBloodGlucoseMeasurementRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", measurementTime=" + measurementTime +
+                ", frequency='" + frequency + '\'' +
+                ", actualCheckTime=" + actualCheckTime +
                 ", glucoseLevel=" + glucoseLevel +
                 ", glucoseContext=" + glucoseContext +
+                ", comments='" + comments + '\'' +
                 '}';
     }
+
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
@@ -52,17 +69,24 @@ public class AddBloodGlucoseMeasurementRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private LocalDateTime measurementTime;
+        private String frequency;
+        private LocalTime actualCheckTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
+        private String comments;
 
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
         }
 
-        public Builder withMeasurementTime(LocalDateTime measurementTime) {
-            this.measurementTime = measurementTime;
+        public Builder withFrequency(String frequency) {
+            this.frequency = frequency;
+            return this;
+        }
+
+        public Builder withActualCheckTime(LocalTime actualCheckTime) {
+            this.actualCheckTime = actualCheckTime;
             return this;
         }
 
@@ -76,8 +100,13 @@ public class AddBloodGlucoseMeasurementRequest {
             return this;
         }
 
+        public Builder withComments(String comments) {
+            this.comments = comments;
+            return this;
+        }
+
         public AddBloodGlucoseMeasurementRequest build() {
-            return new AddBloodGlucoseMeasurementRequest(patientId, measurementTime, glucoseLevel, glucoseContext);
+            return new AddBloodGlucoseMeasurementRequest(patientId, frequency, actualCheckTime, glucoseLevel, glucoseContext, comments);
         }
     }
     }
