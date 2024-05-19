@@ -10,7 +10,6 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "vitalSigns")
 public class VitalSigns {
-
     private String patientId;
     private LocalDateTime actualCheckTime;
     private double temperature;

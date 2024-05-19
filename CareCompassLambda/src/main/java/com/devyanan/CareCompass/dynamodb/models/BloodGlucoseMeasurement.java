@@ -2,16 +2,14 @@ package com.devyanan.CareCompass.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
-import com.devyanan.CareCompass.converters.LocalTimeConverter;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "bloodGlucoseMeasurements")
 public class BloodGlucoseMeasurement {
     private String patientId;
-    private LocalTime actualCheckTime;
+    private LocalDateTime actualCheckTime;
     private double glucoseLevel;
     private GlucoseMeasurementContext glucoseContext;
     private String comments;
@@ -21,6 +19,7 @@ public class BloodGlucoseMeasurement {
     }
 
     @DynamoDBHashKey(attributeName = "patientId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"bloodGlucoseMeasurementsIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -30,12 +29,13 @@ public class BloodGlucoseMeasurement {
     }
 
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
-    @DynamoDBTypeConverted(converter = LocalTimeConverter.class)
-    public LocalTime getActualCheckTime() {
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "bloodGlucoseMeasurementsIndex", attributeName = "actualCheckTime")
+    @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
     }
 
-    public void setActualCheckTime(LocalTime actualCheckTime) {
+    public void setActualCheckTime(LocalDateTime actualCheckTime) {
         this.actualCheckTime = actualCheckTime;
     }
 

@@ -103,7 +103,7 @@ String comments;
 ```
 // BloodGlucoseMeasurementModel
 String patientId;                   
-LocalTime actualCheckTime;
+LocalDateTime actualCheckTime;
 double glucoseLevel;
 GlucoseMeasurementContext glucoseContext;
 String comments;    
@@ -259,6 +259,11 @@ actualCheckTime // Sort Key
 ```
 patientId // Partition Key, String
 reminderTime //Sort Key, LocalDateTime
+```
+## 7.8. `bloodGlucoseMeasurementsIndex`
+```
+patientId // Partition Key
+actualCheckTime // sort key
 ```
 
 ## 8. Pages

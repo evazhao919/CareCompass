@@ -5,18 +5,16 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Objects;
 
 @JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.Builder.class)
 public class AddBloodGlucoseMeasurementRequest {
     private final String patientId;
-    private final LocalTime actualCheckTime;
+    private final LocalDateTime actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
-    public AddBloodGlucoseMeasurementRequest(String patientId, LocalTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public AddBloodGlucoseMeasurementRequest(String patientId, LocalDateTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
@@ -28,7 +26,7 @@ public class AddBloodGlucoseMeasurementRequest {
         return patientId;
     }
 
-    public LocalTime getActualCheckTime() {
+    public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
     }
 
@@ -62,7 +60,7 @@ public class AddBloodGlucoseMeasurementRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private LocalTime actualCheckTime;
+        private LocalDateTime actualCheckTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
         private String comments;
@@ -72,7 +70,7 @@ public class AddBloodGlucoseMeasurementRequest {
             return this;
         }
 
-        public Builder withActualCheckTime(LocalTime actualCheckTime) {
+        public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
             this.actualCheckTime = actualCheckTime;
             return this;
         }

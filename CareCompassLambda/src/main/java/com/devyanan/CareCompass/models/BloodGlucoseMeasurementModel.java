@@ -2,17 +2,17 @@ package com.devyanan.CareCompass.models;
 
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class BloodGlucoseMeasurementModel {
     private final String patientId;
-    private final LocalTime actualCheckTime;
+    private final LocalDateTime actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
-    public BloodGlucoseMeasurementModel(String patientId, LocalTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public BloodGlucoseMeasurementModel(String patientId, LocalDateTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
@@ -24,7 +24,7 @@ public class BloodGlucoseMeasurementModel {
         return patientId;
     }
 
-    public LocalTime getActualCheckTime() {
+    public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
     }
 
@@ -55,7 +55,7 @@ public class BloodGlucoseMeasurementModel {
 
     public static class Builder {
         private String patientId;
-        private LocalTime actualCheckTime;
+        private LocalDateTime actualCheckTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
         private String comments;
@@ -65,7 +65,7 @@ public class BloodGlucoseMeasurementModel {
             return this;
         }
 
-        public Builder withActualCheckTime(LocalTime actualCheckTime) {
+        public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
             this.actualCheckTime = actualCheckTime;
             return this;
         }

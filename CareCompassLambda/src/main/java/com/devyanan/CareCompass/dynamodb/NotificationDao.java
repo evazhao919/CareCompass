@@ -26,7 +26,7 @@ public class NotificationDao {
     public Notification addNotification(Notification notification){
         if(notification == null){
             metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT,1);
-            log.info("Attempted to add a notification with null or empty name.");
+            log.info("Attempted to add a null notification.");
             throw new IllegalArgumentException("notification object or name cannot be null or empty.");
         }
 
@@ -110,15 +110,4 @@ public class NotificationDao {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
-//
-//    public List<Notification> getNotificationsByType(List<Notification> notifications, String reminderType) {
-//        return notifications.stream()
-//                .filter(notification -> notification.getReminderType().equals(reminderType))
-//                .collect(Collectors.toList());
-//    }
-//    public List<Notification> getNotificationsByReminderTime(List<Notification> notifications, LocalDateTime reminderTime) {
-//        return notifications.stream()
-//                .filter(notification -> notification.getReminderTime().isEqual(reminderTime))
-//                .collect(Collectors.toList());
-//    }
 }

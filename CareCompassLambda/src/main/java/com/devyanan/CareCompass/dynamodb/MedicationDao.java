@@ -51,7 +51,7 @@ public class MedicationDao {
 
     public Medication deleteMedication(Medication medication){
         if (medication == null) {
-            log.warn("Attempted to delete a null or empty medication object.");
+            log.warn("Attempted to delete a null medication object.");
             metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_NULL_OR_EMPTY_COUNT,1);
             return medication;
         }

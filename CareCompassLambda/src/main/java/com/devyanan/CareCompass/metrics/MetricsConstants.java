@@ -29,7 +29,46 @@ public class MetricsConstants {
     public static final String DELETE_MEDICATION_TOTAL_COUNT ="";
     public static final String GET_SINGLE_MEDICATION_TOTAL_COUNT = "";
     public static final String GET_ALL_MEDICATIONS_TOTAL_COUNT = "";
+    public static final String ADD_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "";
+    public static final String DELETE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "";
+    public static final String GET_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "";
+    public static final String GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_TOTAL_COUNT = "";
+    public static final String GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_NOT_FOUND_COUNT = "";
+    public static final String GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_FOUND_COUNT = "";
+    public static final String GET_ALL_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "";
 
+    public static final String DELETE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "";
+    public static final String DELETE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT = "";
+    public static final String GET_ALL_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_ALL_BLOOD_GLUCOSE_MEASUREMENT_FOUND_COUNT = "";
+    public static final String ADD_VITAL_SIGNS_NULL_OR_EMPTY_COUNT = "";
+    public static final String ADD_VITAL_SIGNS_TOTAL_COUNT = "";
+    public static final String ADD_VITAL_SIGNS_SUCCESS_COUNT = "";
+    public static final String DELETE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT = "";
+    public static final String DELETE_VITAL_SIGNS_TOTAL_COUNT = "";
+    public static final String DELETE_VITAL_SIGNS_SUCCESS_COUNT = "";
+    public static final String GET_ALL_VITAL_SIGNS_TOTAL_COUNT = "";
+    public static final String GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_ALL_VITAL_SIGNS_FOUND_COUNT = "";
+    public static final String GET_VITAL_SIGNS_FOR_DATE_RANGE_TOTAL_COUNT = "";
+    public static final String GET_VITAL_SIGNS_FOR_DATE_RANGE_FOUND_COUNT = "";
+    public static final String GET_VITAL_SIGNS_FOR_DATE_RANGE_NOT_FOUND_COUNT = "";
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
+    public static final String
 
 
 
