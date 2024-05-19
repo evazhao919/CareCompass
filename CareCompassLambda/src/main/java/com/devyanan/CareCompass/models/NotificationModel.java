@@ -1,7 +1,5 @@
 package com.devyanan.CareCompass.models;
 
-import com.devyanan.CareCompass.dynamodb.models.Notification;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 

@@ -2,7 +2,6 @@ package com.devyanan.CareCompass.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 @JsonDeserialize(builder = GetAllVitalSignsRequest.Builder.class)
 public class GetAllVitalSignsRequest {
     private final String patientId;

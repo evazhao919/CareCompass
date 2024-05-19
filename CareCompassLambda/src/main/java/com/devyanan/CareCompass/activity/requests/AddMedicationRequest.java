@@ -1,12 +1,7 @@
 package com.devyanan.CareCompass.activity.requests;
 
-import com.devyanan.CareCompass.dynamodb.models.Medication;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 @JsonDeserialize(builder = AddMedicationRequest.Builder.class)
 public class AddMedicationRequest {
     private final String patientId;

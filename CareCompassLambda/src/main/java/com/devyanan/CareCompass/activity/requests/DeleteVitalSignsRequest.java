@@ -1,12 +1,9 @@
 package com.devyanan.CareCompass.activity.requests;
 
-import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 @JsonDeserialize(builder = DeleteVitalSignsRequest.Builder.class)
 public class DeleteVitalSignsRequest {
     private final String patientId;

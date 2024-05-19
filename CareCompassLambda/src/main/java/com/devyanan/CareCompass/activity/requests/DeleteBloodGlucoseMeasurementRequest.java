@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
-
 @JsonDeserialize(builder = DeleteBloodGlucoseMeasurementRequest.Builder.class)
 public class DeleteBloodGlucoseMeasurementRequest {
     private final String patientId;

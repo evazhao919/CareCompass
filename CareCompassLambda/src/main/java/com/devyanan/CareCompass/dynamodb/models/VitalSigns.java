@@ -2,10 +2,8 @@ package com.devyanan.CareCompass.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
-import com.devyanan.CareCompass.converters.LocalTimeConverter;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "vitalSigns")

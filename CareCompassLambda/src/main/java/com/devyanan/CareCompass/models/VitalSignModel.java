@@ -1,9 +1,6 @@
 package com.devyanan.CareCompass.models;
 
-import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
-
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Objects;
 
 public class VitalSignModel {
