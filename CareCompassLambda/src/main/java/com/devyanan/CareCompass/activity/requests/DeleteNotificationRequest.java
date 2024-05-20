@@ -3,16 +3,15 @@ package com.devyanan.CareCompass.activity.requests;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.time.LocalDateTime;
 @JsonDeserialize(builder = DeleteNotificationRequest.Builder.class)
 public class DeleteNotificationRequest {
     private final String patientId;
     private final String notificationId;
     private final String notificationTitle;
     private final String reminderContent;
-    private final LocalDateTime reminderTime;
+    private final String reminderTime;
 
-    public DeleteNotificationRequest(String patientId, String notificationId, String notificationTitle, String reminderContent, LocalDateTime reminderTime) {
+    public DeleteNotificationRequest(String patientId, String notificationId, String notificationTitle, String reminderContent, String reminderTime) {
         this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
@@ -36,7 +35,7 @@ public class DeleteNotificationRequest {
         return reminderContent;
     }
 
-    public LocalDateTime getReminderTime() {
+    public String getReminderTime() {
         return reminderTime;
     }
 
@@ -61,7 +60,7 @@ public class DeleteNotificationRequest {
         private String notificationId;
         private String notificationTitle;
         private String reminderContent;
-        private LocalDateTime reminderTime;
+        private String reminderTime;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -81,7 +80,7 @@ public class DeleteNotificationRequest {
             return this;
         }
 
-        public Builder withReminderTime(LocalDateTime reminderTime) {
+        public Builder withReminderTime(String reminderTime) {
             this.reminderTime = reminderTime;
             return this;
         }

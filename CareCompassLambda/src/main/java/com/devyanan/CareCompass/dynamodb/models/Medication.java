@@ -50,14 +50,4 @@ public class Medication {
     public int hashCode() {
         return Objects.hash(patientId, medicationName, prescription, instructions);
     }
-
-    @Override
-    public String toString() {
-        return "Medication{" +
-                "patientId='" + patientId + '\'' +
-                ", medicationName='" + medicationName + '\'' +
-                ", prescription='" + prescription + '\'' +
-                ", instructions='" + instructions + '\'' +
-                '}';
-    }
 }

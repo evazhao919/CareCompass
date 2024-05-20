@@ -2,17 +2,16 @@ package com.devyanan.CareCompass.models;
 
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class BloodGlucoseMeasurementModel {
     private final String patientId;
-    private final LocalDateTime actualCheckTime;
+    private final String actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
-    public BloodGlucoseMeasurementModel(String patientId, LocalDateTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public BloodGlucoseMeasurementModel(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
@@ -24,7 +23,7 @@ public class BloodGlucoseMeasurementModel {
         return patientId;
     }
 
-    public LocalDateTime getActualCheckTime() {
+    public String getActualCheckTime() {
         return actualCheckTime;
     }
 
@@ -53,9 +52,14 @@ public class BloodGlucoseMeasurementModel {
         return Objects.hash(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
     }
 
+    //CHECKSTYLE:OFF:Builder
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static class Builder {
         private String patientId;
-        private LocalDateTime actualCheckTime;
+        private String actualCheckTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
         private String comments;
@@ -65,7 +69,7 @@ public class BloodGlucoseMeasurementModel {
             return this;
         }
 
-        public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
+        public Builder withActualCheckTime(String actualCheckTime) {
             this.actualCheckTime = actualCheckTime;
             return this;
         }

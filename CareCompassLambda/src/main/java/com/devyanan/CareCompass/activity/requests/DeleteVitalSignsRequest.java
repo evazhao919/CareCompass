@@ -3,11 +3,10 @@ package com.devyanan.CareCompass.activity.requests;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.time.LocalDateTime;
 @JsonDeserialize(builder = DeleteVitalSignsRequest.Builder.class)
 public class DeleteVitalSignsRequest {
     private final String patientId;
-    private final LocalDateTime actualCheckTime;
+    private final String actualCheckTime;
     private final double temperature;
     private final int heartRate;
     private final int pulse;
@@ -23,7 +22,7 @@ public class DeleteVitalSignsRequest {
     private final String patientActivity;
     private final String comments;
 
-    public DeleteVitalSignsRequest(String patientId, LocalDateTime actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
+    public DeleteVitalSignsRequest(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.temperature = temperature;
@@ -46,7 +45,7 @@ public class DeleteVitalSignsRequest {
         return patientId;
     }
 
-    public LocalDateTime getActualCheckTime() {
+    public String getActualCheckTime() {
         return actualCheckTime;
     }
 
@@ -136,7 +135,7 @@ public class DeleteVitalSignsRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private LocalDateTime actualCheckTime;
+        private String actualCheckTime;
         private double temperature;
         private int heartRate;
         private int pulse;
@@ -156,7 +155,7 @@ public class DeleteVitalSignsRequest {
             return this;
         }
 
-        public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
+        public Builder withActualCheckTime(String actualCheckTime) {
             this.actualCheckTime = actualCheckTime;
             return this;
         }

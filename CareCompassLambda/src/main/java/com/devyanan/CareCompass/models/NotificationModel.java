@@ -1,6 +1,5 @@
 package com.devyanan.CareCompass.models;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class NotificationModel {
@@ -8,9 +7,9 @@ public class NotificationModel {
     private final String notificationId;
     private final String notificationTitle;
     private final String reminderContent;
-    private final LocalDateTime reminderTime;
+    private final String reminderTime;
 
-    public NotificationModel(String patientId, String notificationId, String notificationTitle, String reminderContent, LocalDateTime reminderTime) {
+    public NotificationModel(String patientId, String notificationId, String notificationTitle, String reminderContent, String reminderTime) {
         this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
@@ -34,7 +33,7 @@ public class NotificationModel {
         return reminderContent;
     }
 
-    public LocalDateTime getReminderTime() {
+    public String getReminderTime() {
         return reminderTime;
     }
 
@@ -61,7 +60,7 @@ public class NotificationModel {
         private String notificationId;
         private String notificationTitle;
         private String reminderContent;
-        private LocalDateTime reminderTime;
+        private String reminderTime;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -82,7 +81,7 @@ public class NotificationModel {
             return this;
         }
 
-        public Builder withReminderTime(LocalDateTime reminderTime) {
+        public Builder withReminderTime(String reminderTime) {
             this.reminderTime = reminderTime;
             return this;
         }

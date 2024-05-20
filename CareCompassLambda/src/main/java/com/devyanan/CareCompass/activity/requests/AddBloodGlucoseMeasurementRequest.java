@@ -4,16 +4,15 @@ import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.time.LocalDateTime;
 @JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.Builder.class)
 public class AddBloodGlucoseMeasurementRequest {
     private final String patientId;
-    private final LocalDateTime actualCheckTime;
+    private final String actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
-    public AddBloodGlucoseMeasurementRequest(String patientId, LocalDateTime actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public AddBloodGlucoseMeasurementRequest(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
@@ -25,7 +24,7 @@ public class AddBloodGlucoseMeasurementRequest {
         return patientId;
     }
 
-    public LocalDateTime getActualCheckTime() {
+    public String getActualCheckTime() {
         return actualCheckTime;
     }
 
@@ -59,7 +58,7 @@ public class AddBloodGlucoseMeasurementRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private LocalDateTime actualCheckTime;
+        private String actualCheckTime;
         private double glucoseLevel;
         private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
         private String comments;
@@ -69,7 +68,7 @@ public class AddBloodGlucoseMeasurementRequest {
             return this;
         }
 
-        public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
+        public Builder withActualCheckTime(String actualCheckTime) {
             this.actualCheckTime = actualCheckTime;
             return this;
         }

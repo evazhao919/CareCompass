@@ -1,11 +1,10 @@
 package com.devyanan.CareCompass.models;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class VitalSignModel {
+public class VitalSignsModel {
     private final String patientId;
-    private final LocalDateTime actualCheckTime;
+    private final String actualCheckTime;
     private final double temperature;
     private final int heartRate;
     private final int pulse;
@@ -21,7 +20,7 @@ public class VitalSignModel {
     private final String patientActivity;
     private final String comments;
 
-    public VitalSignModel(String patientId, LocalDateTime actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
+    public VitalSignsModel(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.temperature = temperature;
@@ -44,7 +43,7 @@ public class VitalSignModel {
         return patientId;
     }
 
-    public LocalDateTime getActualCheckTime() {
+    public String getActualCheckTime() {
         return actualCheckTime;
     }
 
@@ -108,7 +107,7 @@ public class VitalSignModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VitalSignModel that = (VitalSignModel) o;
+        VitalSignsModel that = (VitalSignsModel) o;
         return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(patientPosition, that.patientPosition) && Objects.equals(oxygenTherapy, that.oxygenTherapy) && Objects.equals(flowDelivered, that.flowDelivered) && Objects.equals(patientActivity, that.patientActivity) && Objects.equals(comments, that.comments);
     }
 
@@ -123,7 +122,7 @@ public class VitalSignModel {
     }
     public static class Builder {
         private String patientId;
-        private LocalDateTime actualCheckTime;
+        private String actualCheckTime;
         private double temperature;
         private int heartRate;
         private int pulse;
@@ -144,7 +143,7 @@ public class VitalSignModel {
             return this;
         }
 
-        public Builder withActualCheckTime(LocalDateTime actualCheckTime) {
+        public Builder withActualCheckTime(String actualCheckTime) {
             this.actualCheckTime = actualCheckTime;
             return this;
         }
@@ -219,8 +218,8 @@ public class VitalSignModel {
             return this;
         }
 
-        public VitalSignModel build() {
-            return new VitalSignModel(patientId, actualCheckTime, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
+        public VitalSignsModel build() {
+            return new VitalSignsModel(patientId, actualCheckTime, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
         }
     }
 }

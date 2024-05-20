@@ -4,7 +4,6 @@ import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.time.LocalDateTime;
 @JsonDeserialize(builder = UpdateNotificationsRequest.Builder.class)
 public class UpdateNotificationsRequest {
     private final String patientId;
@@ -13,9 +12,9 @@ public class UpdateNotificationsRequest {
     private final Notification.ReminderType reminderType;
     private final String reminderContent;
     private final String additionalNotes;
-    private final LocalDateTime reminderTime;
+    private final String reminderTime;
 
-    public UpdateNotificationsRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, LocalDateTime reminderTime) {
+    public UpdateNotificationsRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, String reminderTime) {
         this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
@@ -49,7 +48,7 @@ public class UpdateNotificationsRequest {
         return additionalNotes;
     }
 
-    public LocalDateTime getReminderTime() {
+    public String getReminderTime() {
         return reminderTime;
     }
 
@@ -79,7 +78,7 @@ public class UpdateNotificationsRequest {
         private Notification.ReminderType reminderType;
         private String reminderContent;
         private String additionalNotes;
-        private LocalDateTime reminderTime;
+        private String reminderTime;
         public UpdateNotificationsRequest.Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -109,7 +108,7 @@ public class UpdateNotificationsRequest {
             return this;
         }
 
-        public Builder withReminderTime(LocalDateTime reminderTime) {
+        public Builder withReminderTime(String reminderTime) {
             this.reminderTime = reminderTime;
             return this;
         }

@@ -1,15 +1,15 @@
 package com.devyanan.CareCompass.activity.results;
 
-import com.devyanan.CareCompass.models.VitalSignModel;
+import com.devyanan.CareCompass.models.VitalSignsModel;
 
 public class AddVitalSignsResult {
-    private final VitalSignModel vitalSignModel;
+    private final VitalSignsModel vitalSignModel;
 
-    public AddVitalSignsResult(VitalSignModel vitalSignModel) {
+    public AddVitalSignsResult(VitalSignsModel vitalSignModel) {
         this.vitalSignModel = vitalSignModel;
     }
 
-    public VitalSignModel getVitalSignModel() {
+    public VitalSignsModel getVitalSignModel() {
         return vitalSignModel;
     }
 
@@ -26,9 +26,9 @@ public class AddVitalSignsResult {
     }
 
     public static class Builder {
-        private VitalSignModel vitalSignModel;
+        private VitalSignsModel vitalSignModel;
 
-        public Builder withVitalSignModel(VitalSignModel vitalSignModel) {
+        public Builder withVitalSignModel(VitalSignsModel vitalSignModel) {
             this.vitalSignModel = vitalSignModel;
             return this;
         }
