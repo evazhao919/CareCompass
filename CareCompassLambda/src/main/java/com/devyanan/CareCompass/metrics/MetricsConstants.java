@@ -56,8 +56,17 @@ public class MetricsConstants {
     public static final String GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "";
     public static final String GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "";
     public static final String GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT = "";
-
-
+    public static final String GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_FOUND_COUNT = "";
+    public static final String GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_REMINDER_TIME_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_SINGLE_NOTIFICATION_PATIENT_ID_AND_REMINDER_TIME_FOUND_COUNT = "";
+    public static final String DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "";
+    public static final String DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "";
+    public static final String DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT = "";
+    public static final String DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT = "";
+    public static final String DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT = "";
+    public static final String DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT = "";
+    public static final String
 
 
 

@@ -6,14 +6,10 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 public class DeleteMedicationRequest {
     private final String patientId;
     private final String medicationName;
-    private final String prescription;
-    private final String instructions;
 
-    public DeleteMedicationRequest(String patientId, String medicationName, String prescription, String instructions) {
+    public DeleteMedicationRequest(String patientId, String medicationName) {
         this.patientId = patientId;
         this.medicationName = medicationName;
-        this.prescription = prescription;
-        this.instructions = instructions;
     }
 
     public String getPatientId() {
@@ -24,21 +20,11 @@ public class DeleteMedicationRequest {
         return medicationName;
     }
 
-    public String getPrescription() {
-        return prescription;
-    }
-
-    public String getInstructions() {
-        return instructions;
-    }
-
     @Override
     public String toString() {
         return "DeleteMedicationRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", medicationName='" + medicationName + '\'' +
-                ", prescription='" + prescription + '\'' +
-                ", instructions='" + instructions + '\'' +
                 '}';
     }
 
@@ -51,8 +37,6 @@ public class DeleteMedicationRequest {
     public static class Builder {
         private String patientId;
         private String medicationName;
-        private String prescription;
-        private String instructions;
 
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
@@ -64,18 +48,8 @@ public class DeleteMedicationRequest {
             return this;
         }
 
-        public Builder withPrescription(String prescription) {
-            this.prescription = prescription;
-            return this;
-        }
-
-        public Builder withInstructions(String instructions) {
-            this.instructions = instructions;
-            return this;
-        }
-
         public DeleteMedicationRequest build() {
-            return new DeleteMedicationRequest(patientId, medicationName, prescription, instructions);
+            return new DeleteMedicationRequest(patientId, medicationName);
         }
     }
 }

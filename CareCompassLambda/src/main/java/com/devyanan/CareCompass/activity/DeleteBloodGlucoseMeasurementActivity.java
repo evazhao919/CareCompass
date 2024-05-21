@@ -18,21 +18,13 @@ public class DeleteBloodGlucoseMeasurementActivity {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
     }
     public DeleteBloodGlucoseMeasurementResult handleRequest(final DeleteBloodGlucoseMeasurementRequest request){
-        log.info("Received RemoveMedicationRequest {}", request);
-
-        String actualCheckTime = request.getActualCheckTime();
+        log.info("Received DeleteBloodGlucoseMeasurementRequest {}", request);
 
         // TODO check for invalidation
-
-        BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.getSingleBloodGlucoseMeasurement(request.getPatientId(),request.getActualCheckTime(),request.getGlucoseLevel(),request.getGlucoseContext(),request.getComments());
-
-        BloodGlucoseMeasurement result = bloodGlucoseMeasurementDao.deleteBloodGlucoseMeasurement(bloodGlucoseMeasurement);
-
-        ModelConverter modelConverter = new ModelConverter();
-        BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel = modelConverter.toBloodGlucoseMeasurementModel(result);
+        BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.deleteSingleBloodGlucoseMeasurement(request.getPatientId(),request.getActualCheckTime());
 
         return DeleteBloodGlucoseMeasurementResult.builder()
-                .withBloodGlucoseMeasurementModel(bloodGlucoseMeasurementModel)
+                .withBloodGlucoseMeasurementModel(new ModelConverter().toBloodGlucoseMeasurementModel(bloodGlucoseMeasurement))
                 .build();
     }
 }

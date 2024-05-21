@@ -8,16 +8,10 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 public class DeleteBloodGlucoseMeasurementRequest {
     private final String patientId;
     private final String actualCheckTime;
-    private final double glucoseLevel;
-    private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
-    private final String comments;
 
-    public DeleteBloodGlucoseMeasurementRequest(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public DeleteBloodGlucoseMeasurementRequest(String patientId, String actualCheckTime) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
-        this.glucoseLevel = glucoseLevel;
-        this.glucoseContext = glucoseContext;
-        this.comments = comments;
     }
 
     public String getPatientId() {
@@ -28,26 +22,11 @@ public class DeleteBloodGlucoseMeasurementRequest {
         return actualCheckTime;
     }
 
-    public double getGlucoseLevel() {
-        return glucoseLevel;
-    }
-
-    public BloodGlucoseMeasurement.GlucoseMeasurementContext getGlucoseContext() {
-        return glucoseContext;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
     @Override
     public String toString() {
         return "DeleteBloodGlucoseMeasurementRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", actualCheckTime=" + actualCheckTime +
-                ", glucoseLevel=" + glucoseLevel +
-                ", glucoseContext=" + glucoseContext +
-                ", comments='" + comments + '\'' +
                 '}';
     }
 
@@ -61,9 +40,6 @@ public class DeleteBloodGlucoseMeasurementRequest {
     public static class Builder {
         private String patientId;
         private String actualCheckTime;
-        private double glucoseLevel;
-        private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
-        private String comments;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -73,23 +49,8 @@ public class DeleteBloodGlucoseMeasurementRequest {
             this.actualCheckTime = actualCheckTime;
             return this;
         }
-
-        public Builder withGlucoseLevel(double glucoseLevel) {
-            this.glucoseLevel = glucoseLevel;
-            return this;
-        }
-
-        public Builder withGlucoseContext(BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
-            this.glucoseContext = glucoseContext;
-            return this;
-        }
-
-        public Builder withComments(String comments) {
-            this.comments = comments;
-            return this;
-        }
         public DeleteBloodGlucoseMeasurementRequest build() {
-            return new DeleteBloodGlucoseMeasurementRequest(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
+            return new DeleteBloodGlucoseMeasurementRequest(patientId, actualCheckTime);
         }
 }
 }

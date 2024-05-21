@@ -7,9 +7,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
-import com.devyanan.CareCompass.exceptions.BloodGlucoseMeasurementNotFoundException;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
 import com.devyanan.CareCompass.exceptions.DatabaseAccessException;
+import com.devyanan.CareCompass.exceptions.VitalSignsNotFoundException;
 import com.devyanan.CareCompass.metrics.MetricsConstants;
 import com.devyanan.CareCompass.metrics.MetricsPublisher;
 import org.apache.logging.log4j.LogManager;
@@ -77,6 +77,17 @@ private final DynamoDBMapper dynamoDBMapper;
             throw new DatabaseAccessException("Failed to delete vitalSigns from the database", e);
         }
     }
+    public VitalSigns deleteSingleVitalSigns(String patientId, String actualCheckTime){
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT,1);
+        VitalSigns result = this.dynamoDBMapper.load(VitalSigns.class,patientId,actualCheckTime);
+        if(result == null ){
+            log.warn("Attempted to get a null VitalSigns object with patientId {}.", patientId);
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT,1);
+            throw new VitalSignsNotFoundException("VitalSigns actualCheckTime can not be null.");
+        } else {
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT,1);
+            return result;
+        }
 
     public List<VitalSigns> getVitalSignsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
         if (patientId == null) {
@@ -108,7 +119,7 @@ private final DynamoDBMapper dynamoDBMapper;
             return measurements;
         } else {
             metricsPublisher.addCount(MetricsConstants.GET_VITAL_SIGNS_FOR_DATE_RANGE_NOT_FOUND_COUNT, 1);
-            throw new BloodGlucoseMeasurementNotFoundException("No measurements found for the specified date range");
+            throw new VitalSignsNotFoundException("No measurements found for the specified date range");
         }
     }
 

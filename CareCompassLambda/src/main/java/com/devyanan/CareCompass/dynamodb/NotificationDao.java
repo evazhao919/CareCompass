@@ -73,19 +73,40 @@ public class NotificationDao {
             Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, notificationId);
 
             if (singlenotification == null || singlenotification.getNotificationId() == null || singlenotification.getNotificationId().isEmpty()) {
-                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT, 1);
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT, 1);
                 log.warn("No notification found for user: {} and notificationId: {}", patientId, notificationId);
                 throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and notificationId : " + notificationId);
             } else {
-                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID__FOUND_COUNT, 1);
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_FOUND_COUNT, 1);
                 log.info("Get a single notification successfully: {}", notificationId);
                 return singlenotification;
             }
         } catch (DatabaseAccessException e){
-            //log.error("Failed to access the database for user: {} and notification name: {}", patientId, notificationId), e);
+            log.error("Failed to access the database for user: {} and notification id: {}", patientId, notificationId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
+
+    public Notification getSingleNotificationByPatientIdAndReminderTime(String patientId, String reminderTime) {
+        try{
+            log.info("Attempting to get notification: {}", reminderTime);
+            Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, reminderTime);
+
+            if (singlenotification == null) {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_REMINDER_TIME_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No notification found for user: {} and reminderTime: {}", patientId, reminderTime);
+                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and reminderTime : " + reminderTime);
+            } else {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_PATIENT_ID_AND_REMINDER_TIME_FOUND_COUNT, 1);
+                log.info("Get a single notification successfully: {}", reminderTime);
+                return singlenotification;
+            }
+        } catch (DatabaseAccessException e){
+            log.error("Failed to access the database for user: {} and reminderTime: {}", patientId, reminderTime,e);
+            throw new DatabaseAccessException("Failed to access the database", e);
+        }
+    }
+
 
     public List<Notification> getAllNotifications(String patientId){
         try {
