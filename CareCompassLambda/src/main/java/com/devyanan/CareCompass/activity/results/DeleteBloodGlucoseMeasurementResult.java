@@ -28,7 +28,7 @@ public class DeleteBloodGlucoseMeasurementResult {
     public static class Builder {
         private BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel;
 
-        public Builder withNotificationModel(BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel) {
+        public Builder withBloodGlucoseMeasurementModel(BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel) {
             this.bloodGlucoseMeasurementModel = bloodGlucoseMeasurementModel;
             return this;
         }

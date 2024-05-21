@@ -33,9 +33,18 @@ public class Medication {
     public String getPrescription() {
         return prescription;
     }
+
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
+    }
+
     @DynamoDBAttribute(attributeName = "instructions")
     public String getInstructions() {
         return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     @Override

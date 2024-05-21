@@ -76,7 +76,20 @@ public class BloodGlucoseMeasurementDao {
             throw new DatabaseAccessException("Failed to delete bloodGlucoseMeasurement from the database", e);
         }
     }
+    public BloodGlucoseMeasurement getSingleBloodGlucoseMeasurement(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseMeasurementContext, String comments){
+        metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
+        BloodGlucoseMeasurement result = this.dynamoDBMapper.load(BloodGlucoseMeasurement.class,patientId,actualCheckTime);
+        if(result == null ){
+            log.warn("Attempted to get a null bloodGlucoseMeasurement object with patientId {}.", patientId);
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
+            throw new BloodGlucoseMeasurementNotFoundException("BloodGlucoseMeasurement actualCheckTime can not be null.");
+        } else {
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT,1);
+            return result;
+        }
 
+
+    }
     public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
         if (patientId == null) {
             throw new IllegalArgumentException("Patient ID cannot be null");

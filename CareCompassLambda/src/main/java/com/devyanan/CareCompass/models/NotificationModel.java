@@ -9,7 +9,7 @@ public class NotificationModel {
     private final String reminderContent;
     private final String reminderTime;
 
-    public NotificationModel(String patientId, String notificationId, String notificationTitle, String reminderContent, String reminderTime) {
+    private NotificationModel(String patientId, String notificationId, String notificationTitle, String reminderContent, String reminderTime) {
         this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;

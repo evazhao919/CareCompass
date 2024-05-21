@@ -20,7 +20,7 @@ public class VitalSignsModel {
     private final String patientActivity;
     private final String comments;
 
-    public VitalSignsModel(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
+    private VitalSignsModel(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.temperature = temperature;

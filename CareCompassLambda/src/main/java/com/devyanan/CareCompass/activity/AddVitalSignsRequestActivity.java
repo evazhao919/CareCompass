@@ -1,9 +1,12 @@
 package com.devyanan.CareCompass.activity;
 
 import com.devyanan.CareCompass.activity.requests.AddVitalSignsRequest;
+import com.devyanan.CareCompass.activity.results.AddVitalSignsResult;
 import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
+import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.VitalSignsDao;
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
+import com.devyanan.CareCompass.models.VitalSignsModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,54 +16,55 @@ public class AddVitalSignsRequestActivity {
     private final VitalSignsDao vitalSignsDao;
     private final LocalDateTimeConverter dateTimeConverter;
 
-    public AddVitalSignsRequestActivity(VitalSignsDao vitalSignsDao) {
+    public AddVitalSignsRequestActivity(final VitalSignsDao vitalSignsDao) {
         this.vitalSignsDao = vitalSignsDao;
         dateTimeConverter = new LocalDateTimeConverter();
     }
-    public AddVitalSignsRequestActivity handleRequest(final AddVitalSignsRequest addVitalSignsRequest) {
-        log.info("Received AddVitalSignsRequest {}", addVitalSignsRequest);
-        String actualCheckTime = addVitalSignsRequest.getActualCheckTime();
-        double temperature = addVitalSignsRequest.getTemperature();
-        int heartRate = addVitalSignsRequest.getHeartRate();
-        int pulse = addVitalSignsRequest.getPulse();
-        int respiratoryRate = addVitalSignsRequest.getRespiratoryRate();
-        int systolicPressure = addVitalSignsRequest.getSystolicPressure();
-        int diastolicPressure = addVitalSignsRequest.getDiastolicPressure();
-        int meanArterialPressure = addVitalSignsRequest.getMeanArterialPressure();
-        double weight = addVitalSignsRequest.getWeight();
-        String patientPosition = addVitalSignsRequest.getPatientPosition();
-        int bloodOxygenLevel = addVitalSignsRequest.getBloodOxygenLevel();
-        String oxygenTherapy = addVitalSignsRequest.getOxygenTherapy();
-        String flowDelivered = addVitalSignsRequest.getFlowDelivered();
-        String patientActivity = addVitalSignsRequest.getPatientActivity();
-        String comments = addVitalSignsRequest.getComments();
+    public AddVitalSignsResult handleRequest(final AddVitalSignsRequest request) {
+        log.info("Received AddVitalSignsRequest {}", request);
+        String actualCheckTime = request.getActualCheckTime();
+        double temperature = request.getTemperature();
+        int heartRate = request.getHeartRate();
+        int pulse = request.getPulse();
+        int respiratoryRate = request.getRespiratoryRate();
+        int systolicPressure = request.getSystolicPressure();
+        int diastolicPressure = request.getDiastolicPressure();
+        int meanArterialPressure = request.getMeanArterialPressure();
+        double weight = request.getWeight();
+        String patientPosition = request.getPatientPosition();
+        int bloodOxygenLevel = request.getBloodOxygenLevel();
+        String oxygenTherapy = request.getOxygenTherapy();
+        String flowDelivered = request.getFlowDelivered();
+        String patientActivity = request.getPatientActivity();
+        String comments = request.getComments();
 
         //TODO check for invalid enter
 
         VitalSigns vitalSigns = new VitalSigns();
-        vitalSigns.setPatientId(addVitalSignsRequest.getPatientId());
-        vitalSigns.setActualCheckTime(dateTimeConverter.unconvert(addVitalSignsRequest.getActualCheckTime()));
-        vitalSigns.setTemperature(addVitalSignsRequest.getTemperature());
-        vitalSigns.setHeartRate(addVitalSignsRequest.getHeartRate());
-        vitalSigns.setPulse(addVitalSignsRequest.getPulse());
-        vitalSigns.setRespiratoryRate(addVitalSignsRequest.getRespiratoryRate());
-        vitalSigns.setSystolicPressure(addVitalSignsRequest.getSystolicPressure());
-        vitalSigns.setDiastolicPressure(addVitalSignsRequest.getDiastolicPressure());
-        vitalSigns.setMeanArterialPressure(addVitalSignsRequest.getMeanArterialPressure());
-        vitalSigns.setWeight(addVitalSignsRequest.getWeight());
-        vitalSigns.setPatientPosition(addVitalSignsRequest.getPatientPosition());
-        vitalSigns.setBloodOxygenLevel(addVitalSignsRequest.getBloodOxygenLevel());
-        vitalSigns.setOxygenTherapy(addVitalSignsRequest.getOxygenTherapy());
-        vitalSigns.setFlowDelivered(addVitalSignsRequest.getOxygenTherapy());
-        vitalSigns.setPatientActivity(addVitalSignsRequest.getPatientActivity());
-        vitalSigns.setComments(addVitalSignsRequest.getComments());
+        vitalSigns.setPatientId(request.getPatientId());
+        vitalSigns.setActualCheckTime(dateTimeConverter.unconvert(request.getActualCheckTime()));
+        vitalSigns.setTemperature(request.getTemperature());
+        vitalSigns.setHeartRate(request.getHeartRate());
+        vitalSigns.setPulse(request.getPulse());
+        vitalSigns.setRespiratoryRate(request.getRespiratoryRate());
+        vitalSigns.setSystolicPressure(request.getSystolicPressure());
+        vitalSigns.setDiastolicPressure(request.getDiastolicPressure());
+        vitalSigns.setMeanArterialPressure(request.getMeanArterialPressure());
+        vitalSigns.setWeight(request.getWeight());
+        vitalSigns.setPatientPosition(request.getPatientPosition());
+        vitalSigns.setBloodOxygenLevel(request.getBloodOxygenLevel());
+        vitalSigns.setOxygenTherapy(request.getOxygenTherapy());
+        vitalSigns.setFlowDelivered(request.getOxygenTherapy());
+        vitalSigns.setPatientActivity(request.getPatientActivity());
+        vitalSigns.setComments(request.getComments());
 
         VitalSigns result = vitalSignsDao.addVitalSigns(vitalSigns);
 
+        ModelConverter modelConverter = new ModelConverter();
+        VitalSignsModel vitalSignsModel = modelConverter.toVitalSignsModel(result);
 
-
-
-
-
+       return AddVitalSignsResult.builder()
+               .withVitalSignModel(vitalSignsModel)
+               .build();
     }
 }

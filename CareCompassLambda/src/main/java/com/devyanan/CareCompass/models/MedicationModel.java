@@ -8,7 +8,7 @@ public class MedicationModel {
     private final String prescription;
     private final String instructions;
 
-    public MedicationModel(String patientId, String medicationName, String prescription, String instructions) {
+    private MedicationModel(String patientId, String medicationName, String prescription, String instructions) {
         this.patientId = patientId;
         this.medicationName = medicationName;
         this.prescription = prescription;
