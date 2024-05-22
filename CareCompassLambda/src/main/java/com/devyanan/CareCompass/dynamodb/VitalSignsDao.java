@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.devyanan.CareCompass.dynamodb.models.Medication;
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
 import com.devyanan.CareCompass.exceptions.DatabaseAccessException;
@@ -77,16 +78,42 @@ private final DynamoDBMapper dynamoDBMapper;
             throw new DatabaseAccessException("Failed to delete vitalSigns from the database", e);
         }
     }
-    public VitalSigns deleteSingleVitalSigns(String patientId, String actualCheckTime){
-        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT,1);
-        VitalSigns result = this.dynamoDBMapper.load(VitalSigns.class,patientId,actualCheckTime);
-        if(result == null ){
+    public VitalSigns deleteSingleVitalSigns(String patientId, String actualCheckTime) {
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
+        VitalSigns result = this.dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
+        if (result == null) {
             log.warn("Attempted to get a null VitalSigns object with patientId {}.", patientId);
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT,1);
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
             throw new VitalSignsNotFoundException("VitalSigns actualCheckTime can not be null.");
         } else {
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT,1);
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT, 1);
             return result;
+        }
+    }
+        public List<VitalSigns> getAllVitalSigns(String patientId) {
+            try {
+                log.info("Get vitalSigns for patientId with id: {}", patientId);
+                metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_TOTAL_COUNT, 1);
+                log.info("Attempting to get all vitalSigns for user: {}", patientId);
+                VitalSigns vitalSigns = new VitalSigns();
+                vitalSigns.setPatientId(patientId);
+
+                DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
+                        .withHashKeyValues(vitalSigns);
+                QueryResultPage<VitalSigns> results = dynamoDBMapper
+                        .queryPage(VitalSigns.class, queryExpression);
+
+                if (results.getResults().isEmpty()) {
+                    metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
+                    log.warn("No vitalSigns found for user: {}", patientId);
+                    return Collections.emptyList();
+                }
+                metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_FOUND_COUNT, 1);
+                return results.getResults();
+            } catch (Exception e) {
+                log.error("Failed to access the database for user: {}", patientId, e);
+                throw new DatabaseAccessException("Failed to access the database", e);
+            }
         }
 
     public List<VitalSigns> getVitalSignsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
@@ -122,30 +149,4 @@ private final DynamoDBMapper dynamoDBMapper;
             throw new VitalSignsNotFoundException("No measurements found for the specified date range");
         }
     }
-
-    public List<VitalSigns> getAllVitalSigns(String patientId){
-        try {
-            log.info("Get vitalSigns for patientId with id: {}",patientId);
-            metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_TOTAL_COUNT,1);
-            log.info("Attempting to get all vitalSigns for user: {}", patientId);
-            VitalSigns vitalSigns = new VitalSigns();
-            vitalSigns.setPatientId(patientId);
-
-            DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
-                    .withHashKeyValues(vitalSigns);
-            QueryResultPage<VitalSigns> results = dynamoDBMapper
-                    .queryPage(VitalSigns.class, queryExpression);
-
-            if (results.getResults().isEmpty()) {
-                metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No vitalSigns found for user: {}", patientId);
-                return Collections.emptyList();
-            }
-            metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_FOUND_COUNT, 1);
-            return results.getResults();
-        } catch (Exception e) {
-            log.error("Failed to access the database for user: {}", patientId, e);
-            throw new DatabaseAccessException("Failed to access the database", e);
-        }
     }
-}

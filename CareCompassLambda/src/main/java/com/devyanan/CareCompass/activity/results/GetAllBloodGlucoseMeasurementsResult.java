@@ -29,7 +29,7 @@ public class GetAllBloodGlucoseMeasurementsResult {
 
     public static class Builder {
         private List<BloodGlucoseMeasurementModel> bloodGlucoseMeasurementModelList;
-        public Builder withBloodGlucoseMeasurementModels(List<BloodGlucoseMeasurementModel> bloodGlucoseMeasurementModelList){
+        public Builder withBloodGlucoseMeasurementModelList(List<BloodGlucoseMeasurementModel> bloodGlucoseMeasurementModelList){
             this.bloodGlucoseMeasurementModelList = bloodGlucoseMeasurementModelList;
             return this;
         }

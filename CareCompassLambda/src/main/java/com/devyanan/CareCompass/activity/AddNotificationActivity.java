@@ -43,10 +43,5 @@ public class AddNotificationActivity {
         return AddNotificationResult.builder()
                 .withNotificationModel(notificationModel)
                 .build();
-//        private String patientId;
-//        private String notificationId;
-//        private String notificationTitle;
-//        private String reminderContent;
-//        private LocalDateTime reminderTime;
     }
 }

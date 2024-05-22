@@ -124,10 +124,10 @@ public class NotificationDao {
                 log.warn("No notifications found for user: {}", patientId);
                 return Collections.emptyList();
             }
-            metricsPublisher.addCount(MetricsConstants.GET_ALL_NOTIFICATIONS_NOTIFICATION_FOUND_COUNT, 1);
+            metricsPublisher.addCount(MetricsConstants.GET_ALL_NOTIFICATIONS_FOUND_COUNT, 1);
             return results.getResults();
         } catch (Exception e) {
-            //log.error("Failed to access the database for user: {}", patientId, e);
+            log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }

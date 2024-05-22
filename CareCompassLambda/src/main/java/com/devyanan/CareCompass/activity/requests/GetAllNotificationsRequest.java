@@ -10,15 +10,14 @@ public class GetAllNotificationsRequest {
         this.patientId = patientId;
     }
 
+    public String getPatientId() {
+        return patientId;
+    }
     @Override
     public String toString() {
         return "GetAllNotificationsRequest{" +
                 "patientId='" + patientId + '\'' +
                 '}';
-    }
-
-    public String getPatientId() {
-        return patientId;
     }
 
     //CHECKSTYLE:OFF:Builder
