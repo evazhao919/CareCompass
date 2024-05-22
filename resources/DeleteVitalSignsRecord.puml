@@ -10,7 +10,7 @@ Client -> CareCompassUI: request to delete an medication
 CareCompassUI -> DeleteVitalSignsAPI: DELETE /vitals/:vitalSignsId
 DeleteVitalSignsAPI  -> Database: Deletes a specified vital signs record to Database
 
-Database  --> DeleteVitalSignsAPI:: 200 response
+Database  --> DeleteVitalSignsAPI: 200 response
 DeleteVitalSignsAPI --> CareCompassUI: 200 response
 CareCompassUI --> Client: Show success message & details
 @enduml

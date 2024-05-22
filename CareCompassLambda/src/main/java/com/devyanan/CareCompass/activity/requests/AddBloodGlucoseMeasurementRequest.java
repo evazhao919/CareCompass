@@ -1,17 +1,18 @@
-package com.devyanan.CareCompass.models;
+package com.devyanan.CareCompass.activity.requests;
 
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.util.Objects;
-
-public class BloodGlucoseMeasurementModel {
+@JsonDeserialize(builder = AddBloodGlucoseMeasurementRequest.Builder.class)
+public class AddBloodGlucoseMeasurementRequest {
     private final String patientId;
     private final String actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
-    private BloodGlucoseMeasurementModel(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public AddBloodGlucoseMeasurementRequest(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
@@ -40,23 +41,21 @@ public class BloodGlucoseMeasurementModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BloodGlucoseMeasurementModel that = (BloodGlucoseMeasurementModel) o;
-        return Double.compare(glucoseLevel, that.glucoseLevel) == 0 && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && glucoseContext == that.glucoseContext && Objects.equals(comments, that.comments);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
+    public String toString() {
+        return "AddBloodGlucoseMeasurementRequest{" +
+                "patientId='" + patientId + '\'' +
+                ", actualCheckTime=" + actualCheckTime +
+                ", glucoseLevel=" + glucoseLevel +
+                ", glucoseContext=" + glucoseContext +
+                ", comments='" + comments + '\'' +
+                '}';
     }
 
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
     }
-
+    @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
         private String actualCheckTime;
@@ -88,8 +87,9 @@ public class BloodGlucoseMeasurementModel {
             this.comments = comments;
             return this;
         }
-        public BloodGlucoseMeasurementModel build() {
-            return new BloodGlucoseMeasurementModel(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
+
+        public AddBloodGlucoseMeasurementRequest build() {
+            return new AddBloodGlucoseMeasurementRequest(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
         }
     }
-}
+    }

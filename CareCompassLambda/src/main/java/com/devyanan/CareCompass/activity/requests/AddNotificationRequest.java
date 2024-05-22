@@ -1,26 +1,21 @@
 package com.devyanan.CareCompass.activity.requests;
 
-import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = UpdateNotificationsRequest.Builder.class)
-public class UpdateNotificationsRequest {
+@JsonDeserialize(builder = AddNotificationRequest.Builder.class)
+public class AddNotificationRequest {
     private final String patientId;
-    private final String notificationId;
+    private final String notificationId;//TODO you may need remove notificationId from AddNotificationRequest
     private final String notificationTitle;
-    private final Notification.ReminderType reminderType;
     private final String reminderContent;
-    private final String additionalNotes;
     private final String reminderTime;
 
-    public UpdateNotificationsRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, String reminderTime) {
+    public AddNotificationRequest(String patientId, String notificationId, String notificationTitle, String reminderContent,  String reminderTime) {
         this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
-        this.reminderType = reminderType;
         this.reminderContent = reminderContent;
-        this.additionalNotes = additionalNotes;
         this.reminderTime = reminderTime;
     }
 
@@ -36,16 +31,8 @@ public class UpdateNotificationsRequest {
         return notificationTitle;
     }
 
-    public Notification.ReminderType getReminderType() {
-        return reminderType;
-    }
-
     public String getReminderContent() {
         return reminderContent;
-    }
-
-    public String getAdditionalNotes() {
-        return additionalNotes;
     }
 
     public String getReminderTime() {
@@ -54,13 +41,11 @@ public class UpdateNotificationsRequest {
 
     @Override
     public String toString() {
-        return "UpdateNotificationsRequest{" +
+        return "CreateNotificationRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
-                ", reminderType=" + reminderType +
                 ", reminderContent='" + reminderContent + '\'' +
-                ", additionalNotes='" + additionalNotes + '\'' +
                 ", reminderTime=" + reminderTime +
                 '}';
     }
@@ -69,17 +54,14 @@ public class UpdateNotificationsRequest {
     public static Builder builder() {
         return new Builder();
     }
-
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
         private String notificationId;
         private String notificationTitle;
-        private Notification.ReminderType reminderType;
         private String reminderContent;
-        private String additionalNotes;
         private String reminderTime;
-        public UpdateNotificationsRequest.Builder withPatientId(String patientId) {
+        public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
         }
@@ -93,18 +75,8 @@ public class UpdateNotificationsRequest {
             return this;
         }
 
-        public Builder withReminderType(Notification.ReminderType reminderType) {
-            this.reminderType = reminderType;
-            return this;
-        }
-
         public Builder withReminderContent(String reminderContent) {
             this.reminderContent = reminderContent;
-            return this;
-        }
-
-        public Builder withAdditionalNotes(String additionalNotes) {
-            this.additionalNotes = additionalNotes;
             return this;
         }
 
@@ -113,8 +85,8 @@ public class UpdateNotificationsRequest {
             return this;
         }
 
-        public UpdateNotificationsRequest build() {
-            return new UpdateNotificationsRequest(patientId,  notificationId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
+        public AddNotificationRequest build() {
+            return new AddNotificationRequest(patientId, notificationId, notificationTitle, reminderContent, reminderTime);
         }
     }
 }
