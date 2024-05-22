@@ -11,8 +11,8 @@ env:
   # STUDENTS: Set these environment variables 
   API_BASE_URL: https://vromjahp3i.execute-api.us-east-2.amazonaws.com/Prod/
   COGNITO_DOMAIN: project-carecompass-yanan-zhao
-  COGNITO_REDIRECT_SIGNIN: TODO-REPLACE
-  COGNITO_REDIRECT_SIGNOUT: TODO-REPLACE
+  COGNITO_REDIRECT_SIGNIN: https://d1lfyvas5gdhbh.cloudfront.net
+  COGNITO_REDIRECT_SIGNOUT: https://d1lfyvas5gdhbh.cloudfront.net
 
   COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
   COGNITO_USER_POOL_CLIENT_ID: ${{ secrets.COGNITO_USER_POOL_CLIENT_ID }}
