@@ -10,11 +10,14 @@ import com.devyanan.CareCompass.models.NotificationModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
+
 public class AddNotificationActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
     private final LocalDateTimeConverter dateTimeConverter;
 
+    @Inject
     public AddNotificationActivity(NotificationDao notificationDao, LocalDateTimeConverter dateTimeConverter) {
         this.notificationDao = notificationDao;
         this.dateTimeConverter = dateTimeConverter;

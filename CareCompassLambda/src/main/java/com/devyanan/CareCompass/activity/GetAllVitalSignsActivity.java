@@ -9,12 +9,13 @@ import com.devyanan.CareCompass.exceptions.VitalSignsNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class GetAllVitalSignsActivity {
     private final Logger log = LogManager.getLogger();
     private final VitalSignsDao vitalSignsDao;
-
+    @Inject
     public GetAllVitalSignsActivity(VitalSignsDao vitalSignsDao) {
         this.vitalSignsDao = vitalSignsDao;
     }

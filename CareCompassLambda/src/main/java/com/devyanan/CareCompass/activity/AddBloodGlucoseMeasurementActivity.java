@@ -10,13 +10,13 @@ import com.devyanan.CareCompass.models.BloodGlucoseMeasurementModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.time.LocalDateTime;
+import javax.inject.Inject;
 
 public class AddBloodGlucoseMeasurementActivity {
     private final Logger log = LogManager.getLogger();
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
     private final LocalDateTimeConverter dateTimeConverter;
-
+    @Inject
     public AddBloodGlucoseMeasurementActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao, LocalDateTimeConverter dateTimeConverter) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
         this.dateTimeConverter = dateTimeConverter;

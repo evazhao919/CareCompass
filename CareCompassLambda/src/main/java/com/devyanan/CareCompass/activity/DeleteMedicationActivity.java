@@ -9,10 +9,12 @@ import com.devyanan.CareCompass.models.MedicationModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
+
 public class DeleteMedicationActivity {
     private final Logger log = LogManager.getLogger();
     private final MedicationDao medicationDao;
-
+    @Inject
     public DeleteMedicationActivity(MedicationDao medicationDao) {
         this.medicationDao = medicationDao;
     }

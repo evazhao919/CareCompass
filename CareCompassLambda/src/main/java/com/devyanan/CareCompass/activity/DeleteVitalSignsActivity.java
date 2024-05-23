@@ -8,10 +8,12 @@ import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
+
 public class DeleteVitalSignsActivity {
     private final Logger log = LogManager.getLogger();
     private final VitalSignsDao vitalSignsDao;
-
+    @Inject
     public DeleteVitalSignsActivity(VitalSignsDao vitalSignsDao) {
         this.vitalSignsDao = vitalSignsDao;
     }

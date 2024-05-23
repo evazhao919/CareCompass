@@ -9,12 +9,13 @@ import com.devyanan.CareCompass.exceptions.MedicationNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class GetAllMedicationsActivity {
     private final Logger log = LogManager.getLogger();
     private final MedicationDao medicationDao;
-
+    @Inject
     public GetAllMedicationsActivity(MedicationDao medicationDao) {
         this.medicationDao = medicationDao;
     }

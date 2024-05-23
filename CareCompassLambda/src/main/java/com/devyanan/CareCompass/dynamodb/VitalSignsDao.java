@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.devyanan.CareCompass.dynamodb.models.Medication;
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
 import com.devyanan.CareCompass.exceptions.DatabaseAccessException;
@@ -16,17 +15,19 @@ import com.devyanan.CareCompass.metrics.MetricsPublisher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Singleton
 public class VitalSignsDao {
 private final DynamoDBMapper dynamoDBMapper;
     private final MetricsPublisher metricsPublisher;
     private final Logger log = LogManager.getLogger();
-
+    @Inject
     public VitalSignsDao(DynamoDBMapper dynamoDBMapper, MetricsPublisher metricsPublisher) {
         this.dynamoDBMapper = dynamoDBMapper;
         this.metricsPublisher = metricsPublisher;
@@ -90,29 +91,29 @@ private final DynamoDBMapper dynamoDBMapper;
             return result;
         }
     }
-        public List<VitalSigns> getAllVitalSigns(String patientId) {
-            try {
-                log.info("Get vitalSigns for patientId with id: {}", patientId);
-                metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_TOTAL_COUNT, 1);
-                log.info("Attempting to get all vitalSigns for user: {}", patientId);
-                VitalSigns vitalSigns = new VitalSigns();
-                vitalSigns.setPatientId(patientId);
+    public List<VitalSigns> getAllVitalSigns(String patientId) {
+        try {
+            log.info("Get vitalSigns for patientId with id: {}", patientId);
+            metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_TOTAL_COUNT, 1);
+            log.info("Attempting to get all vitalSigns for user: {}", patientId);
+            VitalSigns vitalSigns = new VitalSigns();
+            vitalSigns.setPatientId(patientId);
 
-                DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
-                        .withHashKeyValues(vitalSigns);
-                QueryResultPage<VitalSigns> results = dynamoDBMapper
-                        .queryPage(VitalSigns.class, queryExpression);
+            DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
+                    .withHashKeyValues(vitalSigns);
+            QueryResultPage<VitalSigns> results = dynamoDBMapper
+                     .queryPage(VitalSigns.class, queryExpression);
 
-                if (results.getResults().isEmpty()) {
-                    metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
-                    log.warn("No vitalSigns found for user: {}", patientId);
-                    return Collections.emptyList();
+        if (results.getResults().isEmpty()) {
+            metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
+            log.warn("No vitalSigns found for user: {}", patientId);
+            return Collections.emptyList();
                 }
-                metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_FOUND_COUNT, 1);
-                return results.getResults();
+            metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_FOUND_COUNT, 1);
+            return results.getResults();
             } catch (Exception e) {
-                log.error("Failed to access the database for user: {}", patientId, e);
-                throw new DatabaseAccessException("Failed to access the database", e);
+            log.error("Failed to access the database for user: {}", patientId, e);
+            throw new DatabaseAccessException("Failed to access the database", e);
             }
         }
 

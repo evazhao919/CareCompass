@@ -10,12 +10,13 @@ import com.devyanan.CareCompass.models.VitalSignsModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
 
 public class AddVitalSignsRequestActivity {
     private final Logger log = LogManager.getLogger();
     private final VitalSignsDao vitalSignsDao;
     private final LocalDateTimeConverter dateTimeConverter;
-
+    @Inject
     public AddVitalSignsRequestActivity(final VitalSignsDao vitalSignsDao) {
         this.vitalSignsDao = vitalSignsDao;
         dateTimeConverter = new LocalDateTimeConverter();
