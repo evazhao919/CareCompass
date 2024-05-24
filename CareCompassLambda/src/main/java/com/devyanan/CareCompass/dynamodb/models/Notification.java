@@ -18,7 +18,7 @@ public class Notification {
     }
 
     @DynamoDBHashKey(attributeName = "patientId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "patientId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"NotificationsReminderTimeIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -26,11 +26,12 @@ public class Notification {
     public void setPatientId(String patientId) {
         this.patientId = patientId;
     }
-
+    @DynamoDBRangeKey(attributeName = "notificationId")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "NotificationIdIndex", attributeName = "notificationId")
     public String getNotificationId() {
         return notificationId;
     }
-    @DynamoDBRangeKey(attributeName = "notificationId")
+
     public void setNotificationId(String notificationId) {
         this.notificationId = notificationId;
     }
@@ -57,7 +58,6 @@ public class Notification {
     }
 
     @DynamoDBAttribute(attributeName = "reminderTime")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "userNotificationsIndex", attributeName = "reminderTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getReminderTime() {
         return reminderTime;

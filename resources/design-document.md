@@ -203,16 +203,16 @@ LocalDateTime reminderTime;
 
 ### 7.1. `medications`
 ```
-patientId // String Partition Key
-medicationName // String Sort Key
+patientId // String (Partition Key)
+medicationName // String (Sort Key)
 prescription // String 
 instructions // String 
 ```
 
 ### 7.2. `vitalSigns`
 ```
-patientId // String
-actualCheckTime // LocalDateTime      
+patientId // String (Partition Key)
+actualCheckTime // LocalDateTime (Sort Key)
 temperature // double 
 heartRate // int 
 pulse // int 
@@ -230,41 +230,30 @@ comments // String
 ```
 ## 7.3. `notifications`
 ```
-patientId // String 
-notificationId // String 
+patientId // String (Partition Key)
+notificationId // String (Sort Key)
 notificationTitle // String 
 reminderContent // String 
 reminderTime // LocalDateTime 
 ```
 ## 7.4. `bloodGlucoseMeasurements`
 ```
-patientId // String 
-frequency // String 
+patientId // String (Partition Key)
+frequency // String (Sort Key)
 actualCheckTime // LocalTime 
 glucoseLevel // double
 glucoseContext // String
 comments // String 
 ```
-### 7.5. `GSI medicationIndex`
-```
-patientId // partition key, string
-medicationName // sort key, String
-```
-### 7.6. `GSI vitalSignsIndex`
-```
-patientId // Partition Key
-actualCheckTime // Sort Key
-```
-### 7.7. `GSI userNotificationsIndex`
+### 7.5. `GSI NotificationIdIndex`
 ```
 patientId // Partition Key, String
-reminderTime //Sort Key, LocalDateTime
+notificationId // Sort Key，String
+reminderTime // LocalDateTime
+notificationTitle // String 
+reminderContent // String 
 ```
-## 7.8. `bloodGlucoseMeasurementsIndex`
-```
-patientId // Partition Key
-actualCheckTime // sort key
-```
+
 
 ## 8. Pages
 

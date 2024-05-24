@@ -38,7 +38,6 @@ public class VitalSigns {
         SITTING, STANDING, LAYING_DOWN, POST_EXERCISE,
     }
     @DynamoDBHashKey(attributeName = "patientId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -47,7 +46,6 @@ public class VitalSigns {
         this.patientId = patientId;
     }
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "vitalSignsIndex", attributeName = "actualCheckTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getActualCheckTime() {
         return actualCheckTime;

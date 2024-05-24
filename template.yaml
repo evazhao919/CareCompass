@@ -200,21 +200,41 @@ Resources:
                   - logs:PutLogEvents
                   - cloudwatch:PutMetricData
                 Resource: '*'
-        - PolicyName: 'AccessPlaylistsTable'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action: dynamodb:*
-                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/playlists"
 
-        - PolicyName: 'AccessAlbumTracksTable'
+        - PolicyName: 'AccessBloodGlucoseMeasurementsTable'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
               - Effect: Allow
                 Action: dynamodb:*
-                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/album_tracks"
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/bloodGlucoseMeasurements"
+
+        - PolicyName: 'AccessMedicationsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/medications"
+
+        - PolicyName: 'AccessNotificationsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: [
+                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications"
+                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications/index/NotificationIdIndex"
+                ]
+
+        - PolicyName: 'AccessVitalSignsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/vitalSigns"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration

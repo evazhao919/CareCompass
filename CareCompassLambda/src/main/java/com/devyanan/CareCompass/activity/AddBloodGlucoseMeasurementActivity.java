@@ -17,9 +17,9 @@ public class AddBloodGlucoseMeasurementActivity {
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
     private final LocalDateTimeConverter dateTimeConverter;
     @Inject
-    public AddBloodGlucoseMeasurementActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao, LocalDateTimeConverter dateTimeConverter) {
+    public AddBloodGlucoseMeasurementActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
-        this.dateTimeConverter = dateTimeConverter;
+        this.dateTimeConverter = new LocalDateTimeConverter();
     }
     public AddBloodGlucoseMeasurementResult handleRequest(final AddBloodGlucoseMeasurementRequest request){
         log.info("Received addBloodGlucoseMeasurementRequest {}", request);

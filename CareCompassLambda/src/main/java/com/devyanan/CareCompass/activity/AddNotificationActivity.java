@@ -18,9 +18,9 @@ public class AddNotificationActivity {
     private final LocalDateTimeConverter dateTimeConverter;
 
     @Inject
-    public AddNotificationActivity(NotificationDao notificationDao, LocalDateTimeConverter dateTimeConverter) {
+    public AddNotificationActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
-        this.dateTimeConverter = dateTimeConverter;
+        this.dateTimeConverter = new LocalDateTimeConverter();
     }
 
     public AddNotificationResult handleRequest(final AddNotificationRequest request){

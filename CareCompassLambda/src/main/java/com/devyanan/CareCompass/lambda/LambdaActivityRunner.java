@@ -1,5 +1,6 @@
 package com.devyanan.CareCompass.lambda;
 
+import com.devyanan.CareCompass.dependency.DaggerServiceComponent;
 import com.devyanan.CareCompass.dependency.ServiceComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

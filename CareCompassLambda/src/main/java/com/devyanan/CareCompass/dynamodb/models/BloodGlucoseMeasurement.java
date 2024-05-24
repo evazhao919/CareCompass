@@ -19,7 +19,6 @@ public class BloodGlucoseMeasurement {
     }
 
     @DynamoDBHashKey(attributeName = "patientId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"bloodGlucoseMeasurementsIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -29,7 +28,6 @@ public class BloodGlucoseMeasurement {
     }
 
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "bloodGlucoseMeasurementsIndex", attributeName = "actualCheckTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
