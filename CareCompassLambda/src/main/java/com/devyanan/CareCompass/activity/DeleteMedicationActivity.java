@@ -21,10 +21,6 @@ public class DeleteMedicationActivity {
     public DeleteMedicationResult handleRequest(final DeleteMedicationRequest request){
         log.info("Received DeleteMedicationRequest {}", request);
 
-//        String medicationName = request.getMedicationName();
-
-        // TODO check for invalidation
-
         Medication result = medicationDao.getSingleMedication(request.getPatientId(),request.getMedicationName());
 
         ModelConverter modelConverter = new ModelConverter();

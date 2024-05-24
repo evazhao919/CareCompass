@@ -23,23 +23,6 @@ public class AddVitalSignsRequestActivity {
     }
     public AddVitalSignsResult handleRequest(final AddVitalSignsRequest request) {
         log.info("Received AddVitalSignsRequest {}", request);
-        String actualCheckTime = request.getActualCheckTime();
-        double temperature = request.getTemperature();
-        int heartRate = request.getHeartRate();
-        int pulse = request.getPulse();
-        int respiratoryRate = request.getRespiratoryRate();
-        int systolicPressure = request.getSystolicPressure();
-        int diastolicPressure = request.getDiastolicPressure();
-        int meanArterialPressure = request.getMeanArterialPressure();
-        double weight = request.getWeight();
-        VitalSigns.PatientPosition patientPosition = request.getPatientPosition();
-        int bloodOxygenLevel = request.getBloodOxygenLevel();
-        VitalSigns.OxygenTherapy oxygenTherapy = request.getOxygenTherapy();
-        VitalSigns.FlowDelivered flowDelivered = request.getFlowDelivered();
-        VitalSigns.PatientActivity patientActivity = request.getPatientActivity();
-        String comments = request.getComments();
-
-        //TODO check for invalid enter
 
         VitalSigns vitalSigns = new VitalSigns();
         vitalSigns.setPatientId(request.getPatientId());

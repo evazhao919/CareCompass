@@ -20,11 +20,6 @@ public class AddMedicationActivity {
     }
     public AddMedicationResult handleRequest(final AddMedicationRequest request){
         log.info("Received AddMedicationRequest {}", request);
-        String medicationName = request.getMedicationName();
-        String prescription = request.getPrescription();
-        String instructions = request.getInstructions();
-
-        //TODO check for invalid enter
 
         Medication medication = new Medication();
         medication.setPatientId(request.getPatientId());

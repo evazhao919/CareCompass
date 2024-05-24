@@ -20,7 +20,6 @@ public class DeleteBloodGlucoseMeasurementActivity {
     public DeleteBloodGlucoseMeasurementResult handleRequest(final DeleteBloodGlucoseMeasurementRequest request){
         log.info("Received DeleteBloodGlucoseMeasurementRequest {}", request);
 
-        // TODO check for invalidation
         BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.deleteSingleBloodGlucoseMeasurement(request.getPatientId(),request.getActualCheckTime());
 
         return DeleteBloodGlucoseMeasurementResult.builder()

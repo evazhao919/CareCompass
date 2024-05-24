@@ -20,13 +20,9 @@ public class DeleteNotificationActivity {
     public DeleteNotificationResult handleRequest(final DeleteNotificationRequest request){
         log.info("Received DeleteNotificationRequest {}", request);
 
-        // TODO check for invalidation
-
         Notification notification = notificationDao.getSingleNotificationByPatientIdAndReminderTime(request.getPatientId(),request.getReminderTime());
         return DeleteNotificationResult.builder()
                 .withNotificationModel(new ModelConverter().toNotificationModel(notification))
                 .build();
-
-
     }
 }

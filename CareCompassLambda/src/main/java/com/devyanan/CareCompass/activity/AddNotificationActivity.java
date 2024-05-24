@@ -25,16 +25,10 @@ public class AddNotificationActivity {
 
     public AddNotificationResult handleRequest(final AddNotificationRequest request){
         log.info("Received AddVitalSignsRequest {}", request);
-        String notificationId = request.getNotificationId();
-        String notificationTitle = request.getNotificationTitle();
-        String reminderContent = request.getReminderContent();
-        String reminderTime = request.getReminderTime();
-        Notification.ReminderType reminderType = request.getReminderType();
-
-        //TODO check for invalid enter
 
         Notification notification = new Notification();
         notification.setPatientId(request.getPatientId());
+        notification.setNotificationId(request.getNotificationId());
         notification.setNotificationTitle(request.getNotificationTitle());
         notification.setReminderContent(request.getReminderContent());
         notification.setReminderTime(dateTimeConverter.unconvert(request.getReminderTime()));

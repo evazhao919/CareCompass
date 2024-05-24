@@ -23,12 +23,6 @@ public class AddBloodGlucoseMeasurementActivity {
     }
     public AddBloodGlucoseMeasurementResult handleRequest(final AddBloodGlucoseMeasurementRequest request){
         log.info("Received addBloodGlucoseMeasurementRequest {}", request);
-        String actualCheckTime = request.getActualCheckTime();
-        double glucoseLevel = request.getGlucoseLevel();
-        BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext = request.getGlucoseContext();
-        String comments = request.getComments();
-
-        //TODO check for invalid enter
 
         BloodGlucoseMeasurement bloodGlucoseMeasurement = new BloodGlucoseMeasurement();
         bloodGlucoseMeasurement.setPatientId(request.getPatientId());
