@@ -1,5 +1,7 @@
 package com.devyanan.CareCompass.models;
 
+import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
+
 import java.util.Objects;
 
 public class VitalSignsModel {
@@ -13,14 +15,14 @@ public class VitalSignsModel {
     private final int diastolicPressure;
     private final int meanArterialPressure;
     private final double weight;
-    private final String patientPosition;
-    private final int bloodOxygenLevel;
-    private final String oxygenTherapy;
-    private final String flowDelivered;
-    private final String patientActivity;
-    private final String comments;
+    private VitalSigns.PatientPosition patientPosition;
+    private int bloodOxygenLevel;
+    private VitalSigns.OxygenTherapy oxygenTherapy;
+    private VitalSigns.FlowDelivered flowDelivered;
+    private VitalSigns.PatientActivity patientActivity;
+    private String comments;
 
-    private VitalSignsModel(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, String patientPosition, int bloodOxygenLevel, String oxygenTherapy, String flowDelivered, String patientActivity, String comments) {
+    public VitalSignsModel(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.temperature = temperature;
@@ -79,7 +81,7 @@ public class VitalSignsModel {
         return weight;
     }
 
-    public String getPatientPosition() {
+    public VitalSigns.PatientPosition getPatientPosition() {
         return patientPosition;
     }
 
@@ -87,15 +89,15 @@ public class VitalSignsModel {
         return bloodOxygenLevel;
     }
 
-    public String getOxygenTherapy() {
+    public VitalSigns.OxygenTherapy getOxygenTherapy() {
         return oxygenTherapy;
     }
 
-    public String getFlowDelivered() {
+    public VitalSigns.FlowDelivered getFlowDelivered() {
         return flowDelivered;
     }
 
-    public String getPatientActivity() {
+    public VitalSigns.PatientActivity getPatientActivity() {
         return patientActivity;
     }
 
@@ -108,7 +110,7 @@ public class VitalSignsModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSignsModel that = (VitalSignsModel) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(patientPosition, that.patientPosition) && Objects.equals(oxygenTherapy, that.oxygenTherapy) && Objects.equals(flowDelivered, that.flowDelivered) && Objects.equals(patientActivity, that.patientActivity) && Objects.equals(comments, that.comments);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments);
     }
 
     @Override
@@ -131,11 +133,11 @@ public class VitalSignsModel {
         private int diastolicPressure;
         private int meanArterialPressure;
         private double weight;
-        private String patientPosition;
+        private VitalSigns.PatientPosition patientPosition;
         private int bloodOxygenLevel;
-        private String oxygenTherapy;
-        private String flowDelivered;
-        private String patientActivity;
+        private VitalSigns.OxygenTherapy oxygenTherapy;
+        private VitalSigns.FlowDelivered flowDelivered;
+        private VitalSigns.PatientActivity patientActivity;
         private String comments;
 
         public Builder withPatientId(String patientId) {
@@ -187,8 +189,7 @@ public class VitalSignsModel {
             this.weight = weight;
             return this;
         }
-
-        public Builder withPatientPosition(String patientPosition) {
+        public Builder withPatientPosition(VitalSigns.PatientPosition patientPosition) {
             this.patientPosition = patientPosition;
             return this;
         }
@@ -198,17 +199,17 @@ public class VitalSignsModel {
             return this;
         }
 
-        public Builder withOxygenTherapy(String oxygenTherapy) {
+        public Builder withOxygenTherapy(VitalSigns.OxygenTherapy oxygenTherapy) {
             this.oxygenTherapy = oxygenTherapy;
             return this;
         }
 
-        public Builder withFlowDelivered(String flowDelivered) {
+        public Builder withFlowDelivered(VitalSigns.FlowDelivered flowDelivered) {
             this.flowDelivered = flowDelivered;
             return this;
         }
 
-        public Builder withPatientActivity(String patientActivity) {
+        public Builder withPatientActivity(VitalSigns.PatientActivity patientActivity) {
             this.patientActivity = patientActivity;
             return this;
         }

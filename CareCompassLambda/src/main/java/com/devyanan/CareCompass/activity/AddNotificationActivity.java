@@ -29,6 +29,7 @@ public class AddNotificationActivity {
         String notificationTitle = request.getNotificationTitle();
         String reminderContent = request.getReminderContent();
         String reminderTime = request.getReminderTime();
+        Notification.ReminderType reminderType = request.getReminderType();
 
         //TODO check for invalid enter
 
@@ -37,6 +38,7 @@ public class AddNotificationActivity {
         notification.setNotificationTitle(request.getNotificationTitle());
         notification.setReminderContent(request.getReminderContent());
         notification.setReminderTime(dateTimeConverter.unconvert(request.getReminderTime()));
+        notification.setReminderType(request.getReminderType());
 
         Notification result = notificationDao.addNotification(notification);
 

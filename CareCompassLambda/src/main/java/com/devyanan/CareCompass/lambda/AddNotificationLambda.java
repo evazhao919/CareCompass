@@ -2,30 +2,32 @@ package com.devyanan.CareCompass.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.devyanan.CareCompass.activity.requests.AddMedicationRequest;
-import com.devyanan.CareCompass.activity.results.AddMedicationResult;
+import com.devyanan.CareCompass.activity.requests.AddNotificationRequest;
+import com.devyanan.CareCompass.activity.results.AddNotificationResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AddNotificationLambda extends LambdaActivityRunner<AddMedicationRequest, AddMedicationResult>
-        implements RequestHandler<AuthenticatedLambdaRequest<AddMedicationRequest>, LambdaResponse> {
+public class AddNotificationLambda extends LambdaActivityRunner<AddNotificationRequest, AddNotificationResult>
+        implements RequestHandler<AuthenticatedLambdaRequest<AddNotificationRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
     @Override
-    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddMedicationRequest> input, Context context) {
-        log.info("AuthenticatedLambdaRequest<AddMedicationRequest> received");
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddNotificationRequest> input, Context context) {
+        log.info("AuthenticatedLambdaRequest<NotificationRequest> received");
         return super.runActivity(
                 () -> {
-                    AddMedicationRequest unauthenticatedRequest = input.fromBody(AddMedicationRequest.class);
+                    AddNotificationRequest unauthenticatedRequest = input.fromBody(AddNotificationRequest.class);
                     return input.fromUserClaims(claims ->
-                            AddMedicationRequest.builder()
+                            AddNotificationRequest.builder()
                                     .withPatientId(claims.get("email"))
-                                    .withMedicationName(unauthenticatedRequest.getMedicationName())
-                                    .withPrescription(unauthenticatedRequest.getPrescription())
-                                    .withInstructions(unauthenticatedRequest.getInstructions())
+                                    .withNotificationId(unauthenticatedRequest.getNotificationId())
+                                    .withNotificationTitle(unauthenticatedRequest.getNotificationTitle())
+                                    .withReminderContent(unauthenticatedRequest.getReminderContent())
+                                    .withReminderTime(unauthenticatedRequest.getReminderTime())
+                                    .withReminderType(unauthenticatedRequest.getReminderType())
                                     .build());
                 },
                 (request, serviceComponent) ->
-                        serviceComponent.provideAddMedicationActivity().handleRequest(request)
+                        serviceComponent.provideAddNotificationActivity().handleRequest(request)
         );
     }
 }

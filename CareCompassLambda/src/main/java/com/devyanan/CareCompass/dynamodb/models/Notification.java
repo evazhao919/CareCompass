@@ -12,9 +12,10 @@ public class Notification {
     private String notificationTitle;
     private String reminderContent;
     private LocalDateTime reminderTime;
+    private ReminderType reminderType;
 
     public enum ReminderType {
-        MEDICATION, APPOINTMENT, GLUCOSE_MEASUREMENT, GENERAL
+        GLUCOSE_MEASUREMENT, MEDICATION, VITAL_SIGNS, GENERAL
     }
 
     @DynamoDBHashKey(attributeName = "patientId")
@@ -56,6 +57,14 @@ public class Notification {
             this.reminderContent = reminderContent;
         }
     }
+    @DynamoDBAttribute(attributeName = "reminderType")
+    public Notification.ReminderType getReminderType() {
+        return reminderType;
+    }
+
+    public void setReminderType(ReminderType reminderType) {
+        this.reminderType = reminderType;
+    }
 
     @DynamoDBAttribute(attributeName = "reminderTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
@@ -72,11 +81,11 @@ public class Notification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
-        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(reminderTime, that.reminderTime);
+        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(reminderTime, that.reminderTime) && reminderType == that.reminderType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, notificationId, notificationTitle, reminderContent, reminderTime);
+        return Objects.hash(patientId, notificationId, notificationTitle, reminderContent, reminderTime, reminderType);
     }
 }

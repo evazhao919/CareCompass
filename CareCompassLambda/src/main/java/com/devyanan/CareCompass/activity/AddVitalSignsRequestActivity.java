@@ -32,11 +32,11 @@ public class AddVitalSignsRequestActivity {
         int diastolicPressure = request.getDiastolicPressure();
         int meanArterialPressure = request.getMeanArterialPressure();
         double weight = request.getWeight();
-        String patientPosition = request.getPatientPosition();
+        VitalSigns.PatientPosition patientPosition = request.getPatientPosition();
         int bloodOxygenLevel = request.getBloodOxygenLevel();
-        String oxygenTherapy = request.getOxygenTherapy();
-        String flowDelivered = request.getFlowDelivered();
-        String patientActivity = request.getPatientActivity();
+        VitalSigns.OxygenTherapy oxygenTherapy = request.getOxygenTherapy();
+        VitalSigns.FlowDelivered flowDelivered = request.getFlowDelivered();
+        VitalSigns.PatientActivity patientActivity = request.getPatientActivity();
         String comments = request.getComments();
 
         //TODO check for invalid enter
@@ -55,7 +55,7 @@ public class AddVitalSignsRequestActivity {
         vitalSigns.setPatientPosition(request.getPatientPosition());
         vitalSigns.setBloodOxygenLevel(request.getBloodOxygenLevel());
         vitalSigns.setOxygenTherapy(request.getOxygenTherapy());
-        vitalSigns.setFlowDelivered(request.getOxygenTherapy());
+        vitalSigns.setFlowDelivered(request.getFlowDelivered());
         vitalSigns.setPatientActivity(request.getPatientActivity());
         vitalSigns.setComments(request.getComments());
 
