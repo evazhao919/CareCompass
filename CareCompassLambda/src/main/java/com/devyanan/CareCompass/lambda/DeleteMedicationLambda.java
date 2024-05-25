@@ -7,6 +7,9 @@ import com.devyanan.CareCompass.activity.results.DeleteMedicationResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Lambda function handler for deleting medications.
+ */
 public class DeleteMedicationLambda extends LambdaActivityRunner<DeleteMedicationRequest, DeleteMedicationResult>
         implements RequestHandler<AuthenticatedLambdaRequest<DeleteMedicationRequest>,LambdaResponse>  {
     private final Logger log = LogManager.getLogger();

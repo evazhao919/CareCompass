@@ -4,6 +4,9 @@ import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 
 import java.util.Objects;
 
+/**
+ * Represents a model for blood glucose measurements.
+ */
 public class BloodGlucoseMeasurementModel {
     private final String patientId;
     private final String actualCheckTime;
@@ -11,6 +14,10 @@ public class BloodGlucoseMeasurementModel {
     private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
     private final String comments;
 
+    /**
+     * Private constructor for the BloodGlucoseMeasurementModel.
+     * Use the Builder pattern to construct instances of this class.
+     */
     private BloodGlucoseMeasurementModel(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;

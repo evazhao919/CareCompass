@@ -22,6 +22,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * DAO class for managing VitalSigns data in DynamoDB.
+ */
 @Singleton
 public class VitalSignsDao {
 private final DynamoDBMapper dynamoDBMapper;
@@ -33,6 +37,15 @@ private final DynamoDBMapper dynamoDBMapper;
         this.metricsPublisher = metricsPublisher;
     }
 
+    /**
+     * Method to add vital signs data.
+     *
+     * @param vitalSigns The vital signs data to add.
+     * @return The added vital signs data.
+     * @throws IllegalArgumentException If the vital signs object is null or empty.
+     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while adding the vital signs data.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public VitalSigns addVitalSigns(VitalSigns vitalSigns){
         if(vitalSigns == null){
         metricsPublisher.addCount(MetricsConstants.ADD_VITAL_SIGNS_NULL_OR_EMPTY_COUNT,1);
@@ -57,6 +70,12 @@ private final DynamoDBMapper dynamoDBMapper;
         return vitalSigns;
     }
 
+    /**
+     * DAO method to delete vital signs data.
+     *
+     * @param vitalSigns The vital signs data to delete.
+     * @return The deleted vital signs data.
+     */
     public VitalSigns deleteVitalSigns(VitalSigns vitalSigns){
         if (vitalSigns == null) {
             log.warn("Attempted to delete a null vitalSigns object.");
@@ -79,6 +98,15 @@ private final DynamoDBMapper dynamoDBMapper;
             throw new DatabaseAccessException("Failed to delete vitalSigns from the database", e);
         }
     }
+
+    /**
+     * DAO method to delete a single vital signs data.
+     *
+     * @param patientId       The ID of the patient.
+     * @param actualCheckTime The actual check time of the vital signs data.
+     * @return The deleted vital signs data.
+     * @throws VitalSignsNotFoundException If the vital signs data is not found.
+     */
     public VitalSigns deleteSingleVitalSigns(String patientId, String actualCheckTime) {
         metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
         VitalSigns result = this.dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
@@ -91,6 +119,14 @@ private final DynamoDBMapper dynamoDBMapper;
             return result;
         }
     }
+
+    /**
+     * DAO method to retrieve all vital signs data for a patient.
+     *
+     * @param patientId The ID of the patient.
+     * @return A list of vital signs data for the specified patient.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public List<VitalSigns> getAllVitalSigns(String patientId) {
         try {
             log.info("Get vitalSigns for patientId with id: {}", patientId);
@@ -117,6 +153,16 @@ private final DynamoDBMapper dynamoDBMapper;
             }
         }
 
+    /**
+     * DAO method to retrieve vital signs data for a specified date range.
+     *
+     * @param patientId The ID of the patient.
+     * @param startDate The start date of the date range.
+     * @param endDate   The end date of the date range.
+     * @return A list of vital signs data for the specified patient within the date range.
+     * @throws IllegalArgumentException      If any of the parameters are null.
+     * @throws VitalSignsNotFoundException If no vital signs data is found for the specified date range.
+     */
     public List<VitalSigns> getVitalSignsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
         if (patientId == null) {
             throw new IllegalArgumentException("Patient ID cannot be null");

@@ -183,7 +183,7 @@ ReminderType reminderType;  // enum
 * Response: Success or error message. (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error).
 
 ### 6.12. Create Blood Glucose Measurement Endpoint
-* POST /blood-glucose
+* POST /bloodGlucoseMeasurements
 * Body: BloodGlucoseMeasurementModel
 * Description: Logs a new blood glucose measurement for a patient.
 * Response: Returns the newly created BloodGlucoseMeasurementModel.

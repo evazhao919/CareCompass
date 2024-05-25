@@ -4,6 +4,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.Objects;
 
+/**
+ * Represents a medication entity stored in DynamoDB.
+ */
 @DynamoDBTable(tableName = "medications")
 public class Medication {
     private String patientId;

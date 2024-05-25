@@ -6,6 +6,9 @@ import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Represents vital signs data stored in DynamoDB.
+ */
 @DynamoDBTable(tableName = "vitalSigns")
 public class VitalSigns {
     private String patientId;

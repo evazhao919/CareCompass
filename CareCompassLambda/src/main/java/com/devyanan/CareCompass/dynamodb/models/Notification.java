@@ -5,6 +5,10 @@ import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+/**
+ * Represents a notification entity stored in DynamoDB.
+ */
 @DynamoDBTable(tableName = "notifications")
 public class Notification {
     private String patientId;

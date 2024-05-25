@@ -7,9 +7,20 @@ import com.devyanan.CareCompass.activity.results.GetAllBloodGlucoseMeasurementsR
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Lambda function handler for retrieving all blood glucose measurements.
+ */
 public class GetAllBloodGlucoseMeasurementsLambda extends LambdaActivityRunner<GetAllBloodGlucoseMeasurementsRequest, GetAllBloodGlucoseMeasurementsResult>
         implements RequestHandler<AuthenticatedLambdaRequest<GetAllBloodGlucoseMeasurementsRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
+
+    /**
+     * Handles the Lambda request for retrieving all blood glucose measurements.
+     *
+     * @param input   The input request containing the authenticated request and context.
+     * @param context The Lambda execution context.
+     * @return A LambdaResponse indicating the result of the operation.
+     */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetAllBloodGlucoseMeasurementsRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest<GetAllBloodGlucoseMeasurementsRequest> received");

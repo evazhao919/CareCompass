@@ -11,13 +11,27 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 
+/**
+ * This class handles the logic for adding a medication.
+ */
 public class AddMedicationActivity {
     private final Logger log = LogManager.getLogger();
     private final MedicationDao medicationDao;
+
+    /**
+     * Constructor for AddMedicationActivity.
+     * @param medicationDao DAO for medications
+     */
     @Inject
     public AddMedicationActivity(MedicationDao medicationDao) {
         this.medicationDao = medicationDao;
     }
+
+    /**
+     * Handles the request to add a medication.
+     * @param request The request containing the medication data
+     * @return The result of adding the medication
+     */
     public AddMedicationResult handleRequest(final AddMedicationRequest request){
         log.info("Received AddMedicationRequest {}", request);
 

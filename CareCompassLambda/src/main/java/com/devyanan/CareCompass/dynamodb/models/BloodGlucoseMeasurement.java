@@ -6,6 +6,9 @@ import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Represents a blood glucose measurement entity stored in DynamoDB.
+ */
 @DynamoDBTable(tableName = "bloodGlucoseMeasurements")
 public class BloodGlucoseMeasurement {
     private String patientId;

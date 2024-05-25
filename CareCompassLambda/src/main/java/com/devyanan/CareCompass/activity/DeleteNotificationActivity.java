@@ -10,13 +10,27 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 
+/**
+ * This class handles the logic for deleting a notification.
+ */
 public class DeleteNotificationActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
+
+    /**
+     * Constructor for DeleteNotificationActivity.
+     * @param notificationDao DAO for notifications
+     */
     @Inject
     public DeleteNotificationActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
     }
+
+    /**
+     * Handles the request to delete a notification.
+     * @param request The request containing the notification data for deletion
+     * @return The result of the deletion operation
+     */
     public DeleteNotificationResult handleRequest(final DeleteNotificationRequest request){
         log.info("Received DeleteNotificationRequest {}", request);
 

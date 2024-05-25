@@ -22,6 +22,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * DAO class for managing BloodGlucoseMeasurement data in DynamoDB.
+ */
 @Singleton
 public class BloodGlucoseMeasurementDao {
     private final DynamoDBMapper dynamoDBMapper;
@@ -32,6 +36,16 @@ public class BloodGlucoseMeasurementDao {
         this.dynamoDBMapper = dynamoDBMapper;
         this.metricsPublisher = metricsPublisher;
     }
+
+    /**
+     * Method to add a blood glucose measurement.
+     *
+     * @param bloodGlucoseMeasurement The blood glucose measurement to add.
+     * @return The added blood glucose measurement.
+     * @throws IllegalArgumentException  If the blood glucose measurement object is null.
+     * @throws CustomDynamoDBException   If there is a DynamoDB-specific error while adding the blood glucose measurement.
+     * @throws DatabaseAccessException  If there is an error accessing the database.
+     */
     public BloodGlucoseMeasurement addBloodGlucoseMeasurement(BloodGlucoseMeasurement bloodGlucoseMeasurement){
         if(bloodGlucoseMeasurement == null){
             metricsPublisher.addCount(MetricsConstants.ADD_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
@@ -56,6 +70,14 @@ public class BloodGlucoseMeasurementDao {
         return bloodGlucoseMeasurement;
     }
 
+    /**
+     * Method to delete a blood glucose measurement.
+     *
+     * @param bloodGlucoseMeasurement The blood glucose measurement to delete.
+     * @return The deleted blood glucose measurement.
+     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while deleting the blood glucose measurement.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public BloodGlucoseMeasurement deleteBloodGlucoseMeasurement(BloodGlucoseMeasurement bloodGlucoseMeasurement){
         if (bloodGlucoseMeasurement == null) {
             log.warn("Attempted to delete a null bloodGlucoseMeasurement object.");
@@ -78,6 +100,15 @@ public class BloodGlucoseMeasurementDao {
             throw new DatabaseAccessException("Failed to delete bloodGlucoseMeasurement from the database", e);
         }
     }
+
+    /**
+     * Method to delete a single blood glucose measurement.
+     *
+     * @param patientId       The ID of the patient.
+     * @param actualCheckTime The actual check time of the blood glucose measurement.
+     * @return The deleted blood glucose measurement.
+     * @throws BloodGlucoseMeasurementNotFoundException If the blood glucose measurement is not found.
+     */
     public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurement(String patientId, String actualCheckTime){
         metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
         BloodGlucoseMeasurement result = this.dynamoDBMapper.load(BloodGlucoseMeasurement.class,patientId,actualCheckTime);
@@ -89,9 +120,18 @@ public class BloodGlucoseMeasurementDao {
             metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT,1);
             return result;
         }
-
-
     }
+
+    /**
+     * DAO method to retrieve blood glucose measurements data for a specified date range.
+     *
+     * @param patientId The ID of the patient.
+     * @param startDate The start date of the date range.
+     * @param endDate   The end date of the date range.
+     * @return A list of blood glucose measurements data for the specified patient within the date range.
+     * @throws IllegalArgumentException           If any of the parameters are null.
+     * @throws BloodGlucoseMeasurementNotFoundException If no blood glucose measurements data is found for the specified date range.
+     */
     public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
         if (patientId == null) {
             throw new IllegalArgumentException("Patient ID cannot be null");
@@ -124,8 +164,15 @@ public class BloodGlucoseMeasurementDao {
             metricsPublisher.addCount(MetricsConstants.GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_NOT_FOUND_COUNT, 1);
             throw new BloodGlucoseMeasurementNotFoundException("No measurements found for the specified date range");
         }
-        }
+    }
 
+    /**
+     * DAO method to retrieve all blood glucose measurements data for a patient.
+     *
+     * @param patientId The ID of the patient.
+     * @return A list of all blood glucose measurements data for the specified patient.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public List<BloodGlucoseMeasurement> getAllBloodGlucoseMeasurements(String patientId) {
         try {
             log.info("Get blood glucose measurements for patientId with id: {}",patientId);

@@ -36,12 +36,12 @@ public class NotificationDao {
             log.info("Attempting to add a notification: {}", notification);
             dynamoDBMapper.save(notification);
             metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT,1);
-            //log.info("Notification added successfully for user: {}", notification.getPatientId());
+            log.info("Notification added successfully for user: {}", notification.getPatientId());
         } catch (AmazonDynamoDBException e) {
-            //log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
+            log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
             throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
         }catch (Exception e) {
-            //log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
+            log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
             throw new DatabaseAccessException("Failed to add notification to the database", e);
         }
 
@@ -59,16 +59,17 @@ public class NotificationDao {
             log.info("Attempting to delete notification: {}", notification);
             this.dynamoDBMapper.delete(notification);
             metricsPublisher.addCount(MetricsConstants.DELETE_NOTIFICATION_SUCCESS_COUNT,1);
-            //log.info("notification deleted successfully: {}", notification);
+            log.info("notification deleted successfully: {}", notification);
             return true;
         }catch (AmazonDynamoDBException e) {
-            //log.error("DynamoDB-specific error occurred while deleting notification: {}", notification, e);
+            log.error("DynamoDB-specific error occurred while deleting notification: {}", notification, e);
             throw new CustomDynamoDBException("Failed to delete notification from the database due to DynamoDB-specific error", e);
         } catch (Exception e) {
-            //log.error("Failed to delete notification: {}", notification, e);
+            log.error("Failed to delete notification: {}", notification, e);
             throw new DatabaseAccessException("Failed to delete notification from the database", e);
         }
     }
+
     public Notification getSingleNotificationByPatientIdAndNotificationId(String patientId, String notificationId) {
         try{
             log.info("Attempting to get notification: {}", notificationId);
@@ -109,7 +110,6 @@ public class NotificationDao {
         }
     }
 
-
     public List<Notification> getAllNotifications(String patientId){
         try {
             log.info("Attempting to get all notifications for user: {}", patientId);
@@ -131,6 +131,28 @@ public class NotificationDao {
         } catch (Exception e) {
             log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
+        }
+    }
+
+    public Notification updateNotification(Notification updatedNotification) {
+        if (updatedNotification == null || updatedNotification.getPatientId() == null || updatedNotification.getNotificationId() == null) {
+            log.warn("Attempted to update a null or empty notification object.");
+            metricsPublisher.addCount(MetricsConstants.UPDATE_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
+            throw new IllegalArgumentException("Updated notification object or patient ID or notification ID cannot be null or empty.");
+        }
+
+        try {
+            log.info("Attempting to update notification: {}", updatedNotification);
+            dynamoDBMapper.save(updatedNotification);
+            metricsPublisher.addCount(MetricsConstants.UPDATE_NOTIFICATION_SUCCESS_COUNT, 1);
+            log.info("Notification updated successfully: {}", updatedNotification);
+            return updatedNotification;
+        } catch (AmazonDynamoDBException e) {
+            log.error("DynamoDB-specific error occurred while updating notification: {}", updatedNotification, e);
+            throw new CustomDynamoDBException("Failed to update notification in the database due to DynamoDB-specific error", e);
+        } catch (Exception e) {
+            log.error("Failed to update notification: {}", updatedNotification, e);
+            throw new DatabaseAccessException("Failed to update notification in the database", e);
         }
     }
 }

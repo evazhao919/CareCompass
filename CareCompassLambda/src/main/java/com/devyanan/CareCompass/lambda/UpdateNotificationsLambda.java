@@ -5,8 +5,19 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.devyanan.CareCompass.activity.requests.UpdateNotificationsRequest;
 import com.devyanan.CareCompass.activity.results.UpdateNotificationsResult;
 
+/**
+ * Lambda function handler for updating notifications.
+ */
 public class UpdateNotificationsLambda extends LambdaActivityRunner<UpdateNotificationsRequest, UpdateNotificationsResult>
         implements RequestHandler<AuthenticatedLambdaRequest<UpdateNotificationsRequest>, LambdaResponse> {
+
+    /**
+     * Handles the Lambda request for updating notifications.
+     *
+     * @param input   The input request containing the authenticated request and context.
+     * @param context The Lambda execution context.
+     * @return A LambdaResponse indicating the result of the operation.
+     */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<UpdateNotificationsRequest> input, Context context) {
         return super.runActivity(

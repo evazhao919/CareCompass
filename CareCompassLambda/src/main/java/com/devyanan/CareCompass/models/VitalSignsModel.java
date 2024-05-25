@@ -4,6 +4,9 @@ import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 
 import java.util.Objects;
 
+/**
+ * Represents a model for vital signs.
+ */
 public class VitalSignsModel {
     private final String patientId;
     private final String actualCheckTime;
@@ -22,6 +25,10 @@ public class VitalSignsModel {
     private VitalSigns.PatientActivity patientActivity;
     private String comments;
 
+    /**
+     * Private constructor for the VitalSignsModel.
+     * Use the Builder pattern to construct instances of this class.
+     */
     public VitalSignsModel(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;

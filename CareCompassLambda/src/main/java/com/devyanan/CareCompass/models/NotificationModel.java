@@ -1,10 +1,12 @@
 package com.devyanan.CareCompass.models;
 
-import com.devyanan.CareCompass.activity.requests.AddNotificationRequest;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
 
 import java.util.Objects;
 
+/**
+ * Represents a model for notifications.
+ */
 public class NotificationModel {
     private final String patientId;
     private final String notificationId;
@@ -13,6 +15,10 @@ public class NotificationModel {
     private final String reminderTime;
     private final Notification.ReminderType ReminderType;
 
+    /**
+     * Private constructor for the NotificationModel.
+     * Use the Builder pattern to construct instances of this class.
+     */
     private NotificationModel(String patientId, String notificationId, String notificationTitle, String reminderContent, String reminderTime, Notification.ReminderType reminderType) {
         this.patientId = patientId;
         this.notificationId = notificationId;

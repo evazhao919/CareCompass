@@ -7,9 +7,21 @@ import com.devyanan.CareCompass.activity.results.AddMedicationResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Lambda function handler for adding medication.
+ */
+
 public class AddMedicationLambda extends LambdaActivityRunner<AddMedicationRequest, AddMedicationResult>
         implements RequestHandler<AuthenticatedLambdaRequest<AddMedicationRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
+
+    /**
+     * Handles the Lambda request for adding medication.
+     *
+     * @param input   The input request containing the authenticated request and context.
+     * @param context The Lambda execution context.
+     * @return A LambdaResponse indicating the result of the operation.
+     */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddMedicationRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest<AddMedicationRequest> received");

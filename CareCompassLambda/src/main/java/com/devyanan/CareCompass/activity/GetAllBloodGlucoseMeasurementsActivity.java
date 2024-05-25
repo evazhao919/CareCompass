@@ -12,13 +12,28 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * This class handles the logic for retrieving all blood glucose measurements for a patient.
+ */
 public class GetAllBloodGlucoseMeasurementsActivity {
     private final Logger log = LogManager.getLogger();
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
+
+    /**
+     * Constructor for GetAllBloodGlucoseMeasurementsActivity.
+     * @param bloodGlucoseMeasurementDao DAO for blood glucose measurements
+     */
     @Inject
     public GetAllBloodGlucoseMeasurementsActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
     }
+
+    /**
+     * Handles the request to retrieve all blood glucose measurements for a patient.
+     * @param request The request containing the patient ID
+     * @return The result containing the list of blood glucose measurements
+     * @throws BloodGlucoseMeasurementNotFoundException if no measurements are found for the patient
+     */
     public GetAllBloodGlucoseMeasurementsResult handleRequest(GetAllBloodGlucoseMeasurementsRequest request){
         log.info("GetAllBloodGlucoseMeasurementsRequest received {}.",request);
         List<BloodGlucoseMeasurement> bloodGlucoseMeasurementList;
