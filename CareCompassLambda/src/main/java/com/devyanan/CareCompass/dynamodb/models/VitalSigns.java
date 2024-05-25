@@ -18,11 +18,11 @@ public class VitalSigns {
     private int diastolicPressure;
     private int meanArterialPressure;
     private double weight;
-    private String patientPosition;
+    private PatientPosition patientPosition;
     private int bloodOxygenLevel;
-    private String oxygenTherapy;
-    private String flowDelivered;
-    private String patientActivity;
+    private OxygenTherapy oxygenTherapy;
+    private FlowDelivered flowDelivered;
+    private PatientActivity patientActivity;
     private String comments;
 
     public enum PatientPosition {
@@ -38,7 +38,6 @@ public class VitalSigns {
         SITTING, STANDING, LAYING_DOWN, POST_EXERCISE,
     }
     @DynamoDBHashKey(attributeName = "patientId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"medicationIndex", "vitalSignsIndex","userNotificationsIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -47,7 +46,6 @@ public class VitalSigns {
         this.patientId = patientId;
     }
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "vitalSignsIndex", attributeName = "actualCheckTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
@@ -113,6 +111,7 @@ public class VitalSigns {
     public void setMeanArterialPressure(int meanArterialPressure) {
         this.meanArterialPressure = meanArterialPressure;
     }
+
     @DynamoDBAttribute(attributeName = "weight")
     public double getWeight() {
         return weight;
@@ -121,14 +120,16 @@ public class VitalSigns {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
     @DynamoDBAttribute(attributeName = "patientPosition")
-    public String getPatientPosition() {
+    public PatientPosition getPatientPosition() {
         return patientPosition;
     }
 
-    public void setPatientPosition(String patientPosition) {
+    public void setPatientPosition(PatientPosition patientPosition) {
         this.patientPosition = patientPosition;
     }
+
     @DynamoDBAttribute(attributeName = "bloodOxygenLevel")
     public int getBloodOxygenLevel() {
         return bloodOxygenLevel;
@@ -137,30 +138,34 @@ public class VitalSigns {
     public void setBloodOxygenLevel(int bloodOxygenLevel) {
         this.bloodOxygenLevel = bloodOxygenLevel;
     }
+
     @DynamoDBAttribute(attributeName = "oxygenTherapy")
-    public String getOxygenTherapy() {
+    public OxygenTherapy getOxygenTherapy() {
         return oxygenTherapy;
     }
 
-    public void setOxygenTherapy(String oxygenTherapy) {
+    public void setOxygenTherapy(OxygenTherapy oxygenTherapy) {
         this.oxygenTherapy = oxygenTherapy;
     }
+
     @DynamoDBAttribute(attributeName = "flowDelivered")
-    public String getFlowDelivered() {
+    public FlowDelivered getFlowDelivered() {
         return flowDelivered;
     }
 
-    public void setFlowDelivered(String flowDelivered) {
+    public void setFlowDelivered(FlowDelivered flowDelivered) {
         this.flowDelivered = flowDelivered;
     }
+
     @DynamoDBAttribute(attributeName = "patientActivity")
-    public String getPatientActivity() {
+    public PatientActivity getPatientActivity() {
         return patientActivity;
     }
 
-    public void setPatientActivity(String patientActivity) {
+    public void setPatientActivity(PatientActivity patientActivity) {
         this.patientActivity = patientActivity;
     }
+
     @DynamoDBAttribute(attributeName = "comments")
     public String getComments() {
         return comments;
@@ -175,7 +180,7 @@ public class VitalSigns {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VitalSigns that = (VitalSigns) o;
-        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && Objects.equals(patientPosition, that.patientPosition) && Objects.equals(oxygenTherapy, that.oxygenTherapy) && Objects.equals(flowDelivered, that.flowDelivered) && Objects.equals(patientActivity, that.patientActivity) && Objects.equals(comments, that.comments);
+        return Double.compare(temperature, that.temperature) == 0 && heartRate == that.heartRate && pulse == that.pulse && respiratoryRate == that.respiratoryRate && systolicPressure == that.systolicPressure && diastolicPressure == that.diastolicPressure && meanArterialPressure == that.meanArterialPressure && Double.compare(weight, that.weight) == 0 && bloodOxygenLevel == that.bloodOxygenLevel && Objects.equals(patientId, that.patientId) && Objects.equals(actualCheckTime, that.actualCheckTime) && patientPosition == that.patientPosition && oxygenTherapy == that.oxygenTherapy && flowDelivered == that.flowDelivered && patientActivity == that.patientActivity && Objects.equals(comments, that.comments);
     }
 
     @Override

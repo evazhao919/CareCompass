@@ -1,5 +1,6 @@
 package com.devyanan.CareCompass.activity.requests;
 
+import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -10,13 +11,15 @@ public class AddNotificationRequest {
     private final String notificationTitle;
     private final String reminderContent;
     private final String reminderTime;
+    private final Notification.ReminderType reminderType;
 
-    public AddNotificationRequest(String patientId, String notificationId, String notificationTitle, String reminderContent,  String reminderTime) {
+    public AddNotificationRequest(String patientId, String notificationId, String notificationTitle, String reminderContent, String reminderTime, Notification.ReminderType reminderType) {
         this.patientId = patientId;
         this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
         this.reminderContent = reminderContent;
         this.reminderTime = reminderTime;
+        this.reminderType = reminderType;
     }
 
     public String getPatientId() {
@@ -39,14 +42,19 @@ public class AddNotificationRequest {
         return reminderTime;
     }
 
+    public Notification.ReminderType getReminderType() {
+        return reminderType;
+    }
+
     @Override
     public String toString() {
-        return "CreateNotificationRequest{" +
+        return "AddNotificationRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderContent='" + reminderContent + '\'' +
-                ", reminderTime=" + reminderTime +
+                ", reminderTime='" + reminderTime + '\'' +
+                ", reminderType=" + reminderType +
                 '}';
     }
 
@@ -61,6 +69,7 @@ public class AddNotificationRequest {
         private String notificationTitle;
         private String reminderContent;
         private String reminderTime;
+        private Notification.ReminderType reminderType;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -85,8 +94,13 @@ public class AddNotificationRequest {
             return this;
         }
 
+        public Builder withReminderType(Notification.ReminderType reminderType) {
+            this.reminderType = reminderType;
+            return this;
+        }
+
         public AddNotificationRequest build() {
-            return new AddNotificationRequest(patientId, notificationId, notificationTitle, reminderContent, reminderTime);
+            return new AddNotificationRequest(patientId, notificationId, notificationTitle, reminderContent, reminderTime, reminderType);
         }
     }
 }

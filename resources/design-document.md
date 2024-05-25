@@ -93,11 +93,11 @@ int systolicPressure;
 int diastolicPressure;
 int meanArterialPressure;
 double weight;
-String patientPosition;
+PatientPosition patientPosition; // enum
 int bloodOxygenLevel;
-String oxygenTherapy;
-String flowDelivered;
-String patientActivity;
+OxygenTherapy oxygenTherapy; // enum
+FlowDelivered flowDelivered; // enum
+PatientActivity patientActivity; // enum
 String comments;        
 ```
 ```
@@ -105,7 +105,7 @@ String comments;
 String patientId;                   
 LocalDateTime actualCheckTime;
 double glucoseLevel;
-GlucoseMeasurementContext glucoseContext;
+GlucoseMeasurementContext glucoseContext; // enum
 String comments;    
 ```
 ```
@@ -116,6 +116,7 @@ String notificationId;
 String notificationTitle;
 String reminderContent;
 LocalDateTime reminderTime;
+ReminderType reminderType;  // enum
 ```
 
 ### Medication Management Reminder Endpoints
@@ -203,16 +204,16 @@ LocalDateTime reminderTime;
 
 ### 7.1. `medications`
 ```
-patientId // String Partition Key
-medicationName // String Sort Key
+patientId // String (Partition Key)
+medicationName // String (Sort Key)
 prescription // String 
 instructions // String 
 ```
 
 ### 7.2. `vitalSigns`
 ```
-patientId // String
-actualCheckTime // LocalDateTime      
+patientId // String (Partition Key)
+actualCheckTime // LocalDateTime (Sort Key)
 temperature // double 
 heartRate // int 
 pulse // int 
@@ -221,50 +222,40 @@ systolicPressure // int
 diastolicPressure // int 
 meanArterialPressure // int 
 weight // double 
-patientPosition // String 
-bloodOxygenLevel // int 
-oxygenTherapy // String 
-flowDelivered // String 
-patientActivity // String 
+patientPosition // PatientPosition (enum)
+bloodOxygenLevel // int enum
+oxygenTherapy // OxygenTherapy (enum)
+flowDelivered // FlowDelivered
+patientActivity // PatientActivity (enum)
 comments // String 
 ```
 ## 7.3. `notifications`
 ```
-patientId // String 
-notificationId // String 
+patientId // String (Partition Key)
+notificationId // String (Sort Key)
 notificationTitle // String 
 reminderContent // String 
 reminderTime // LocalDateTime 
 ```
 ## 7.4. `bloodGlucoseMeasurements`
 ```
-patientId // String 
-frequency // String 
+patientId // String (Partition Key)
+frequency // String (Sort Key)
 actualCheckTime // LocalTime 
 glucoseLevel // double
-glucoseContext // String
+glucoseContext // GlucoseMeasurementContext  (enum)
 comments // String 
 ```
-### 7.5. `GSI medicationIndex`
-```
-patientId // partition key, string
-medicationName // sort key, String
-```
-### 7.6. `GSI vitalSignsIndex`
-```
-patientId // Partition Key
-actualCheckTime // Sort Key
-```
-### 7.7. `GSI userNotificationsIndex`
+### 7.5. `GSI NotificationIdIndex`
 ```
 patientId // Partition Key, String
-reminderTime //Sort Key, LocalDateTime
+notificationId // Sort Key，String
+reminderTime // LocalDateTime
+notificationTitle // String 
+reminderContent // String 
+reminderType;  // ReminderType  (enum)
 ```
-## 7.8. `bloodGlucoseMeasurementsIndex`
-```
-patientId // Partition Key
-actualCheckTime // sort key
-```
+
 
 ## 8. Pages
 

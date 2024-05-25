@@ -10,30 +10,29 @@ import com.devyanan.CareCompass.models.NotificationModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
+
 public class AddNotificationActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
     private final LocalDateTimeConverter dateTimeConverter;
 
-    public AddNotificationActivity(NotificationDao notificationDao, LocalDateTimeConverter dateTimeConverter) {
+    @Inject
+    public AddNotificationActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
-        this.dateTimeConverter = dateTimeConverter;
+        this.dateTimeConverter = new LocalDateTimeConverter();
     }
 
     public AddNotificationResult handleRequest(final AddNotificationRequest request){
         log.info("Received AddVitalSignsRequest {}", request);
-        String notificationId = request.getNotificationId();
-        String notificationTitle = request.getNotificationTitle();
-        String reminderContent = request.getReminderContent();
-        String reminderTime = request.getReminderTime();
-
-        //TODO check for invalid enter
 
         Notification notification = new Notification();
         notification.setPatientId(request.getPatientId());
+        notification.setNotificationId(request.getNotificationId());
         notification.setNotificationTitle(request.getNotificationTitle());
         notification.setReminderContent(request.getReminderContent());
         notification.setReminderTime(dateTimeConverter.unconvert(request.getReminderTime()));
+        notification.setReminderType(request.getReminderType());
 
         Notification result = notificationDao.addNotification(notification);
 

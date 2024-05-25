@@ -8,10 +8,12 @@ import com.devyanan.CareCompass.dynamodb.models.Notification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
+
 public class UpdateNotificationsActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
-
+    @Inject
     public UpdateNotificationsActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
     }

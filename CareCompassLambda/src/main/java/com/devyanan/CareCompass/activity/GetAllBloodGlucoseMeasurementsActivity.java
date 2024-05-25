@@ -9,12 +9,13 @@ import com.devyanan.CareCompass.exceptions.BloodGlucoseMeasurementNotFoundExcept
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class GetAllBloodGlucoseMeasurementsActivity {
     private final Logger log = LogManager.getLogger();
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
-
+    @Inject
     public GetAllBloodGlucoseMeasurementsActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
     }

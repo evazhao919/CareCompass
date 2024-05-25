@@ -5,22 +5,21 @@ import com.devyanan.CareCompass.activity.results.DeleteBloodGlucoseMeasurementRe
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.BloodGlucoseMeasurementDao;
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
-import com.devyanan.CareCompass.models.BloodGlucoseMeasurementModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.inject.Inject;
 
 public class DeleteBloodGlucoseMeasurementActivity {
     private final Logger log = LogManager.getLogger();
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
-
-
+    @Inject
     public DeleteBloodGlucoseMeasurementActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
     }
     public DeleteBloodGlucoseMeasurementResult handleRequest(final DeleteBloodGlucoseMeasurementRequest request){
         log.info("Received DeleteBloodGlucoseMeasurementRequest {}", request);
 
-        // TODO check for invalidation
         BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.deleteSingleBloodGlucoseMeasurement(request.getPatientId(),request.getActualCheckTime());
 
         return DeleteBloodGlucoseMeasurementResult.builder()
