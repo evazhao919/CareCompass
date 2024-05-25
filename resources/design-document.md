@@ -246,16 +246,11 @@ glucoseLevel // double
 glucoseContext // GlucoseMeasurementContext  (enum)
 comments // String 
 ```
-### 7.5. `GSI NotificationIdIndex`
+### 7.5. `GSI vitalSignsDateIndex`
 ```
 patientId // Partition Key, String
-notificationId // Sort Key，String
-reminderTime // LocalDateTime
-notificationTitle // String 
-reminderContent // String 
-reminderType;  // ReminderType  (enum)
+actualCheckTime // LocalDateTime (Sort Key)
 ```
-
 
 ## 8. Pages
 

@@ -28,19 +28,20 @@ public class VitalSigns {
     private PatientActivity patientActivity;
     private String comments;
 
-    public enum PatientPosition {
+    public enum PatientPosition { //TODO enum should use PATIENT_POSITION, will do refactor for all the enums
         SUPINE, PRONE, LEFT_LATERAL, RIGHT_LATERAL, SITTING, STANDING
     }
-    public enum OxygenTherapy {
+    public enum OxygenTherapy { // TODO Naming convention, for limited time will do it later
         NASAL_CANNULA, SIMPLE_FACE_MASK, NON_REBREATHER_MASK, VENTURI_MASK, HIGH_FLOW_NASAL_CANNULA
     }
-    public enum FlowDelivered {
+    public enum FlowDelivered { // TODO Naming convention, for limited time will do it later
         LOW_FLOW, MEDIUM_FLOW, HIGH_FLOW
     }
-    public enum PatientActivity {
+    public enum PatientActivity { // TODO Naming convention, for limited time will do it later
         SITTING, STANDING, LAYING_DOWN, POST_EXERCISE,
     }
     @DynamoDBHashKey(attributeName = "patientId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"vitalSignsDateIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -50,6 +51,7 @@ public class VitalSigns {
     }
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "NotificationIdIndex", attributeName = "actualCheckTime")
     public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
     }

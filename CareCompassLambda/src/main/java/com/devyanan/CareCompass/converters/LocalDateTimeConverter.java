@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  * Converter class for converting LocalDateTime objects to and from their string representations.
  */
 public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, LocalDateTime> {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
 
     /**
      * Converts a LocalDateTime object to its string representation.

@@ -13,11 +13,11 @@ import java.util.Objects;
 public class BloodGlucoseMeasurement {
     private String patientId;
     private LocalDateTime actualCheckTime;
-    private double glucoseLevel;
+    private double glucoseLevel; // TODO may need use bigDecimal, for limited time will do it later
     private GlucoseMeasurementContext glucoseContext;
     private String comments;
 
-    public enum GlucoseMeasurementContext {
+    public enum GlucoseMeasurementContext { // TODO Naming convention, for limited time will do it later
         FASTING, BEFORE_MEAL, AFTER_MEAL, BEDTIME;
     }
 

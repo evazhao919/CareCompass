@@ -18,12 +18,11 @@ public class Notification {
     private LocalDateTime reminderTime;
     private ReminderType reminderType;
 
-    public enum ReminderType {
+    public enum ReminderType {  // TODO Naming convention, for limited time will do it later
         GLUCOSE_MEASUREMENT, MEDICATION, VITAL_SIGNS, GENERAL
     }
 
     @DynamoDBHashKey(attributeName = "patientId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"NotificationsReminderTimeIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -32,7 +31,6 @@ public class Notification {
         this.patientId = patientId;
     }
     @DynamoDBRangeKey(attributeName = "notificationId")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "NotificationIdIndex", attributeName = "notificationId")
     public String getNotificationId() {
         return notificationId;
     }

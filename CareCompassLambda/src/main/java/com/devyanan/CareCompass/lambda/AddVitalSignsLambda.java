@@ -23,7 +23,7 @@ public class AddVitalSignsLambda extends LambdaActivityRunner<AddVitalSignsReque
      */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddVitalSignsRequest> input, Context context) {
-        log.info("AuthenticatedLambdaRequest<AddMedicationRequest> received");
+        log.info("AuthenticatedLambdaRequest<AddVitalSignsRequest> received");
         return super.runActivity(
                 () -> {
                     AddVitalSignsRequest unauthenticatedRequest = input.fromBody(AddVitalSignsRequest.class);

@@ -18,12 +18,12 @@ public class VitalSignsModel {
     private final int diastolicPressure;
     private final int meanArterialPressure;
     private final double weight;
-    private VitalSigns.PatientPosition patientPosition;
-    private int bloodOxygenLevel;
-    private VitalSigns.OxygenTherapy oxygenTherapy;
-    private VitalSigns.FlowDelivered flowDelivered;
-    private VitalSigns.PatientActivity patientActivity;
-    private String comments;
+    private final VitalSigns.PatientPosition patientPosition;
+    private final int bloodOxygenLevel;
+    private final VitalSigns.OxygenTherapy oxygenTherapy;
+    private final VitalSigns.FlowDelivered flowDelivered;
+    private final VitalSigns.PatientActivity patientActivity;
+    private final String comments;
 
     /**
      * Private constructor for the VitalSignsModel.
