@@ -112,7 +112,6 @@ String comments;
 // NotificationModel
 
 String patientId;
-String notificationId;
 String notificationTitle;
 String reminderContent;
 LocalDateTime reminderTime;
@@ -232,10 +231,9 @@ comments // String
 ## 7.3. `notifications`
 ```
 patientId // String (Partition Key)
-notificationId // String (Sort Key)
 notificationTitle // String 
 reminderContent // String 
-reminderTime // LocalDateTime 
+reminderTime // LocalDateTime (Sort Key)
 ```
 ## 7.4. `bloodGlucoseMeasurements`
 ```

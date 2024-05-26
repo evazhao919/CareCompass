@@ -26,7 +26,6 @@ public class UpdateNotificationsLambda extends LambdaActivityRunner<UpdateNotifi
                     return input.fromUserClaims(claims ->
                             UpdateNotificationsRequest.builder()
                                     .withPatientId(claims.get("email"))
-                                    .withNotificationId(unauthenticatedRequest.getNotificationId())
                                     .withNotificationTitle(unauthenticatedRequest.getNotificationTitle())
                                     .withReminderType(unauthenticatedRequest.getReminderType())
                                     .withReminderContent(unauthenticatedRequest.getReminderContent())

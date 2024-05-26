@@ -121,7 +121,6 @@ public class ModelConverter {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return NotificationModel.builder()
                 .withPatientId(notification.getPatientId())
-                .withNotificationId(notification.getNotificationId())
                 .withNotificationTitle(notification.getNotificationTitle())
                 .withReminderContent(notification.getReminderContent())
                 .withReminderTime(localDateTimeConverter.convert(notification.getReminderTime()))

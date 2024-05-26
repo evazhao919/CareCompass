@@ -98,15 +98,6 @@ public class InputValidationUtils {
     }
 
     /**
-     * Generates a random notification ID.
-     *
-     * @return A random alphanumeric ID.
-     */
-    public static String generateNotificationId() {
-        return RandomStringUtils.randomAlphanumeric(MAX_ID_LENGTH);
-    }
-
-    /**
      * Checks if a notification title is valid.
      *
      * @param notificationTitle The notification title to validate.
