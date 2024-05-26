@@ -51,7 +51,7 @@ public class VitalSigns {
     }
     @DynamoDBRangeKey(attributeName = "actualCheckTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "NotificationIdIndex", attributeName = "actualCheckTime")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "vitalSignsDateIndex", attributeName = "actualCheckTime")
     public LocalDateTime getActualCheckTime() {
         return actualCheckTime;
     }

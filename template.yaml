@@ -603,29 +603,40 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "patientId"
           AttributeType: "S"
-        - AttributeName: "patientId"
+        - AttributeName: "reminderTime"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "id"
+        - AttributeName: "patientId"
           KeyType: "HASH"
+        - AttributeName: "reminderTime"
+          KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "notifications"
 
-  AlbumTracksTable:
+  VitalSignsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "asin"
+        - AttributeName: "patientId"
           AttributeType: "S"
-        - AttributeName: "track_number"
-          AttributeType: "N"
+        - AttributeName: "actualCheckTime"
+          AttributeType: "S"
       KeySchema:
-        - AttributeName: "asin"
+        - AttributeName: "patientId"
           KeyType: "HASH"
-        - AttributeName: "track_number"
+        - AttributeName: "actualCheckTime"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
-      TableName: "album_tracks"
+      TableName: "vitalSigns"
+      GlobalSecondaryIndexes:
+        - IndexName: "vitalSignsDateIndex"
+          KeySchema:
+            - AttributeName: "patientId"
+              KeyType: "HASH"
+            - AttributeName: "actualCheckTime"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: "ALL"
 
 #-----------------------------------------------------
 # The outputs defined below will be printed
