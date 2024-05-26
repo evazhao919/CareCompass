@@ -4,8 +4,8 @@ import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = UpdateNotificationsRequest.Builder.class)
-public class UpdateNotificationsRequest {
+@JsonDeserialize(builder = UpdateNotificationDetailsRequest.Builder.class)
+public class UpdateNotificationDetailsRequest {
     private final String patientId;
     private final String notificationTitle;
     private final Notification.ReminderType reminderType;
@@ -13,7 +13,7 @@ public class UpdateNotificationsRequest {
     private final String additionalNotes;
     private final String reminderTime;
 
-    public UpdateNotificationsRequest(String patientId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, String reminderTime) {
+    public UpdateNotificationDetailsRequest(String patientId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, String reminderTime) {
         this.patientId = patientId;
         this.notificationTitle = notificationTitle;
         this.reminderType = reminderType;
@@ -48,7 +48,7 @@ public class UpdateNotificationsRequest {
 
     @Override
     public String toString() {
-        return "UpdateNotificationsRequest{" +
+        return "UpdateNotificationDetailsRequest{" +
                 "patientId='" + patientId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderType=" + reminderType +
@@ -71,7 +71,7 @@ public class UpdateNotificationsRequest {
         private String reminderContent;
         private String additionalNotes;
         private String reminderTime;
-        public UpdateNotificationsRequest.Builder withPatientId(String patientId) {
+        public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
         }
@@ -101,8 +101,8 @@ public class UpdateNotificationsRequest {
             return this;
         }
 
-        public UpdateNotificationsRequest build() {
-            return new UpdateNotificationsRequest(patientId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
+        public UpdateNotificationDetailsRequest build() {
+            return new UpdateNotificationDetailsRequest(patientId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
         }
     }
 }

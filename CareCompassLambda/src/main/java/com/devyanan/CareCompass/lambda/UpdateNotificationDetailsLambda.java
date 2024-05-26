@@ -2,29 +2,29 @@ package com.devyanan.CareCompass.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.devyanan.CareCompass.activity.requests.UpdateNotificationsRequest;
-import com.devyanan.CareCompass.activity.results.UpdateNotificationsResult;
+import com.devyanan.CareCompass.activity.requests.UpdateNotificationDetailsRequest;
+import com.devyanan.CareCompass.activity.results.UpdateNotificationDetailsResult;
 
 /**
  * Lambda function handler for updating notifications.
  */
-public class UpdateNotificationsLambda extends LambdaActivityRunner<UpdateNotificationsRequest, UpdateNotificationsResult>
-        implements RequestHandler<AuthenticatedLambdaRequest<UpdateNotificationsRequest>, LambdaResponse> {
+public class UpdateNotificationDetailsLambda extends LambdaActivityRunner<UpdateNotificationDetailsRequest, UpdateNotificationDetailsResult>
+        implements RequestHandler<AuthenticatedLambdaRequest<UpdateNotificationDetailsRequest>, LambdaResponse> {
 
     /**
-     * Handles the Lambda request for updating notifications.
+     * Handles the Lambda request for updating notification details.
      *
      * @param input   The input request containing the authenticated request and context.
      * @param context The Lambda execution context.
      * @return A LambdaResponse indicating the result of the operation.
      */
     @Override
-    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<UpdateNotificationsRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<UpdateNotificationDetailsRequest> input, Context context) {
         return super.runActivity(
                 () -> {
-                    UpdateNotificationsRequest unauthenticatedRequest = input.fromBody(UpdateNotificationsRequest.class);
+                    UpdateNotificationDetailsRequest unauthenticatedRequest = input.fromBody(UpdateNotificationDetailsRequest.class);
                     return input.fromUserClaims(claims ->
-                            UpdateNotificationsRequest.builder()
+                            UpdateNotificationDetailsRequest.builder()
                                     .withPatientId(claims.get("email"))
                                     .withNotificationTitle(unauthenticatedRequest.getNotificationTitle())
                                     .withReminderType(unauthenticatedRequest.getReminderType())
@@ -34,7 +34,7 @@ public class UpdateNotificationsLambda extends LambdaActivityRunner<UpdateNotifi
                                     .build());
                 },
                 (request, serviceComponent) ->
-                        serviceComponent.provideUpdateNotificationsActivity().handleRequest(request)
+                        serviceComponent.provideUpdateNotificationDetailsActivity().handleRequest(request)
         );
     }
 }

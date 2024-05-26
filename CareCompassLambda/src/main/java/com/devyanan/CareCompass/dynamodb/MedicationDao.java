@@ -157,4 +157,35 @@ public class MedicationDao {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
+
+    /**
+     * Updates a medication in the database.
+     *
+     * @param updatedMedication The updated medication object.
+     * @return The updated medication object.
+     * @throws IllegalArgumentException If the updated medication object is null or empty.
+     * @throws CustomDynamoDBException If there is a DynamoDB-specific error.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
+    public Medication updateMedication(Medication updatedMedication) {
+        if (updatedMedication == null) {
+            log.warn("Attempted to update a null or empty medication object.");
+            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
+            throw new IllegalArgumentException("Updated medication object cannot be null or empty.");
+        }
+
+        try {
+            log.info("Attempting to update medication: {}", updatedMedication);
+            dynamoDBMapper.save(updatedMedication);
+            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_SUCCESS_COUNT, 1);
+            log.info("Medication updated successfully: {}", updatedMedication);
+            return updatedMedication;
+        } catch (AmazonDynamoDBException e) {
+            log.error("DynamoDB-specific error occurred while updating medication: {}", updatedMedication, e);
+            throw new CustomDynamoDBException("Failed to update medication in the database due to DynamoDB-specific error", e);
+        } catch (Exception e) {
+            log.error("Failed to update medication: {}", updatedMedication, e);
+            throw new DatabaseAccessException("Failed to update medication in the database", e);
+        }
+    }
 }

@@ -1,7 +1,7 @@
 package com.devyanan.CareCompass.activity;
 
-import com.devyanan.CareCompass.activity.requests.UpdateNotificationsRequest;
-import com.devyanan.CareCompass.activity.results.UpdateNotificationsResult;
+import com.devyanan.CareCompass.activity.requests.UpdateNotificationDetailsRequest;
+import com.devyanan.CareCompass.activity.results.UpdateNotificationDetailsResult;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.NotificationDao;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
@@ -14,16 +14,16 @@ import javax.inject.Inject;
 /**
  * This class handles the logic for updating notifications.
  */
-public class UpdateNotificationsActivity {
+public class UpdateNotificationDetailsActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
 
     /**
-     * Constructor for UpdateNotificationsActivity.
+     * Constructor for UpdateNotificationDetailsActivity.
      * @param notificationDao DAO for notifications
      */
     @Inject
-    public UpdateNotificationsActivity(NotificationDao notificationDao) {
+    public UpdateNotificationDetailsActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
     }
 
@@ -35,8 +35,8 @@ public class UpdateNotificationsActivity {
      * @return The result of the update operation
      * @throws NotificationNotFoundException if the notification to be updated is not found
      */
-    public UpdateNotificationsResult handleRequest(final UpdateNotificationsRequest request){
-        log.info("Received UpdateNotificationsRequest {}", request);
+    public UpdateNotificationDetailsResult handleRequest(final UpdateNotificationDetailsRequest request){
+        log.info("Received UpdateNotificationDetailsRequest {}", request);
 
         Notification notification = notificationDao.getSingleNotificationByPatientIdAndReminderTime(
                 request.getPatientId(),
@@ -53,7 +53,7 @@ public class UpdateNotificationsActivity {
 
         notificationDao.updateNotification(notification);
 
-        return UpdateNotificationsResult.builder()
+        return UpdateNotificationDetailsResult.builder()
                 .withNotificationModel(new ModelConverter().toNotificationModel(notification))
                 .build();
     }

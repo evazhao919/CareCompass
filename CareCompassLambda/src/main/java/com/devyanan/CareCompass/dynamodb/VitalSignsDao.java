@@ -18,10 +18,8 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * DAO class for managing VitalSigns data in DynamoDB.
@@ -239,5 +237,55 @@ private final DynamoDBMapper dynamoDBMapper;
             metricsPublisher.addCount(MetricsConstants.GET_VITAL_SIGNS_FOR_DATE_RANGE_NOT_FOUND_COUNT, 1);
             throw new VitalSignsNotFoundException("No measurements found for the specified date range");
         }
+    }
+
+    /**
+     * Retrieves the vital signs recorded for the last seven days for a specified patient.
+     *
+     * @param patientId The ID of the patient.
+     * @return A list of vital signs recorded for the last seven days.
+     */
+    public List<VitalSigns> getVitalSignsForLastSevenDays(String patientId) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime sevenDaysAgo = now.minusDays(7);
+
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(":patientId", new AttributeValue().withS(patientId));
+        expressionAttributeValues.put(":sevenDaysAgo", new AttributeValue().withS(sevenDaysAgo.toString()));
+
+        DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
+                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :sevenDaysAgo")
+                .withExpressionAttributeValues(expressionAttributeValues);
+
+        PaginatedQueryList<VitalSigns> queryResult = dynamoDBMapper.query(VitalSigns.class, queryExpression);
+
+        List<VitalSigns> vitalSignsForLastSevenDays = new ArrayList<>(queryResult);
+
+        return vitalSignsForLastSevenDays;
+    }
+
+    /**
+     * Retrieves the vital signs recorded for the last one month for a specified patient.
+     *
+     * @param patientId The ID of the patient.
+     * @return A list of vital signs recorded for the last one month.
+     */
+    public List<VitalSigns> getVitalSignsForLastOneMonth(String patientId) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime oneMonthAgo = now.minusMonths(1);
+
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(":patientId", new AttributeValue().withS(patientId));
+        expressionAttributeValues.put(":oneMonthAgo", new AttributeValue().withS(oneMonthAgo.toString()));
+
+        DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
+                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :oneMonthAgo")
+                .withExpressionAttributeValues(expressionAttributeValues);
+
+        PaginatedQueryList<VitalSigns> queryResult = dynamoDBMapper.query(VitalSigns.class, queryExpression);
+
+        List<VitalSigns> vitalSignsForLastOneMonth = new ArrayList<>(queryResult);
+
+        return vitalSignsForLastOneMonth;
     }
 }
