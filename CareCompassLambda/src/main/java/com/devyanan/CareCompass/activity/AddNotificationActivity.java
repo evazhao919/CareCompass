@@ -42,7 +42,7 @@ public class AddNotificationActivity {
         notification.setPatientId(request.getPatientId());
         notification.setNotificationTitle(request.getNotificationTitle());
         notification.setReminderContent(request.getReminderContent());
-        notification.setReminderTime(dateTimeConverter.unconvert(request.getReminderTime()));
+        notification.setScheduledTime(dateTimeConverter.unconvert(request.getScheduledTime()));
         notification.setReminderType(request.getReminderType());
 
         Notification result = notificationDao.addNotification(notification);

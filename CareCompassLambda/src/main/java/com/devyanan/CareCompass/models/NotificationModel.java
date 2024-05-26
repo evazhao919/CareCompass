@@ -11,18 +11,18 @@ public class NotificationModel {
     private final String patientId;
     private final String notificationTitle;
     private final String reminderContent;
-    private final String reminderTime;
+    private final String scheduledTime;
     private final Notification.ReminderType ReminderType;
 
     /**
      * Private constructor for the NotificationModel.
      * Use the Builder pattern to construct instances of this class.
      */
-    private NotificationModel(String patientId, String notificationTitle, String reminderContent, String reminderTime, Notification.ReminderType reminderType) {
+    private NotificationModel(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.ReminderType reminderType) {
         this.patientId = patientId;
         this.notificationTitle = notificationTitle;
         this.reminderContent = reminderContent;
-        this.reminderTime = reminderTime;
+        this.scheduledTime = scheduledTime;
         ReminderType = reminderType;
     }
 
@@ -38,8 +38,8 @@ public class NotificationModel {
         return reminderContent;
     }
 
-    public String getReminderTime() {
-        return reminderTime;
+    public String getScheduledTime() {
+        return scheduledTime;
     }
 
     public Notification.ReminderType getReminderType() {
@@ -51,12 +51,12 @@ public class NotificationModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NotificationModel that = (NotificationModel) o;
-        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(reminderTime, that.reminderTime) && ReminderType == that.ReminderType;
+        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(scheduledTime, that.scheduledTime) && ReminderType == that.ReminderType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, notificationTitle, reminderContent, reminderTime, ReminderType);
+        return Objects.hash(patientId, notificationTitle, reminderContent, scheduledTime, ReminderType);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -68,7 +68,7 @@ public class NotificationModel {
         private String patientId;
         private String notificationTitle;
         private String reminderContent;
-        private String reminderTime;
+        private String scheduledTime;
         private Notification.ReminderType reminderType;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
@@ -85,8 +85,8 @@ public class NotificationModel {
             return this;
         }
 
-        public Builder withReminderTime(String reminderTime) {
-            this.reminderTime = reminderTime;
+        public Builder withScheduledTime(String scheduledTime) {
+            this.scheduledTime = scheduledTime;
             return this;
         }
         public Builder withReminderType(Notification.ReminderType reminderType) {
@@ -95,7 +95,7 @@ public class NotificationModel {
         }
 
         public NotificationModel build() {
-            return new NotificationModel(patientId, notificationTitle, reminderContent, reminderTime, reminderType);
+            return new NotificationModel(patientId, notificationTitle, reminderContent, scheduledTime, reminderType);
         }
     }
 }

@@ -18,7 +18,7 @@ public class AddNotificationLambda extends LambdaActivityRunner<AddNotificationR
      * Handles the Lambda request for adding a notification.
      *
      * @param input   The input request containing the authenticated request and context.
-     * @param context The Lambda execution context.
+     * @param context The Lambda scheduledTime context.
      * @return A LambdaResponse indicating the result of the operation.
      */
     @Override
@@ -32,7 +32,7 @@ public class AddNotificationLambda extends LambdaActivityRunner<AddNotificationR
                                     .withPatientId(claims.get("email"))
                                     .withNotificationTitle(unauthenticatedRequest.getNotificationTitle())
                                     .withReminderContent(unauthenticatedRequest.getReminderContent())
-                                    .withReminderTime(unauthenticatedRequest.getReminderTime())
+                                    .withScheduledTime(unauthenticatedRequest.getScheduledTime())
                                     .withReminderType(unauthenticatedRequest.getReminderType())
                                     .build());
                 },

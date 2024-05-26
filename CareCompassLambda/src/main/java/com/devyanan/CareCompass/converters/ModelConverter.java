@@ -123,7 +123,7 @@ public class ModelConverter {
                 .withPatientId(notification.getPatientId())
                 .withNotificationTitle(notification.getNotificationTitle())
                 .withReminderContent(notification.getReminderContent())
-                .withReminderTime(localDateTimeConverter.convert(notification.getReminderTime()))
+                .withScheduledTime(localDateTimeConverter.convert(notification.getScheduledTime()))
                 .build();
     }
 

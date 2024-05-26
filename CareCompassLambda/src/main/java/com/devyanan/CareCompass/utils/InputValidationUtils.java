@@ -121,15 +121,15 @@ public class InputValidationUtils {
         }
     }
 
-    public static void isReminderTimeValid(LocalDateTime reminderTime) {
+    public static void isscheduledTimeValid(LocalDateTime scheduledTime) {
         /**
          * Checks if a reminder time is valid.
          *
-         * @param reminderTime The reminder time to validate.
-         * @throws IllegalArgumentException if reminderTime is null.
+         * @param scheduledTime The reminder time to validate.
+         * @throws IllegalArgumentException if scheduledTime is null.
          */
-        if (reminderTime == null) {
-            throw new IllegalArgumentException("ReminderTime cannot be null");
+        if (scheduledTime == null) {
+            throw new IllegalArgumentException("scheduledTime cannot be null");
         }
     }
 

@@ -114,7 +114,7 @@ String comments;
 String patientId;
 String notificationTitle;
 String reminderContent;
-LocalDateTime reminderTime;
+LocalDateTime scheduledTime;
 ReminderType reminderType;  // enum
 ```
 
@@ -233,7 +233,7 @@ comments // String
 patientId // String (Partition Key)
 notificationTitle // String 
 reminderContent // String 
-reminderTime // LocalDateTime (Sort Key)
+scheduledTime // LocalDateTime (Sort Key)
 ```
 ## 7.4. `bloodGlucoseMeasurements`
 ```

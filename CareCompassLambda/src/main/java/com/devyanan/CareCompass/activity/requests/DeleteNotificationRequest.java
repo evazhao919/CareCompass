@@ -6,26 +6,26 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = DeleteNotificationRequest.Builder.class)
 public class DeleteNotificationRequest {
     private final String patientId;
-    private final String reminderTime;
+    private final String scheduledTime;
 
-    public DeleteNotificationRequest(String patientId, String reminderTime) {
+    public DeleteNotificationRequest(String patientId, String scheduledTime) {
         this.patientId = patientId;
-        this.reminderTime = reminderTime;
+        this.scheduledTime = scheduledTime;
     }
 
     public String getPatientId() {
         return patientId;
     }
 
-    public String getReminderTime() {
-        return reminderTime;
+    public String getscheduledTime() {
+        return scheduledTime;
     }
 
     @Override
     public String toString() {
         return "DeleteNotificationRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", reminderTime=" + reminderTime +
+                ", scheduledTime=" + scheduledTime +
                 '}';
     }
 
@@ -36,18 +36,18 @@ public class DeleteNotificationRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String reminderTime;
+        private String scheduledTime;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
         }
 
-        public Builder withReminderTime(String reminderTime) {
-            this.reminderTime = reminderTime;
+        public Builder withScheduledTime(String scheduledTime) {
+            this.scheduledTime = scheduledTime;
             return this;
         }
         public DeleteNotificationRequest build() {
-            return new DeleteNotificationRequest(patientId, reminderTime);
+            return new DeleteNotificationRequest(patientId, scheduledTime);
         }
     }
 }

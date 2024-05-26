@@ -122,27 +122,27 @@ public class NotificationDao {
      * Retrieves a single notification based on patient ID and reminder time.
      *
      * @param patientId    The ID of the patient.
-     * @param reminderTime The reminder time.
+     * @param scheduledTime The reminder time.
      * @return The retrieved notification.
      * @throws NotificationNotFoundException If the notification is not found.
      * @throws DatabaseAccessException      If there is an error accessing the database.
      */
-    public Notification getSingleNotificationByPatientIdAndReminderTime(String patientId, String reminderTime) {
+    public Notification getSingleNotificationByPatientIdAndscheduledTime(String patientId, String scheduledTime) {
         try{
-            log.info("Attempting to get notification: {}", reminderTime);
-            Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, reminderTime);
+            log.info("Attempting to get notification: {}", scheduledTime);
+            Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);
 
             if (singlenotification == null) {
-                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_REMINDER_TIME_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No notification found for user: {} and reminderTime: {}", patientId, reminderTime);
-                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and reminderTime : " + reminderTime);
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No notification found for user: {} and scheduledTime: {}", patientId, scheduledTime);
+                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and scheduledTime : " + scheduledTime);
             } else {
-                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_PATIENT_ID_AND_REMINDER_TIME_FOUND_COUNT, 1);
-                log.info("Get a single notification successfully: {}", reminderTime);
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_PATIENT_ID_AND_SCHEDULED_TIME_FOUND_COUNT, 1);
+                log.info("Get a single notification successfully: {}", scheduledTime);
                 return singlenotification;
             }
         } catch (DatabaseAccessException e){
-            log.error("Failed to access the database for user: {} and reminderTime: {}", patientId, reminderTime,e);
+            log.error("Failed to access the database for user: {} and scheduledTime: {}", patientId, scheduledTime,e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
