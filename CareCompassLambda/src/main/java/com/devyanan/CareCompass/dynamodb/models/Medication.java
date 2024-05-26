@@ -13,7 +13,11 @@ public class Medication {
     private String medicationName;
     private String prescription;
     private String instructions;
+    private MEDICATION_STATUS medicationStatus;
 
+    public enum MEDICATION_STATUS {
+        ACTIVE, DISCONTINUED, ON_HOLD, TEMPORARY_STOP
+    }
     @DynamoDBHashKey(attributeName = "patientId")
     public String getPatientId() {
         return patientId;

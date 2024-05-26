@@ -8,12 +8,12 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 public class UpdateNotificationDetailsRequest {
     private final String patientId;
     private final String notificationTitle;
-    private final Notification.ReminderType reminderType;
+    private final Notification.REMINDER_TYPE reminderType;
     private final String reminderContent;
     private final String additionalNotes;
     private final String scheduledTime;
 
-    public UpdateNotificationDetailsRequest(String patientId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, String scheduledTime) {
+    public UpdateNotificationDetailsRequest(String patientId, String notificationTitle, Notification.REMINDER_TYPE reminderType, String reminderContent, String additionalNotes, String scheduledTime) {
         this.patientId = patientId;
         this.notificationTitle = notificationTitle;
         this.reminderType = reminderType;
@@ -30,7 +30,7 @@ public class UpdateNotificationDetailsRequest {
         return notificationTitle;
     }
 
-    public Notification.ReminderType getReminderType() {
+    public Notification.REMINDER_TYPE getReminderType() {
         return reminderType;
     }
 
@@ -67,7 +67,7 @@ public class UpdateNotificationDetailsRequest {
     public static class Builder {
         private String patientId;
         private String notificationTitle;
-        private Notification.ReminderType reminderType;
+        private Notification.REMINDER_TYPE reminderType;
         private String reminderContent;
         private String additionalNotes;
         private String scheduledTime;
@@ -81,7 +81,7 @@ public class UpdateNotificationDetailsRequest {
             return this;
         }
 
-        public Builder withReminderType(Notification.ReminderType reminderType) {
+        public Builder withReminderType(Notification.REMINDER_TYPE reminderType) {
             this.reminderType = reminderType;
             return this;
         }

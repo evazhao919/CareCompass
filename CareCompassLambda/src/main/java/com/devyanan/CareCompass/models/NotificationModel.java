@@ -12,13 +12,13 @@ public class NotificationModel {
     private final String notificationTitle;
     private final String reminderContent;
     private final String scheduledTime;
-    private final Notification.ReminderType ReminderType;
+    private final Notification.REMINDER_TYPE ReminderType;
 
     /**
      * Private constructor for the NotificationModel.
      * Use the Builder pattern to construct instances of this class.
      */
-    private NotificationModel(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.ReminderType reminderType) {
+    private NotificationModel(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.REMINDER_TYPE reminderType) {
         this.patientId = patientId;
         this.notificationTitle = notificationTitle;
         this.reminderContent = reminderContent;
@@ -42,7 +42,7 @@ public class NotificationModel {
         return scheduledTime;
     }
 
-    public Notification.ReminderType getReminderType() {
+    public Notification.REMINDER_TYPE getReminderType() {
         return ReminderType;
     }
 
@@ -69,7 +69,7 @@ public class NotificationModel {
         private String notificationTitle;
         private String reminderContent;
         private String scheduledTime;
-        private Notification.ReminderType reminderType;
+        private Notification.REMINDER_TYPE reminderType;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -89,7 +89,7 @@ public class NotificationModel {
             this.scheduledTime = scheduledTime;
             return this;
         }
-        public Builder withReminderType(Notification.ReminderType reminderType) {
+        public Builder withReminderType(Notification.REMINDER_TYPE reminderType) {
             this.reminderType = reminderType;
             return this;
         }

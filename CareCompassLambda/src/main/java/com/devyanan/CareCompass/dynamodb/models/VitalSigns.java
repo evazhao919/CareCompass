@@ -21,23 +21,23 @@ public class VitalSigns {
     private int diastolicPressure;
     private int meanArterialPressure;
     private double weight;
-    private PatientPosition patientPosition;
+    private PATIENT_POSITION patientPosition;
     private int bloodOxygenLevel;
-    private OxygenTherapy oxygenTherapy;
-    private FlowDelivered flowDelivered;
-    private PatientActivity patientActivity;
+    private OXYGEN_THERAPY oxygenTherapy;
+    private FLOW_DELIVERED  flowDelivered;
+    private PATIENT_ACTIVITY patientActivity;
     private String comments;
 
-    public enum PatientPosition { //TODO enum should use PATIENT_POSITION, will do refactor for all the enums
+    public enum PATIENT_POSITION {
         SUPINE, PRONE, LEFT_LATERAL, RIGHT_LATERAL, SITTING, STANDING
     }
-    public enum OxygenTherapy { // TODO Naming convention, for limited time will do it later
+    public enum OXYGEN_THERAPY {
         NASAL_CANNULA, SIMPLE_FACE_MASK, NON_REBREATHER_MASK, VENTURI_MASK, HIGH_FLOW_NASAL_CANNULA
     }
-    public enum FlowDelivered { // TODO Naming convention, for limited time will do it later
+    public enum FLOW_DELIVERED {
         LOW_FLOW, MEDIUM_FLOW, HIGH_FLOW
     }
-    public enum PatientActivity { // TODO Naming convention, for limited time will do it later
+    public enum PATIENT_ACTIVITY {
         SITTING, STANDING, LAYING_DOWN, POST_EXERCISE,
     }
     @DynamoDBHashKey(attributeName = "patientId")
@@ -127,11 +127,11 @@ public class VitalSigns {
     }
 
     @DynamoDBAttribute(attributeName = "patientPosition")
-    public PatientPosition getPatientPosition() {
+    public PATIENT_POSITION getPatientPosition() {
         return patientPosition;
     }
 
-    public void setPatientPosition(PatientPosition patientPosition) {
+    public void setPatientPosition(PATIENT_POSITION patientPosition) {
         this.patientPosition = patientPosition;
     }
 
@@ -145,29 +145,29 @@ public class VitalSigns {
     }
 
     @DynamoDBAttribute(attributeName = "oxygenTherapy")
-    public OxygenTherapy getOxygenTherapy() {
+    public OXYGEN_THERAPY getOxygenTherapy() {
         return oxygenTherapy;
     }
 
-    public void setOxygenTherapy(OxygenTherapy oxygenTherapy) {
+    public void setOxygenTherapy(OXYGEN_THERAPY oxygenTherapy) {
         this.oxygenTherapy = oxygenTherapy;
     }
 
     @DynamoDBAttribute(attributeName = "flowDelivered")
-    public FlowDelivered getFlowDelivered() {
+    public FLOW_DELIVERED  getFlowDelivered() {
         return flowDelivered;
     }
 
-    public void setFlowDelivered(FlowDelivered flowDelivered) {
+    public void setFlowDelivered(FLOW_DELIVERED  flowDelivered) {
         this.flowDelivered = flowDelivered;
     }
 
     @DynamoDBAttribute(attributeName = "patientActivity")
-    public PatientActivity getPatientActivity() {
+    public PATIENT_ACTIVITY getPatientActivity() {
         return patientActivity;
     }
 
-    public void setPatientActivity(PatientActivity patientActivity) {
+    public void setPatientActivity(PATIENT_ACTIVITY patientActivity) {
         this.patientActivity = patientActivity;
     }
 

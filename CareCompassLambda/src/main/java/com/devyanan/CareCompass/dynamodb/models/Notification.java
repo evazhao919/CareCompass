@@ -15,9 +15,9 @@ public class Notification {
     private String notificationTitle;
     private String reminderContent;
     private LocalDateTime scheduledTime;
-    private ReminderType reminderType;
+    private REMINDER_TYPE reminderType;
 
-    public enum ReminderType {  // TODO Naming convention, for limited time will do it later
+    public enum REMINDER_TYPE {
         GLUCOSE_MEASUREMENT, MEDICATION, VITAL_SIGNS, GENERAL
     }
 
@@ -51,11 +51,11 @@ public class Notification {
         }
     }
     @DynamoDBAttribute(attributeName = "reminderType")
-    public Notification.ReminderType getReminderType() {
+    public Notification.REMINDER_TYPE getReminderType() {
         return reminderType;
     }
 
-    public void setReminderType(ReminderType reminderType) {
+    public void setReminderType(REMINDER_TYPE reminderType) {
         this.reminderType = reminderType;
     }
 

@@ -10,9 +10,9 @@ public class AddNotificationRequest {
     private final String notificationTitle;
     private final String reminderContent;
     private final String scheduledTime;
-    private final Notification.ReminderType reminderType;
+    private final Notification.REMINDER_TYPE reminderType;
 
-    public AddNotificationRequest(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.ReminderType reminderType) {
+    public AddNotificationRequest(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.REMINDER_TYPE reminderType) {
         this.patientId = patientId;
         this.notificationTitle = notificationTitle;
         this.reminderContent = reminderContent;
@@ -36,7 +36,7 @@ public class AddNotificationRequest {
         return scheduledTime;
     }
 
-    public Notification.ReminderType getReminderType() {
+    public Notification.REMINDER_TYPE getReminderType() {
         return reminderType;
     }
 
@@ -61,7 +61,7 @@ public class AddNotificationRequest {
         private String notificationTitle;
         private String reminderContent;
         private String scheduledTime;
-        private Notification.ReminderType reminderType;
+        private Notification.REMINDER_TYPE reminderType;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
@@ -82,7 +82,7 @@ public class AddNotificationRequest {
             return this;
         }
 
-        public Builder withReminderType(Notification.ReminderType reminderType) {
+        public Builder withReminderType(Notification.REMINDER_TYPE reminderType) {
             this.reminderType = reminderType;
             return this;
         }

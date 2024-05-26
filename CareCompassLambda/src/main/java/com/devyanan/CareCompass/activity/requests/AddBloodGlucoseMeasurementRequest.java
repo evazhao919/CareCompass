@@ -9,10 +9,10 @@ public class AddBloodGlucoseMeasurementRequest {
     private final String patientId;
     private final String actualCheckTime;
     private final double glucoseLevel;
-    private final BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
+    private final BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext;
     private final String comments;
 
-    public AddBloodGlucoseMeasurementRequest(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext, String comments) {
+    public AddBloodGlucoseMeasurementRequest(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
@@ -32,7 +32,7 @@ public class AddBloodGlucoseMeasurementRequest {
         return glucoseLevel;
     }
 
-    public BloodGlucoseMeasurement.GlucoseMeasurementContext getGlucoseContext() {
+    public BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT getGlucoseContext() {
         return glucoseContext;
     }
 
@@ -60,7 +60,7 @@ public class AddBloodGlucoseMeasurementRequest {
         private String patientId;
         private String actualCheckTime;
         private double glucoseLevel;
-        private BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext;
+        private BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext;
         private String comments;
 
         public Builder withPatientId(String patientId) {
@@ -78,7 +78,7 @@ public class AddBloodGlucoseMeasurementRequest {
             return this;
         }
 
-        public Builder withGlucoseContext(BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
+        public Builder withGlucoseContext(BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext) {
             this.glucoseContext = glucoseContext;
             return this;
         }

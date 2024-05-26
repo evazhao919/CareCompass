@@ -14,10 +14,10 @@ public class BloodGlucoseMeasurement {
     private String patientId;
     private LocalDateTime actualCheckTime;
     private double glucoseLevel; // TODO may need use bigDecimal, for limited time will do it later
-    private GlucoseMeasurementContext glucoseContext;
+    private GLUCOSE_MEASUREMENT_CONTEXT glucoseContext;
     private String comments;
 
-    public enum GlucoseMeasurementContext { // TODO Naming convention, for limited time will do it later
+    public enum GLUCOSE_MEASUREMENT_CONTEXT {
         FASTING, BEFORE_MEAL, AFTER_MEAL, BEDTIME;
     }
 
@@ -41,11 +41,11 @@ public class BloodGlucoseMeasurement {
     }
 
     @DynamoDBAttribute(attributeName = "glucoseContext")
-    public GlucoseMeasurementContext getGlucoseContext() {
+    public GLUCOSE_MEASUREMENT_CONTEXT getGlucoseContext() {
         return glucoseContext;
     }
 
-    public void setGlucoseContext(GlucoseMeasurementContext glucoseContext) {
+    public void setGlucoseContext(GLUCOSE_MEASUREMENT_CONTEXT glucoseContext) {
         this.glucoseContext = glucoseContext;
     }
 
