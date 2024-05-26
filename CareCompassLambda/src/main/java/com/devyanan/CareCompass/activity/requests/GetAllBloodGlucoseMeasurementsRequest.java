@@ -16,7 +16,7 @@ public class GetAllBloodGlucoseMeasurementsRequest {
 
     @Override
     public String toString() {
-        return "GetUserBloodGlucoseMeasurementRequest{" +
+        return "GetAllBloodGlucoseMeasurementsRequest{" +
                 "patientId='" + patientId + '\'' +
                 '}';
     }

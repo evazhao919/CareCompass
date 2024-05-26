@@ -1,18 +1,6 @@
 package com.devyanan.CareCompass.dependency;
 
-import com.devyanan.CareCompass.activity.AddBloodGlucoseMeasurementActivity;
-import com.devyanan.CareCompass.activity.AddMedicationActivity;
-import com.devyanan.CareCompass.activity.AddNotificationActivity;
-import com.devyanan.CareCompass.activity.AddVitalSignsRequestActivity;
-import com.devyanan.CareCompass.activity.DeleteBloodGlucoseMeasurementActivity;
-import com.devyanan.CareCompass.activity.DeleteMedicationActivity;
-import com.devyanan.CareCompass.activity.DeleteNotificationActivity;
-import com.devyanan.CareCompass.activity.DeleteVitalSignsActivity;
-import com.devyanan.CareCompass.activity.GetAllBloodGlucoseMeasurementsActivity;
-import com.devyanan.CareCompass.activity.GetAllMedicationsActivity;
-import com.devyanan.CareCompass.activity.GetAllNotificationsActivity;
-import com.devyanan.CareCompass.activity.GetAllVitalSignsActivity;
-import com.devyanan.CareCompass.activity.UpdateNotificationsActivity;
+import com.devyanan.CareCompass.activity.*;
 
 import dagger.Component;
 
@@ -99,7 +87,13 @@ public interface ServiceComponent {
 
     /**
      * Provides the relevant activity.
-     * @return UpdateNotificationsActivity
+     * @return UpdateNotificationDetailsActivity
      */
-    UpdateNotificationsActivity provideUpdateNotificationsActivity();
+    UpdateNotificationDetailsActivity provideUpdateNotificationDetailsActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return UpdateMedicationDetailsActivity
+     */
+    UpdateMedicationDetailsActivity provideUpdateMedicationDetailsActivity();
 }

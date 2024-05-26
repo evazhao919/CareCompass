@@ -12,13 +12,28 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * This class handles the logic for retrieving all medications for a patient.
+ */
 public class GetAllMedicationsActivity {
     private final Logger log = LogManager.getLogger();
     private final MedicationDao medicationDao;
+
+    /**
+     * Constructor for GetAllMedicationsActivity.
+     * @param medicationDao DAO for medications
+     */
     @Inject
     public GetAllMedicationsActivity(MedicationDao medicationDao) {
         this.medicationDao = medicationDao;
     }
+
+    /**
+     * Handles the request to retrieve all medications for a patient.
+     * @param request The request containing the patient ID
+     * @return The result containing the list of medications
+     * @throws MedicationNotFoundException if no medications are found for the patient
+     */
     public GetAllMedicationsResult handleRequest(GetAllMedicationsRequest request){
         log.info("GetAllMedicationsRequest received {}.",request);
         List<Medication> medicationList;

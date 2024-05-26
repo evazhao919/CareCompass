@@ -7,9 +7,20 @@ import com.devyanan.CareCompass.activity.results.DeleteNotificationResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Lambda function handler for deleting notifications.
+ */
 public class DeleteNotificationLambda extends LambdaActivityRunner<DeleteNotificationRequest, DeleteNotificationResult>
         implements RequestHandler<AuthenticatedLambdaRequest<DeleteNotificationRequest>,LambdaResponse> {
     private final Logger log = LogManager.getLogger();
+
+    /**
+     * Handles the Lambda request for deleting notifications.
+     *
+     * @param input   The input request containing the authenticated request and context.
+     * @param context The Lambda execution context.
+     * @return A LambdaResponse indicating the result of the operation.
+     */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<DeleteNotificationRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest<DeleteNotificationRequest> received");

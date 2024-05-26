@@ -112,7 +112,6 @@ String comments;
 // NotificationModel
 
 String patientId;
-String notificationId;
 String notificationTitle;
 String reminderContent;
 LocalDateTime reminderTime;
@@ -183,7 +182,7 @@ ReminderType reminderType;  // enum
 * Response: Success or error message. (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error).
 
 ### 6.12. Create Blood Glucose Measurement Endpoint
-* POST /blood-glucose
+* POST /bloodGlucoseMeasurements
 * Body: BloodGlucoseMeasurementModel
 * Description: Logs a new blood glucose measurement for a patient.
 * Response: Returns the newly created BloodGlucoseMeasurementModel.
@@ -232,10 +231,9 @@ comments // String
 ## 7.3. `notifications`
 ```
 patientId // String (Partition Key)
-notificationId // String (Sort Key)
 notificationTitle // String 
 reminderContent // String 
-reminderTime // LocalDateTime 
+reminderTime // LocalDateTime (Sort Key)
 ```
 ## 7.4. `bloodGlucoseMeasurements`
 ```
@@ -246,16 +244,11 @@ glucoseLevel // double
 glucoseContext // GlucoseMeasurementContext  (enum)
 comments // String 
 ```
-### 7.5. `GSI NotificationIdIndex`
+### 7.5. `GSI vitalSignsDateIndex`
 ```
 patientId // Partition Key, String
-notificationId // Sort Key，String
-reminderTime // LocalDateTime
-notificationTitle // String 
-reminderContent // String 
-reminderType;  // ReminderType  (enum)
+actualCheckTime // LocalDateTime (Sort Key)
 ```
-
 
 ## 8. Pages
 

@@ -15,6 +15,12 @@ import java.util.List;
  * Converts between Data and API models.
  */
 public class ModelConverter {
+
+    /**
+     * Converts BloodGlucoseMeasurement entity to BloodGlucoseMeasurementModel.
+     * @param bloodGlucoseMeasurement The BloodGlucoseMeasurement entity to convert.
+     * @return The corresponding BloodGlucoseMeasurementModel.
+     */
     public BloodGlucoseMeasurementModel toBloodGlucoseMeasurementModel(BloodGlucoseMeasurement bloodGlucoseMeasurement){
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return BloodGlucoseMeasurementModel.builder()
@@ -26,6 +32,11 @@ public class ModelConverter {
                 .build();
     }
 
+    /**
+     * Converts a list of BloodGlucoseMeasurement entities to a list of BloodGlucoseMeasurementModel.
+     * @param bloodGlucoseMeasurementList The list of BloodGlucoseMeasurement entities to convert.
+     * @return The corresponding list of BloodGlucoseMeasurementModel.
+     */
     public List<BloodGlucoseMeasurementModel> toBloodGlucoseMeasurementModelList(List<BloodGlucoseMeasurement> bloodGlucoseMeasurementList){
         List<BloodGlucoseMeasurementModel> bloodGlucoseMeasurementModelList = new ArrayList<>();
         for(BloodGlucoseMeasurement bloodGlucoseMeasurement : bloodGlucoseMeasurementList){
@@ -34,6 +45,11 @@ public class ModelConverter {
         return bloodGlucoseMeasurementModelList;
     }
 
+    /**
+     * Converts Medication entity to MedicationModel.
+     * @param medication The Medication entity to convert.
+     * @return The corresponding MedicationModel.
+     */
     public MedicationModel toMedicationModel(Medication medication){
         return MedicationModel.builder()
                 .withPatientId(medication.getPatientId())
@@ -43,6 +59,11 @@ public class ModelConverter {
                 .build();
     }
 
+    /**
+     * Converts a list of Medication entities to a list of MedicationModel.
+     * @param medicationList The list of Medication entities to convert.
+     * @return The corresponding list of MedicationModel.
+     */
     public List<MedicationModel> toMedicationModelList(List<Medication> medicationList){
         List<MedicationModel> medicationModelList = new ArrayList<>();
         for(Medication medication : medicationList){
@@ -51,6 +72,11 @@ public class ModelConverter {
         return medicationModelList;
     }
 
+    /**
+     * Converts a list of Medication entities to a list of MedicationModel.
+     * @param vitalSigns The list of Medication entities to convert.
+     * @return The corresponding list of MedicationModel.
+     */
     public VitalSignsModel toVitalSignsModel(VitalSigns vitalSigns) {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return VitalSignsModel.builder()
@@ -73,6 +99,11 @@ public class ModelConverter {
                 .build();
     }
 
+    /**
+     * Converts a list of VitalSigns entities to a list of VitalSignsModel.
+     * @param vitalSignsList The list of VitalSigns entities to convert.
+     * @return The corresponding list of VitalSignsModel.
+     */
     public List<VitalSignsModel> toVitalSignsModelList (List<VitalSigns> vitalSignsList){
         List<VitalSignsModel> vitalSignsModelList = new ArrayList<>();
         for(VitalSigns vitalSigns : vitalSignsList){
@@ -80,17 +111,27 @@ public class ModelConverter {
         }
         return vitalSignsModelList;
     }
+
+    /**
+     * Converts Notification entity to NotificationModel.
+     * @param notification The Notification entity to convert.
+     * @return The corresponding NotificationModel.
+     */
     public NotificationModel toNotificationModel(Notification notification){
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return NotificationModel.builder()
                 .withPatientId(notification.getPatientId())
-                .withNotificationId(notification.getNotificationId())
                 .withNotificationTitle(notification.getNotificationTitle())
                 .withReminderContent(notification.getReminderContent())
                 .withReminderTime(localDateTimeConverter.convert(notification.getReminderTime()))
                 .build();
     }
 
+    /**
+     * Converts a list of Notification entities to a list of NotificationModel.
+     * @param notificationList The list of Notification entities to convert.
+     * @return The corresponding list of NotificationModel.
+     */
     public  List<NotificationModel> toNotificationModelList(List<Notification> notificationList){
         List<NotificationModel> notificationModelList = new ArrayList<>();
         for(Notification notification : notificationList){

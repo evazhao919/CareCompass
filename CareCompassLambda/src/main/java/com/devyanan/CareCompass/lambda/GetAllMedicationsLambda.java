@@ -7,9 +7,20 @@ import com.devyanan.CareCompass.activity.results.GetAllMedicationsResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Lambda function handler for retrieving all medications.
+ */
 public class GetAllMedicationsLambda  extends LambdaActivityRunner<GetAllMedicationsRequest, GetAllMedicationsResult>
         implements RequestHandler<AuthenticatedLambdaRequest<GetAllMedicationsRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
+
+    /**
+     * Handles the Lambda request for retrieving all medications.
+     *
+     * @param input   The input request containing the authenticated request and context.
+     * @param context The Lambda execution context.
+     * @return A LambdaResponse indicating the result of the operation.
+     */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetAllMedicationsRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest<GetAllMedicationsRequest> received");
@@ -25,23 +36,3 @@ public class GetAllMedicationsLambda  extends LambdaActivityRunner<GetAllMedicat
         );
     }
 }
-
-//public class GetPlaylistLambda
-//        extends LambdaActivityRunner<GetPlaylistRequest, GetPlaylistResult>
-//        implements RequestHandler<LambdaRequest<GetPlaylistRequest>, LambdaResponse> {
-//
-//    private final Logger log = LogManager.getLogger();
-//
-//    @Override
-//    public LambdaResponse handleRequest(LambdaRequest<GetPlaylistRequest> input, Context context) {
-//        log.info("handleRequest");
-//        return super.runActivity(
-//            () -> input.fromPath(path ->
-//                    GetPlaylistRequest.builder()
-//                            .withId(path.get("id"))
-//                            .build()),
-//            (request, serviceComponent) ->
-//                    serviceComponent.provideGetPlaylistActivity().handleRequest(request)
-//        );
-//    }
-//}

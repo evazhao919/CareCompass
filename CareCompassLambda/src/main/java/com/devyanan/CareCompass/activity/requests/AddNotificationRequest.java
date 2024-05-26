@@ -7,15 +7,13 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = AddNotificationRequest.Builder.class)
 public class AddNotificationRequest {
     private final String patientId;
-    private final String notificationId;//TODO you may need remove notificationId from AddNotificationRequest
     private final String notificationTitle;
     private final String reminderContent;
     private final String reminderTime;
     private final Notification.ReminderType reminderType;
 
-    public AddNotificationRequest(String patientId, String notificationId, String notificationTitle, String reminderContent, String reminderTime, Notification.ReminderType reminderType) {
+    public AddNotificationRequest(String patientId, String notificationTitle, String reminderContent, String reminderTime, Notification.ReminderType reminderType) {
         this.patientId = patientId;
-        this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
         this.reminderContent = reminderContent;
         this.reminderTime = reminderTime;
@@ -24,10 +22,6 @@ public class AddNotificationRequest {
 
     public String getPatientId() {
         return patientId;
-    }
-
-    public String getNotificationId() {
-        return notificationId;
     }
 
     public String getNotificationTitle() {
@@ -50,7 +44,6 @@ public class AddNotificationRequest {
     public String toString() {
         return "AddNotificationRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderContent='" + reminderContent + '\'' +
                 ", reminderTime='" + reminderTime + '\'' +
@@ -65,17 +58,12 @@ public class AddNotificationRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String notificationId;
         private String notificationTitle;
         private String reminderContent;
         private String reminderTime;
         private Notification.ReminderType reminderType;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
-            return this;
-        }
-        public Builder withNotificationId(String notificationId) {
-            this.notificationId = notificationId;
             return this;
         }
 
@@ -100,7 +88,7 @@ public class AddNotificationRequest {
         }
 
         public AddNotificationRequest build() {
-            return new AddNotificationRequest(patientId, notificationId, notificationTitle, reminderContent, reminderTime, reminderType);
+            return new AddNotificationRequest(patientId, notificationTitle, reminderContent, reminderTime, reminderType);
         }
     }
 }

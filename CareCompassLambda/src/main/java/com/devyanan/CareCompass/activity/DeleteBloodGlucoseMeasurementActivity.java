@@ -10,13 +10,27 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 
+/**
+ * This class handles the logic for deleting a blood glucose measurement.
+ */
 public class DeleteBloodGlucoseMeasurementActivity {
     private final Logger log = LogManager.getLogger();
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
+
+    /**
+     * Constructor for DeleteBloodGlucoseMeasurementActivity.
+     * @param bloodGlucoseMeasurementDao DAO for blood glucose measurements
+     */
     @Inject
     public DeleteBloodGlucoseMeasurementActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
     }
+
+    /**
+     * Handles the request to delete a blood glucose measurement.
+     * @param request The request containing the data for deletion
+     * @return The result of the deletion operation
+     */
     public DeleteBloodGlucoseMeasurementResult handleRequest(final DeleteBloodGlucoseMeasurementRequest request){
         log.info("Received DeleteBloodGlucoseMeasurementRequest {}", request);
 

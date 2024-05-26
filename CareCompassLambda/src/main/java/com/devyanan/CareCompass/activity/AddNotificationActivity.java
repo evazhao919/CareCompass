@@ -12,23 +12,34 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 
+/**
+ * This class handles the logic for adding a notification.
+ */
 public class AddNotificationActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
     private final LocalDateTimeConverter dateTimeConverter;
 
+    /**
+     * Constructor for AddNotificationActivity.
+     * @param notificationDao DAO for notifications
+     */
     @Inject
     public AddNotificationActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
         this.dateTimeConverter = new LocalDateTimeConverter();
     }
 
+    /**
+     * Handles the request to add a notification.
+     * @param request The request containing the notification data
+     * @return The result of adding the notification
+     */
     public AddNotificationResult handleRequest(final AddNotificationRequest request){
         log.info("Received AddVitalSignsRequest {}", request);
 
         Notification notification = new Notification();
         notification.setPatientId(request.getPatientId());
-        notification.setNotificationId(request.getNotificationId());
         notification.setNotificationTitle(request.getNotificationTitle());
         notification.setReminderContent(request.getReminderContent());
         notification.setReminderTime(dateTimeConverter.unconvert(request.getReminderTime()));

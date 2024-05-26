@@ -5,36 +5,29 @@ import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+/**
+ * Represents a notification entity stored in DynamoDB.
+ */
 @DynamoDBTable(tableName = "notifications")
 public class Notification {
     private String patientId;
-    private String notificationId;
     private String notificationTitle;
     private String reminderContent;
     private LocalDateTime reminderTime;
     private ReminderType reminderType;
 
-    public enum ReminderType {
+    public enum ReminderType {  // TODO Naming convention, for limited time will do it later
         GLUCOSE_MEASUREMENT, MEDICATION, VITAL_SIGNS, GENERAL
     }
 
     @DynamoDBHashKey(attributeName = "patientId")
-    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"NotificationsReminderTimeIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
-    }
-    @DynamoDBRangeKey(attributeName = "notificationId")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "NotificationIdIndex", attributeName = "notificationId")
-    public String getNotificationId() {
-        return notificationId;
-    }
-
-    public void setNotificationId(String notificationId) {
-        this.notificationId = notificationId;
     }
 
     @DynamoDBAttribute(attributeName = "notificationTitle")
@@ -66,7 +59,7 @@ public class Notification {
         this.reminderType = reminderType;
     }
 
-    @DynamoDBAttribute(attributeName = "reminderTime")
+    @DynamoDBRangeKey(attributeName = "reminderTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getReminderTime() {
         return reminderTime;
@@ -81,11 +74,11 @@ public class Notification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
-        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(reminderTime, that.reminderTime) && reminderType == that.reminderType;
+        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(reminderTime, that.reminderTime) && reminderType == that.reminderType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, notificationId, notificationTitle, reminderContent, reminderTime, reminderType);
+        return Objects.hash(patientId, notificationTitle, reminderContent, reminderTime, reminderType);
     }
 }

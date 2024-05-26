@@ -2,12 +2,19 @@ package com.devyanan.CareCompass.models;
 
 import java.util.Objects;
 
+/**
+ * Represents a model for medication information.
+ */
 public class MedicationModel {
     private final String patientId;
     private final String medicationName;
     private final String prescription;
     private final String instructions;
 
+    /**
+     * Private constructor for the MedicationModel.
+     * Use the Builder pattern to construct instances of this class.
+     */
     private MedicationModel(String patientId, String medicationName, String prescription, String instructions) {
         this.patientId = patientId;
         this.medicationName = medicationName;

@@ -15,6 +15,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collections;
 import java.util.List;
+
+/**
+ * DAO class for managing Medication data in DynamoDB.
+ */
 @Singleton
 public class MedicationDao {
     private final DynamoDBMapper dynamoDBMapper;
@@ -26,6 +30,15 @@ public class MedicationDao {
         this.metricsPublisher = metricsPublisher;
     }
 
+    /**
+     * Method to add a medication record.
+     *
+     * @param medication The medication object to add.
+     * @return The added medication object.
+     * @throws IllegalArgumentException If the medication object or name is null or empty.
+     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while adding the medication.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public Medication addMedication(Medication medication){
 
         if(medication == null || medication.getMedicationName() == null || medication.getMedicationName().isEmpty()){
@@ -47,10 +60,17 @@ public class MedicationDao {
             log.error("Failed to add medication for user: {}", medication.getPatientId(), e);
             throw new DatabaseAccessException("Failed to add medication to the database", e);
         }
-
         return medication;
     }
 
+    /**
+     * Method to delete a medication record.
+     *
+     * @param medication The medication object to delete.
+     * @return The deleted medication object.
+     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while deleting the medication.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public Medication deleteMedication(Medication medication){
         if (medication == null) {
             log.warn("Attempted to delete a null medication object.");
@@ -74,6 +94,15 @@ public class MedicationDao {
         }
     }
 
+    /**
+     * Retrieves a single medication record for a specified patient and medication name.
+     *
+     * @param patientId      The ID of the patient.
+     * @param medicationName The name of the medication.
+     * @return The medication object.
+     * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
+     * @throws DatabaseAccessException    If there is an error accessing the database.
+     */
     public Medication getSingleMedication(String patientId, String medicationName) {
         try{
             log.info("Get medication for patientId with id: {}",patientId);
@@ -96,6 +125,13 @@ public class MedicationDao {
         }
     }
 
+    /**
+     * Retrieves all medications for a specified patient.
+     *
+     * @param patientId The ID of the patient.
+     * @return A list of medication objects.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public List<Medication> getAllMedications(String patientId){
        try {
            log.info("Get medication for patientId with id: {}",patientId);
@@ -119,6 +155,37 @@ public class MedicationDao {
         } catch (Exception e) {
             log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
+        }
+    }
+
+    /**
+     * Updates a medication in the database.
+     *
+     * @param updatedMedication The updated medication object.
+     * @return The updated medication object.
+     * @throws IllegalArgumentException If the updated medication object is null or empty.
+     * @throws CustomDynamoDBException If there is a DynamoDB-specific error.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
+    public Medication updateMedication(Medication updatedMedication) {
+        if (updatedMedication == null) {
+            log.warn("Attempted to update a null or empty medication object.");
+            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
+            throw new IllegalArgumentException("Updated medication object cannot be null or empty.");
+        }
+
+        try {
+            log.info("Attempting to update medication: {}", updatedMedication);
+            dynamoDBMapper.save(updatedMedication);
+            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_SUCCESS_COUNT, 1);
+            log.info("Medication updated successfully: {}", updatedMedication);
+            return updatedMedication;
+        } catch (AmazonDynamoDBException e) {
+            log.error("DynamoDB-specific error occurred while updating medication: {}", updatedMedication, e);
+            throw new CustomDynamoDBException("Failed to update medication in the database due to DynamoDB-specific error", e);
+        } catch (Exception e) {
+            log.error("Failed to update medication: {}", updatedMedication, e);
+            throw new DatabaseAccessException("Failed to update medication in the database", e);
         }
     }
 }

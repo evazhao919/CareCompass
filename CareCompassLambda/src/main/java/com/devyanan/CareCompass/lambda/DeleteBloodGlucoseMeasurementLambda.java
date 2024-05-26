@@ -7,9 +7,20 @@ import com.devyanan.CareCompass.activity.results.DeleteBloodGlucoseMeasurementRe
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Lambda function handler for deleting blood glucose measurements.
+ */
 public class DeleteBloodGlucoseMeasurementLambda extends LambdaActivityRunner<DeleteBloodGlucoseMeasurementRequest, DeleteBloodGlucoseMeasurementResult>
 implements RequestHandler<AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasurementRequest>,LambdaResponse> {
     private final Logger log = LogManager.getLogger();
+
+    /**
+     * Handles the Lambda request for deleting blood glucose measurements.
+     *
+     * @param input   The input request containing the authenticated request and context.
+     * @param context The Lambda execution context.
+     * @return A LambdaResponse indicating the result of the operation.
+     */
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasurementRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasurementRequest> received");

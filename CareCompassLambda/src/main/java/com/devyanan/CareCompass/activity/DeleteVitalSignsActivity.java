@@ -10,13 +10,27 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 
+/**
+ * This class handles the logic for deleting vital signs.
+ */
 public class DeleteVitalSignsActivity {
     private final Logger log = LogManager.getLogger();
     private final VitalSignsDao vitalSignsDao;
+
+    /**
+     * Constructor for DeleteVitalSignsActivity.
+     * @param vitalSignsDao DAO for vital signs
+     */
     @Inject
     public DeleteVitalSignsActivity(VitalSignsDao vitalSignsDao) {
         this.vitalSignsDao = vitalSignsDao;
     }
+
+    /**
+     * Handles the request to delete vital signs.
+     * @param request The request containing the vital signs data for deletion
+     * @return The result of the deletion operation
+     */
     public DeleteVitalSignsResult handleRequest(final DeleteVitalSignsRequest request){
         log.info("Received DeleteVitalSignsRequest {}", request);
 

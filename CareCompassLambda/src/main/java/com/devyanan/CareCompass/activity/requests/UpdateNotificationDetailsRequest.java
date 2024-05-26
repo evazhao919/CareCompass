@@ -4,19 +4,17 @@ import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = UpdateNotificationsRequest.Builder.class)
-public class UpdateNotificationsRequest {
+@JsonDeserialize(builder = UpdateNotificationDetailsRequest.Builder.class)
+public class UpdateNotificationDetailsRequest {
     private final String patientId;
-    private final String notificationId;
     private final String notificationTitle;
     private final Notification.ReminderType reminderType;
     private final String reminderContent;
     private final String additionalNotes;
     private final String reminderTime;
 
-    public UpdateNotificationsRequest(String patientId, String notificationId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, String reminderTime) {
+    public UpdateNotificationDetailsRequest(String patientId, String notificationTitle, Notification.ReminderType reminderType, String reminderContent, String additionalNotes, String reminderTime) {
         this.patientId = patientId;
-        this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
         this.reminderType = reminderType;
         this.reminderContent = reminderContent;
@@ -26,10 +24,6 @@ public class UpdateNotificationsRequest {
 
     public String getPatientId() {
         return patientId;
-    }
-
-    public String getNotificationId() {
-        return notificationId;
     }
 
     public String getNotificationTitle() {
@@ -54,9 +48,8 @@ public class UpdateNotificationsRequest {
 
     @Override
     public String toString() {
-        return "UpdateNotificationsRequest{" +
+        return "UpdateNotificationDetailsRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderType=" + reminderType +
                 ", reminderContent='" + reminderContent + '\'' +
@@ -73,18 +66,13 @@ public class UpdateNotificationsRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String notificationId;
         private String notificationTitle;
         private Notification.ReminderType reminderType;
         private String reminderContent;
         private String additionalNotes;
         private String reminderTime;
-        public UpdateNotificationsRequest.Builder withPatientId(String patientId) {
+        public Builder withPatientId(String patientId) {
             this.patientId = patientId;
-            return this;
-        }
-        public Builder withNotificationId(String notificationId) {
-            this.notificationId = notificationId;
             return this;
         }
 
@@ -113,8 +101,8 @@ public class UpdateNotificationsRequest {
             return this;
         }
 
-        public UpdateNotificationsRequest build() {
-            return new UpdateNotificationsRequest(patientId,  notificationId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
+        public UpdateNotificationDetailsRequest build() {
+            return new UpdateNotificationDetailsRequest(patientId, notificationTitle, reminderType, reminderContent,  additionalNotes, reminderTime);
         }
     }
 }

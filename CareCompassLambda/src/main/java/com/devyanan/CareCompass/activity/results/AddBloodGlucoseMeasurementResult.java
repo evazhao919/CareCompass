@@ -15,7 +15,7 @@ public class AddBloodGlucoseMeasurementResult {
 
     @Override
     public String toString() {
-        return "AddGlucoseLevelResult{" +
+        return "AddBloodGlucoseMeasurementResult{" +
                 "bloodGlucoseMeasurementModel=" + bloodGlucoseMeasurementModel +
                 '}';
     }
