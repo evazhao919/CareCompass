@@ -28,12 +28,12 @@ public class DeleteNotificationLambda extends LambdaActivityRunner<DeleteNotific
                 () -> {
                     DeleteNotificationRequest unauthenticatedRequest = input.fromPath(path ->
                             DeleteNotificationRequest.builder()
-                                    .withReminderTime(path.get("reminderTime"))
+                                    .withScheduledTime(path.get("scheduledTime"))
                                     .build());
                     return input.fromUserClaims(claims ->
                             DeleteNotificationRequest.builder()
                                     .withPatientId(claims.get("email"))
-                                    .withReminderTime(unauthenticatedRequest.getReminderTime())
+                                    .withScheduledTime(unauthenticatedRequest.getscheduledTime())
                                     .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteNotificationActivity().handleRequest(request)));

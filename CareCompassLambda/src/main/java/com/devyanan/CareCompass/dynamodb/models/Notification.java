@@ -14,7 +14,7 @@ public class Notification {
     private String patientId;
     private String notificationTitle;
     private String reminderContent;
-    private LocalDateTime reminderTime;
+    private LocalDateTime scheduledTime;
     private ReminderType reminderType;
 
     public enum ReminderType {  // TODO Naming convention, for limited time will do it later
@@ -59,14 +59,14 @@ public class Notification {
         this.reminderType = reminderType;
     }
 
-    @DynamoDBRangeKey(attributeName = "reminderTime")
+    @DynamoDBRangeKey(attributeName = "scheduledTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
-    public LocalDateTime getReminderTime() {
-        return reminderTime;
+    public LocalDateTime getScheduledTime() {
+        return scheduledTime;
     }
 
-    public void setReminderTime(LocalDateTime reminderTime) {
-        this.reminderTime = reminderTime;
+    public void setScheduledTime(LocalDateTime scheduledTime) {
+        this.scheduledTime = scheduledTime;
     }
 
     @Override
@@ -74,11 +74,11 @@ public class Notification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
-        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(reminderTime, that.reminderTime) && reminderType == that.reminderType;
+        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(scheduledTime, that.scheduledTime) && reminderType == that.reminderType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, notificationTitle, reminderContent, reminderTime, reminderType);
+        return Objects.hash(patientId, notificationTitle, reminderContent, scheduledTime, reminderType);
     }
 }

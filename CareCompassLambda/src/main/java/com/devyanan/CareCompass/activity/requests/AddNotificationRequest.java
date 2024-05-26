@@ -9,14 +9,14 @@ public class AddNotificationRequest {
     private final String patientId;
     private final String notificationTitle;
     private final String reminderContent;
-    private final String reminderTime;
+    private final String scheduledTime;
     private final Notification.ReminderType reminderType;
 
-    public AddNotificationRequest(String patientId, String notificationTitle, String reminderContent, String reminderTime, Notification.ReminderType reminderType) {
+    public AddNotificationRequest(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.ReminderType reminderType) {
         this.patientId = patientId;
         this.notificationTitle = notificationTitle;
         this.reminderContent = reminderContent;
-        this.reminderTime = reminderTime;
+        this.scheduledTime = scheduledTime;
         this.reminderType = reminderType;
     }
 
@@ -32,8 +32,8 @@ public class AddNotificationRequest {
         return reminderContent;
     }
 
-    public String getReminderTime() {
-        return reminderTime;
+    public String getScheduledTime() {
+        return scheduledTime;
     }
 
     public Notification.ReminderType getReminderType() {
@@ -46,7 +46,7 @@ public class AddNotificationRequest {
                 "patientId='" + patientId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderContent='" + reminderContent + '\'' +
-                ", reminderTime='" + reminderTime + '\'' +
+                ", scheduledTime='" + scheduledTime + '\'' +
                 ", reminderType=" + reminderType +
                 '}';
     }
@@ -60,7 +60,7 @@ public class AddNotificationRequest {
         private String patientId;
         private String notificationTitle;
         private String reminderContent;
-        private String reminderTime;
+        private String scheduledTime;
         private Notification.ReminderType reminderType;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
@@ -77,8 +77,8 @@ public class AddNotificationRequest {
             return this;
         }
 
-        public Builder withReminderTime(String reminderTime) {
-            this.reminderTime = reminderTime;
+        public Builder withScheduledTime(String scheduledTime) {
+            this.scheduledTime = scheduledTime;
             return this;
         }
 
@@ -88,7 +88,7 @@ public class AddNotificationRequest {
         }
 
         public AddNotificationRequest build() {
-            return new AddNotificationRequest(patientId, notificationTitle, reminderContent, reminderTime, reminderType);
+            return new AddNotificationRequest(patientId, notificationTitle, reminderContent, scheduledTime, reminderType);
         }
     }
 }

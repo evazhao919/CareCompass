@@ -398,7 +398,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /notifications/{reminderTime}
+            Path: /notifications/{scheduledTime}
             Method: delete
 
   DeleteVitalSignsLambda:
@@ -538,7 +538,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /notifications/{reminderTime}
+            Path: /notifications/{scheduledTime}
             Method: put
 
 #  UpdatePlaylistLambda:
@@ -623,12 +623,12 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "patientId"
           AttributeType: "S"
-        - AttributeName: "reminderTime"
+        - AttributeName: "scheduledTime"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "patientId"
           KeyType: "HASH"
-        - AttributeName: "reminderTime"
+        - AttributeName: "scheduledTime"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "notifications"

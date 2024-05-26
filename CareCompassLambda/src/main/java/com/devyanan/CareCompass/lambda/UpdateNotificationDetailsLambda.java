@@ -30,7 +30,7 @@ public class UpdateNotificationDetailsLambda extends LambdaActivityRunner<Update
                                     .withReminderType(unauthenticatedRequest.getReminderType())
                                     .withReminderContent(unauthenticatedRequest.getReminderContent())
                                     .withAdditionalNotes(unauthenticatedRequest.getAdditionalNotes())
-                                    .withReminderTime(unauthenticatedRequest.getReminderTime())
+                                    .withscheduledTime(unauthenticatedRequest.getscheduledTime())
                                     .build());
                 },
                 (request, serviceComponent) ->

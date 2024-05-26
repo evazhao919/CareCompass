@@ -32,10 +32,8 @@ public class MetricsConstants {
     public static final String ADD_NOTIFICATION_SUCCESS_COUNT = "add_notification_success_count";
     public static final String DELETE_NOTIFICATION_NULL_OR_EMPTY_COUNT = "delete_notification_null_or_empty_count";
     public static final String DELETE_NOTIFICATION_SUCCESS_COUNT = "delete_notification_success_count";
-    public static final String GET_SINGLE_NOTIFICATION_PATIENT_ID_AND_REMINDER_TIME_FOUND_COUNT = "get_single_notification_patient_id_and_reminder_time_found_count";
-//    public static final String GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT = "get_single_notification_by_patient_id_and_notification_id_null_or_empty_count";
-//    public static final String GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_FOUND_COUNT = "get_single_notification_by_patient_id_and_notification_id_found_count";
-    public static final String GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_REMINDER_TIME_NULL_OR_EMPTY_COUNT = "get_single_notification_by_patient_id_and_reminder_time_null_or_empty_count";
+    public static final String GET_SINGLE_NOTIFICATION_PATIENT_ID_AND_SCHEDULED_TIME_FOUND_COUNT = "get_single_notification_patient_id_and_scheduled_time_found_count";
+    public static final String GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_OR_EMPTY_COUNT = "get_single_notification_by_patient_id_and_scheduledTime_time_null_or_empty_count";
     public static final String GET_ALL_NOTIFICATIONS_NULL_OR_EMPTY_COUNT = "get_all_notifications_null_or_empty_count";
     public static final String GET_ALL_NOTIFICATIONS_FOUND_COUNT = "get_all_notifications_found_count";
     public static final String UPDATE_NOTIFICATION_NULL_OR_EMPTY_COUNT = "update_notification_null_or_empty_count";
