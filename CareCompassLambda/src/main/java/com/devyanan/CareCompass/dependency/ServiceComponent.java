@@ -102,4 +102,10 @@ public interface ServiceComponent {
      * @return RetrieveCurrentMedicationsActivity
      */
     RetrieveCurrentMedicationsActivity provideRetrieveCurrentMedicationsActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return RetrieveAllUpcomingNotificationsActivity
+     */
+    RetrieveAllUpcomingNotificationsActivity provideRetrieveAllUpcomingNotificationsActivity();
 }
