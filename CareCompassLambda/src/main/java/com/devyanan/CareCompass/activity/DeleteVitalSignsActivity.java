@@ -34,7 +34,7 @@ public class DeleteVitalSignsActivity {
     public DeleteVitalSignsResult handleRequest(final DeleteVitalSignsRequest request){
         log.info("Received DeleteVitalSignsRequest {}", request);
 
-        VitalSigns vitalSigns = vitalSignsDao.deleteSingleVitalSigns(request.getPatientId(),request.getActualCheckTime());
+        VitalSigns vitalSigns = vitalSignsDao.deleteSingleVitalSignsByActualCheckTime(request.getPatientId(),request.getActualCheckTime());
 
         return DeleteVitalSignsResult.builder()
                 .withVitalSignModel(new ModelConverter().toVitalSignsModel(vitalSigns))

@@ -34,7 +34,7 @@ public class DeleteNotificationActivity {
     public DeleteNotificationResult handleRequest(final DeleteNotificationRequest request){
         log.info("Received DeleteNotificationRequest {}", request);
 
-        Notification notification = notificationDao.getSingleNotificationByScheduledTime(request.getPatientId(),request.getscheduledTime());
+        Notification notification = notificationDao.deleteSingleNotificationByScheduledTime(request.getPatientId(),request.getscheduledTime());
         return DeleteNotificationResult.builder()
                 .withNotificationModel(new ModelConverter().toNotificationModel(notification))
                 .build();

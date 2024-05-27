@@ -38,7 +38,7 @@ public class UpdateMedicationDetailsActivity {
     public UpdateMedicationDetailsResult handleRequest(final UpdateMedicationDetailsRequest request) {
         log.info("Received UpdateMedicationDetailsRequest {}", request);
 
-        Medication medication = medicationDao.getSingleMedicationByMedicationName(request.getPatientId(), request.getMedicationName());
+        Medication medication = medicationDao.updateSingleMedicationByMedicationName(request.getPatientId(), request.getMedicationName());
 
         if (medication == null) {
             throw new MedicationNotFoundException("Medication not found");
@@ -46,6 +46,7 @@ public class UpdateMedicationDetailsActivity {
 
         medication.setPrescription(request.getPrescription());
         medication.setInstructions(request.getInstructions());
+        medication.setMedicationStatus(request.getMedicationStatus());
 
         medicationDao.updateMedication(medication);
 

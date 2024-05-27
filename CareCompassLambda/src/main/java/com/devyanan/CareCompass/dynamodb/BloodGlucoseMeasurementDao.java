@@ -70,37 +70,6 @@ public class BloodGlucoseMeasurementDao {
     }
 
     /**
-     * Method to delete a blood glucose measurement.
-     *
-     * @param bloodGlucoseMeasurement The blood glucose measurement to delete.
-     * @return The deleted blood glucose measurement.
-     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while deleting the blood glucose measurement.
-     * @throws DatabaseAccessException If there is an error accessing the database.
-     */
-    public BloodGlucoseMeasurement deleteBloodGlucoseMeasurement(BloodGlucoseMeasurement bloodGlucoseMeasurement){
-        if (bloodGlucoseMeasurement == null) {
-            log.warn("Attempted to delete a null bloodGlucoseMeasurement object.");
-            metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
-            return bloodGlucoseMeasurement;
-        }
-        log.info("Delete medication for patientId with id: {}",bloodGlucoseMeasurement.getPatientId());
-        metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
-        try {
-            log.info("Attempting to delete bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement);
-            this.dynamoDBMapper.delete(bloodGlucoseMeasurement);
-            metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT,1);
-            log.info("BloodGlucoseMeasurement deleted successfully: {}", bloodGlucoseMeasurement);
-            return bloodGlucoseMeasurement;
-        }catch (AmazonDynamoDBException e) {
-            log.error("DynamoDB-specific error occurred while deleting bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement, e);
-            throw new CustomDynamoDBException("Failed to delete bloodGlucoseMeasurement from the database due to DynamoDB-specific error", e);
-        } catch (Exception e) {
-            log.error("Failed to delete bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement, e);
-            throw new DatabaseAccessException("Failed to delete bloodGlucoseMeasurement from the database", e);
-        }
-    }
-
-    /**
      * Method to delete a single blood glucose measurement.
      *
      * @param patientId       The ID of the patient.
@@ -121,49 +90,6 @@ public class BloodGlucoseMeasurementDao {
         }
     }
 
-    /**
-     * DAO method to retrieve blood glucose measurements data for a specified date range.
-     *
-     * @param patientId The ID of the patient.
-     * @param startDate The start date of the date range.
-     * @param endDate   The end date of the date range.
-     * @return A list of blood glucose measurements data for the specified patient within the date range.
-     * @throws IllegalArgumentException           If any of the parameters are null.
-     * @throws BloodGlucoseMeasurementNotFoundException If no blood glucose measurements data is found for the specified date range.
-     */
-    public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
-        if (patientId == null) {
-            throw new IllegalArgumentException("Patient ID cannot be null");
-        }
-        if (startDate == null || endDate == null) {
-            throw new IllegalArgumentException("Start date and end date cannot be null");
-        }
-            log.info("Get blood glucose measurements for patientId: {} between dates: {} and {}", patientId, startDate, endDate);
-            metricsPublisher.addCount(MetricsConstants.GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_TOTAL_COUNT,1);
-        Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":patientId", new AttributeValue().withS(patientId));
-        valueMap.put(":startDate", new AttributeValue().withS(startDate.toString()));
-        valueMap.put(":endDate", new AttributeValue().withS(endDate.toString()));
-
-        DynamoDBQueryExpression<BloodGlucoseMeasurement> queryExpression = new DynamoDBQueryExpression<BloodGlucoseMeasurement>()
-                .withIndexName("bloodGlucoseMeasurementsIndex")
-                .withConsistentRead(false)
-                .withKeyConditionExpression("patientId = :patientId")
-                .withFilterExpression("#actualCheckTime BETWEEN :startDate AND :endDate")
-                .withExpressionAttributeNames(Collections.singletonMap("#actualCheckTime", "actualCheckTime"))
-                .withExpressionAttributeValues(valueMap);
-
-        PaginatedQueryList<BloodGlucoseMeasurement> measurements =
-                dynamoDBMapper.query(BloodGlucoseMeasurement.class, queryExpression);
-
-        if (!measurements.isEmpty()) {
-            metricsPublisher.addCount(MetricsConstants.GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_FOUND_COUNT, 1);
-            return measurements;
-        } else {
-            metricsPublisher.addCount(MetricsConstants.GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_NOT_FOUND_COUNT, 1);
-            throw new BloodGlucoseMeasurementNotFoundException("No measurements found for the specified date range");
-        }
-    }
 
     /**
      * DAO method to retrieve all blood glucose measurements data for a patient.
@@ -198,28 +124,105 @@ public class BloodGlucoseMeasurementDao {
         }
     }
 
-    /**
-     * Retrieves the vital signs recorded for the last three days for a specified patient.
-     *
-     * @param patientId The ID of the patient.
-     * @return A list of vital signs recorded for the last three days.
-     */
-    public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementForLastThreeDays(String patientId) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime threeDaysAgo = now.minusDays(3);
+//    /**
+//     * Retrieves the vital signs recorded for the last three days for a specified patient.
+//     *
+//     * @param patientId The ID of the patient.
+//     * @return A list of vital signs recorded for the last three days.
+//     */
+//    public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementForLastThreeDays(String patientId) {
+//        LocalDateTime now = LocalDateTime.now();
+//        LocalDateTime threeDaysAgo = now.minusDays(3);
+//
+//        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
+//        expressionAttributeValues.put(":patientId", new AttributeValue().withS(patientId));
+//        expressionAttributeValues.put(":threeDaysAgo", new AttributeValue().withS(threeDaysAgo.toString()));
+//
+//        DynamoDBQueryExpression<BloodGlucoseMeasurement> queryExpression = new DynamoDBQueryExpression<BloodGlucoseMeasurement>()
+//                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :threeDaysAgo")
+//                .withExpressionAttributeValues(expressionAttributeValues);
+//
+//        PaginatedQueryList<BloodGlucoseMeasurement> queryResult = dynamoDBMapper.query(BloodGlucoseMeasurement.class, queryExpression);
+//
+//        List<BloodGlucoseMeasurement> BloodGlucoseMeasurementForLastThreeDays = new ArrayList<>(queryResult);
+//
+//        return BloodGlucoseMeasurementForLastThreeDays;
+//    }
 
-        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
-        expressionAttributeValues.put(":patientId", new AttributeValue().withS(patientId));
-        expressionAttributeValues.put(":threeDaysAgo", new AttributeValue().withS(threeDaysAgo.toString()));
 
-        DynamoDBQueryExpression<BloodGlucoseMeasurement> queryExpression = new DynamoDBQueryExpression<BloodGlucoseMeasurement>()
-                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :threeDaysAgo")
-                .withExpressionAttributeValues(expressionAttributeValues);
+    //    /**
+//     * DAO method to retrieve blood glucose measurements data for a specified date range.
+//     *
+//     * @param patientId The ID of the patient.
+//     * @param startDate The start date of the date range.
+//     * @param endDate   The end date of the date range.
+//     * @return A list of blood glucose measurements data for the specified patient within the date range.
+//     * @throws IllegalArgumentException           If any of the parameters are null.
+//     * @throws BloodGlucoseMeasurementNotFoundException If no blood glucose measurements data is found for the specified date range.
+//     */
+//    public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
+//        if (patientId == null) {
+//            throw new IllegalArgumentException("Patient ID cannot be null");
+//        }
+//        if (startDate == null || endDate == null) {
+//            throw new IllegalArgumentException("Start date and end date cannot be null");
+//        }
+//            log.info("Get blood glucose measurements for patientId: {} between dates: {} and {}", patientId, startDate, endDate);
+//            metricsPublisher.addCount(MetricsConstants.GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_TOTAL_COUNT,1);
+//        Map<String, AttributeValue> valueMap = new HashMap<>();
+//        valueMap.put(":patientId", new AttributeValue().withS(patientId));
+//        valueMap.put(":startDate", new AttributeValue().withS(startDate.toString()));
+//        valueMap.put(":endDate", new AttributeValue().withS(endDate.toString()));
+//
+//        DynamoDBQueryExpression<BloodGlucoseMeasurement> queryExpression = new DynamoDBQueryExpression<BloodGlucoseMeasurement>()
+//                .withIndexName("bloodGlucoseMeasurementsIndex")
+//                .withConsistentRead(false)
+//                .withKeyConditionExpression("patientId = :patientId")
+//                .withFilterExpression("#actualCheckTime BETWEEN :startDate AND :endDate")
+//                .withExpressionAttributeNames(Collections.singletonMap("#actualCheckTime", "actualCheckTime"))
+//                .withExpressionAttributeValues(valueMap);
+//
+//        PaginatedQueryList<BloodGlucoseMeasurement> measurements =
+//                dynamoDBMapper.query(BloodGlucoseMeasurement.class, queryExpression);
+//
+//        if (!measurements.isEmpty()) {
+//            metricsPublisher.addCount(MetricsConstants.GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_FOUND_COUNT, 1);
+//            return measurements;
+//        } else {
+//            metricsPublisher.addCount(MetricsConstants.GET_BLOOD_GLUCOSE_FOR_DATE_RANGE_NOT_FOUND_COUNT, 1);
+//            throw new BloodGlucoseMeasurementNotFoundException("No measurements found for the specified date range");
+//        }
+//    }
 
-        PaginatedQueryList<BloodGlucoseMeasurement> queryResult = dynamoDBMapper.query(BloodGlucoseMeasurement.class, queryExpression);
+    //    /**
+//     * Method to delete a blood glucose measurement.
+//     *
+//     * @param bloodGlucoseMeasurement The blood glucose measurement to delete.
+//     * @return The deleted blood glucose measurement.
+//     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while deleting the blood glucose measurement.
+//     * @throws DatabaseAccessException If there is an error accessing the database.
+//     */
+//    public BloodGlucoseMeasurement deleteBloodGlucoseMeasurement(BloodGlucoseMeasurement bloodGlucoseMeasurement){
+//        if (bloodGlucoseMeasurement == null) {
+//            log.warn("Attempted to delete a null bloodGlucoseMeasurement object.");
+//            metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
+//            return bloodGlucoseMeasurement;
+//        }
+//        log.info("Delete medication for patientId with id: {}",bloodGlucoseMeasurement.getPatientId());
+//        metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
+//        try {
+//            log.info("Attempting to delete bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement);
+//            this.dynamoDBMapper.delete(bloodGlucoseMeasurement);
+//            metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT,1);
+//            log.info("BloodGlucoseMeasurement deleted successfully: {}", bloodGlucoseMeasurement);
+//            return bloodGlucoseMeasurement;
+//        }catch (AmazonDynamoDBException e) {
+//            log.error("DynamoDB-specific error occurred while deleting bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement, e);
+//            throw new CustomDynamoDBException("Failed to delete bloodGlucoseMeasurement from the database due to DynamoDB-specific error", e);
+//        } catch (Exception e) {
+//            log.error("Failed to delete bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement, e);
+//            throw new DatabaseAccessException("Failed to delete bloodGlucoseMeasurement from the database", e);
+//        }
+//    }
 
-        List<BloodGlucoseMeasurement> BloodGlucoseMeasurementForLastThreeDays = new ArrayList<>(queryResult);
-
-        return BloodGlucoseMeasurementForLastThreeDays;
-    }
 }

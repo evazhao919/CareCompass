@@ -69,37 +69,6 @@ public class MedicationDao {
     }
 
     /**
-     * Method to delete a medication record.
-     *
-     * @param medication The medication object to delete.
-     * @return The deleted medication object.
-     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while deleting the medication.
-     * @throws DatabaseAccessException If there is an error accessing the database.
-     */
-    public Medication deleteMedication(Medication medication){
-        if (medication == null) {
-            log.warn("Attempted to delete a null medication object.");
-            metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_NULL_OR_EMPTY_COUNT,1);
-            return medication;
-        }
-        log.info("Delete medication for patientId with id: {}",medication.getPatientId());
-        metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_TOTAL_COUNT,1);
-        try {
-            log.info("Attempting to delete medication: {}", medication);
-            this.dynamoDBMapper.delete(medication);
-            metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_SUCCESS_COUNT,1);
-            log.info("Medication deleted successfully: {}", medication);
-            return medication;
-        }catch (AmazonDynamoDBException e) {
-            log.error("DynamoDB-specific error occurred while deleting medication: {}", medication, e);
-            throw new CustomDynamoDBException("Failed to delete medication from the database due to DynamoDB-specific error", e);
-        } catch (Exception e) {
-            log.error("Failed to delete medication: {}", medication, e);
-            throw new DatabaseAccessException("Failed to delete medication from the database", e);
-        }
-    }
-
-    /**
      * Retrieves a single medication record for a specified patient and medication name.
      *
      * @param patientId      The ID of the patient.
@@ -108,22 +77,22 @@ public class MedicationDao {
      * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
      * @throws DatabaseAccessException    If there is an error accessing the database.
      */
-    public Medication getSingleMedicationByMedicationName(String patientId, String medicationName) {
+    public Medication deleteSingleMedicationByMedicationName(String patientId, String medicationName) {
         try{
             log.info("Get medication for patientId with id: {}",patientId);
-            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_TOTAL_COUNT,1);
-            log.info("Attempting to get medication: {}", medicationName);
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_TOTAL_COUNT,1);
+            log.info("Attempting to delete medication: {}", medicationName);
             Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
 
-        if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
-            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
-            log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
-            throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
-        } else {
-            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_FOUND_COUNT, 1);
-            log.info("Get a single medication successfully: {}", medicationName);
-            return singleMedication;
-        }
+            if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
+                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
+                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
+            } else {
+                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_FOUND_COUNT, 1);
+                log.info("Get a single medication successfully: {}", medicationName);
+                return singleMedication;
+            }
         } catch (DatabaseAccessException e){
             log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationName, e);
             throw new DatabaseAccessException("Failed to access the database", e);
@@ -164,15 +133,45 @@ public class MedicationDao {
     }
 
     /**
+     * Update a single medication record for a specified patient and medication name.
+     *
+     * @param patientId      The ID of the patient.
+     * @param medicationName The name of the medication.
+     * @return The medication object.
+     * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
+     * @throws DatabaseAccessException    If there is an error accessing the database.
+     */
+    public Medication updateSingleMedicationByMedicationName(String patientId, String medicationName) {
+        try{
+            log.info("Update medication for patientId with id: {}",patientId);
+            metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_TOTAL_COUNT,1);
+            log.info("Attempting to update medication: {}", medicationName);
+            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
+
+            if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
+                metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
+                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
+            } else {
+                metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_FOUND_COUNT, 1);
+                log.info("Update a single medication successfully: {}", medicationName);
+                return singleMedication;
+            }
+        } catch (DatabaseAccessException e){
+            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationName, e);
+            throw new DatabaseAccessException("Failed to access the database", e);
+        }
+    }
+
+    /**
      * Updates a medication in the database.
      *
      * @param updatedMedication The updated medication object.
-     * @return The updated medication object.
      * @throws IllegalArgumentException If the updated medication object is null or empty.
-     * @throws CustomDynamoDBException If there is a DynamoDB-specific error.
-     * @throws DatabaseAccessException If there is an error accessing the database.
+     * @throws CustomDynamoDBException  If there is a DynamoDB-specific error.
+     * @throws DatabaseAccessException  If there is an error accessing the database.
      */
-    public Medication updateMedication(Medication updatedMedication) {
+    public void updateMedication(Medication updatedMedication) {
         if (updatedMedication == null) {
             log.warn("Attempted to update a null or empty medication object.");
             metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
@@ -184,7 +183,6 @@ public class MedicationDao {
             dynamoDBMapper.save(updatedMedication);
             metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_SUCCESS_COUNT, 1);
             log.info("Medication updated successfully: {}", updatedMedication);
-            return updatedMedication;
         } catch (AmazonDynamoDBException e) {
             log.error("DynamoDB-specific error occurred while updating medication: {}", updatedMedication, e);
             throw new CustomDynamoDBException("Failed to update medication in the database due to DynamoDB-specific error", e);
@@ -211,4 +209,65 @@ public class MedicationDao {
         }
         return medications;
     }
+
+//    /**
+//     * Method to delete a medication record.
+//     *
+//     * @param medication The medication object to delete.
+//     * @return The deleted medication object.
+//     * @throws CustomDynamoDBException If there is a DynamoDB-specific error while deleting the medication.
+//     * @throws DatabaseAccessException If there is an error accessing the database.
+//     */
+//    public Medication deleteMedication(Medication medication){
+//        if (medication == null) {
+//            log.warn("Attempted to delete a null medication object.");
+//            metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_NULL_OR_EMPTY_COUNT,1);
+//            return medication;
+//        }
+//        log.info("Delete medication for patientId with id: {}",medication.getPatientId());
+//        metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_TOTAL_COUNT,1);
+//        try {
+//            log.info("Attempting to delete medication: {}", medication);
+//            this.dynamoDBMapper.delete(medication);
+//            metricsPublisher.addCount(MetricsConstants.DELETE_MEDICATION_SUCCESS_COUNT,1);
+//            log.info("Medication deleted successfully: {}", medication);
+//            return medication;
+//        }catch (AmazonDynamoDBException e) {
+//            log.error("DynamoDB-specific error occurred while deleting medication: {}", medication, e);
+//            throw new CustomDynamoDBException("Failed to delete medication from the database due to DynamoDB-specific error", e);
+//        } catch (Exception e) {
+//            log.error("Failed to delete medication: {}", medication, e);
+//            throw new DatabaseAccessException("Failed to delete medication from the database", e);
+//        }
+//    }
+//    /**
+//     * Retrieves a single medication record for a specified patient and medication name.
+//     *
+//     * @param patientId      The ID of the patient.
+//     * @param medicationName The name of the medication.
+//     * @return The medication object.
+//     * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
+//     * @throws DatabaseAccessException    If there is an error accessing the database.
+//     */
+//    public Medication getSingleMedicationByMedicationName(String patientId, String medicationName) {
+//        try{
+//            log.info("Get medication for patientId with id: {}",patientId);
+//            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_TOTAL_COUNT,1);
+//            log.info("Attempting to get medication: {}", medicationName);
+//            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
+//
+//            if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
+//                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
+//                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
+//                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
+//            } else {
+//                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_FOUND_COUNT, 1);
+//                log.info("Get a single medication successfully: {}", medicationName);
+//                return singleMedication;
+//            }
+//        } catch (DatabaseAccessException e){
+//            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationName, e);
+//            throw new DatabaseAccessException("Failed to access the database", e);
+//        }
+//    }
 }

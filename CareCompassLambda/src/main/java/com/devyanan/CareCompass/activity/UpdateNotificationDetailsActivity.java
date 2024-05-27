@@ -38,10 +38,7 @@ public class UpdateNotificationDetailsActivity {
     public UpdateNotificationDetailsResult handleRequest(final UpdateNotificationDetailsRequest request){
         log.info("Received UpdateNotificationDetailsRequest {}", request);
 
-        Notification notification = notificationDao.getSingleNotificationByScheduledTime(
-                request.getPatientId(),
-                request.getscheduledTime()
-        );
+        Notification notification = notificationDao.updateSingleNotificationByScheduledTime(request.getPatientId(), request.getscheduledTime());
 
         if (notification == null) {
             throw new NotificationNotFoundException("Notification not found");
