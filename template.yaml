@@ -575,7 +575,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        CareCompassService:
           Type: Api
           Properties:
             Path: /medications/
