@@ -558,7 +558,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /notifications/retrieve/{scheduledTime}
+            Path: /notifications/retrieve/date/{scheduledTime}
             Method: get
 
   RetrieveCurrentMedicationsLambda:

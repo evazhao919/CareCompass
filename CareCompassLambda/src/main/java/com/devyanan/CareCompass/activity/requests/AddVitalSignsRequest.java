@@ -16,12 +16,12 @@ public class AddVitalSignsRequest {
     private final int diastolicPressure;
     private final int meanArterialPressure;
     private final double weight;
-    private VitalSigns.PATIENT_POSITION patientPosition;
-    private int bloodOxygenLevel;
-    private VitalSigns.OXYGEN_THERAPY oxygenTherapy;
-    private VitalSigns.FLOW_DELIVERED  flowDelivered;
-    private VitalSigns.PATIENT_ACTIVITY patientActivity;
-    private String comments;
+    private final VitalSigns.PATIENT_POSITION patientPosition;
+    private final int bloodOxygenLevel;
+    private final VitalSigns.OXYGEN_THERAPY oxygenTherapy;
+    private final VitalSigns.FLOW_DELIVERED  flowDelivered;
+    private final VitalSigns.PATIENT_ACTIVITY patientActivity;
+    private final String comments;
 
     public AddVitalSignsRequest(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PATIENT_POSITION patientPosition, int bloodOxygenLevel, VitalSigns.OXYGEN_THERAPY oxygenTherapy, VitalSigns.FLOW_DELIVERED  flowDelivered, VitalSigns.PATIENT_ACTIVITY patientActivity, String comments) {
         this.patientId = patientId;
