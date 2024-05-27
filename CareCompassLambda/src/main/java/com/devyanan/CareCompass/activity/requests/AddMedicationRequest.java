@@ -1,5 +1,6 @@
 package com.devyanan.CareCompass.activity.requests;
 
+import com.devyanan.CareCompass.dynamodb.models.Medication;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = AddMedicationRequest.Builder.class)
@@ -8,12 +9,14 @@ public class AddMedicationRequest {
     private final String medicationName;
     private final String prescription;
     private final String instructions;
+    private final Medication.MEDICATION_STATUS medicationStatus;
 
-    public AddMedicationRequest(String patientId, String medicationName, String prescription, String instructions) {
+    public AddMedicationRequest(String patientId, String medicationName, String prescription, String instructions, Medication.MEDICATION_STATUS medicationStatus) {
         this.patientId = patientId;
         this.medicationName = medicationName;
         this.prescription = prescription;
         this.instructions = instructions;
+        this.medicationStatus = medicationStatus;
     }
 
     public String getPatientId() {
@@ -32,6 +35,10 @@ public class AddMedicationRequest {
         return instructions;
     }
 
+    public Medication.MEDICATION_STATUS getMedicationStatus() {
+        return medicationStatus;
+    }
+
     @Override
     public String toString() {
         return "AddMedicationRequest{" +
@@ -39,6 +46,7 @@ public class AddMedicationRequest {
                 ", medicationName='" + medicationName + '\'' +
                 ", prescription='" + prescription + '\'' +
                 ", instructions='" + instructions + '\'' +
+                ", medicationStatus=" + medicationStatus +
                 '}';
     }
 
@@ -52,6 +60,7 @@ public class AddMedicationRequest {
         private  String medicationName;
         private String prescription;
         private String instructions;
+        private Medication.MEDICATION_STATUS medicationStatus;
 
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
@@ -73,8 +82,13 @@ public class AddMedicationRequest {
             return this;
         }
 
+        public Builder withMedicationStatus(Medication.MEDICATION_STATUS medicationStatus) {
+            this.medicationStatus = medicationStatus;
+            return this;
+        }
+
         public AddMedicationRequest build() {
-            return new AddMedicationRequest(patientId, medicationName, prescription,instructions);
+            return new AddMedicationRequest(patientId, medicationName, prescription,instructions, medicationStatus);
         }
     }
 }

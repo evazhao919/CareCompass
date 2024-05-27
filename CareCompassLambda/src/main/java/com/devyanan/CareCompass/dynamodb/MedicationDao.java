@@ -1,9 +1,9 @@
 package com.devyanan.CareCompass.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
+import com.amazonaws.services.cloudwatch.model.StandardUnit;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
 import com.devyanan.CareCompass.exceptions.*;
 import com.devyanan.CareCompass.metrics.MetricsConstants;
@@ -14,7 +14,12 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.devyanan.CareCompass.metrics.MetricsConstants.RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT;
+import static com.devyanan.CareCompass.metrics.MetricsConstants.RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT;
 
 /**
  * DAO class for managing Medication data in DynamoDB.
@@ -187,5 +192,23 @@ public class MedicationDao {
             log.error("Failed to update medication: {}", updatedMedication, e);
             throw new DatabaseAccessException("Failed to update medication in the database", e);
         }
+    }
+
+    public List<Medication> retrieveCurrentMedicationsByMedicationStatus(Medication.MEDICATION_STATUS medicationStatus) {
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":medicationStatus", new AttributeValue().withS(medicationStatus.name()));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("medicationStatus = :medicationStatus")
+                .withExpressionAttributeValues(valueMap);
+
+        PaginatedScanList<Medication> medications = dynamoDBMapper.scan(Medication.class, scanExpression);
+        if (medications == null || medications.isEmpty()) {
+            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT, 1, StandardUnit.Count);
+            throw new MedicationNotFoundException("No medications found in database for status: " + medicationStatus);
+        } else {
+            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT, 1, StandardUnit.Count);
+        }
+        return medications;
     }
 }

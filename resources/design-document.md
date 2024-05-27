@@ -78,7 +78,8 @@ and JavaScript for dynamic user interfaces.
 String patientId;
 String medicationName;
 String prescription;
-String instructions;        
+String instructions;  
+MEDICATION_STATUS // medicationStatus (enum)      
 ```
 ```
 // VitalSignModel
@@ -93,11 +94,11 @@ int systolicPressure;
 int diastolicPressure;
 int meanArterialPressure;
 double weight;
-PatientPosition patientPosition; // enum
+PATIENT_POSITION patientPosition; // enum
 int bloodOxygenLevel;
-OxygenTherapy oxygenTherapy; // enum
-FlowDelivered flowDelivered; // enum
-PatientActivity patientActivity; // enum
+OXYGEN_THERAPY oxygenTherapy; // enum
+FLOW_DELIVERED flowDelivered; // enum
+PATIENT_ACTIVITY patientActivity; // enum
 String comments;        
 ```
 ```
@@ -105,7 +106,7 @@ String comments;
 String patientId;                   
 LocalDateTime actualCheckTime;
 double glucoseLevel;
-GlucoseMeasurementContext glucoseContext; // enum
+GLUCOSE_MEASUREMENT_CONTEXT glucoseContext; // enum
 String comments;    
 ```
 ```
@@ -115,7 +116,7 @@ String patientId;
 String notificationTitle;
 String reminderContent;
 LocalDateTime scheduledTime;
-ReminderType reminderType;  // enum
+REMINDER_TYPE reminderType;  // enum
 ```
 
 ### Medication Management Reminder Endpoints
@@ -207,6 +208,7 @@ patientId // String (Partition Key)
 medicationName // String (Sort Key)
 prescription // String 
 instructions // String 
+medicationStatus // MEDICATION_STATUS (enum)
 ```
 
 ### 7.2. `vitalSigns`
@@ -221,11 +223,11 @@ systolicPressure // int
 diastolicPressure // int 
 meanArterialPressure // int 
 weight // double 
-patientPosition // PatientPosition (enum)
-bloodOxygenLevel // int enum
-oxygenTherapy // OxygenTherapy (enum)
-flowDelivered // FlowDelivered
-patientActivity // PatientActivity (enum)
+patientPosition // PATIENT_POSITION (enum)
+bloodOxygenLevel // int 
+oxygenTherapy //  OXYGEN_THERAPY (enum)
+flowDelivered // FLOW_DELIVERED (enum)
+patientActivity // PATIENT_ACTIVITY (enum)
 comments // String 
 ```
 ## 7.3. `notifications`
@@ -234,6 +236,7 @@ patientId // String (Partition Key)
 notificationTitle // String 
 reminderContent // String 
 scheduledTime // LocalDateTime (Sort Key)
+reminderType // REMINDER_TYPE (enum)
 ```
 ## 7.4. `bloodGlucoseMeasurements`
 ```
@@ -241,7 +244,7 @@ patientId // String (Partition Key)
 frequency // String (Sort Key)
 actualCheckTime // LocalTime 
 glucoseLevel // double
-glucoseContext // GlucoseMeasurementContext  (enum)
+glucoseContext // GLUCOSE_MEASUREMENT_CONTEXT  (enum)
 comments // String 
 ```
 ### 7.5. `GSI vitalSignsDateIndex`

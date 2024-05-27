@@ -34,6 +34,7 @@ public class AddMedicationLambda extends LambdaActivityRunner<AddMedicationReque
                                     .withMedicationName(unauthenticatedRequest.getMedicationName())
                                     .withPrescription(unauthenticatedRequest.getPrescription())
                                     .withInstructions(unauthenticatedRequest.getInstructions())
+                                    .withMedicationStatus(unauthenticatedRequest.getMedicationStatus())
                                     .build());
                 },
                 (request, serviceComponent) ->

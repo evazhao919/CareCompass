@@ -26,6 +26,7 @@ public class UpdateMedicationDetailsLambda extends LambdaActivityRunner<UpdateMe
                                     .withMedicationName(unauthenticatedRequest.getMedicationName())
                                     .withPrescription(unauthenticatedRequest.getPrescription())
                                     .withInstructions(unauthenticatedRequest.getInstructions())
+                                    .withMedicationStatus(unauthenticatedRequest.getMedicationStatus())
                                     .build());
                 },
                 (request, serviceComponent) ->

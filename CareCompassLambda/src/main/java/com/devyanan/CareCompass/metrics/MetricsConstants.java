@@ -26,6 +26,8 @@ public class MetricsConstants {
     public static final String GET_ALL_MEDICATIONS_TOTAL_COUNT = "get_all_medications_total_count";
     public static final String  UPDATE_MEDICATION_NULL_OR_EMPTY_COUNT = "update_medication_null_or_empty_count";
     public static final String UPDATE_MEDICATION_SUCCESS_COUNT = "update_medication_success_count";
+    public static final String RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT = "";
+    public static final String RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT = "";
 
     // Notification Metrics
     public static final String ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT = "add_notification_null_or_empty_count";

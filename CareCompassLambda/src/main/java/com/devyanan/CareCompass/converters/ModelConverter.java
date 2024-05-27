@@ -56,6 +56,7 @@ public class ModelConverter {
                 .withMedicationName(medication.getMedicationName())
                 .withPrescription(medication.getPrescription())
                 .withInstructions(medication.getInstructions())
+                .withMedicationStatus(medication.getMedicationStatus())
                 .build();
     }
 
@@ -124,6 +125,7 @@ public class ModelConverter {
                 .withNotificationTitle(notification.getNotificationTitle())
                 .withReminderContent(notification.getReminderContent())
                 .withScheduledTime(localDateTimeConverter.convert(notification.getScheduledTime()))
+                .withReminderType(notification.getReminderType())
                 .build();
     }
 

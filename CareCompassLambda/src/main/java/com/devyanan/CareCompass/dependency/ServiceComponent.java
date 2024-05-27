@@ -96,4 +96,10 @@ public interface ServiceComponent {
      * @return UpdateMedicationDetailsActivity
      */
     UpdateMedicationDetailsActivity provideUpdateMedicationDetailsActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return RetrieveCurrentMedicationsActivity
+     */
+    RetrieveCurrentMedicationsActivity provideRetrieveCurrentMedicationsActivity();
 }
