@@ -38,7 +38,7 @@ public class UpdateNotificationDetailsActivity {
     public UpdateNotificationDetailsResult handleRequest(final UpdateNotificationDetailsRequest request){
         log.info("Received UpdateNotificationDetailsRequest {}", request);
 
-        Notification notification = notificationDao.getSingleNotificationByPatientIdAndscheduledTime(
+        Notification notification = notificationDao.getSingleNotificationByPatientIdAndScheduledTime(
                 request.getPatientId(),
                 request.getscheduledTime()
         );

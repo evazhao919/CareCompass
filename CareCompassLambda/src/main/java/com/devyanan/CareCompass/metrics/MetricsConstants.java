@@ -40,6 +40,9 @@ public class MetricsConstants {
     public static final String GET_ALL_NOTIFICATIONS_FOUND_COUNT = "get_all_notifications_found_count";
     public static final String UPDATE_NOTIFICATION_NULL_OR_EMPTY_COUNT = "update_notification_null_or_empty_count";
     public static final String UPDATE_NOTIFICATION_SUCCESS_COUNT = "update_notification_success_count";
+    public static final String GET_ALL_UPCOMING_NOTIFICATIONS_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_COUNT = "";
+    public static final String GET_ALL_UPCOMING_NOTIFICATIONS_FOUND_COUNT = "";
+
 
     // Blood Glucose Measurement Metrics
     public static final String ADD_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "add_blood_glucose_measurement_null_or_empty_count";

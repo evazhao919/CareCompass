@@ -194,7 +194,7 @@ public class MedicationDao {
         }
     }
 
-    public List<Medication> retrieveCurrentMedicationsByMedicationStatus(Medication.MEDICATION_STATUS medicationStatus) {
+    public List<Medication> retrieveCurrentMedicationsByMedicationStatus(String patientId, Medication.MEDICATION_STATUS medicationStatus) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":medicationStatus", new AttributeValue().withS(medicationStatus.name()));
 

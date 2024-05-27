@@ -240,28 +240,28 @@ private final DynamoDBMapper dynamoDBMapper;
     }
 
     /**
-     * Retrieves the vital signs recorded for the last seven days for a specified patient.
+     * Retrieves the vital signs recorded for the last three days for a specified patient.
      *
      * @param patientId The ID of the patient.
-     * @return A list of vital signs recorded for the last seven days.
+     * @return A list of vital signs recorded for the last three days.
      */
-    public List<VitalSigns> getVitalSignsForLastSevenDays(String patientId) {
+    public List<VitalSigns> getVitalSignsForLastThreeDays(String patientId) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime sevenDaysAgo = now.minusDays(7);
+        LocalDateTime threeDaysAgo = now.minusDays(3);
 
         Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
         expressionAttributeValues.put(":patientId", new AttributeValue().withS(patientId));
-        expressionAttributeValues.put(":sevenDaysAgo", new AttributeValue().withS(sevenDaysAgo.toString()));
+        expressionAttributeValues.put(":threeDaysAgo", new AttributeValue().withS(threeDaysAgo.toString()));
 
         DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
-                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :sevenDaysAgo")
+                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :threeDaysAgo")
                 .withExpressionAttributeValues(expressionAttributeValues);
 
         PaginatedQueryList<VitalSigns> queryResult = dynamoDBMapper.query(VitalSigns.class, queryExpression);
 
-        List<VitalSigns> vitalSignsForLastSevenDays = new ArrayList<>(queryResult);
+        List<VitalSigns> vitalSignsForLastThreeDays = new ArrayList<>(queryResult);
 
-        return vitalSignsForLastSevenDays;
+        return vitalSignsForLastThreeDays;
     }
 
     /**

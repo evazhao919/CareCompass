@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
+import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.exceptions.BloodGlucoseMeasurementNotFoundException;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
 import com.devyanan.CareCompass.exceptions.DatabaseAccessException;
@@ -18,10 +19,8 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * DAO class for managing BloodGlucoseMeasurement data in DynamoDB.
@@ -197,5 +196,30 @@ public class BloodGlucoseMeasurementDao {
             log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
+    }
+
+    /**
+     * Retrieves the vital signs recorded for the last three days for a specified patient.
+     *
+     * @param patientId The ID of the patient.
+     * @return A list of vital signs recorded for the last three days.
+     */
+    public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementForLastThreeDays(String patientId) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime threeDaysAgo = now.minusDays(3);
+
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(":patientId", new AttributeValue().withS(patientId));
+        expressionAttributeValues.put(":threeDaysAgo", new AttributeValue().withS(threeDaysAgo.toString()));
+
+        DynamoDBQueryExpression<BloodGlucoseMeasurement> queryExpression = new DynamoDBQueryExpression<BloodGlucoseMeasurement>()
+                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :threeDaysAgo")
+                .withExpressionAttributeValues(expressionAttributeValues);
+
+        PaginatedQueryList<BloodGlucoseMeasurement> queryResult = dynamoDBMapper.query(BloodGlucoseMeasurement.class, queryExpression);
+
+        List<BloodGlucoseMeasurement> BloodGlucoseMeasurementForLastThreeDays = new ArrayList<>(queryResult);
+
+        return BloodGlucoseMeasurementForLastThreeDays;
     }
 }

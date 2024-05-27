@@ -24,7 +24,7 @@ public class RetrieveCurrentMedicationsActivity {
 
         List<Medication> searchResults;
         try {
-            searchResults = medicationDao.retrieveCurrentMedicationsByMedicationStatus(Medication.MEDICATION_STATUS.valueOf(request.getMedicationStatus()));
+            searchResults = medicationDao.retrieveCurrentMedicationsByMedicationStatus(request.getPatientId(), Medication.MEDICATION_STATUS.valueOf(request.getMedicationStatus()));
         } catch (MedicationNotFoundException e) {
             throw new MedicationNotFoundException(String.format("No %s medications found.", request.getMedicationStatus()),
                     e.getCause());
