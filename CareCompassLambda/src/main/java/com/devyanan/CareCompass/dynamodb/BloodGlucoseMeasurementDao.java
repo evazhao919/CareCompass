@@ -108,7 +108,7 @@ public class BloodGlucoseMeasurementDao {
      * @return The deleted blood glucose measurement.
      * @throws BloodGlucoseMeasurementNotFoundException If the blood glucose measurement is not found.
      */
-    public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurement(String patientId, String actualCheckTime){
+    public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurementByActualCheckTime(String patientId, String actualCheckTime){
         metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
         BloodGlucoseMeasurement result = this.dynamoDBMapper.load(BloodGlucoseMeasurement.class,patientId,actualCheckTime);
         if(result == null ){

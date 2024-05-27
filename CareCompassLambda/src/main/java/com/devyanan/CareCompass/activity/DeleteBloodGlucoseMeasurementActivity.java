@@ -34,7 +34,7 @@ public class DeleteBloodGlucoseMeasurementActivity {
     public DeleteBloodGlucoseMeasurementResult handleRequest(final DeleteBloodGlucoseMeasurementRequest request){
         log.info("Received DeleteBloodGlucoseMeasurementRequest {}", request);
 
-        BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.deleteSingleBloodGlucoseMeasurement(request.getPatientId(),request.getActualCheckTime());
+        BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.deleteSingleBloodGlucoseMeasurementByActualCheckTime(request.getPatientId(),request.getActualCheckTime());
 
         return DeleteBloodGlucoseMeasurementResult.builder()
                 .withBloodGlucoseMeasurementModel(new ModelConverter().toBloodGlucoseMeasurementModel(bloodGlucoseMeasurement))

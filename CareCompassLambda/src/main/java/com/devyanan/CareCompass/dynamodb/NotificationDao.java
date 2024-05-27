@@ -127,7 +127,7 @@ public class NotificationDao {
 //    }
 
     /**
-     * Retrieves a single notification based on patient ID and reminder time.
+     * Retrieves a single notification based on patient ID and scheduled time.
      *
      * @param patientId     The ID of the patient.
      * @param scheduledTime The reminder time.
@@ -135,7 +135,7 @@ public class NotificationDao {
      * @throws NotificationNotFoundException If the notification is not found.
      * @throws DatabaseAccessException       If there is an error accessing the database.
      */
-    public Notification getSingleNotificationByPatientIdAndScheduledTime(String patientId, String scheduledTime) {
+    public Notification getSingleNotificationByScheduledTime(String patientId, String scheduledTime) {
         try {
             log.info("Attempting to get notification: {}", scheduledTime);
             Notification singleNotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);

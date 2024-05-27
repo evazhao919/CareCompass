@@ -105,7 +105,7 @@ private final DynamoDBMapper dynamoDBMapper;
      * @return The deleted vital signs data.
      * @throws VitalSignsNotFoundException If the vital signs data is not found.
      */
-    public VitalSigns deleteSingleVitalSigns(String patientId, String actualCheckTime) {
+    public VitalSigns deleteSingleVitalSignsByActualCheckTime(String patientId, String actualCheckTime) {
         metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
         VitalSigns result = this.dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
         if (result == null) {

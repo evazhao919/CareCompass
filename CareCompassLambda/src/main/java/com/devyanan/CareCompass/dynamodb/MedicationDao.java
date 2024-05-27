@@ -108,7 +108,7 @@ public class MedicationDao {
      * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
      * @throws DatabaseAccessException    If there is an error accessing the database.
      */
-    public Medication getSingleMedication(String patientId, String medicationName) {
+    public Medication getSingleMedicationByMedicationName(String patientId, String medicationName) {
         try{
             log.info("Get medication for patientId with id: {}",patientId);
             metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_TOTAL_COUNT,1);
