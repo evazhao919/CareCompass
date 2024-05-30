@@ -40,6 +40,7 @@ public class AddMedicationActivity {
         medication.setMedicationName(request.getMedicationName());
         medication.setPrescription(request.getPrescription());
         medication.setInstructions(request.getInstructions());
+        medication.setMedicationStatus(request.getMedicationStatus());
 
         Medication result = medicationDao.addMedication(medication);
 

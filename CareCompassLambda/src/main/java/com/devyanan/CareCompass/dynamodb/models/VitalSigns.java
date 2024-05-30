@@ -125,7 +125,7 @@ public class VitalSigns {
     public void setWeight(double weight) {
         this.weight = weight;
     }
-
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "patientPosition")
     public PATIENT_POSITION getPatientPosition() {
         return patientPosition;
@@ -143,7 +143,7 @@ public class VitalSigns {
     public void setBloodOxygenLevel(int bloodOxygenLevel) {
         this.bloodOxygenLevel = bloodOxygenLevel;
     }
-
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "oxygenTherapy")
     public OXYGEN_THERAPY getOxygenTherapy() {
         return oxygenTherapy;
@@ -152,7 +152,7 @@ public class VitalSigns {
     public void setOxygenTherapy(OXYGEN_THERAPY oxygenTherapy) {
         this.oxygenTherapy = oxygenTherapy;
     }
-
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "flowDelivered")
     public FLOW_DELIVERED  getFlowDelivered() {
         return flowDelivered;
@@ -161,7 +161,7 @@ public class VitalSigns {
     public void setFlowDelivered(FLOW_DELIVERED  flowDelivered) {
         this.flowDelivered = flowDelivered;
     }
-
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "patientActivity")
     public PATIENT_ACTIVITY getPatientActivity() {
         return patientActivity;

@@ -53,7 +53,7 @@ public class NotificationDao {
      * @throws DatabaseAccessException  If there is an error accessing the database.
      */
     public Notification addNotification(Notification notification) {
-        if (notification == null) {
+        if (notification == null || notification.getScheduledTime() == null) {
             metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
             log.info("Attempted to add a null notification.");
             throw new IllegalArgumentException("notification object or name cannot be null or empty.");
@@ -84,7 +84,7 @@ public class NotificationDao {
      * @throws NotificationNotFoundException If the notification is not found.
      * @throws DatabaseAccessException       If there is an error accessing the database.
      */
-    public Notification updateSingleNotificationByScheduledTime(String patientId, String scheduledTime) {
+    public Notification updateSingleNotificationByScheduledTime(String patientId, String scheduledTime) {//TODO   ？？？？？？应该是LocalDateTime
         try {
             log.info("Attempting to get notification: {}", scheduledTime);
             Notification singleNotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);
@@ -112,7 +112,7 @@ public class NotificationDao {
      * @throws NotificationNotFoundException If the notification is not found.
      * @throws DatabaseAccessException       If there is an error accessing the database.
      */
-    public Notification deleteSingleNotificationByScheduledTime(String patientId, String scheduledTime) {
+    public Notification deleteSingleNotificationByScheduledTime(String patientId, String scheduledTime) { //TODO   ？？？？？？应该是LocalDateTime
         try {
             log.info("Attempting to delete notification: {}", scheduledTime);
             Notification singleNotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);

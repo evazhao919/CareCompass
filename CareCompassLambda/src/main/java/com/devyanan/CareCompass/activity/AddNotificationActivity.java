@@ -35,23 +35,23 @@ public class AddNotificationActivity {
      * @param request The request containing the notification data
      * @return The result of adding the notification
      */
-    public AddNotificationResult handleRequest(final AddNotificationRequest request){
+    public AddNotificationResult handleRequest(final AddNotificationRequest request){//request is String, result is String
         log.info("Received AddVitalSignsRequest {}", request);
 
-        Notification notification = new Notification();
+        Notification notification = new Notification();   // POJO Notification LocalDateTime
         notification.setPatientId(request.getPatientId());
         notification.setNotificationTitle(request.getNotificationTitle());
         notification.setReminderContent(request.getReminderContent());
-        notification.setScheduledTime(dateTimeConverter.unconvert(request.getScheduledTime()));
-        notification.setReminderType(request.getReminderType());
+        notification.setScheduledTime(dateTimeConverter.unconvert(request.getScheduledTime()));//1， 把Request的String 变成LocalDateTime 给POJO用， POJO给DAO用  请看（2）
+        notification.setReminderType(request.getReminderType()); //
 
-        Notification result = notificationDao.addNotification(notification);
+        Notification result = notificationDao.addNotification(notification); //2 ， 把LocalDateTime 给POJO用, 存储到数据库里，但是 为什么dynamoDB里是String????? 因为POJO里面有：@DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
 
         ModelConverter modelConverter = new ModelConverter();
-        NotificationModel notificationModel = modelConverter.toNotificationModel(result);
+        NotificationModel notificationModel = modelConverter.toNotificationModel(result);  //3 ， 把LocalDateTime结果 用modelConverter 转换成 String
 
         return AddNotificationResult.builder()
-                .withNotificationModel(notificationModel)
+                .withNotificationModel(notificationModel)   //4, 返回String 结果 所以result is String
                 .build();
     }
 }

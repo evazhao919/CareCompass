@@ -25,6 +25,7 @@ public class AddMedicationLambda extends LambdaActivityRunner<AddMedicationReque
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddMedicationRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest<AddMedicationRequest> received");
+        log.warn("Input {}", input.toString());
         return super.runActivity(
                 () -> {
                     AddMedicationRequest unauthenticatedRequest = input.fromBody(AddMedicationRequest.class);

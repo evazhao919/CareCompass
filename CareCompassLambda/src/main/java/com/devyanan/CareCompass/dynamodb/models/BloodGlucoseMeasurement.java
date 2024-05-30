@@ -39,7 +39,7 @@ public class BloodGlucoseMeasurement {
     public void setActualCheckTime(LocalDateTime actualCheckTime) {
         this.actualCheckTime = actualCheckTime;
     }
-
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "glucoseContext")
     public GLUCOSE_MEASUREMENT_CONTEXT getGlucoseContext() {
         return glucoseContext;

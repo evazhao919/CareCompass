@@ -12,6 +12,7 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "notifications")
 public class Notification {
     private String patientId;
+    private String notificationID;
     private String notificationTitle;
     private String reminderContent;
     private LocalDateTime scheduledTime;
@@ -50,6 +51,8 @@ public class Notification {
             this.reminderContent = reminderContent;
         }
     }
+
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "reminderType")
     public Notification.REMINDER_TYPE getReminderType() {
         return reminderType;
