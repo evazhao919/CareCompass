@@ -43,7 +43,7 @@ public class InputValidationUtils {
      * @param glucoseContext The glucose context to validate.
      * @throws IllegalArgumentException if glucoseContext is null.
      */
-    public static void isValidGlucoseContext(BloodGlucoseMeasurement.GlucoseMeasurementContext glucoseContext) {
+    public static void isValidGlucoseContext(BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext) {
         if (glucoseContext == null) {
             throw new IllegalArgumentException("Glucose context cannot be null.");
         }
@@ -121,7 +121,7 @@ public class InputValidationUtils {
         }
     }
 
-    public static void isscheduledTimeValid(LocalDateTime scheduledTime) {
+    public static void isScheduledTimeValid(LocalDateTime scheduledTime) {
         /**
          * Checks if a reminder time is valid.
          *
@@ -129,11 +129,11 @@ public class InputValidationUtils {
          * @throws IllegalArgumentException if scheduledTime is null.
          */
         if (scheduledTime == null) {
-            throw new IllegalArgumentException("scheduledTime cannot be null");
+            throw new IllegalArgumentException("ScheduledTime cannot be null");
         }
     }
 
-    public static void isReminderTypeValid(Notification.ReminderType reminderType) {
+    public static void isReminderTypeValid(Notification.REMINDER_TYPE reminderType) {
         /**
          * Checks if a reminder type is valid.
          *

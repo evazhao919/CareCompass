@@ -25,7 +25,7 @@ public class ModelConverter {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return BloodGlucoseMeasurementModel.builder()
                 .withPatientId(bloodGlucoseMeasurement.getPatientId())
-                .withActualCheckTime(localDateTimeConverter.convert(bloodGlucoseMeasurement.getActualCheckTime()))
+                .withActualCheckTime(localDateTimeConverter.convert(bloodGlucoseMeasurement.getActualCheckTime())) ////TODO LocalDateTime 转换成 String
                 .withGlucoseLevel(bloodGlucoseMeasurement.getGlucoseLevel())
                 .withGlucoseContext(bloodGlucoseMeasurement.getGlucoseContext())
                 .withComments(bloodGlucoseMeasurement.getComments())
@@ -53,9 +53,11 @@ public class ModelConverter {
     public MedicationModel toMedicationModel(Medication medication){
         return MedicationModel.builder()
                 .withPatientId(medication.getPatientId())
+                .withMedicationId(medication.getMedicationId())
                 .withMedicationName(medication.getMedicationName())
                 .withPrescription(medication.getPrescription())
                 .withInstructions(medication.getInstructions())
+                .withMedicationStatus(medication.getMedicationStatus())
                 .build();
     }
 
@@ -73,7 +75,7 @@ public class ModelConverter {
     }
 
     /**
-     * Converts a list of Medication entities to a list of MedicationModel.
+     * Converts a list of Medication entities to a list of MedicationModel.//Todo
      * @param vitalSigns The list of Medication entities to convert.
      * @return The corresponding list of MedicationModel.
      */
@@ -81,7 +83,7 @@ public class ModelConverter {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return VitalSignsModel.builder()
                 .withPatientId(vitalSigns.getPatientId())
-                .withActualCheckTime(localDateTimeConverter.convert(vitalSigns.getActualCheckTime()))
+                .withActualCheckTime(localDateTimeConverter.convert(vitalSigns.getActualCheckTime()))  //TODO LocalDateTime 转换成 String
                 .withTemperature(vitalSigns.getTemperature())
                 .withHeartRate(vitalSigns.getHeartRate())
                 .withPulse(vitalSigns.getPulse())
@@ -121,9 +123,11 @@ public class ModelConverter {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return NotificationModel.builder()
                 .withPatientId(notification.getPatientId())
+                .withMedicationId(notification.getNotificationId())
                 .withNotificationTitle(notification.getNotificationTitle())
                 .withReminderContent(notification.getReminderContent())
-                .withScheduledTime(localDateTimeConverter.convert(notification.getScheduledTime()))
+                .withScheduledTime(localDateTimeConverter.convert(notification.getScheduledTime())) //TODO  LocalDateTime 转换成 String
+                .withReminderType(notification.getReminderType())
                 .build();
     }
 

@@ -7,13 +7,15 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = AddNotificationRequest.Builder.class)
 public class AddNotificationRequest {
     private final String patientId;
+//    private final String notificationId;
     private final String notificationTitle;
     private final String reminderContent;
     private final String scheduledTime;
-    private final Notification.ReminderType reminderType;
+    private final Notification.REMINDER_TYPE reminderType;
 
-    public AddNotificationRequest(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.ReminderType reminderType) {
+    public AddNotificationRequest(String patientId, String notificationTitle, String reminderContent, String scheduledTime, Notification.REMINDER_TYPE reminderType) {
         this.patientId = patientId;
+//        this.notificationId = notificationId;
         this.notificationTitle = notificationTitle;
         this.reminderContent = reminderContent;
         this.scheduledTime = scheduledTime;
@@ -23,6 +25,10 @@ public class AddNotificationRequest {
     public String getPatientId() {
         return patientId;
     }
+
+//    public String getNotificationId() {
+//        return notificationId;
+//    }
 
     public String getNotificationTitle() {
         return notificationTitle;
@@ -36,7 +42,7 @@ public class AddNotificationRequest {
         return scheduledTime;
     }
 
-    public Notification.ReminderType getReminderType() {
+    public Notification.REMINDER_TYPE getReminderType() {
         return reminderType;
     }
 
@@ -44,6 +50,7 @@ public class AddNotificationRequest {
     public String toString() {
         return "AddNotificationRequest{" +
                 "patientId='" + patientId + '\'' +
+//                ", notificationId='" + notificationId + '\'' +
                 ", notificationTitle='" + notificationTitle + '\'' +
                 ", reminderContent='" + reminderContent + '\'' +
                 ", scheduledTime='" + scheduledTime + '\'' +
@@ -58,14 +65,20 @@ public class AddNotificationRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
+//        private String notificationId;
         private String notificationTitle;
         private String reminderContent;
         private String scheduledTime;
-        private Notification.ReminderType reminderType;
+        private Notification.REMINDER_TYPE reminderType;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
         }
+
+//        public Builder withNotificationId(String notification) {
+//            this.notificationId = notification;
+//            return this;
+//        }
 
         public Builder withNotificationTitle(String notificationTitle) {
             this.notificationTitle = notificationTitle;
@@ -82,7 +95,7 @@ public class AddNotificationRequest {
             return this;
         }
 
-        public Builder withReminderType(Notification.ReminderType reminderType) {
+        public Builder withReminderType(Notification.REMINDER_TYPE reminderType) {
             this.reminderType = reminderType;
             return this;
         }

@@ -25,7 +25,7 @@ public class DeleteVitalSignsRequest {
     public String toString() {
         return "DeleteVitalSignsRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", actualCheckTime=" + actualCheckTime +
+                ", actualCheckTime='" + actualCheckTime + '\'' +
                 '}';
     }
 

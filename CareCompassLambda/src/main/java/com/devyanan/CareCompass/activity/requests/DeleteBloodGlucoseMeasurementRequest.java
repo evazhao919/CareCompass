@@ -26,10 +26,9 @@ public class DeleteBloodGlucoseMeasurementRequest {
     public String toString() {
         return "DeleteBloodGlucoseMeasurementRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", actualCheckTime=" + actualCheckTime +
+                ", actualCheckTime='" + actualCheckTime + '\'' +
                 '}';
     }
-
 
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {

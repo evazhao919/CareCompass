@@ -16,14 +16,14 @@ public class AddVitalSignsRequest {
     private final int diastolicPressure;
     private final int meanArterialPressure;
     private final double weight;
-    private VitalSigns.PatientPosition patientPosition;
-    private int bloodOxygenLevel;
-    private VitalSigns.OxygenTherapy oxygenTherapy;
-    private VitalSigns.FlowDelivered flowDelivered;
-    private VitalSigns.PatientActivity patientActivity;
-    private String comments;
+    private final VitalSigns.PATIENT_POSITION patientPosition;
+    private final int bloodOxygenLevel;
+    private final VitalSigns.OXYGEN_THERAPY oxygenTherapy;
+    private final VitalSigns.FLOW_DELIVERED  flowDelivered;
+    private final VitalSigns.PATIENT_ACTIVITY patientActivity;
+    private final String comments;
 
-    public AddVitalSignsRequest(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PatientPosition patientPosition, int bloodOxygenLevel, VitalSigns.OxygenTherapy oxygenTherapy, VitalSigns.FlowDelivered flowDelivered, VitalSigns.PatientActivity patientActivity, String comments) {
+    public AddVitalSignsRequest(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PATIENT_POSITION patientPosition, int bloodOxygenLevel, VitalSigns.OXYGEN_THERAPY oxygenTherapy, VitalSigns.FLOW_DELIVERED  flowDelivered, VitalSigns.PATIENT_ACTIVITY patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.temperature = temperature;
@@ -82,7 +82,7 @@ public class AddVitalSignsRequest {
         return weight;
     }
 
-    public VitalSigns.PatientPosition getPatientPosition() {
+    public VitalSigns.PATIENT_POSITION getPatientPosition() {
         return patientPosition;
     }
 
@@ -90,15 +90,15 @@ public class AddVitalSignsRequest {
         return bloodOxygenLevel;
     }
 
-    public VitalSigns.OxygenTherapy getOxygenTherapy() {
+    public VitalSigns.OXYGEN_THERAPY getOxygenTherapy() {
         return oxygenTherapy;
     }
 
-    public VitalSigns.FlowDelivered getFlowDelivered() {
+    public VitalSigns.FLOW_DELIVERED  getFlowDelivered() {
         return flowDelivered;
     }
 
-    public VitalSigns.PatientActivity getPatientActivity() {
+    public VitalSigns.PATIENT_ACTIVITY getPatientActivity() {
         return patientActivity;
     }
 
@@ -144,11 +144,11 @@ public class AddVitalSignsRequest {
         private int diastolicPressure;
         private int meanArterialPressure;
         private double weight;
-        private VitalSigns.PatientPosition patientPosition;
+        private VitalSigns.PATIENT_POSITION patientPosition;
         private int bloodOxygenLevel;
-        private VitalSigns.OxygenTherapy oxygenTherapy;
-        private VitalSigns.FlowDelivered flowDelivered;
-        private VitalSigns.PatientActivity patientActivity;
+        private VitalSigns.OXYGEN_THERAPY oxygenTherapy;
+        private VitalSigns.FLOW_DELIVERED  flowDelivered;
+        private VitalSigns.PATIENT_ACTIVITY patientActivity;
         private String comments;
 
         public Builder withPatientId(String patientId) {
@@ -201,7 +201,7 @@ public class AddVitalSignsRequest {
             return this;
         }
 
-        public Builder withPatientPosition(VitalSigns.PatientPosition patientPosition) {
+        public Builder withPatientPosition(VitalSigns.PATIENT_POSITION patientPosition) {
             this.patientPosition = patientPosition;
             return this;
         }
@@ -211,17 +211,17 @@ public class AddVitalSignsRequest {
             return this;
         }
 
-        public Builder withOxygenTherapy(VitalSigns.OxygenTherapy oxygenTherapy) {
+        public Builder withOxygenTherapy(VitalSigns.OXYGEN_THERAPY oxygenTherapy) {
             this.oxygenTherapy = oxygenTherapy;
             return this;
         }
 
-        public Builder withFlowDelivered(VitalSigns.FlowDelivered flowDelivered) {
+        public Builder withFlowDelivered(VitalSigns.FLOW_DELIVERED  flowDelivered) {
             this.flowDelivered = flowDelivered;
             return this;
         }
 
-        public Builder withPatientActivity(VitalSigns.PatientActivity patientActivity) {
+        public Builder withPatientActivity(VitalSigns.PATIENT_ACTIVITY patientActivity) {
             this.patientActivity = patientActivity;
             return this;
         }

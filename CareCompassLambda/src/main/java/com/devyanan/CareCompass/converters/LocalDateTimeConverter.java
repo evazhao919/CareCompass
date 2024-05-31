@@ -2,6 +2,7 @@ package com.devyanan.CareCompass.converters;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -9,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * Converter class for converting LocalDateTime objects to and from their string representations.
  */
 public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, LocalDateTime> {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+    private static final DateTimeFormatter ISO_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     /**
      * Converts a LocalDateTime object to its string representation.
@@ -22,7 +23,7 @@ public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, Loc
         if (localDateTime == null) {
             return null;
         }
-        return FORMATTER.format(localDateTime);
+        return ISO_DATE_TIME_FORMATTER.format(localDateTime);
     }
 
     /**
@@ -33,6 +34,6 @@ public class LocalDateTimeConverter implements DynamoDBTypeConverter<String, Loc
      */
     @Override
     public LocalDateTime unconvert(String dateTimeRepresentation) {
-        return LocalDateTime.parse(dateTimeRepresentation, FORMATTER);
+        return LocalDateTime.parse(dateTimeRepresentation, ISO_DATE_TIME_FORMATTER);
     }
 }

@@ -2,6 +2,7 @@ package com.devyanan.CareCompass.activity;
 
 import com.devyanan.CareCompass.activity.requests.UpdateMedicationDetailsRequest;
 import com.devyanan.CareCompass.activity.results.UpdateMedicationDetailsResult;
+import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.MedicationDao;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
@@ -20,7 +21,8 @@ public class UpdateMedicationDetailsActivity {
 
     /**
      * Constructor for UpdateMedicationDetailsActivity.
-     * @param medicationDao DAO for medications
+     *
+     * @param medicationDao     DAO for medications
      */
     @Inject
     public UpdateMedicationDetailsActivity(MedicationDao medicationDao) {
@@ -35,17 +37,19 @@ public class UpdateMedicationDetailsActivity {
      * @return The result of the update operation
      * @throws MedicationNotFoundException if the medication to be updated is not found
      */
-    public UpdateMedicationDetailsResult handleRequest(final UpdateMedicationDetailsRequest request) {
+    public UpdateMedicationDetailsResult handleRequest(final UpdateMedicationDetailsRequest request) {///TODO this one is right!!change the notification acitivity
         log.info("Received UpdateMedicationDetailsRequest {}", request);
 
-        Medication medication = medicationDao.getSingleMedication(request.getPatientId(), request.getMedicationName());
+        Medication medication = medicationDao.getMedication(request.getPatientId(),request.getMedicationId());
 
         if (medication == null) {
             throw new MedicationNotFoundException("Medication not found");
         }
 
+        medication.setMedicationName(request.getMedicationName());
         medication.setPrescription(request.getPrescription());
         medication.setInstructions(request.getInstructions());
+        medication.setMedicationStatus(request.getMedicationStatus());
 
         medicationDao.updateMedication(medication);
 

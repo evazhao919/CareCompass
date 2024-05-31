@@ -2,6 +2,7 @@ package com.devyanan.CareCompass.activity;
 
 import com.devyanan.CareCompass.activity.requests.UpdateNotificationDetailsRequest;
 import com.devyanan.CareCompass.activity.results.UpdateNotificationDetailsResult;
+import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.NotificationDao;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
@@ -17,14 +18,17 @@ import javax.inject.Inject;
 public class UpdateNotificationDetailsActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
+    private final LocalDateTimeConverter dateTimeConverter;
 
     /**
      * Constructor for UpdateNotificationDetailsActivity.
-     * @param notificationDao DAO for notifications
+     *
+     * @param notificationDao   DAO for notifications
      */
     @Inject
     public UpdateNotificationDetailsActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
+        this.dateTimeConverter = new LocalDateTimeConverter();
     }
 
     /**
@@ -38,18 +42,16 @@ public class UpdateNotificationDetailsActivity {
     public UpdateNotificationDetailsResult handleRequest(final UpdateNotificationDetailsRequest request){
         log.info("Received UpdateNotificationDetailsRequest {}", request);
 
-        Notification notification = notificationDao.getSingleNotificationByPatientIdAndscheduledTime(
-                request.getPatientId(),
-                request.getscheduledTime()
-        );
+        Notification notification = notificationDao.updateSingleNotificationByScheduledTime(request.getPatientId(), request.getNotificationId());// Todo should i request notificationid here?
 
         if (notification == null) {
             throw new NotificationNotFoundException("Notification not found");
         }
 
-        notification.setNotificationTitle(request.getNotificationTitle());
-        notification.setReminderContent(request.getReminderContent());
+        notification.setNotificationTitle(request.getNotificationTitle());// Todo should i request NotificationTitle here?
         notification.setReminderType(request.getReminderType());
+        notification.setReminderContent(request.getReminderContent());
+        notification.setScheduledTime(dateTimeConverter.unconvert(request.getScheduledTime()));
 
         notificationDao.updateNotification(notification);
 

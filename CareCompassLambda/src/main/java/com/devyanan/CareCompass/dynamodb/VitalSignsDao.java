@@ -105,17 +105,42 @@ private final DynamoDBMapper dynamoDBMapper;
      * @return The deleted vital signs data.
      * @throws VitalSignsNotFoundException If the vital signs data is not found.
      */
-    public VitalSigns deleteSingleVitalSigns(String patientId, String actualCheckTime) {
-        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
-        VitalSigns result = this.dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
-        if (result == null) {
-            log.warn("Attempted to get a null VitalSigns object with patientId {}.", patientId);
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
-            throw new VitalSignsNotFoundException("VitalSigns actualCheckTime can not be null.");
-        } else {
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT, 1);
-            return result;
+    public VitalSigns deleteSingleVitalSignsByActualCheckTime(String patientId, LocalDateTime actualCheckTime) { //TODO   ？？？？？？应该是LocalDateTime,Dao 里面不应该使用时间
+        try {
+            // Increment the count for the delete operation
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
+
+            // Construct the key for the item to be deleted
+            VitalSigns vitalSignsToDelete = new VitalSigns();
+            vitalSignsToDelete.setPatientId(patientId);
+            vitalSignsToDelete.setActualCheckTime(actualCheckTime);
+
+            // Load the item from the database
+            VitalSigns existingVitalSigns = dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
+
+            // Check if the item exists before attempting to delete it
+            if (existingVitalSigns != null) {
+                // Delete the item from the database
+                dynamoDBMapper.delete(vitalSignsToDelete);
+                // Return the deleted item
+                return existingVitalSigns;
+            } else {
+                // If the item doesn't exist, throw a custom exception
+                throw new VitalSignsNotFoundException("Vital signs not found for patientId: " + patientId + " and actualCheckTime: " + actualCheckTime);
+            }
+        } catch (Exception e) {
+            // Handle any exceptions
+            log.error("Failed to delete vital signs for patientId: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
+            throw new DatabaseAccessException("Failed to delete vital signs", e);
         }
+//        if (result == null) {
+//            log.warn("Attempted to get a null VitalSigns object with patientId {}.", patientId);
+//            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
+//            throw new VitalSignsNotFoundException("VitalSigns actualCheckTime can not be null.");
+//        } else {
+//            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT, 1);
+//            return result;
+//        }
     }
 
     /**
@@ -204,7 +229,7 @@ private final DynamoDBMapper dynamoDBMapper;
      * @throws IllegalArgumentException      If any of the parameters are null.
      * @throws VitalSignsNotFoundException If no vital signs data is found for the specified date range.
      */
-    public List<VitalSigns> getVitalSignsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){
+    public List<VitalSigns> getVitalSignsForDateRange(String patientId, LocalDate startDate, LocalDate endDate){ ////TODO   ？？？？？？应该是LocalDateTime
         if (patientId == null) {
             throw new IllegalArgumentException("Patient ID cannot be null");
         }
@@ -240,28 +265,28 @@ private final DynamoDBMapper dynamoDBMapper;
     }
 
     /**
-     * Retrieves the vital signs recorded for the last seven days for a specified patient.
+     * Retrieves the vital signs recorded for the last three days for a specified patient.
      *
      * @param patientId The ID of the patient.
-     * @return A list of vital signs recorded for the last seven days.
+     * @return A list of vital signs recorded for the last three days.
      */
-    public List<VitalSigns> getVitalSignsForLastSevenDays(String patientId) {
+    public List<VitalSigns> getVitalSignsForLastThreeDays(String patientId) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime sevenDaysAgo = now.minusDays(7);
+        LocalDateTime threeDaysAgo = now.minusDays(3);
 
         Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
         expressionAttributeValues.put(":patientId", new AttributeValue().withS(patientId));
-        expressionAttributeValues.put(":sevenDaysAgo", new AttributeValue().withS(sevenDaysAgo.toString()));
+        expressionAttributeValues.put(":threeDaysAgo", new AttributeValue().withS(threeDaysAgo.toString()));
 
         DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
-                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :sevenDaysAgo")
+                .withKeyConditionExpression("patientId = :patientId AND actualCheckTime > :threeDaysAgo")
                 .withExpressionAttributeValues(expressionAttributeValues);
 
         PaginatedQueryList<VitalSigns> queryResult = dynamoDBMapper.query(VitalSigns.class, queryExpression);
 
-        List<VitalSigns> vitalSignsForLastSevenDays = new ArrayList<>(queryResult);
+        List<VitalSigns> vitalSignsForLastThreeDays = new ArrayList<>(queryResult);
 
-        return vitalSignsForLastSevenDays;
+        return vitalSignsForLastThreeDays;
     }
 
     /**

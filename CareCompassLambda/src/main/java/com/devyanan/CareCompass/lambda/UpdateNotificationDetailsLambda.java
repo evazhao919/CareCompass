@@ -26,11 +26,11 @@ public class UpdateNotificationDetailsLambda extends LambdaActivityRunner<Update
                     return input.fromUserClaims(claims ->
                             UpdateNotificationDetailsRequest.builder()
                                     .withPatientId(claims.get("email"))
+                                    .withNotificationId(unauthenticatedRequest.getNotificationId())
                                     .withNotificationTitle(unauthenticatedRequest.getNotificationTitle())
-                                    .withReminderType(unauthenticatedRequest.getReminderType())
                                     .withReminderContent(unauthenticatedRequest.getReminderContent())
-                                    .withAdditionalNotes(unauthenticatedRequest.getAdditionalNotes())
-                                    .withscheduledTime(unauthenticatedRequest.getscheduledTime())
+                                    .withScheduledTime(unauthenticatedRequest.getScheduledTime())
+                                    .withReminderType(unauthenticatedRequest.getReminderType())
                                     .build());
                 },
                 (request, serviceComponent) ->
