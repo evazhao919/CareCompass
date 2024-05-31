@@ -518,7 +518,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /medications/{medicationName}
+            Path: /medications/{medicationId}
             Method: put
 
   UpdateNotificationDetailsLambda:
@@ -538,7 +538,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /notifications/{scheduledTime}
+            Path: /notifications/{notificationId}
             Method: put
 
   RetrieveAllUpcomingNotificationsLambda:
@@ -558,15 +558,15 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /notifications/retrieve/date/{scheduledTime}
+            Path: /upcomingNotifications/{scheduledTime}
             Method: get
 
-  RetrieveCurrentMedicationsLambda:
+  RetrieveMedicationsByStatusLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: CareCompassLambda
-      Handler: com.devyanan.CareCompass.lambda.RetrieveCurrentMedicationsLambda::handleRequest
+      Handler: com.devyanan.CareCompass.lambda.RetrieveMedicationsByStatusLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -578,7 +578,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /medications/retrieve/medicationStatus/{medicationStatus}
+            Path: /medicationsByStatus/{medicationStatus}
             Method: get
 
   #-----------------------------------------------------

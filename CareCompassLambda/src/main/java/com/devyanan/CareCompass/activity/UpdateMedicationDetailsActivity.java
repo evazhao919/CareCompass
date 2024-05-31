@@ -37,14 +37,15 @@ public class UpdateMedicationDetailsActivity {
      * @return The result of the update operation
      * @throws MedicationNotFoundException if the medication to be updated is not found
      */
-    public UpdateMedicationDetailsResult handleRequest(final UpdateMedicationDetailsRequest request) {
+    public UpdateMedicationDetailsResult handleRequest(final UpdateMedicationDetailsRequest request) {///TODO this one is right!!change the notification acitivity
         log.info("Received UpdateMedicationDetailsRequest {}", request);
 
-        Medication medication = medicationDao.updateSingleMedicationByMedicationId(request.getPatientId(), request.getMedicationId());
+        Medication medication = medicationDao.getMedication(request.getPatientId(),request.getMedicationId());
 
         if (medication == null) {
             throw new MedicationNotFoundException("Medication not found");
         }
+
         medication.setMedicationName(request.getMedicationName());
         medication.setPrescription(request.getPrescription());
         medication.setInstructions(request.getInstructions());

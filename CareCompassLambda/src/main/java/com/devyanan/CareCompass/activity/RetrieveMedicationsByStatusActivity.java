@@ -12,11 +12,11 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import java.util.List;
 
-public class RetrieveCurrentMedicationsActivity {
+public class RetrieveMedicationsByStatusActivity {
     private final Logger log = LogManager.getLogger();
     private final MedicationDao medicationDao;
     @Inject
-    public RetrieveCurrentMedicationsActivity(MedicationDao medicationDao) {
+    public RetrieveMedicationsByStatusActivity(MedicationDao medicationDao) {
         this.medicationDao = medicationDao;
     }
     public RetrieveCurrentMedicationsResult handleRequest(RetrieveCurrentMedicationsRequest request) {
@@ -24,7 +24,7 @@ public class RetrieveCurrentMedicationsActivity {
 
         List<Medication> searchResults;
         try {
-            searchResults = medicationDao.retrieveCurrentMedicationsByMedicationStatus(request.getPatientId(), Medication.MEDICATION_STATUS.valueOf(request.getMedicationStatus()));
+            searchResults = medicationDao.retrieveMedicationsByMedicationStatus(request.getPatientId(), Medication.MEDICATION_STATUS.valueOf(request.getMedicationStatus()));
         } catch (MedicationNotFoundException e) {
             throw new MedicationNotFoundException(String.format("No %s medications found.", request.getMedicationStatus()),
                     e.getCause());

@@ -52,7 +52,7 @@ public class RetrieveAllUpcomingNotificationsActivity {
     public RetrieveAllUpcomingNotificationsResult handleRequest(RetrieveAllUpcomingNotificationsRequest request){
         List<Notification> notificationList;
 
-            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(), LocalDateTime.now());
+            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(), LocalDateTime.now().withSecond(0).withNano(0));
         return RetrieveAllUpcomingNotificationsResult.builder()
                 .withNotifications(new ModelConverter().toNotificationModelList(notificationList))
                 .build();

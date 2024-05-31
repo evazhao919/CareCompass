@@ -5,7 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.devyanan.CareCompass.activity.requests.RetrieveCurrentMedicationsRequest;
 import com.devyanan.CareCompass.activity.results.RetrieveCurrentMedicationsResult;
 
-public class RetrieveCurrentMedicationsLambda extends LambdaActivityRunner<RetrieveCurrentMedicationsRequest,
+public class RetrieveMedicationsByStatusLambda extends LambdaActivityRunner<RetrieveCurrentMedicationsRequest,
         RetrieveCurrentMedicationsResult> implements RequestHandler<AuthenticatedLambdaRequest<RetrieveCurrentMedicationsRequest>,
         LambdaResponse> {
     @Override

@@ -141,26 +141,26 @@ public class MedicationDao {
      * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
      * @throws DatabaseAccessException    If there is an error accessing the database.
      */
-    public Medication updateSingleMedicationByMedicationId(String patientId, String medicationId) {
-        try{
-            log.info("Update medication for patientId with id: {}",patientId);
-            metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_TOTAL_COUNT,1);
-            log.info("Attempting to update medication: {}", medicationId);
+    public Medication getMedication(String patientId, String medicationId) {
+//        try{
+//            log.info("Update medication for patientId with id: {}",patientId);
+//            metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_TOTAL_COUNT,1);
+//            log.info("Attempting to update medication: {}", medicationId);
             Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationId);
-
-            if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
-                metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationId);
-                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationId);
-            } else {
-                metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_FOUND_COUNT, 1);
-                log.info("Update a single medication successfully: {}", medicationId);
-                return singleMedication;
-            }
-        } catch (DatabaseAccessException e){
-            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationId, e);
-            throw new DatabaseAccessException("Failed to access the database", e);
-        }
+//
+//            if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
+//                metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
+//                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationId);
+//                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationId);
+//            } else {
+//                metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_FOUND_COUNT, 1);
+//                log.info("Update a single medication successfully: {}", medicationId);
+               return singleMedication;
+//            }
+//        } catch (DatabaseAccessException e){
+//            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationId, e);
+//            throw new DatabaseAccessException("Failed to access the database", e);
+//        }
     }
 
     /**
@@ -172,27 +172,27 @@ public class MedicationDao {
      * @throws DatabaseAccessException  If there is an error accessing the database.
      */
     public void updateMedication(Medication updatedMedication) {
-        if (updatedMedication == null) {
-            log.warn("Attempted to update a null or empty medication object.");
-            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
-            throw new IllegalArgumentException("Updated medication object cannot be null or empty.");
-        }
-
-        try {
-            log.info("Attempting to update medication: {}", updatedMedication);
+//        if (updatedMedication == null) {
+//            log.warn("Attempted to update a null or empty medication object.");
+//            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
+//            throw new IllegalArgumentException("Updated medication object cannot be null or empty.");
+//        }
+//
+//        try {
+//            log.info("Attempting to update medication: {}", updatedMedication);
             dynamoDBMapper.save(updatedMedication);
-            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_SUCCESS_COUNT, 1);
-            log.info("Medication updated successfully: {}", updatedMedication);
-        } catch (AmazonDynamoDBException e) {
-            log.error("DynamoDB-specific error occurred while updating medication: {}", updatedMedication, e);
-            throw new CustomDynamoDBException("Failed to update medication in the database due to DynamoDB-specific error", e);
-        } catch (Exception e) {
-            log.error("Failed to update medication: {}", updatedMedication, e);
-            throw new DatabaseAccessException("Failed to update medication in the database", e);
-        }
+//            metricsPublisher.addCount(MetricsConstants.UPDATE_MEDICATION_SUCCESS_COUNT, 1);
+//            log.info("Medication updated successfully: {}", updatedMedication);
+//        } catch (AmazonDynamoDBException e) {
+//            log.error("DynamoDB-specific error occurred while updating medication: {}", updatedMedication, e);
+//            throw new CustomDynamoDBException("Failed to update medication in the database due to DynamoDB-specific error", e);
+//        } catch (Exception e) {
+//            log.error("Failed to update medication: {}", updatedMedication, e);
+//            throw new DatabaseAccessException("Failed to update medication in the database", e);
+//        }
     }
 
-    public List<Medication> retrieveCurrentMedicationsByMedicationStatus(String patientId, Medication.MEDICATION_STATUS medicationStatus) {
+    public List<Medication> retrieveMedicationsByMedicationStatus(String patientId, Medication.MEDICATION_STATUS medicationStatus) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":medicationStatus", new AttributeValue().withS(medicationStatus.name()));
 
@@ -201,12 +201,12 @@ public class MedicationDao {
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedScanList<Medication> medications = dynamoDBMapper.scan(Medication.class, scanExpression);
-        if (medications == null || medications.isEmpty()) {
-            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT, 1, StandardUnit.Count);
-            throw new MedicationNotFoundException("No medications found in database for status: " + medicationStatus);
-        } else {
-            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT, 1, StandardUnit.Count);
-        }
+//        if (medications == null || medications.isEmpty()) {
+//            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT, 1, StandardUnit.Count);
+//            throw new MedicationNotFoundException("No medications found in database for status: " + medicationStatus);
+//        } else {
+//            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT, 1, StandardUnit.Count);
+//        }
         return medications;
     }
 

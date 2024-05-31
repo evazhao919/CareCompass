@@ -42,16 +42,16 @@ public class UpdateNotificationDetailsActivity {
     public UpdateNotificationDetailsResult handleRequest(final UpdateNotificationDetailsRequest request){
         log.info("Received UpdateNotificationDetailsRequest {}", request);
 
-        Notification notification = notificationDao.updateSingleNotificationByScheduledTime(request.getPatientId(), request.getNotificationId());
+        Notification notification = notificationDao.updateSingleNotificationByScheduledTime(request.getPatientId(), request.getNotificationId());// Todo should i request notificationid here?
 
         if (notification == null) {
             throw new NotificationNotFoundException("Notification not found");
         }
 
-        notification.setNotificationTitle(request.getNotificationTitle());
+        notification.setNotificationTitle(request.getNotificationTitle());// Todo should i request NotificationTitle here?
+        notification.setReminderType(request.getReminderType());
         notification.setReminderContent(request.getReminderContent());
         notification.setScheduledTime(dateTimeConverter.unconvert(request.getScheduledTime()));
-        notification.setReminderType(request.getReminderType());
 
         notificationDao.updateNotification(notification);
 
