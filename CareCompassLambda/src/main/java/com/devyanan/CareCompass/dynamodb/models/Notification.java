@@ -12,7 +12,7 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "notifications")
 public class Notification {
     private String patientId;
-    private String notificationID;
+    private String notificationId;
     private String notificationTitle;
     private String reminderContent;
     private LocalDateTime scheduledTime;
@@ -29,6 +29,14 @@ public class Notification {
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
+    }
+    @DynamoDBRangeKey(attributeName = "notificationId")
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
     }
 
     @DynamoDBAttribute(attributeName = "notificationTitle")
@@ -62,7 +70,7 @@ public class Notification {
         this.reminderType = reminderType;
     }
 
-    @DynamoDBRangeKey(attributeName = "scheduledTime")
+    @DynamoDBAttribute(attributeName = "scheduledTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
     public LocalDateTime getScheduledTime() {
         return scheduledTime;
@@ -77,11 +85,11 @@ public class Notification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
-        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(scheduledTime, that.scheduledTime) && reminderType == that.reminderType;
+        return Objects.equals(patientId, that.patientId) && Objects.equals(notificationId, that.notificationId) && Objects.equals(notificationTitle, that.notificationTitle) && Objects.equals(reminderContent, that.reminderContent) && Objects.equals(scheduledTime, that.scheduledTime) && reminderType == that.reminderType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(patientId, notificationTitle, reminderContent, scheduledTime, reminderType);
+        return Objects.hash(patientId, notificationId, notificationTitle, reminderContent, scheduledTime, reminderType);
     }
 }

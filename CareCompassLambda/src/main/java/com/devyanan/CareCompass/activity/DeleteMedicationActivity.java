@@ -36,9 +36,9 @@ public class DeleteMedicationActivity {
         log.info("Received DeleteMedicationRequest {}", request);
 
 
-        //TODO
+        // TODO
 
-        Medication result = medicationDao.deleteSingleMedicationByMedicationName(request.getPatientId(),request.getMedicationName());
+        Medication result = medicationDao.deleteSingleMedicationByMedicationId(request.getPatientId(),request.getMedicationId());
 
         ModelConverter modelConverter = new ModelConverter();
         MedicationModel medicationModel = modelConverter.toMedicationModel(result);

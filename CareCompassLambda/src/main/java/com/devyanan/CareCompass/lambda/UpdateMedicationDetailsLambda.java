@@ -23,6 +23,7 @@ public class UpdateMedicationDetailsLambda extends LambdaActivityRunner<UpdateMe
                     return input.fromUserClaims(claims ->
                             UpdateMedicationDetailsRequest.builder()
                                     .withPatientId(claims.get("email"))
+                                    .withMedicationId(unauthenticatedRequest.getMedicationId())
                                     .withMedicationName(unauthenticatedRequest.getMedicationName())
                                     .withPrescription(unauthenticatedRequest.getPrescription())
                                     .withInstructions(unauthenticatedRequest.getInstructions())

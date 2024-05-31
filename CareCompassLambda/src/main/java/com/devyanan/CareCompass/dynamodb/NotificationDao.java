@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.devyanan.CareCompass.exceptions.*;
 import com.devyanan.CareCompass.metrics.MetricsConstants;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class NotificationDao {
     private final DynamoDBMapper dynamoDBMapper;
     private final MetricsPublisher metricsPublisher;
+    private final LocalDateTimeConverter localDateTimeConverter;
     private final Logger log = LogManager.getLogger();
 
     /**
@@ -41,6 +43,7 @@ public class NotificationDao {
     public NotificationDao(DynamoDBMapper dynamoDBMapper, MetricsPublisher metricsPublisher) {
         this.dynamoDBMapper = dynamoDBMapper;
         this.metricsPublisher = metricsPublisher;
+        localDateTimeConverter = new LocalDateTimeConverter();
     }
 
     /**
@@ -53,24 +56,24 @@ public class NotificationDao {
      * @throws DatabaseAccessException  If there is an error accessing the database.
      */
     public Notification addNotification(Notification notification) {
-        if (notification == null || notification.getScheduledTime() == null) {
-            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
-            log.info("Attempted to add a null notification.");
-            throw new IllegalArgumentException("notification object or name cannot be null or empty.");
-        }
+//        if (notification == null || notification.getScheduledTime() == null) {
+//            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
+//            log.info("Attempted to add a null notification.");
+//            throw new IllegalArgumentException("notification object or name cannot be null or empty.");
+//        }
 
-        try {
-            log.info("Attempting to add a notification: {}", notification);
+//        try {
+//            log.info("Attempting to add a notification: {}", notification);
             dynamoDBMapper.save(notification);
-            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT, 1);
-            log.info("Notification added successfully for user: {}", notification.getPatientId());
-        } catch (AmazonDynamoDBException e) {
-            log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
-            throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
-        } catch (Exception e) {
-            log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
-            throw new DatabaseAccessException("Failed to add notification to the database", e);
-        }
+//            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT, 1);
+//            log.info("Notification added successfully for user: {}", notification.getPatientId());
+//        } catch (AmazonDynamoDBException e) {
+//            log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
+//            throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
+//        } catch (Exception e) {
+//            log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
+//            throw new DatabaseAccessException("Failed to add notification to the database", e);
+//        }
 
         return notification;
     }
@@ -192,36 +195,71 @@ public class NotificationDao {
         }
     }
 
-    public List<Notification> RetrieveAllUpcomingNotifications(String patientId) {
-        try {
-            log.info("Attempting to retrieve all upcoming notifications for user: {}", patientId);
-            LocalDateTime currentTime = LocalDateTime.now();
+    public List<Notification> RetrieveAllUpcomingNotifications(String patientId, LocalDateTime startDate ) {
 
+        try {
             Map<String, Condition> rangeKeyConditions = new HashMap<>();
             Condition rangeCondition = new Condition()
-                    .withComparisonOperator(ComparisonOperator.GT)
-                    .withAttributeValueList(new AttributeValue().withS(currentTime.toString()));
+                    .withComparisonOperator(ComparisonOperator.GE)
+                    .withAttributeValueList(new AttributeValue().withS(startDate.toString()));
             rangeKeyConditions.put("scheduledTime", rangeCondition);
 
+            Notification hashKey = new Notification();
+            hashKey.setPatientId(patientId);
+
             DynamoDBQueryExpression<Notification> queryExpression = new DynamoDBQueryExpression<Notification>()
-                    .withHashKeyValues(new Notification())
+                    .withHashKeyValues(hashKey)
                     .withRangeKeyConditions(rangeKeyConditions);
 
             QueryResultPage<Notification> results = dynamoDBMapper.queryPage(Notification.class, queryExpression);
 
             if (results.getResults().isEmpty()) {
-                metricsPublisher.addCount(MetricsConstants.GET_ALL_UPCOMING_NOTIFICATIONS_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_COUNT, 1);
-                log.warn("No notifications found for user: {}", patientId);
                 return Collections.emptyList();
             }
 
-            metricsPublisher.addCount(MetricsConstants.GET_ALL_UPCOMING_NOTIFICATIONS_FOUND_COUNT, 1);
             return results.getResults();
         } catch (Exception e) {
-            log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
+
     }
+
+//    public List<Notification> RetrieveAllUpcomingNotifications(String patientId) {
+//        try {
+//            log.info("Attempting to retrieve all upcoming notifications for user: {}", patientId);
+//            LocalDateTime currentTime = LocalDateTime.now();
+//
+//            Map<String, Condition> rangeKeyConditions = new HashMap<>();
+//            Condition rangeCondition = new Condition()
+//                    .withComparisonOperator(ComparisonOperator.GE) // Change comparison operator to GE
+//                    .withAttributeValueList(new AttributeValue().withS(currentTime.toString()));
+//            rangeKeyConditions.put("scheduledTime", rangeCondition);
+//
+//            // Set hash key value to patientId
+//            Notification hashKey = new Notification();
+//            hashKey.setPatientId(patientId);
+//
+//            DynamoDBQueryExpression<Notification> queryExpression = new DynamoDBQueryExpression<Notification>()
+//                    .withHashKeyValues(hashKey)
+//                    .withRangeKeyConditions(rangeKeyConditions);
+//
+//            QueryResultPage<Notification> results = dynamoDBMapper.queryPage(Notification.class, queryExpression);
+//
+//            if (results.getResults().isEmpty()) {
+//                metricsPublisher.addCount(MetricsConstants.GET_ALL_UPCOMING_NOTIFICATIONS_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_COUNT, 1);
+//                log.warn("No notifications found for user: {}", patientId);
+//                return Collections.emptyList();
+//            }
+//
+//            // Handle pagination if necessary
+//
+//            metricsPublisher.addCount(MetricsConstants.GET_ALL_UPCOMING_NOTIFICATIONS_FOUND_COUNT, 1);
+//            return results.getResults();
+//        } catch (Exception e) {
+//            log.error("Failed to access the database for user: {}", patientId, e);
+//            throw new DatabaseAccessException("Failed to access the database", e);
+//        }
+//    }
 
     //    public Notification getSingleNotificationByPatientIdAndNotificationId(String patientId, String notificationId) {
 //        try{

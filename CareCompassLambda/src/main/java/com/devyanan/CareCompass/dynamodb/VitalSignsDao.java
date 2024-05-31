@@ -105,17 +105,42 @@ private final DynamoDBMapper dynamoDBMapper;
      * @return The deleted vital signs data.
      * @throws VitalSignsNotFoundException If the vital signs data is not found.
      */
-    public VitalSigns deleteSingleVitalSignsByActualCheckTime(String patientId, String actualCheckTime) { //TODO   ？？？？？？应该是LocalDateTime
-        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
-        VitalSigns result = this.dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
-        if (result == null) {
-            log.warn("Attempted to get a null VitalSigns object with patientId {}.", patientId);
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
-            throw new VitalSignsNotFoundException("VitalSigns actualCheckTime can not be null.");
-        } else {
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT, 1);
-            return result;
+    public VitalSigns deleteSingleVitalSignsByActualCheckTime(String patientId, LocalDateTime actualCheckTime) { //TODO   ？？？？？？应该是LocalDateTime,Dao 里面不应该使用时间
+        try {
+            // Increment the count for the delete operation
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
+
+            // Construct the key for the item to be deleted
+            VitalSigns vitalSignsToDelete = new VitalSigns();
+            vitalSignsToDelete.setPatientId(patientId);
+            vitalSignsToDelete.setActualCheckTime(actualCheckTime);
+
+            // Load the item from the database
+            VitalSigns existingVitalSigns = dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
+
+            // Check if the item exists before attempting to delete it
+            if (existingVitalSigns != null) {
+                // Delete the item from the database
+                dynamoDBMapper.delete(vitalSignsToDelete);
+                // Return the deleted item
+                return existingVitalSigns;
+            } else {
+                // If the item doesn't exist, throw a custom exception
+                throw new VitalSignsNotFoundException("Vital signs not found for patientId: " + patientId + " and actualCheckTime: " + actualCheckTime);
+            }
+        } catch (Exception e) {
+            // Handle any exceptions
+            log.error("Failed to delete vital signs for patientId: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
+            throw new DatabaseAccessException("Failed to delete vital signs", e);
         }
+//        if (result == null) {
+//            log.warn("Attempted to get a null VitalSigns object with patientId {}.", patientId);
+//            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
+//            throw new VitalSignsNotFoundException("VitalSigns actualCheckTime can not be null.");
+//        } else {
+//            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_SUCCESS_COUNT, 1);
+//            return result;
+//        }
     }
 
     /**

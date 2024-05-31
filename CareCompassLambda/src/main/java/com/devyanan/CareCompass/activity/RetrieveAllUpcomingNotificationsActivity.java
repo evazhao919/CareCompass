@@ -2,6 +2,7 @@ package com.devyanan.CareCompass.activity;
 
 import com.devyanan.CareCompass.activity.requests.RetrieveAllUpcomingNotificationsRequest;
 import com.devyanan.CareCompass.activity.results.RetrieveAllUpcomingNotificationsResult;
+import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.NotificationDao;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
@@ -10,11 +11,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RetrieveAllUpcomingNotificationsActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
+    private final LocalDateTimeConverter dateTimeConverter;
 
     /**
      * Constructor for RetrieveAllUpcomingNotificationsActivity.
@@ -23,6 +26,7 @@ public class RetrieveAllUpcomingNotificationsActivity {
     @Inject
     public RetrieveAllUpcomingNotificationsActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
+        this.dateTimeConverter = new LocalDateTimeConverter();
     }
 
     /**
@@ -31,19 +35,26 @@ public class RetrieveAllUpcomingNotificationsActivity {
      * @return The result containing the list of notifications
      * @throws NotificationNotFoundException if no notifications are found for the patient
      */
+//    public RetrieveAllUpcomingNotificationsResult handleRequest(RetrieveAllUpcomingNotificationsRequest request){
+//        log.info("RetrieveAllUpcomingNotificationsRequest received {}.",request);
+//        List<Notification> notificationList;
+//        try{
+//            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId());
+//        } catch (NotificationNotFoundException e){
+//            log.error("Notifications with PatientId {} is not found in database.",
+//                    request.getPatientId());
+//            throw new NotificationNotFoundException(e.getMessage(),e.getCause());
+//        }
+//        return RetrieveAllUpcomingNotificationsResult.builder()
+//                .withNotifications(new ModelConverter().toNotificationModelList(notificationList))
+//                .build();
+//    }
     public RetrieveAllUpcomingNotificationsResult handleRequest(RetrieveAllUpcomingNotificationsRequest request){
-        log.info("RetrieveAllUpcomingNotificationsRequest received {}.",request);
         List<Notification> notificationList;
-        try{
-            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId());
-        } catch (NotificationNotFoundException e){
-            log.error("Notifications with PatientId {} is not found in database.",
-                    request.getPatientId());
-            throw new NotificationNotFoundException(e.getMessage(),e.getCause());
-        }
+
+            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(), LocalDateTime.now());
         return RetrieveAllUpcomingNotificationsResult.builder()
                 .withNotifications(new ModelConverter().toNotificationModelList(notificationList))
                 .build();
     }
-
 }

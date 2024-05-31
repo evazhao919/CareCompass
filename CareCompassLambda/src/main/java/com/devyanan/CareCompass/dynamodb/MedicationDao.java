@@ -46,13 +46,13 @@ public class MedicationDao {
      */
     public Medication addMedication(Medication medication){
 
-        if(medication == null || medication.getMedicationName() == null || medication.getMedicationName().isEmpty()){
-            metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_NULL_OR_EMPTY_COUNT,1);
-            log.info("Attempted to add a medication with null or empty name.");
-            throw new IllegalArgumentException("Medication object or name cannot be null or empty.");
-        }
-        log.info("add medication for patientId with id: {}",medication.getPatientId());
-        metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_TOTAL_COUNT,1);
+//        if(medication == null || medication.getMedicationName() == null || medication.getMedicationName().isEmpty()){
+//            metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_NULL_OR_EMPTY_COUNT,1);
+//            log.info("Attempted to add a medication with null or empty name.");
+//            throw new IllegalArgumentException("Medication object or name cannot be null or empty.");
+//        }
+//        log.info("add medication for patientId with id: {}",medication.getPatientId());
+//        metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_TOTAL_COUNT,1);
         try {
             log.info("Attempting to add a medication: {}", medication);
             dynamoDBMapper.save(medication);
@@ -72,29 +72,29 @@ public class MedicationDao {
      * Retrieves a single medication record for a specified patient and medication name.
      *
      * @param patientId      The ID of the patient.
-     * @param medicationName The name of the medication.
+     * @param medicationId The name of the medication.
      * @return The medication object.
      * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
      * @throws DatabaseAccessException    If there is an error accessing the database.
      */
-    public Medication deleteSingleMedicationByMedicationName(String patientId, String medicationName) {
+    public Medication deleteSingleMedicationByMedicationId(String patientId, String medicationId) {
         try{
             log.info("Get medication for patientId with id: {}",patientId);
             metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_TOTAL_COUNT,1);
-            log.info("Attempting to delete medication: {}", medicationName);
-            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
+            log.info("Attempting to delete medication: {}", medicationId);
+            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationId);
 
             if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
                 metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
-                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
+                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationId);
+                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationId);
             } else {
                 metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_FOUND_COUNT, 1);
-                log.info("Get a single medication successfully: {}", medicationName);
+                log.info("Get a single medication successfully: {}", medicationId);
                 return singleMedication;
             }
         } catch (DatabaseAccessException e){
-            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationName, e);
+            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
@@ -136,29 +136,29 @@ public class MedicationDao {
      * Update a single medication record for a specified patient and medication name.
      *
      * @param patientId      The ID of the patient.
-     * @param medicationName The name of the medication.
+     * @param medicationId The name of the medication.
      * @return The medication object.
      * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
      * @throws DatabaseAccessException    If there is an error accessing the database.
      */
-    public Medication updateSingleMedicationByMedicationName(String patientId, String medicationName) {
+    public Medication updateSingleMedicationByMedicationId(String patientId, String medicationId) {
         try{
             log.info("Update medication for patientId with id: {}",patientId);
             metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_TOTAL_COUNT,1);
-            log.info("Attempting to update medication: {}", medicationName);
-            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationName);
+            log.info("Attempting to update medication: {}", medicationId);
+            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationId);
 
             if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
                 metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationName);
-                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationName);
+                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationId);
+                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationId);
             } else {
                 metricsPublisher.addCount(MetricsConstants.UPDATE_SINGLE_MEDICATION_FOUND_COUNT, 1);
-                log.info("Update a single medication successfully: {}", medicationName);
+                log.info("Update a single medication successfully: {}", medicationId);
                 return singleMedication;
             }
         } catch (DatabaseAccessException e){
-            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationName, e);
+            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }

@@ -6,6 +6,7 @@ import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.MedicationDao;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
 import com.devyanan.CareCompass.models.MedicationModel;
+import com.devyanan.CareCompass.utils.IdGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,6 +38,7 @@ public class AddMedicationActivity {
 
         Medication medication = new Medication();
         medication.setPatientId(request.getPatientId());
+        medication.setMedicationId(IdGenerator.generateId());
         medication.setMedicationName(request.getMedicationName());
         medication.setPrescription(request.getPrescription());
         medication.setInstructions(request.getInstructions());

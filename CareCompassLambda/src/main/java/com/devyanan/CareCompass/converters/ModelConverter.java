@@ -53,6 +53,7 @@ public class ModelConverter {
     public MedicationModel toMedicationModel(Medication medication){
         return MedicationModel.builder()
                 .withPatientId(medication.getPatientId())
+                .withMedicationId(medication.getMedicationId())
                 .withMedicationName(medication.getMedicationName())
                 .withPrescription(medication.getPrescription())
                 .withInstructions(medication.getInstructions())
@@ -82,7 +83,7 @@ public class ModelConverter {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return VitalSignsModel.builder()
                 .withPatientId(vitalSigns.getPatientId())
-                .withActualCheckTime(localDateTimeConverter.convert(vitalSigns.getActualCheckTime()))  //TODO ？LocalDateTime 转换成 String
+                .withActualCheckTime(localDateTimeConverter.convert(vitalSigns.getActualCheckTime()))  //TODO LocalDateTime 转换成 String
                 .withTemperature(vitalSigns.getTemperature())
                 .withHeartRate(vitalSigns.getHeartRate())
                 .withPulse(vitalSigns.getPulse())
@@ -122,6 +123,7 @@ public class ModelConverter {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return NotificationModel.builder()
                 .withPatientId(notification.getPatientId())
+                .withMedicationId(notification.getNotificationId())
                 .withNotificationTitle(notification.getNotificationTitle())
                 .withReminderContent(notification.getReminderContent())
                 .withScheduledTime(localDateTimeConverter.convert(notification.getScheduledTime())) //TODO  LocalDateTime 转换成 String

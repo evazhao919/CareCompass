@@ -34,7 +34,7 @@ public class Medication {
     public String getMedicationId() {
         return medicationId;
     }
-    
+
     public void setMedicationId(String medicationId) {
         this.medicationId = medicationId;
     }
@@ -74,4 +74,16 @@ public class Medication {
         this.medicationStatus = medicationStatus;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Medication that = (Medication) o;
+        return Objects.equals(log, that.log) && Objects.equals(patientId, that.patientId) && Objects.equals(medicationId, that.medicationId) && Objects.equals(medicationName, that.medicationName) && Objects.equals(prescription, that.prescription) && Objects.equals(instructions, that.instructions) && medicationStatus == that.medicationStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(log, patientId, medicationId, medicationName, prescription, instructions, medicationStatus);
+    }
 }

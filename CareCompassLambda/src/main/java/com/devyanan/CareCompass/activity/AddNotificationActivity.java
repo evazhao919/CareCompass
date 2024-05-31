@@ -7,10 +7,12 @@ import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.NotificationDao;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.devyanan.CareCompass.models.NotificationModel;
+import com.devyanan.CareCompass.utils.IdGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.UUID;
 
 /**
  * This class handles the logic for adding a notification.
@@ -40,6 +42,7 @@ public class AddNotificationActivity {
 
         Notification notification = new Notification();   // POJO Notification LocalDateTime
         notification.setPatientId(request.getPatientId());
+        notification.setNotificationId(IdGenerator.generateId());
         notification.setNotificationTitle(request.getNotificationTitle());
         notification.setReminderContent(request.getReminderContent());
         notification.setScheduledTime(dateTimeConverter.unconvert(request.getScheduledTime()));//1， 把Request的String 变成LocalDateTime 给POJO用， POJO给DAO用  请看（2）

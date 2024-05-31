@@ -7,13 +7,15 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = UpdateMedicationDetailsRequest.Builder.class)
 public class UpdateMedicationDetailsRequest {
         private final String patientId;
+        private final String medicationId;
         private final String medicationName;
         private final String prescription;
         private final String instructions;
         private final Medication.MEDICATION_STATUS medicationStatus;
 
-    public UpdateMedicationDetailsRequest(String patientId, String medicationName, String prescription, String instructions, Medication.MEDICATION_STATUS medicationStatus) {
+    public UpdateMedicationDetailsRequest(String patientId, String medicationId, String medicationName, String prescription, String instructions, Medication.MEDICATION_STATUS medicationStatus) {
         this.patientId = patientId;
+        this.medicationId = medicationId;
         this.medicationName = medicationName;
         this.prescription = prescription;
         this.instructions = instructions;
@@ -22,6 +24,10 @@ public class UpdateMedicationDetailsRequest {
 
     public String getPatientId() {
         return patientId;
+    }
+
+    public String getMedicationId() {
+        return medicationId;
     }
 
     public String getMedicationName() {
@@ -44,6 +50,7 @@ public class UpdateMedicationDetailsRequest {
     public String toString() {
         return "UpdateMedicationDetailsRequest{" +
                 "patientId='" + patientId + '\'' +
+                ", medicationId='" + medicationId + '\'' +
                 ", medicationName='" + medicationName + '\'' +
                 ", prescription='" + prescription + '\'' +
                 ", instructions='" + instructions + '\'' +
@@ -59,12 +66,18 @@ public class UpdateMedicationDetailsRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
+        private String medicationId;
         private String medicationName;
         private String prescription;
         private String instructions;
         private Medication.MEDICATION_STATUS medicationStatus;
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
+            return this;
+        }
+
+        public Builder withMedicationId(String medicationId) {
+            this.medicationId = medicationId;
             return this;
         }
 
@@ -89,7 +102,7 @@ public class UpdateMedicationDetailsRequest {
         }
 
         public UpdateMedicationDetailsRequest build() {
-            return new UpdateMedicationDetailsRequest(patientId, medicationName, prescription, instructions, medicationStatus);
+            return new UpdateMedicationDetailsRequest(patientId, medicationId, medicationName, prescription, instructions, medicationStatus);
         }
     }
 }

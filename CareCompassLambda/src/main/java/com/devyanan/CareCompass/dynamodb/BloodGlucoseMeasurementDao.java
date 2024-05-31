@@ -8,6 +8,7 @@ import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
+import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.exceptions.BloodGlucoseMeasurementNotFoundException;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
 import com.devyanan.CareCompass.exceptions.DatabaseAccessException;
@@ -77,16 +78,43 @@ public class BloodGlucoseMeasurementDao {
      * @return The deleted blood glucose measurement.
      * @throws BloodGlucoseMeasurementNotFoundException If the blood glucose measurement is not found.
      */
-    public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurementByActualCheckTime(String patientId, String actualCheckTime){//TODO   ？？？？？？应该是LocalDateTime
-        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
-        BloodGlucoseMeasurement result = this.dynamoDBMapper.load(BloodGlucoseMeasurement.class,patientId,actualCheckTime);
-        if(result == null ){
-            log.warn("Attempted to get a null bloodGlucoseMeasurement object with patientId {}.", patientId);
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
-            throw new BloodGlucoseMeasurementNotFoundException("BloodGlucoseMeasurement actualCheckTime can not be null.");
-        } else {
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT,1);
-            return result;
+    public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurementByActualCheckTime(String patientId, LocalDateTime actualCheckTime){//TODO   ？？？？？？应该是LocalDateTime
+//        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
+//        BloodGlucoseMeasurement result = this.dynamoDBMapper.load(BloodGlucoseMeasurement.class,patientId,actualCheckTime);
+//        if(result == null ){
+//            log.warn("Attempted to get a null bloodGlucoseMeasurement object with patientId {}.", patientId);
+//            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
+//            throw new BloodGlucoseMeasurementNotFoundException("BloodGlucoseMeasurement actualCheckTime can not be null.");
+//        } else {
+//            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT,1);
+//            return result;
+//        }
+        try {
+            // Increment the count for the delete operation
+            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
+
+            // Construct the key for the item to be deleted
+            BloodGlucoseMeasurement bloodGlucoseMeasurementToDelete = new BloodGlucoseMeasurement();
+            bloodGlucoseMeasurementToDelete.setPatientId(patientId);
+            bloodGlucoseMeasurementToDelete.setActualCheckTime(actualCheckTime);
+
+            // Load the item from the database
+            BloodGlucoseMeasurement existingBloodGlucoseMeasurement = dynamoDBMapper.load(BloodGlucoseMeasurement.class, patientId, actualCheckTime);
+
+            // Check if the item exists before attempting to delete it
+            if (existingBloodGlucoseMeasurement != null) {
+                // Delete the item from the database
+                dynamoDBMapper.delete(bloodGlucoseMeasurementToDelete);
+                // Return the deleted item
+                return existingBloodGlucoseMeasurement;
+            } else {
+                // If the item doesn't exist, throw a custom exception
+                throw new BloodGlucoseMeasurementNotFoundException("Blood glucose measurement not found for patientId: " + patientId + " and actualCheckTime: " + actualCheckTime);
+            }
+        } catch (Exception e) {
+            // Handle any exceptions
+            log.error("Failed to delete blood glucose measurement for patientId: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
+            throw new DatabaseAccessException("Failed to delete blood glucose measurement", e);
         }
     }
 
@@ -125,10 +153,10 @@ public class BloodGlucoseMeasurementDao {
     }
 
 //    /**
-//     * Retrieves the vital signs recorded for the last three days for a specified patient.
+//     * Retrieves the blood glucose masurement recorded for the last three days for a specified patient.
 //     *
 //     * @param patientId The ID of the patient.
-//     * @return A list of vital signs recorded for the last three days.
+//     * @return A list of blood glucose masurement recorded for the last three days.
 //     */
 //    public List<BloodGlucoseMeasurement> getBloodGlucoseMeasurementForLastThreeDays(String patientId) {
 //        LocalDateTime now = LocalDateTime.now();

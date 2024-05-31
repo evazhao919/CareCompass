@@ -5,26 +5,26 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = DeleteMedicationRequest.Builder.class)
 public class DeleteMedicationRequest {
     private final String patientId;
-    private final String medicationName;
+    private final String medicationId;
 
-    public DeleteMedicationRequest(String patientId, String medicationName) {
+    public DeleteMedicationRequest(String patientId, String medicationId) {
         this.patientId = patientId;
-        this.medicationName = medicationName;
+        this.medicationId = medicationId;
     }
 
     public String getPatientId() {
         return patientId;
     }
 
-    public String getMedicationName() {
-        return medicationName;
+    public String getMedicationId() {
+        return medicationId;
     }
 
     @Override
     public String toString() {
         return "DeleteMedicationRequest{" +
                 "patientId='" + patientId + '\'' +
-                ", medicationName='" + medicationName + '\'' +
+                ", medicationId='" + medicationId + '\'' +
                 '}';
     }
 
@@ -36,20 +36,20 @@ public class DeleteMedicationRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String medicationName;
+        private String medicationId;
 
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
         }
 
-        public Builder withMedicationName(String medicationName) {
-            this.medicationName = medicationName;
+        public Builder withMedicationId(String medicationId) {
+            this.medicationId = medicationId;
             return this;
         }
 
         public DeleteMedicationRequest build() {
-            return new DeleteMedicationRequest(patientId, medicationName);
+            return new DeleteMedicationRequest(patientId, medicationId);
         }
     }
 }

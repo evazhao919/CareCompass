@@ -378,7 +378,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /medications/{medicationName}
+            Path: /medications/{medicationId}
             Method: delete
 
   DeleteNotificationLambda:
@@ -398,7 +398,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /notifications/{scheduledTime}
+            Path: /notifications/{notificationId}
             Method: delete
 
   DeleteVitalSignsLambda:
@@ -607,12 +607,12 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "patientId"
           AttributeType: "S"
-        - AttributeName: "medicationName"
+        - AttributeName: "medicationId"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "patientId"
           KeyType: "HASH"
-        - AttributeName: "medicationName"
+        - AttributeName: "medicationId"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "medications"
@@ -623,12 +623,12 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "patientId"
           AttributeType: "S"
-        - AttributeName: "scheduledTime"
+        - AttributeName: "notificationId"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "patientId"
           KeyType: "HASH"
-        - AttributeName: "scheduledTime"
+        - AttributeName: "notificationId"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "notifications"

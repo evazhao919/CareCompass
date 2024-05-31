@@ -2,6 +2,7 @@ package com.devyanan.CareCompass.activity;
 
 import com.devyanan.CareCompass.activity.requests.DeleteBloodGlucoseMeasurementRequest;
 import com.devyanan.CareCompass.activity.results.DeleteBloodGlucoseMeasurementResult;
+import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.BloodGlucoseMeasurementDao;
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 public class DeleteBloodGlucoseMeasurementActivity {
     private final Logger log = LogManager.getLogger();
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
+    private final LocalDateTimeConverter dateTimeConverter;
 
     /**
      * Constructor for DeleteBloodGlucoseMeasurementActivity.
@@ -24,6 +26,7 @@ public class DeleteBloodGlucoseMeasurementActivity {
     @Inject
     public DeleteBloodGlucoseMeasurementActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
+        dateTimeConverter = new LocalDateTimeConverter();
     }
 
     /**
@@ -34,12 +37,12 @@ public class DeleteBloodGlucoseMeasurementActivity {
     public DeleteBloodGlucoseMeasurementResult handleRequest(final DeleteBloodGlucoseMeasurementRequest request){
         log.info("Received DeleteBloodGlucoseMeasurementRequest {}", request);
 
-        //TODO
+        // TODO
 
-        BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.deleteSingleBloodGlucoseMeasurementByActualCheckTime(request.getPatientId(),request.getActualCheckTime());
+        BloodGlucoseMeasurement result = bloodGlucoseMeasurementDao.deleteSingleBloodGlucoseMeasurementByActualCheckTime(request.getPatientId(),dateTimeConverter.unconvert(request.getActualCheckTime()));
 
         return DeleteBloodGlucoseMeasurementResult.builder()
-                .withBloodGlucoseMeasurementModel(new ModelConverter().toBloodGlucoseMeasurementModel(bloodGlucoseMeasurement))
+                .withBloodGlucoseMeasurementModel(new ModelConverter().toBloodGlucoseMeasurementModel(result))
                 .build();
     }
 }
