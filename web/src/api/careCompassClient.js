@@ -18,7 +18,7 @@ export default class CareCompassClient extends BindingClass {
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'addBloodGlucoseMeasurement',
         'addMedication', 'addNotification', 'addVitalSigns', 'deleteBloodGlucoseMeasurement', 'deleteMedication',
         'deleteNotification', 'deleteVitalSigns', 'getAllBloodGlucoseMeasurements','getAllMedications',
-        'getAllNotifications','getAllVitalSigns','retrieveAllUpcomingNotifications','retrieveCurrentMedications',
+        'getAllNotifications','getAllVitalSigns','retrieveAllUpcomingNotifications','RetrieveMedicationsByStatus',
         'updateMedicationDetails', 'updateNotificationDetails'];
         this.bindClassMethods(methodsToBind, this);
 
@@ -242,7 +242,7 @@ export default class CareCompassClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The playlist's metadata.
      */
-    async getAllBloodGlucoseMeasurements(errorCallback) {
+    async getAllBloodGlucoseMeasurements(BloodGlucoseMeasurementAttributes or patientId,errorCallback) {
         try {
             const response = await this.axiosClient.get(`playlists/${id}`);
             return response.data.playlist;
@@ -298,7 +298,7 @@ export default class CareCompassClient extends BindingClass {
      * @param criteria A string containing search criteria to pass to the API.
      * @returns The playlists that match the search criteria.
      */
-    async RetrieveCurrentMedications(criteria, errorCallback) {
+    async RetrieveMedicationsByStatus(criteria, errorCallback) {
         try {
             const queryParams = new URLSearchParams({ q: criteria })
             const queryString = queryParams.toString();

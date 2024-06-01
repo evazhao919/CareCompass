@@ -2,11 +2,11 @@ package com.devyanan.CareCompass.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-public class RetrieveCurrentMedicationsRequest {
+public class RetrieveMedicationsByStatusRequest {
     private final String patientId;
     private final String medicationStatus;
 
-    public RetrieveCurrentMedicationsRequest(String patientId, String medicationStatus) {
+    public RetrieveMedicationsByStatusRequest(String patientId, String medicationStatus) {
         this.patientId = patientId;
         this.medicationStatus = medicationStatus;
     }
@@ -21,7 +21,7 @@ public class RetrieveCurrentMedicationsRequest {
 
     @Override
     public String toString() {
-        return "RetrieveCurrentMedicationsRequest{" +
+        return "RetrieveMedicationsByStatusRequest {" +
                 "patientId='" + patientId + '\'' +
                 ", medicationStatus='" + medicationStatus + '\'' +
                 '}';
@@ -43,8 +43,8 @@ public class RetrieveCurrentMedicationsRequest {
             this.medicationStatus = medicationStatus;
             return this;
         }
-        public RetrieveCurrentMedicationsRequest build() {
-            return new RetrieveCurrentMedicationsRequest(patientId, medicationStatus);
+        public RetrieveMedicationsByStatusRequest build() {
+            return new RetrieveMedicationsByStatusRequest(patientId, medicationStatus);
         }
     }
 }
