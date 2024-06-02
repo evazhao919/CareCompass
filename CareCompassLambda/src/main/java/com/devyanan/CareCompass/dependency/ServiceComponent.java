@@ -108,4 +108,10 @@ public interface ServiceComponent {
      * @return RetrieveAllUpcomingNotificationsActivity
      */
     RetrieveAllUpcomingNotificationsActivity provideRetrieveAllUpcomingNotificationsActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return RetrieveNotificationsByReminderTypeActivity
+     */
+    RetrieveNotificationsByReminderTypeActivity provideRetrieveNotificationsByReminderTypeActivity();
 }

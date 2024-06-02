@@ -8,24 +8,6 @@ import com.devyanan.CareCompass.activity.results.RetrieveMedicationsByStatusResu
 public class RetrieveMedicationsByStatusLambda extends LambdaActivityRunner<RetrieveMedicationsByStatusRequest,
         RetrieveMedicationsByStatusResult> implements RequestHandler<AuthenticatedLambdaRequest<RetrieveMedicationsByStatusRequest>,
         LambdaResponse> {
-//    @Override
-//    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<RetrieveMedicationsByStatusRequest> input, Context context) {
-//        return super.runActivity(
-//                () -> {
-//                    RetrieveMedicationsByStatusRequest unauthenticatedLambdaRequest = input.fromQuery(query ->
-//                            RetrieveMedicationsByStatusRequest.builder()
-//                                    .withMedicationStatus(query.get("medicationStatus"))
-//                                    .build());
-//                    return input.fromUserClaims(claims ->
-//                            RetrieveMedicationsByStatusRequest.builder()
-//                                    .withPatientId(claims.get("email"))
-//                                    .withMedicationStatus(unauthenticatedLambdaRequest.getMedicationStatus())
-//                                    .build());
-//                },
-//                (request, serviceComponent) ->
-//                        serviceComponent.provideRetrieveMedicationsByStatusActivity().handleRequest(request)
-//        );
-//    }
         @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<RetrieveMedicationsByStatusRequest> input, Context context) {
         return super.runActivity(
@@ -44,4 +26,22 @@ public class RetrieveMedicationsByStatusLambda extends LambdaActivityRunner<Retr
                         serviceComponent.provideRetrieveMedicationsByStatusActivity().handleRequest(request)
         );
     }
+    //    @Override
+//    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<RetrieveMedicationsByStatusRequest> input, Context context) {
+//        return super.runActivity(
+//                () -> {
+//                    RetrieveMedicationsByStatusRequest unauthenticatedLambdaRequest = input.fromQuery(query ->
+//                            RetrieveMedicationsByStatusRequest.builder()
+//                                    .withMedicationStatus(query.get("medicationStatus"))
+//                                    .build());
+//                    return input.fromUserClaims(claims ->
+//                            RetrieveMedicationsByStatusRequest.builder()
+//                                    .withPatientId(claims.get("email"))
+//                                    .withMedicationStatus(unauthenticatedLambdaRequest.getMedicationStatus())
+//                                    .build());
+//                },
+//                (request, serviceComponent) ->
+//                        serviceComponent.provideRetrieveMedicationsByStatusActivity().handleRequest(request)
+//        );
+//    }
 }

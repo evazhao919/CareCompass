@@ -1,14 +1,11 @@
 package com.devyanan.CareCompass.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
-import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.devyanan.CareCompass.exceptions.*;
 import com.devyanan.CareCompass.metrics.MetricsConstants;
@@ -237,6 +234,18 @@ public class NotificationDao {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
 
+    }
+
+    public List<Notification> retrieveNotificationsByReminderType(String patientId, Notification.REMINDER_TYPE reminderType) {
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":reminderType", new AttributeValue().withS(reminderType.name()));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("reminderType = :reminderType")
+                .withExpressionAttributeValues(valueMap);
+
+        PaginatedScanList<Notification> notifications = dynamoDBMapper.scan(Notification.class, scanExpression);
+        return notifications;
     }
 
 //    public List<Notification> RetrieveAllUpcomingNotifications(String patientId) {
