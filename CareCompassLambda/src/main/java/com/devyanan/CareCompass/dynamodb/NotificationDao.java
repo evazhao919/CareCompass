@@ -1,8 +1,6 @@
 package com.devyanan.CareCompass.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
@@ -110,29 +108,43 @@ public class NotificationDao {
      * Retrieves a single notification based on patient ID and scheduled time.
      *
      * @param patientId     The ID of the patient.
-     * @param scheduledTime The reminder time.
+     * @param notificationId
      * @return The retrieved notification.
      * @throws NotificationNotFoundException If the notification is not found.
      * @throws DatabaseAccessException       If there is an error accessing the database.
      */
-    public Notification deleteSingleNotificationByScheduledTime(String patientId, String scheduledTime) { //TODO   ？？？？？？应该是LocalDateTime
-        try {
-            log.info("Attempting to delete notification: {}", scheduledTime);
-            Notification singleNotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);
+    public Notification deleteSingleNotificationByNotificationId(String patientId, String notificationId) { //TODO   ？？？？？？应该是LocalDateTime
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_BY_ID_TOTAL_COUNT, 1);
 
-            if (singleNotification == null) {
-                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No notification found for user: {} and scheduledTime: {}", patientId, scheduledTime);
-                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and scheduledTime : " + scheduledTime);
-            } else {
-                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_PATIENT_ID_AND_SCHEDULED_TIME_FOUND_COUNT, 1);
-                log.info("Delete a single notification successfully: {}", scheduledTime);
-                return singleNotification;
-            }
-        } catch (DatabaseAccessException e) {
-            log.error("Failed to access the database for user: {} and scheduledTime: {}", patientId, scheduledTime, e);
-            throw new DatabaseAccessException("Failed to access the database", e);
+        Notification notificationToDelete = new Notification();
+        notificationToDelete.setPatientId(patientId);
+        notificationToDelete.setNotificationId(patientId);
+
+        Notification existingNotification = dynamoDBMapper.load(Notification.class, patientId, notificationId);
+
+        if (existingNotification != null) {
+            dynamoDBMapper.delete(notificationToDelete);
+            return existingNotification;
+        } else {
+            throw new NotificationNotFoundException(("Notification not found for patientId: " + patientId + " and notificationId: " + notificationId));
         }
+//        try {
+//            log.info("Attempting to delete notification: {}", scheduledTime);
+//            Notification singleNotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);
+//
+//            if (singleNotification == null) {
+//                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_OR_EMPTY_COUNT, 1);
+//                log.warn("No notification found for user: {} and scheduledTime: {}", patientId, scheduledTime);
+//                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and scheduledTime : " + scheduledTime);
+//            } else {
+//                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_PATIENT_ID_AND_SCHEDULED_TIME_FOUND_COUNT, 1);
+//                log.info("Delete a single notification successfully: {}", scheduledTime);
+//                return singleNotification;
+//            }
+//        } catch (DatabaseAccessException e) {
+//            log.error("Failed to access the database for user: {} and scheduledTime: {}", patientId, scheduledTime, e);
+//            throw new DatabaseAccessException("Failed to access the database", e);
+//        }
     }
 
     /**
@@ -222,6 +234,18 @@ public class NotificationDao {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
 
+    }
+
+    public List<Notification> retrieveNotificationsByReminderType(String patientId, Notification.REMINDER_TYPE reminderType) {
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":reminderType", new AttributeValue().withS(reminderType.name()));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("reminderType = :reminderType")
+                .withExpressionAttributeValues(valueMap);
+
+        PaginatedScanList<Notification> notifications = dynamoDBMapper.scan(Notification.class, scanExpression);
+        return notifications;
     }
 
 //    public List<Notification> RetrieveAllUpcomingNotifications(String patientId) {

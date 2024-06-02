@@ -2,28 +2,28 @@ package com.devyanan.CareCompass.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-public class RetrieveCurrentMedicationsRequest {
+public class RetrieveNotificationsByReminderTypeRequest {
     private final String patientId;
-    private final String medicationStatus;
+    private final String reminderType;
 
-    public RetrieveCurrentMedicationsRequest(String patientId, String medicationStatus) {
+    public RetrieveNotificationsByReminderTypeRequest(String patientId, String reminderType) {
         this.patientId = patientId;
-        this.medicationStatus = medicationStatus;
+        this.reminderType = reminderType;
     }
 
     public String getPatientId() {
         return patientId;
     }
 
-    public String getMedicationStatus() {
-        return medicationStatus;
+    public String getReminderType() {
+        return reminderType;
     }
 
     @Override
     public String toString() {
-        return "RetrieveCurrentMedicationsRequest{" +
+        return "RetrieveNotificationsByReminderType{" +
                 "patientId='" + patientId + '\'' +
-                ", medicationStatus='" + medicationStatus + '\'' +
+                ", reminderType='" + reminderType + '\'' +
                 '}';
     }
 
@@ -33,18 +33,20 @@ public class RetrieveCurrentMedicationsRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-        private String medicationStatus;
+        private String reminderType;
+
         public Builder withPatientId(String patientId) {
             this.patientId = patientId;
             return this;
         }
 
-        public Builder withMedicationStatus(String medicationStatus) {
-            this.medicationStatus = medicationStatus;
+        public Builder withReminderType(String reminderType) {
+            this.reminderType = reminderType;
             return this;
         }
-        public RetrieveCurrentMedicationsRequest build() {
-            return new RetrieveCurrentMedicationsRequest(patientId, medicationStatus);
+
+        public RetrieveNotificationsByReminderTypeRequest build() {
+            return new RetrieveNotificationsByReminderTypeRequest(patientId, reminderType);
         }
     }
 }

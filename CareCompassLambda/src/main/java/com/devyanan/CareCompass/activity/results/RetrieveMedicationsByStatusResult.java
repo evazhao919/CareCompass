@@ -4,10 +4,10 @@ import com.devyanan.CareCompass.models.MedicationModel;
 
 import java.util.List;
 
-public class RetrieveCurrentMedicationsResult {
+public class RetrieveMedicationsByStatusResult {
     private final List<MedicationModel> medications;
 
-    public RetrieveCurrentMedicationsResult(List<MedicationModel> medications) {
+    public RetrieveMedicationsByStatusResult(List<MedicationModel> medications) {
         this.medications = medications;
     }
 
@@ -17,7 +17,7 @@ public class RetrieveCurrentMedicationsResult {
 
     @Override
     public String toString() {
-        return "RetrieveCurrentMedicationsResult{" +
+        return "RetrieveMedicationsByStatusResult {" +
                 "medications=" + medications +
                 '}';
     }
@@ -31,8 +31,8 @@ public class RetrieveCurrentMedicationsResult {
             this.medications = medications;
             return this;
         }
-        public RetrieveCurrentMedicationsResult build() {
-            return new RetrieveCurrentMedicationsResult(medications);
+        public RetrieveMedicationsByStatusResult build() {
+            return new RetrieveMedicationsByStatusResult(medications);
         }
     }
 }

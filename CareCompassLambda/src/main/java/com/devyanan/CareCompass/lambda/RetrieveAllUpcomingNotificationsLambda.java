@@ -11,12 +11,10 @@ public class RetrieveAllUpcomingNotificationsLambda extends LambdaActivityRunner
         @Override
         public LambdaResponse handleRequest(AuthenticatedLambdaRequest<RetrieveAllUpcomingNotificationsRequest> input, Context context) {
                 return super.runActivity(
-                        () -> {
-                                return input.fromUserClaims(claims ->
-                                        RetrieveAllUpcomingNotificationsRequest.builder()
-                                                .withPatientId(claims.get("email"))
-                                                .build());
-                        },
+                        () -> input.fromUserClaims(claims ->
+                                RetrieveAllUpcomingNotificationsRequest.builder()
+                                        .withPatientId(claims.get("email"))
+                                        .build()),
                         (request, serviceComponent) ->
                                 serviceComponent.provideRetrieveAllUpcomingNotificationsActivity().handleRequest(request)
                 );

@@ -123,7 +123,7 @@ public class ModelConverter {
         LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
         return NotificationModel.builder()
                 .withPatientId(notification.getPatientId())
-                .withMedicationId(notification.getNotificationId())
+                .withNotificationId(notification.getNotificationId())
                 .withNotificationTitle(notification.getNotificationTitle())
                 .withReminderContent(notification.getReminderContent())
                 .withScheduledTime(localDateTimeConverter.convert(notification.getScheduledTime())) //TODO  LocalDateTime 转换成 String

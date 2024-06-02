@@ -1,7 +1,7 @@
 package com.devyanan.CareCompass.activity;
 
-import com.devyanan.CareCompass.activity.requests.RetrieveCurrentMedicationsRequest;
-import com.devyanan.CareCompass.activity.results.RetrieveCurrentMedicationsResult;
+import com.devyanan.CareCompass.activity.requests.RetrieveMedicationsByStatusRequest;
+import com.devyanan.CareCompass.activity.results.RetrieveMedicationsByStatusResult;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.MedicationDao;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
@@ -19,8 +19,8 @@ public class RetrieveMedicationsByStatusActivity {
     public RetrieveMedicationsByStatusActivity(MedicationDao medicationDao) {
         this.medicationDao = medicationDao;
     }
-    public RetrieveCurrentMedicationsResult handleRequest(RetrieveCurrentMedicationsRequest request) {
-        log.info("RetrieveCurrentMedicationsRequest {} received.", request);
+    public RetrieveMedicationsByStatusResult handleRequest(RetrieveMedicationsByStatusRequest request) {
+        log.info("RetrieveMedicationsByStatusRequest {} received.", request);
 
         List<Medication> searchResults;
         try {
@@ -29,7 +29,7 @@ public class RetrieveMedicationsByStatusActivity {
             throw new MedicationNotFoundException(String.format("No %s medications found.", request.getMedicationStatus()),
                     e.getCause());
         }
-        return RetrieveCurrentMedicationsResult.builder()
+        return RetrieveMedicationsByStatusResult.builder()
                 .withMedications(new ModelConverter().toMedicationModelList(searchResults))
                 .build();
     }

@@ -17,7 +17,6 @@ import javax.inject.Inject;
 public class DeleteNotificationActivity {
     private final Logger log = LogManager.getLogger();
     private final NotificationDao notificationDao;
-    private final LocalDateTimeConverter dateTimeConverter;
 
     /**
      * Constructor for DeleteNotificationActivity.
@@ -26,7 +25,6 @@ public class DeleteNotificationActivity {
     @Inject
     public DeleteNotificationActivity(NotificationDao notificationDao) {
         this.notificationDao = notificationDao;
-        dateTimeConverter = new LocalDateTimeConverter();
     }
 
     /**
@@ -36,14 +34,8 @@ public class DeleteNotificationActivity {
      */
     public DeleteNotificationResult handleRequest(final DeleteNotificationRequest request){
         log.info("Received DeleteNotificationRequest {}", request);
-        // TODO
 
-
-
-
-
-
-        Notification notification = notificationDao.deleteSingleNotificationByScheduledTime(request.getPatientId(),request.getNotificationId());
+        Notification notification = notificationDao.deleteSingleNotificationByNotificationId(request.getPatientId(),request.getNotificationId());
         return DeleteNotificationResult.builder()
                 .withNotificationModel(new ModelConverter().toNotificationModel(notification))
                 .build();
