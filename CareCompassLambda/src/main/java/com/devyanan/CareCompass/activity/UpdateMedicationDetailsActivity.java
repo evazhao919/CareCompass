@@ -42,9 +42,9 @@ public class UpdateMedicationDetailsActivity {
 
         Medication medication = medicationDao.getMedication(request.getPatientId(),request.getMedicationId());
 
-        if (medication == null) {
-            throw new MedicationNotFoundException("Medication not found");
-        }
+//        if (medication == null) {
+//            throw new MedicationNotFoundException("Medication not found");
+//        }
 
         medication.setMedicationName(request.getMedicationName());
         medication.setPrescription(request.getPrescription());

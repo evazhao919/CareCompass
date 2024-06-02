@@ -37,18 +37,9 @@ public class DeleteVitalSignsActivity {
      */
     public DeleteVitalSignsResult handleRequest(final DeleteVitalSignsRequest request){//request is String, result is String
         log.info("Received DeleteVitalSignsRequest {}", request);
-        //TODO
-
-//        VitalSigns vitalSigns = new VitalSigns(); // POJO Notification LocalDateTime
-//        vitalSigns.setPatientId(request.getPatientId());
-//        vitalSigns.setActualCheckTime(dateTimeConverter.unconvert(request.getActualCheckTime())); //1， 把Request的String 变成LocalDateTime 给POJO用， POJO给DAO用  请看（2）
 
         VitalSigns result = vitalSignsDao.deleteSingleVitalSignsByActualCheckTime(request.getPatientId(),dateTimeConverter.unconvert(request.getActualCheckTime()));//2 ， 把LocalDateTime 给POJO用, 存储到数据库里，但是 为什么dynamoDB里是String????? 因为POJO里面有：@DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
 
-
-
-
-           // log.error("No VitalSigns found with patientId {} and actualCheckTime {}.",request.getPatientId(),request.getActualCheckTime());
         return DeleteVitalSignsResult.builder()
                 .withVitalSignModel(new ModelConverter().toVitalSignsModel(result))
                 .build();

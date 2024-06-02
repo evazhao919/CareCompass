@@ -223,7 +223,10 @@ Resources:
             Statement:
               - Effect: Allow
                 Action: dynamodb:*
-                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications"
+                Resource: [
+                !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications",
+                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications/*"
+                ]
 
         - PolicyName: 'AccessVitalSignsTable'
           PolicyDocument:
@@ -233,7 +236,7 @@ Resources:
                 Action: dynamodb:*
                 Resource: [
                   !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/vitalSigns",
-                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications/index/vitalSignsDateIndex"
+                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/vitalSigns/index/*"
                 ]
   #-----------------------------------------------------
   # Lambda Functions Configuration
@@ -632,6 +635,15 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "notifications"
+      GlobalSecondaryIndexes:
+        - IndexName: "notificationsIndex"
+          KeySchema:
+            - AttributeName: "patientId"
+              KeyType: "HASH"
+            - AttributeName: "scheduledTime"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: "ALL"
 
   VitalSignsTable:
     Type: AWS::DynamoDB::Table

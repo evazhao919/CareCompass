@@ -19,10 +19,11 @@ public class Notification {
     private REMINDER_TYPE reminderType;
 
     public enum REMINDER_TYPE {
-        GLUCOSE_MEASUREMENT, MEDICATION, VITAL_SIGNS, GENERAL
+        GLUCOSE_MEASUREMENT, MEDICATION, VITAL_SIGNS, APPOINTMENT, GENERAL
     }
 
     @DynamoDBHashKey(attributeName = "patientId")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"notificationsIndex"}, attributeName = "patientId")
     public String getPatientId() {
         return patientId;
     }
@@ -72,6 +73,7 @@ public class Notification {
 
     @DynamoDBAttribute(attributeName = "scheduledTime")
     @DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "notificationsIndex", attributeName = "scheduledTime")
     public LocalDateTime getScheduledTime() {
         return scheduledTime;
     }

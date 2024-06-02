@@ -4,6 +4,7 @@ import com.amazonaws.services.cloudwatch.model.StandardUnit;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
 import com.devyanan.CareCompass.exceptions.*;
 import com.devyanan.CareCompass.metrics.MetricsConstants;
@@ -77,25 +78,26 @@ public class MedicationDao {
      * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
      * @throws DatabaseAccessException    If there is an error accessing the database.
      */
-    public Medication deleteSingleMedicationByMedicationId(String patientId, String medicationId) {
-        try{
-            log.info("Get medication for patientId with id: {}",patientId);
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_TOTAL_COUNT,1);
-            log.info("Attempting to delete medication: {}", medicationId);
-            Medication singleMedication = this.dynamoDBMapper.load(Medication.class, patientId, medicationId);
+    public Medication deleteSingleMedicationByMedicationId(String patientId, String medicationId){
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_TOTAL_COUNT, 1);
 
-            if (singleMedication == null || singleMedication.getMedicationName() == null || singleMedication.getMedicationName().isEmpty()) {
-                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No medication found for user: {} and medication name: {}", patientId, medicationId);
-                throw new MedicationNotFoundException("No medications found for user: " + patientId + " and medication name: " + medicationId);
-            } else {
-                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_FOUND_COUNT, 1);
-                log.info("Get a single medication successfully: {}", medicationId);
-                return singleMedication;
-            }
-        } catch (DatabaseAccessException e){
-            log.error("Failed to access the database for user: {} and medication name: {}", patientId, medicationId, e);
-            throw new DatabaseAccessException("Failed to access the database", e);
+        // Construct the key for the item to be deleted
+        Medication medicationDelete = new Medication();
+        medicationDelete.setPatientId(patientId);
+        medicationDelete.setMedicationId(medicationId);
+
+        // Load the item from the database
+        Medication existingMedication = dynamoDBMapper.load(Medication.class, patientId, medicationId);
+
+        // Check if the item exists before attempting to delete it
+        if (existingMedication != null) {
+            // Delete the item from the database
+            dynamoDBMapper.delete(medicationDelete);
+            // Return the deleted item
+            return existingMedication;
+        } else {
+            // If the item doesn't exist, throw a custom exception
+            throw new MedicationNotFoundException(("Medication not found for patientId: " + patientId + " and medicationId: " + medicationId));
         }
     }
 
