@@ -30,7 +30,6 @@ public class AddNotificationLambda extends LambdaActivityRunner<AddNotificationR
                     return input.fromUserClaims(claims ->
                             AddNotificationRequest.builder()
                                     .withPatientId(claims.get("email"))
-//                                    .withNotificationId(unauthenticatedRequest.getNotificationId())
                                     .withNotificationTitle(unauthenticatedRequest.getNotificationTitle())
                                     .withReminderContent(unauthenticatedRequest.getReminderContent())
                                     .withScheduledTime(unauthenticatedRequest.getScheduledTime())

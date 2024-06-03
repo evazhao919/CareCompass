@@ -3,6 +3,7 @@ package com.devyanan.CareCompass.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.devyanan.CareCompass.activity.requests.DeleteBloodGlucoseMeasurementRequest;
+import com.devyanan.CareCompass.activity.requests.DeleteNotificationRequest;
 import com.devyanan.CareCompass.activity.results.DeleteBloodGlucoseMeasurementResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,15 +27,15 @@ implements RequestHandler<AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasureme
         log.info("AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasurementRequest> received");
         return super.runActivity(
                 () -> {
-                    DeleteBloodGlucoseMeasurementRequest unauthenticatedRequest = input.fromPath(path ->
-                            DeleteBloodGlucoseMeasurementRequest.builder()
+                    DeleteBloodGlucoseMeasurementRequest.Builder requestBuilder = DeleteBloodGlucoseMeasurementRequest.builder();
+                    DeleteBloodGlucoseMeasurementRequest unauthenticatedRequest = input.fromUserClaims(claims -> requestBuilder
+                            .withPatientId(claims.get("email"))
+                            .build());
+
+                    return input.fromPath(path -> requestBuilder
+                            .withPatientId(unauthenticatedRequest.getPatientId())
                                     .withActualCheckTime(path.get("actualCheckTime"))
                                     .build());
-                    return input.fromUserClaims(claims ->
-                            DeleteBloodGlucoseMeasurementRequest.builder()
-                            .withPatientId(claims.get("email"))
-                            .withActualCheckTime(unauthenticatedRequest.getActualCheckTime())
-                            .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteBloodGlucoseMeasurementActivity().handleRequest(request)));
     }

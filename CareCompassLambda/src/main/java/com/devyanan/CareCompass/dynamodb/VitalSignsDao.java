@@ -44,7 +44,7 @@ private final DynamoDBMapper dynamoDBMapper;
      * @throws CustomDynamoDBException If there is a DynamoDB-specific error while adding the vital signs data.
      * @throws DatabaseAccessException If there is an error accessing the database.
      */
-    public VitalSigns addVitalSigns(VitalSigns vitalSigns){
+    public VitalSigns saveVitalSigns(VitalSigns vitalSigns){
         if(vitalSigns == null){
         metricsPublisher.addCount(MetricsConstants.ADD_VITAL_SIGNS_NULL_OR_EMPTY_COUNT,1);
         log.info("Attempted to add a null vitalSigns.");

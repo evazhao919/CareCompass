@@ -48,7 +48,7 @@ public class AddNotificationActivity {
         notification.setScheduledTime(dateTimeConverter.unconvert(request.getScheduledTime()));//1， 把Request的String 变成LocalDateTime 给POJO用， POJO给DAO用  请看（2）
         notification.setReminderType(request.getReminderType()); //
 
-        Notification result = notificationDao.addNotification(notification); //2 ， 把LocalDateTime 给POJO用, 存储到数据库里，但是 为什么dynamoDB里是String????? 因为POJO里面有：@DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
+        Notification result = notificationDao.saveNotification(notification); //2 ， 把LocalDateTime 给POJO用, 存储到数据库里，但是 为什么dynamoDB里是String????? 因为POJO里面有：@DynamoDBTypeConverted(converter = LocalDateTimeConverter.class)
 
         ModelConverter modelConverter = new ModelConverter();
         NotificationModel notificationModel = modelConverter.toNotificationModel(result);  //3 ， 把LocalDateTime结果 用modelConverter 转换成 String

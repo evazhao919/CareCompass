@@ -35,9 +35,14 @@ public class DeleteNotificationActivity {
     public DeleteNotificationResult handleRequest(final DeleteNotificationRequest request){
         log.info("Received DeleteNotificationRequest {}", request);
 
-        Notification notification = notificationDao.deleteSingleNotificationByNotificationId(request.getPatientId(),request.getNotificationId());
+        Notification notification = new Notification();
+        notification.setPatientId(request.getPatientId());
+        notification.setNotificationId(request.getNotificationId());
+
+
+        Notification result = notificationDao.deleteNotification(notification);
         return DeleteNotificationResult.builder()
-                .withNotificationModel(new ModelConverter().toNotificationModel(notification))
+                .withNotificationModel(new ModelConverter().toNotificationModel(result))
                 .build();
     }
 }

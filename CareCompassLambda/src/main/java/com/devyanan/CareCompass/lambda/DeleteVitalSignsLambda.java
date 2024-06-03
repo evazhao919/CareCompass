@@ -27,14 +27,13 @@ public class DeleteVitalSignsLambda extends LambdaActivityRunner<DeleteVitalSign
         log.info("AuthenticatedLambdaRequest<DeleteVitalSignsRequest> received");
         return super.runActivity(
                 () -> {
-                    DeleteVitalSignsRequest unauthenticatedRequest = input.fromPath(path ->
-                            DeleteVitalSignsRequest.builder()
-                                    .withActualCheckTime(path.get("actualCheckTime"))
-                                    .build());
-                    return input.fromUserClaims(claims ->
-                            DeleteVitalSignsRequest.builder()
+                    DeleteVitalSignsRequest.Builder requestBuilder = DeleteVitalSignsRequest.builder();
+                    DeleteVitalSignsRequest unauthenticatedRequest = input.fromUserClaims(claims -> requestBuilder
                                     .withPatientId(claims.get("email"))
-                                    .withActualCheckTime(unauthenticatedRequest.getActualCheckTime())
+                                    .build());
+                    return input.fromPath(path -> requestBuilder
+                            .withPatientId(unauthenticatedRequest.getPatientId())
+                                    .withActualCheckTime(path.get("actualCheckTime"))
                                     .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteVitalSignsActivity().handleRequest(request)));

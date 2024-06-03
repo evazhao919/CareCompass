@@ -36,6 +36,8 @@ public class MetricsConstants {
     public static final String UPDATE_SINGLE_MEDICATION_FOUND_COUNT = "";
     public static final String GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT = "";
     public static final String GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_FOUND_COUNT ="";
+    public static final String GET_SINGLE_MEDICATION_BY_MEDICATION_ID_NOT_FOUND_COUNT = "";
+    public static final String GET_SINGLE_MEDICATION_BY_MEDICATION_ID_AND_PATIENT_ID_FOUND_COUNT = "";
 
     // Notification Metrics
     public static final String ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT = "add_notification_null_or_empty_count";
@@ -53,6 +55,8 @@ public class MetricsConstants {
     public static final String DELETE_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_OR_EMPTY_COUNT = "";
     public static final String DELETE_SINGLE_NOTIFICATION_PATIENT_ID_AND_SCHEDULED_TIME_FOUND_COUNT = "";
     public static final String DELETE_SINGLE_NOTIFICATION_BY_ID_TOTAL_COUNT = "";
+    public static final String GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_NOT_FOUND_COUNT = "get_single_notification_by_notification_id_not_found_count";
+    public static final String GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_AND_PATIENT_ID_FOUND_COUNT = "get_single_notification_by_notification_id_and_patient_id_found_count";
 
 
     // Blood Glucose Measurement Metrics

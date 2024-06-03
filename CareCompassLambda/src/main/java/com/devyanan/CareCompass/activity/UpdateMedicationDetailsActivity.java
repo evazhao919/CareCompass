@@ -42,16 +42,12 @@ public class UpdateMedicationDetailsActivity {
 
         Medication medication = medicationDao.getMedication(request.getPatientId(),request.getMedicationId());
 
-//        if (medication == null) {
-//            throw new MedicationNotFoundException("Medication not found");
-//        }
-
         medication.setMedicationName(request.getMedicationName());
         medication.setPrescription(request.getPrescription());
         medication.setInstructions(request.getInstructions());
         medication.setMedicationStatus(request.getMedicationStatus());
 
-        medicationDao.updateMedication(medication);
+        medicationDao.saveMedication(medication);
 
         return UpdateMedicationDetailsResult.builder()
                 .withMedicationModel(new ModelConverter().toMedicationModel(medication))

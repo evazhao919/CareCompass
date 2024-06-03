@@ -45,7 +45,7 @@ public class AddBloodGlucoseMeasurementActivity {
         bloodGlucoseMeasurement.setGlucoseContext(request.getGlucoseContext());
         bloodGlucoseMeasurement.setComments(request.getComments());
 
-        BloodGlucoseMeasurement result = bloodGlucoseMeasurementDao.addBloodGlucoseMeasurement(bloodGlucoseMeasurement);
+        BloodGlucoseMeasurement result = bloodGlucoseMeasurementDao.saveBloodGlucoseMeasurement(bloodGlucoseMeasurement);
 
         ModelConverter modelConverter = new ModelConverter();
         BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel = modelConverter.toBloodGlucoseMeasurementModel(result);

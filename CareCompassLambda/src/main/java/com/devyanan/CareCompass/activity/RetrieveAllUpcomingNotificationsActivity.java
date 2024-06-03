@@ -35,21 +35,8 @@ public class RetrieveAllUpcomingNotificationsActivity {
      * @return The result containing the list of notifications
      * @throws NotificationNotFoundException if no notifications are found for the patient
      */
-//    public RetrieveAllUpcomingNotificationsResult handleRequest(RetrieveAllUpcomingNotificationsRequest request){
-//        log.info("RetrieveAllUpcomingNotificationsRequest received {}.",request);
-//        List<Notification> notificationList;
-//        try{
-//            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId());
-//        } catch (NotificationNotFoundException e){
-//            log.error("Notifications with PatientId {} is not found in database.",
-//                    request.getPatientId());
-//            throw new NotificationNotFoundException(e.getMessage(),e.getCause());
-//        }
-//        return RetrieveAllUpcomingNotificationsResult.builder()
-//                .withNotifications(new ModelConverter().toNotificationModelList(notificationList))
-//                .build();
-//    }
     public RetrieveAllUpcomingNotificationsResult handleRequest(RetrieveAllUpcomingNotificationsRequest request){
+        log.info("RetrieveAllUpcomingNotificationsRequest received {}.",request);
         List<Notification> notificationList;
 
             notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(), LocalDateTime.now().withSecond(0).withNano(0));
