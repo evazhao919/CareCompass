@@ -181,10 +181,11 @@ public class NotificationDao {
     public List<Notification> RetrieveAllUpcomingNotifications(String patientId, LocalDateTime startDate ) {
 
         try {
+
             Map<String, Condition> rangeKeyConditions = new HashMap<>();
             Condition rangeCondition = new Condition()
                     .withComparisonOperator(ComparisonOperator.GE)
-                    .withAttributeValueList(new AttributeValue().withS(startDate.toString()));
+                    .withAttributeValueList(new AttributeValue().withS(localDateTimeConverter.convert(startDate)));
             rangeKeyConditions.put("scheduledTime", rangeCondition);
 
             Notification hashKey = new Notification();
@@ -193,6 +194,7 @@ public class NotificationDao {
             DynamoDBQueryExpression<Notification> queryExpression = new DynamoDBQueryExpression<Notification>()
                     .withHashKeyValues(hashKey)
                     .withRangeKeyConditions(rangeKeyConditions);
+                    queryExpression.setConsistentRead(false);
 
             QueryResultPage<Notification> results = dynamoDBMapper.queryPage(Notification.class, queryExpression);
 
@@ -204,7 +206,6 @@ public class NotificationDao {
         } catch (Exception e) {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
-
     }
 
     public List<Notification> retrieveNotificationsByReminderType(String patientId, Notification.REMINDER_TYPE reminderType) {

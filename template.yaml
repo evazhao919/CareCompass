@@ -559,8 +559,8 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /upcomingNotifications/{medicationStatus}
-            Method: get  #TODO
+            Path: /upcomingNotifications/
+            Method: get
 
   RetrieveMedicationsByStatusLambda:
     Type: AWS::Serverless::Function

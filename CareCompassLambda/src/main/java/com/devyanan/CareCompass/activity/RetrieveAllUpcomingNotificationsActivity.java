@@ -38,8 +38,12 @@ public class RetrieveAllUpcomingNotificationsActivity {
     public RetrieveAllUpcomingNotificationsResult handleRequest(RetrieveAllUpcomingNotificationsRequest request){
         log.info("RetrieveAllUpcomingNotificationsRequest received {}.",request);
         List<Notification> notificationList;
-
-            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(), LocalDateTime.now().withSecond(0).withNano(0));
+        LocalDateTime scheduledTime = LocalDateTime.now().withSecond(0).withNano(0);
+        if(request.getScheduledTime() != null && !request.getScheduledTime().isBlank()){
+           scheduledTime = dateTimeConverter.unconvert(request.getScheduledTime());
+        }
+        log.info("ScheduledTime use blank as null {}", scheduledTime);
+            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(),scheduledTime);
         return RetrieveAllUpcomingNotificationsResult.builder()
                 .withNotifications(new ModelConverter().toNotificationModelList(notificationList))
                 .build();
