@@ -2,7 +2,6 @@ package com.devyanan.CareCompass.activity;
 
 import com.devyanan.CareCompass.activity.requests.DeleteNotificationRequest;
 import com.devyanan.CareCompass.activity.results.DeleteNotificationResult;
-import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.NotificationDao;
 import com.devyanan.CareCompass.dynamodb.models.Notification;

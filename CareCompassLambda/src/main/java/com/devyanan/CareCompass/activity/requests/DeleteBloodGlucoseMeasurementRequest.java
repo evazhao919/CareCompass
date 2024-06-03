@@ -1,6 +1,5 @@
 package com.devyanan.CareCompass.activity.requests;
 
-import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 

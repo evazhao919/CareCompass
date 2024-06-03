@@ -3,7 +3,6 @@ package com.devyanan.CareCompass.utils;
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.devyanan.CareCompass.exceptions.InvalidAttributeValueException;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDateTime;
 

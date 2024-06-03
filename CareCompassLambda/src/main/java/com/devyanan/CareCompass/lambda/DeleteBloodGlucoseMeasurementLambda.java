@@ -3,7 +3,6 @@ package com.devyanan.CareCompass.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.devyanan.CareCompass.activity.requests.DeleteBloodGlucoseMeasurementRequest;
-import com.devyanan.CareCompass.activity.requests.DeleteNotificationRequest;
 import com.devyanan.CareCompass.activity.results.DeleteBloodGlucoseMeasurementResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -5,7 +5,6 @@ import com.devyanan.CareCompass.activity.results.DeleteMedicationResult;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.MedicationDao;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
-import com.devyanan.CareCompass.models.MedicationModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
