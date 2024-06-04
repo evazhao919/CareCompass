@@ -26,14 +26,14 @@ public class DeleteNotificationLambda extends LambdaActivityRunner<DeleteNotific
         log.info("AuthenticatedLambdaRequest<DeleteNotificationRequest> received");
         return super.runActivity(
                 () -> {
-                    DeleteNotificationRequest unauthenticatedRequest = input.fromPath(path ->
-                            DeleteNotificationRequest.builder()
+                    DeleteNotificationRequest.Builder requestBuilder = DeleteNotificationRequest.builder();
+                    DeleteNotificationRequest unauthenticatedRequest = input.fromUserClaims(claims -> requestBuilder
+                            .withPatientId(claims.get("email"))
+                            .build());
+
+                    return input.fromPath(path -> requestBuilder
+                            .withPatientId(unauthenticatedRequest.getPatientId())
                                     .withNotificationId(path.get("notificationId"))
-                                    .build());
-                    return input.fromUserClaims(claims ->
-                            DeleteNotificationRequest.builder()
-                                    .withPatientId(claims.get("email"))
-                                    .withNotificationId(unauthenticatedRequest.getNotificationId())
                                     .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteNotificationActivity().handleRequest(request)));

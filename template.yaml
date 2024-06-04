@@ -224,7 +224,7 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: [
-                !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications",
+                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications",
                   !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/notifications/*"
                 ]
 
@@ -234,10 +234,8 @@ Resources:
             Statement:
               - Effect: Allow
                 Action: dynamodb:*
-                Resource: [
-                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/vitalSigns",
-                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/vitalSigns/index/*"
-                ]
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/vitalSigns"
+
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------
@@ -561,7 +559,7 @@ Resources:
         CareCompassService:
           Type: Api
           Properties:
-            Path: /upcomingNotifications/{scheduledTime}
+            Path: /upcomingNotifications/
             Method: get
 
   RetrieveMedicationsByStatusLambda:
@@ -682,15 +680,6 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "vitalSigns"
-      GlobalSecondaryIndexes:
-        - IndexName: "vitalSignsDateIndex"
-          KeySchema:
-            - AttributeName: "patientId"
-              KeyType: "HASH"
-            - AttributeName: "actualCheckTime"
-              KeyType: "RANGE"
-          Projection:
-            ProjectionType: "ALL"
 
 #-----------------------------------------------------
 # The outputs defined below will be printed
@@ -721,6 +710,3 @@ Outputs:
     Description: "The URL of the deployed front-end application (COGNITO_REDIRECT_SIGNOUT)."
     Value: !Sub "https://${CloudfrontDistribution.DomainName}"
     Condition: DeployCloudFront
-
-
-

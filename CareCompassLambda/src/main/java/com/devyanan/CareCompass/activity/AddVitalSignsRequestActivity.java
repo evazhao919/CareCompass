@@ -56,7 +56,7 @@ public class AddVitalSignsRequestActivity {
         vitalSigns.setPatientActivity(request.getPatientActivity());
         vitalSigns.setComments(request.getComments());
 
-        VitalSigns result = vitalSignsDao.addVitalSigns(vitalSigns);
+        VitalSigns result = vitalSignsDao.saveVitalSigns(vitalSigns);
 
         ModelConverter modelConverter = new ModelConverter();
         VitalSignsModel vitalSignsModel = modelConverter.toVitalSignsModel(result);

@@ -32,7 +32,6 @@ public class AddMedicationLambda extends LambdaActivityRunner<AddMedicationReque
                     return input.fromUserClaims(claims ->
                             AddMedicationRequest.builder()
                                     .withPatientId(claims.get("email"))
-//                                    .withMedicationId(unauthenticatedRequest.getMedicationId())
                                     .withMedicationName(unauthenticatedRequest.getMedicationName())
                                     .withPrescription(unauthenticatedRequest.getPrescription())
                                     .withInstructions(unauthenticatedRequest.getInstructions())

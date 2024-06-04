@@ -18,14 +18,14 @@ public class DeleteMedicationLambda extends LambdaActivityRunner<DeleteMedicatio
         log.info("AuthenticatedLambdaRequest<DeleteMedicationRequest> received");
         return super.runActivity(
                 () -> {
-                    DeleteMedicationRequest unauthenticatedRequest = input.fromPath(path ->
-                            DeleteMedicationRequest.builder()
-                                    .withMedicationId(path.get("medicationId"))
-                                    .build());
-                    return input.fromUserClaims(claims ->
-                            DeleteMedicationRequest.builder()
+                    DeleteMedicationRequest.Builder requestBuilder = DeleteMedicationRequest.builder();
+                    DeleteMedicationRequest unauthenticatedRequest = input.fromUserClaims(claims -> requestBuilder
                                     .withPatientId(claims.get("email"))
-                                    .withMedicationId(unauthenticatedRequest.getMedicationId())
+                                    .build());
+
+                    return input.fromPath(path -> requestBuilder
+                            .withPatientId(unauthenticatedRequest.getPatientId())
+                                    .withMedicationId(path.get("medicationId"))
                                     .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteMedicationActivity().handleRequest(request)));

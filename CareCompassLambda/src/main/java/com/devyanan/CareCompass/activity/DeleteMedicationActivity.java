@@ -5,7 +5,6 @@ import com.devyanan.CareCompass.activity.results.DeleteMedicationResult;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.MedicationDao;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
-import com.devyanan.CareCompass.models.MedicationModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,8 +33,12 @@ public class DeleteMedicationActivity {
      */
     public DeleteMedicationResult handleRequest(final DeleteMedicationRequest request){
         log.info("Received DeleteMedicationRequest {}", request);
+         Medication medication = new Medication();
+         medication.setPatientId(request.getPatientId());
+         medication.setMedicationId(request.getMedicationId());
 
-        Medication result = medicationDao.deleteSingleMedicationByMedicationId(request.getPatientId(),request.getMedicationId());
+
+        Medication result = medicationDao.deleteMedication(medication);
 
         return DeleteMedicationResult.builder()
                 .withMedicationModel(new ModelConverter().toMedicationModel(result))

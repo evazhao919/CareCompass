@@ -53,25 +53,26 @@ public class NotificationDao {
      * @throws CustomDynamoDBException  If there is a DynamoDB-specific error.
      * @throws DatabaseAccessException  If there is an error accessing the database.
      */
-    public Notification addNotification(Notification notification) {
-//        if (notification == null || notification.getScheduledTime() == null) {
-//            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
-//            log.info("Attempted to add a null notification.");
-//            throw new IllegalArgumentException("notification object or name cannot be null or empty.");
-//        }
-
-//        try {
-//            log.info("Attempting to add a notification: {}", notification);
-            dynamoDBMapper.save(notification);
-//            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT, 1);
-//            log.info("Notification added successfully for user: {}", notification.getPatientId());
-//        } catch (AmazonDynamoDBException e) {
-//            log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
-//            throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
-//        } catch (Exception e) {
-//            log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
-//            throw new DatabaseAccessException("Failed to add notification to the database", e);
-//        }
+    public Notification saveNotification(Notification notification) {
+        if (notification == null) {
+            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
+            log.info("Attempted to add a null notification.");
+            throw new IllegalArgumentException("notification object or name cannot be null or empty.");
+        }
+        log.info("add notification for patientId with id: {}",notification.getNotificationId());
+        metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_TOTAL_COUNT,1);
+        try {
+            log.info("Attempting to add a notification: {}", notification);
+        dynamoDBMapper.save(notification);
+            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT, 1);
+            log.info("Notification added successfully for user: {}", notification.getPatientId());
+        } catch (AmazonDynamoDBException e) {
+            log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
+            throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
+        } catch (Exception e) {
+            log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
+            throw new DatabaseAccessException("Failed to add notification to the database", e);
+        }
 
         return notification;
     }
@@ -104,47 +105,18 @@ public class NotificationDao {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
-    /**
-     * Retrieves a single notification based on patient ID and scheduled time.
-     *
-     * @param patientId     The ID of the patient.
-     * @param notificationId
-     * @return The retrieved notification.
-     * @throws NotificationNotFoundException If the notification is not found.
-     * @throws DatabaseAccessException       If there is an error accessing the database.
-     */
-    public Notification deleteSingleNotificationByNotificationId(String patientId, String notificationId) { //TODO   ？？？？？？应该是LocalDateTime
-        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_BY_ID_TOTAL_COUNT, 1);
 
-        Notification notificationToDelete = new Notification();
-        notificationToDelete.setPatientId(patientId);
-        notificationToDelete.setNotificationId(patientId);
+    public Notification deleteNotification(Notification notification) {
+        log.info("Attempting to delete notification with ID: {}", notification.getNotificationId());
 
-        Notification existingNotification = dynamoDBMapper.load(Notification.class, patientId, notificationId);
-
-        if (existingNotification != null) {
-            dynamoDBMapper.delete(notificationToDelete);
-            return existingNotification;
-        } else {
-            throw new NotificationNotFoundException(("Notification not found for patientId: " + patientId + " and notificationId: " + notificationId));
+        if (notification == null) {
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_NOT_FOUND_COUNT, 1);
+            log.warn("No notification ID provided for user: {}", notification.getNotificationId());
+            throw new IllegalArgumentException("Notification ID cannot be empty");
         }
-//        try {
-//            log.info("Attempting to delete notification: {}", scheduledTime);
-//            Notification singleNotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);
-//
-//            if (singleNotification == null) {
-//                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_OR_EMPTY_COUNT, 1);
-//                log.warn("No notification found for user: {} and scheduledTime: {}", patientId, scheduledTime);
-//                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and scheduledTime : " + scheduledTime);
-//            } else {
-//                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_PATIENT_ID_AND_SCHEDULED_TIME_FOUND_COUNT, 1);
-//                log.info("Delete a single notification successfully: {}", scheduledTime);
-//                return singleNotification;
-//            }
-//        } catch (DatabaseAccessException e) {
-//            log.error("Failed to access the database for user: {} and scheduledTime: {}", patientId, scheduledTime, e);
-//            throw new DatabaseAccessException("Failed to access the database", e);
-//        }
+        dynamoDBMapper.delete(notification);
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_ID_FOUND_COUNT, 1);
+        return notification;
     }
 
     /**
@@ -210,10 +182,11 @@ public class NotificationDao {
     public List<Notification> RetrieveAllUpcomingNotifications(String patientId, LocalDateTime startDate ) {
 
         try {
+
             Map<String, Condition> rangeKeyConditions = new HashMap<>();
             Condition rangeCondition = new Condition()
                     .withComparisonOperator(ComparisonOperator.GE)
-                    .withAttributeValueList(new AttributeValue().withS(startDate.toString()));
+                    .withAttributeValueList(new AttributeValue().withS(localDateTimeConverter.convert(startDate)));
             rangeKeyConditions.put("scheduledTime", rangeCondition);
 
             Notification hashKey = new Notification();
@@ -222,6 +195,7 @@ public class NotificationDao {
             DynamoDBQueryExpression<Notification> queryExpression = new DynamoDBQueryExpression<Notification>()
                     .withHashKeyValues(hashKey)
                     .withRangeKeyConditions(rangeKeyConditions);
+                    queryExpression.setConsistentRead(false);
 
             QueryResultPage<Notification> results = dynamoDBMapper.queryPage(Notification.class, queryExpression);
 
@@ -233,7 +207,6 @@ public class NotificationDao {
         } catch (Exception e) {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
-
     }
 
     public List<Notification> retrieveNotificationsByReminderType(String patientId, Notification.REMINDER_TYPE reminderType) {
@@ -248,89 +221,23 @@ public class NotificationDao {
         return notifications;
     }
 
-//    public List<Notification> RetrieveAllUpcomingNotifications(String patientId) {
-//        try {
-//            log.info("Attempting to retrieve all upcoming notifications for user: {}", patientId);
-//            LocalDateTime currentTime = LocalDateTime.now();
-//
-//            Map<String, Condition> rangeKeyConditions = new HashMap<>();
-//            Condition rangeCondition = new Condition()
-//                    .withComparisonOperator(ComparisonOperator.GE) // Change comparison operator to GE
-//                    .withAttributeValueList(new AttributeValue().withS(currentTime.toString()));
-//            rangeKeyConditions.put("scheduledTime", rangeCondition);
-//
-//            // Set hash key value to patientId
-//            Notification hashKey = new Notification();
-//            hashKey.setPatientId(patientId);
-//
-//            DynamoDBQueryExpression<Notification> queryExpression = new DynamoDBQueryExpression<Notification>()
-//                    .withHashKeyValues(hashKey)
-//                    .withRangeKeyConditions(rangeKeyConditions);
-//
-//            QueryResultPage<Notification> results = dynamoDBMapper.queryPage(Notification.class, queryExpression);
-//
-//            if (results.getResults().isEmpty()) {
-//                metricsPublisher.addCount(MetricsConstants.GET_ALL_UPCOMING_NOTIFICATIONS_BY_PATIENT_ID_AND_SCHEDULED_TIME_NULL_COUNT, 1);
-//                log.warn("No notifications found for user: {}", patientId);
-//                return Collections.emptyList();
-//            }
-//
-//            // Handle pagination if necessary
-//
-//            metricsPublisher.addCount(MetricsConstants.GET_ALL_UPCOMING_NOTIFICATIONS_FOUND_COUNT, 1);
-//            return results.getResults();
-//        } catch (Exception e) {
-//            log.error("Failed to access the database for user: {}", patientId, e);
-//            throw new DatabaseAccessException("Failed to access the database", e);
-//        }
-//    }
+    public Notification getNotification(String patientId, String notificationId) {
+        try{
+            log.info("Attempting to get notification: {}", notificationId);
+            Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, notificationId);
 
-    //    public Notification getSingleNotificationByPatientIdAndNotificationId(String patientId, String notificationId) {
-//        try{
-//            log.info("Attempting to get notification: {}", notificationId);
-//            Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, notificationId);
-//
-//            if (singlenotification == null) {
-//                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT, 1);
-//                log.warn("No notification found for user: {} and notificationId: {}", patientId, notificationId);
-//                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and notificationId : " + notificationId);
-//            } else {
-//                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_FOUND_COUNT, 1);
-//                log.info("Get a single notification successfully: {}", notificationId);
-//                return singlenotification;
-//            }
-//        } catch (DatabaseAccessException e){
-//            log.error("Failed to access the database for user: {} and notification id: {}", patientId, notificationId, e);
-//            throw new DatabaseAccessException("Failed to access the database", e);
-//        }
-//    }
-//    /**
-//     * Deletes a notification from the database.
-//     *
-//     * @param notification The notification object to delete.
-//     * @return true if deletion was successful, false otherwise.
-//     * @throws CustomDynamoDBException If there is a DynamoDB-specific error.
-//     * @throws DatabaseAccessException If there is an error accessing the database.
-//     */
-//    public boolean deleteNotification(Notification notification) {
-//        if (notification == null) {
-//            log.warn("Attempted to delete a null or empty notification object.");
-//            metricsPublisher.addCount(MetricsConstants.DELETE_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
-//            return false;
-//        }
-//
-//        try {
-//            log.info("Attempting to delete notification: {}", notification);
-//            this.dynamoDBMapper.delete(notification);
-//            metricsPublisher.addCount(MetricsConstants.DELETE_NOTIFICATION_SUCCESS_COUNT, 1);
-//            log.info("notification deleted successfully: {}", notification);
-//            return true;
-//        } catch (AmazonDynamoDBException e) {
-//            log.error("DynamoDB-specific error occurred while deleting notification: {}", notification, e);
-//            throw new CustomDynamoDBException("Failed to delete notification from the database due to DynamoDB-specific error", e);
-//        } catch (Exception e) {
-//            log.error("Failed to delete notification: {}", notification, e);
-//            throw new DatabaseAccessException("Failed to delete notification from the database", e);
-//        }
-//    }
+            if (singlenotification == null) {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No notification found for user: {} and notificationId: {}", patientId, notificationId);
+                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and notificationId : " + notificationId);
+            } else {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_FOUND_COUNT, 1);
+                log.info("Get a single notification successfully: {}", notificationId);
+                return singlenotification;
+            }
+        } catch (DatabaseAccessException e){
+            log.error("Failed to access the database for user: {} and notification id: {}", patientId, notificationId, e);
+            throw new DatabaseAccessException("Failed to access the database", e);
+        }
+    }
 }

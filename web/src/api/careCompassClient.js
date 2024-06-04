@@ -19,7 +19,7 @@ export default class CareCompassClient extends BindingClass {
         'addMedication', 'addNotification', 'addVitalSigns', 'deleteBloodGlucoseMeasurement', 'deleteMedication',
         'deleteNotification', 'deleteVitalSigns', 'getAllBloodGlucoseMeasurements','getAllMedications',
         'getAllNotifications','getAllVitalSigns','retrieveAllUpcomingNotifications','RetrieveMedicationsByStatus',
-        'updateMedicationDetails', 'updateNotificationDetails'];
+        'retrieveNotificationsByReminderType', 'updateMedicationDetails', 'updateNotificationDetails'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -84,7 +84,7 @@ export default class CareCompassClient extends BindingClass {
       */
      async addBloodGlucoseMeasurement(BloodGlucoseMeasurementAttributes, errorCallback) {
          try {
-             const token = await this.getTokenOrThrow("Only authenticated users can add a song to a blood glucose measurement.");
+             const token = await this.getTokenOrThrow("Only authenticated users can add a blood glucose measurement.");
              const response = await this.axiosClient.post(`playlists/${id}/songs`, {
                  //id: id,
                  //asin: asin,
@@ -244,6 +244,7 @@ export default class CareCompassClient extends BindingClass {
      */
     async getAllBloodGlucoseMeasurements(BloodGlucoseMeasurementAttributes or patientId,errorCallback) {
         try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all blood glucose measurements.");
             const response = await this.axiosClient.get(`playlists/${id}`);
             return response.data.playlist;
         } catch (error) {
@@ -252,6 +253,7 @@ export default class CareCompassClient extends BindingClass {
     }
     async getAllMedications(errorCallback) {
         try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all medicationa.");
             const response = await this.axiosClient.get(`playlists/${id}`);
             return response.data.playlist;
         } catch (error) {
@@ -260,6 +262,7 @@ export default class CareCompassClient extends BindingClass {
     }
     async getAllNotifications(errorCallback) {
         try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all  notificationa.");
             const response = await this.axiosClient.get(`playlists/${id}`);
             return response.data.playlist;
         } catch (error) {
@@ -268,6 +271,7 @@ export default class CareCompassClient extends BindingClass {
     }
     async getAllVitalSigns(errorCallback) {
         try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all blood glucose measurementa.");
             const response = await this.axiosClient.get(`playlists/${id}`);
             return response.data.playlist;
         } catch (error) {
@@ -282,6 +286,7 @@ export default class CareCompassClient extends BindingClass {
      */
     async RetrieveAllUpcomingNotifications(criteria, errorCallback) {
         try {
+            const token = await this.getTokenOrThrow("Only authenticated users can retrieve all upcoming notifications.");
             const queryParams = new URLSearchParams({ q: criteria })
             const queryString = queryParams.toString();
 
@@ -300,6 +305,22 @@ export default class CareCompassClient extends BindingClass {
      */
     async RetrieveMedicationsByStatus(criteria, errorCallback) {
         try {
+            const token = await this.getTokenOrThrow("Only authenticated users can retrieve all medications by status.");
+            const queryParams = new URLSearchParams({ q: criteria })
+            const queryString = queryParams.toString();
+
+            const response = await this.axiosClient.get(`playlists/search?${queryString}`);
+
+            return response.data.playlists;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+
+    }
+
+    async RetrieveNotificationsByReminderType(criteria, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can retrieve all notifications by reminder type.");
             const queryParams = new URLSearchParams({ q: criteria })
             const queryString = queryParams.toString();
 

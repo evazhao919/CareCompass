@@ -44,7 +44,7 @@ public class AddMedicationActivity {
         medication.setInstructions(request.getInstructions());
         medication.setMedicationStatus(request.getMedicationStatus());
 
-        Medication result = medicationDao.addMedication(medication);
+        Medication result = medicationDao.saveMedication(medication);
 
         ModelConverter modelConverter = new ModelConverter();
         MedicationModel medicationModel = modelConverter.toMedicationModel(result);

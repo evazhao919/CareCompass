@@ -2,12 +2,8 @@ package com.devyanan.CareCompass.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
-import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.devyanan.CareCompass.exceptions.BloodGlucoseMeasurementNotFoundException;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
@@ -19,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -46,7 +41,7 @@ public class BloodGlucoseMeasurementDao {
      * @throws CustomDynamoDBException   If there is a DynamoDB-specific error while adding the blood glucose measurement.
      * @throws DatabaseAccessException  If there is an error accessing the database.
      */
-    public BloodGlucoseMeasurement addBloodGlucoseMeasurement(BloodGlucoseMeasurement bloodGlucoseMeasurement){
+    public BloodGlucoseMeasurement saveBloodGlucoseMeasurement(BloodGlucoseMeasurement bloodGlucoseMeasurement){
         if(bloodGlucoseMeasurement == null){
             metricsPublisher.addCount(MetricsConstants.ADD_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
             log.info("Attempted to add a bloodGlucoseMeasurement with null.");
@@ -61,10 +56,10 @@ public class BloodGlucoseMeasurementDao {
             log.info("BloodGlucoseMeasurement added successfully for user: {}", bloodGlucoseMeasurement.getPatientId());
         } catch (AmazonDynamoDBException e) {
             log.error("DynamoDB-specific error occurred while adding bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement, e);
-            throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
+            throw new CustomDynamoDBException("Failed to add blood glucose measurement to the database due to DynamoDB-specific error", e);
         }catch (Exception e) {
             log.error("Failed to add bloodGlucoseMeasurement for user: {}", bloodGlucoseMeasurement.getPatientId(), e);
-            throw new DatabaseAccessException("Failed to add notification to the database", e);
+            throw new DatabaseAccessException("Failed to add blood glucose measurement to the database", e);
         }
 
         return bloodGlucoseMeasurement;
@@ -79,22 +74,15 @@ public class BloodGlucoseMeasurementDao {
      * @throws BloodGlucoseMeasurementNotFoundException If the blood glucose measurement is not found.
      */
     public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurementByActualCheckTime(String patientId, LocalDateTime actualCheckTime){//TODO   ？？？？？？应该是LocalDateTime
+        log.info("Attempting to delete na single blood glucose measurement with ID: {} and actualCheckTime: {}", patientId,actualCheckTime);
 
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
-
-            // Construct the key for the item to be deleted
             BloodGlucoseMeasurement bloodGlucoseMeasurementToDelete = new BloodGlucoseMeasurement();
             bloodGlucoseMeasurementToDelete.setPatientId(patientId);
             bloodGlucoseMeasurementToDelete.setActualCheckTime(actualCheckTime);
 
-            BloodGlucoseMeasurement existingBloodGlucoseMeasurement = dynamoDBMapper.load(BloodGlucoseMeasurement.class, patientId, actualCheckTime);
-
-            if (existingBloodGlucoseMeasurement != null) {
                 dynamoDBMapper.delete(bloodGlucoseMeasurementToDelete);
-                return existingBloodGlucoseMeasurement;
-            } else {
-                throw new BloodGlucoseMeasurementNotFoundException("Blood glucose measurement not found for patientId: " + patientId + " and actualCheckTime: " + actualCheckTime);
-            }
+                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT, 1);
+        return bloodGlucoseMeasurementToDelete;
     }
 
 
@@ -215,7 +203,7 @@ public class BloodGlucoseMeasurementDao {
 //            metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT,1);
 //            return bloodGlucoseMeasurement;
 //        }
-//        log.info("Delete medication for patientId with id: {}",bloodGlucoseMeasurement.getPatientId());
+//        log.info("Delete blood glucose measurement for patientId with id: {}",bloodGlucoseMeasurement.getPatientId());
 //        metricsPublisher.addCount(MetricsConstants.DELETE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
 //        try {
 //            log.info("Attempting to delete bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement);
