@@ -54,24 +54,25 @@ public class NotificationDao {
      * @throws DatabaseAccessException  If there is an error accessing the database.
      */
     public Notification saveNotification(Notification notification) {
-//        if (notification == null || notification.getScheduledTime() == null) {
-//            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
-//            log.info("Attempted to add a null notification.");
-//            throw new IllegalArgumentException("notification object or name cannot be null or empty.");
-//        }
-
-//        try {
-//            log.info("Attempting to add a notification: {}", notification);
+        if (notification == null) {
+            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_NULL_OR_EMPTY_COUNT, 1);
+            log.info("Attempted to add a null notification.");
+            throw new IllegalArgumentException("notification object or name cannot be null or empty.");
+        }
+        log.info("add notification for patientId with id: {}",notification.getNotificationId());
+        metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_TOTAL_COUNT,1);
+        try {
+            log.info("Attempting to add a notification: {}", notification);
         dynamoDBMapper.save(notification);
-//            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT, 1);
-//            log.info("Notification added successfully for user: {}", notification.getPatientId());
-//        } catch (AmazonDynamoDBException e) {
-//            log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
-//            throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
-//        } catch (Exception e) {
-//            log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
-//            throw new DatabaseAccessException("Failed to add notification to the database", e);
-//        }
+            metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT, 1);
+            log.info("Notification added successfully for user: {}", notification.getPatientId());
+        } catch (AmazonDynamoDBException e) {
+            log.error("DynamoDB-specific error occurred while adding notification: {}", notification, e);
+            throw new CustomDynamoDBException("Failed to add notification to the database due to DynamoDB-specific error", e);
+        } catch (Exception e) {
+            log.error("Failed to add notification for user: {}", notification.getPatientId(), e);
+            throw new DatabaseAccessException("Failed to add notification to the database", e);
+        }
 
         return notification;
     }
@@ -114,7 +115,7 @@ public class NotificationDao {
             throw new IllegalArgumentException("Notification ID cannot be empty");
         }
         dynamoDBMapper.delete(notification);
-        metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_AND_PATIENT_ID_FOUND_COUNT, 1);
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_ID_FOUND_COUNT, 1);
         return notification;
     }
 
@@ -220,23 +221,23 @@ public class NotificationDao {
         return notifications;
     }
 
-        public Notification getNotification(String patientId, String notificationId) {
-//        try{
-//            log.info("Attempting to get notification: {}", notificationId);
+    public Notification getNotification(String patientId, String notificationId) {
+        try{
+            log.info("Attempting to get notification: {}", notificationId);
             Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, notificationId);
 
-//            if (singlenotification == null) {
-//                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT, 1);
-//                log.warn("No notification found for user: {} and notificationId: {}", patientId, notificationId);
-//                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and notificationId : " + notificationId);
-//            } else {
-//                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_FOUND_COUNT, 1);
-//                log.info("Get a single notification successfully: {}", notificationId);
+            if (singlenotification == null) {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No notification found for user: {} and notificationId: {}", patientId, notificationId);
+                throw new NotificationNotFoundException("No notifications found for user: " + patientId + " and notificationId : " + notificationId);
+            } else {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_PATIENT_ID_AND_NOTIFICATION_ID_FOUND_COUNT, 1);
+                log.info("Get a single notification successfully: {}", notificationId);
                 return singlenotification;
-//            }
-//        } catch (DatabaseAccessException e){
-//            log.error("Failed to access the database for user: {} and notification id: {}", patientId, notificationId, e);
-//            throw new DatabaseAccessException("Failed to access the database", e);
-//        }
+            }
+        } catch (DatabaseAccessException e){
+            log.error("Failed to access the database for user: {} and notification id: {}", patientId, notificationId, e);
+            throw new DatabaseAccessException("Failed to access the database", e);
+        }
     }
 }

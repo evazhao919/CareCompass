@@ -1,5 +1,6 @@
 package com.devyanan.CareCompass.dynamodb;
 
+import com.amazonaws.services.cloudwatch.model.StandardUnit;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
@@ -16,6 +17,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.devyanan.CareCompass.metrics.MetricsConstants.RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT;
+import static com.devyanan.CareCompass.metrics.MetricsConstants.RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT;
 
 /**
  * DAO class for managing Medication data in DynamoDB.
@@ -41,13 +45,13 @@ public class MedicationDao {
      */
     public Medication saveMedication(Medication medication){
 
-//        if(medication == null || medication.getMedicationName() == null || medication.getMedicationName().isEmpty()){
-//            metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_NULL_OR_EMPTY_COUNT,1);
-//            log.info("Attempted to add a medication with null or empty name.");
-//            throw new IllegalArgumentException("Medication object or name cannot be null or empty.");
-//        }
-//        log.info("add medication for patientId with id: {}",medication.getPatientId());
-//        metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_TOTAL_COUNT,1);
+        if(medication == null || medication.getMedicationName() == null || medication.getMedicationName().isEmpty()){
+            metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_NULL_OR_EMPTY_COUNT,1);
+            log.info("Attempted to add a medication with null or empty name.");
+            throw new IllegalArgumentException("Medication object or name cannot be null or empty.");
+        }
+        log.info("add medication for patientId with id: {}",medication.getPatientId());
+        metricsPublisher.addCount(MetricsConstants.ADD_MEDICATION_TOTAL_COUNT,1);
         try {
             log.info("Attempting to add a medication: {}", medication);
             dynamoDBMapper.save(medication);
@@ -63,17 +67,14 @@ public class MedicationDao {
         return medication;
     }
     public Medication deleteMedication(Medication medication) {
-        log.info("Attempting to delete medication with ID: {}", medication.getMedicationId());
+        log.info("Attempting to delete medication with medicationId: {}", medication.getMedicationId());
 
-        if (medication == null) {
-            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_BY_MEDICATION_ID_NOT_FOUND_COUNT, 1);
-            log.warn("No medication ID provided for user: {}", medication.getMedicationId());
-            throw new IllegalArgumentException("medication ID cannot be empty");
-        }
         dynamoDBMapper.delete(medication);
-        metricsPublisher.addCount(MetricsConstants.GET_SINGLE_MEDICATION_BY_MEDICATION_ID_AND_PATIENT_ID_FOUND_COUNT, 1);
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_BY_MEDICATION_ID_FOUND_COUNT, 1);
+        log.info("Medication deleted successfully for user: {}", medication.getPatientId());
         return medication;
     }
+
     /**
      * Retrieves a single medication record for a specified patient and medication name.
      *
@@ -83,24 +84,6 @@ public class MedicationDao {
      * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
      * @throws DatabaseAccessException    If there is an error accessing the database.
      */
-    public Medication deleteSingleMedicationByMedicationId(String patientId, String medicationId){
-        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_MEDICATION_TOTAL_COUNT, 1);
-
-        Medication medicationDelete = new Medication();
-        medicationDelete.setPatientId(patientId);
-        medicationDelete.setMedicationId(medicationId);
-
-        Medication existingMedication = dynamoDBMapper.load(Medication.class, patientId, medicationId);
-
-        if (existingMedication != null) {
-
-            dynamoDBMapper.delete(medicationDelete);
-
-            return existingMedication;
-        } else {
-            throw new MedicationNotFoundException(("Medication not found for patientId: " + patientId + " and medicationId: " + medicationId));
-        }
-    }
 
     /**
      * Retrieves all medications for a specified patient.
@@ -171,12 +154,12 @@ public class MedicationDao {
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedScanList<Medication> medications = dynamoDBMapper.scan(Medication.class, scanExpression);
-//        if (medications == null || medications.isEmpty()) {
-//            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT, 1, StandardUnit.Count);
-//            throw new MedicationNotFoundException("No medications found in database for status: " + medicationStatus);
-//        } else {
-//            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT, 1, StandardUnit.Count);
-//        }
+        if (medications == null || medications.isEmpty()) {
+            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT, 1, StandardUnit.Count);
+            throw new MedicationNotFoundException("No medications found in database for status: " + medicationStatus);
+        } else {
+            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT, 1, StandardUnit.Count);
+        }
         return medications;
     }
 }

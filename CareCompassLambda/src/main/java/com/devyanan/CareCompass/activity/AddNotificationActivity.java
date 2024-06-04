@@ -38,7 +38,7 @@ public class AddNotificationActivity {
      * @return The result of adding the notification
      */
     public AddNotificationResult handleRequest(final AddNotificationRequest request){//request is String, result is String
-        log.info("Received AddVitalSignsRequest {}", request);
+        log.info("Received AddNotificationRequest {}", request);
 
         Notification notification = new Notification();   // POJO Notification LocalDateTime
         notification.setPatientId(request.getPatientId());

@@ -9,10 +9,10 @@ on:
 env:
 
   # STUDENTS: Set these environment variables 
-  API_BASE_URL: https://xn1hbgn2j0.execute-api.us-east-2.amazonaws.com/Prod/
+  API_BASE_URL: https://hnt8gv0cqh.execute-api.us-east-2.amazonaws.com/Prod/
   COGNITO_DOMAIN: project-carecompass-yanan-zhao
-  COGNITO_REDIRECT_SIGNIN: https://d15ni6quxmvbpc.cloudfront.net
-  COGNITO_REDIRECT_SIGNOUT: https://d15ni6quxmvbpc.cloudfront.net
+  COGNITO_REDIRECT_SIGNIN: https://d2hs88jlxgdibl.cloudfront.net
+  COGNITO_REDIRECT_SIGNOUT: https://d2hs88jlxgdibl.cloudfront.net
 
   COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
   COGNITO_USER_POOL_CLIENT_ID: ${{ secrets.COGNITO_USER_POOL_CLIENT_ID }}
