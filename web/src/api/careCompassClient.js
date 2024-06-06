@@ -76,19 +76,19 @@ export default class CareCompassClient extends BindingClass {
     }
 
      /**
-      * Add a song to a playlist.
-      * @param id The id of the playlist to add a song to.
-      * @param asin The asin that uniquely identifies the album.
-      * @param trackNumber The track number of the song on the album.
-      * @returns The list of songs on a playlist.
+      * Add blood glucose measurement.
+      * @param {Object} bloodGlucoseMeasurementAttributes - Attributes of the blood glucose measurement to add.
+      * @param {Function} errorCallback - Callback function to handle errors.
+      * @returns {Object} A blood glucose measurement that is added.
       */
-     async addBloodGlucoseMeasurement(BloodGlucoseMeasurementAttributes, errorCallback) {
+     async addBloodGlucoseMeasurement(bloodGlucoseMeasurementAttributes, errorCallback) {
          try {
              const token = await this.getTokenOrThrow("Only authenticated users can add a blood glucose measurement.");
-             const response = await this.axiosClient.post(`playlists/${id}/songs`, {
-                 //id: id,
-                 //asin: asin,
-                 trackNumber: trackNumber
+             const response = await this.axiosClient.post(`bloodGlucoseMeasurements`, {
+                  actualCheckTime：bloodGlucoseMeasurementAttributes.actualCheckTime,
+                  glucoseLevel: bloodGlucoseMeasurementAttributes.glucoseLevel,
+                  glucoseContext: bloodGlucoseMeasurementAttributes.glucoseContext,
+                  comments: bloodGlucoseMeasurementAttributes.comments
              }, {
                  headers: {
                      Authorization: `Bearer ${token}`
@@ -97,48 +97,52 @@ export default class CareCompassClient extends BindingClass {
              return response.data.bloodGlucoseMeasurement;
          } catch (error) {
              this.handleError(error, errorCallback)
+             throw error;
          }
      }
 
     /**
-     * Add a song to a playlist.
-     * @param id The id of the playlist to add a song to.
-     * @param asin The asin that uniquely identifies the album.
-     * @param trackNumber The track number of the song on the album.
-     * @returns The list of songs on a playlist.
+    * Add a new medication.
+     * @param {Object} medicationAttributes - Attributes of the medication to add.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The added medication.
      */
     async addMedication(medicationAttributes, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a medication.");
-            const response = await this.axiosClient.post(`playlists/${id}/songs`, {
-                //id: id,
-                //asin: asin,
-                trackNumber: trackNumber
+            const response = await this.axiosClient.post(`medications`, {
+                   //  TODO ?  private final String medicationId;
+                   medicationName: medicationAttributes.medicationName,
+                   prescription: medicationAttributes.prescription,
+                   instructions: medicationAttributes.instructions,
+                   medicationStatus: medicationAttributes.medicationStatus
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.songList;
+            return response.data.medications;
         } catch (error) {
             this.handleError(error, errorCallback)
+            throw error;
         }
     }
 
     /**
-     * Add a song to a playlist.
-     * @param id The id of the playlist to add a song to.
-     * @param asin The asin that uniquely identifies the album.
-     * @param trackNumber The track number of the song on the album.
-     * @returns The list of songs on a playlist.
+     * Add a new notification.
+     * @param {Object} notificationAttributes - Attributes of the notification to add.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The added notification.
      */
     async addNotification(notificationAttributes, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a notification.");
-            const response = await this.axiosClient.post(`playlists/${id}/songs`, {
-                //id: id,
-                //asin: asin,
-                trackNumber: trackNumber
+            const response = await this.axiosClient.post(`notifications`, {
+                //TODO    private final String notificationId;
+                    notificationTitle: notificationAttributes.notificationTitle,
+                    reminderContent: notificationAttributes.reminderContent,
+                    scheduledTime: notificationAttributes.scheduledTime,
+                    reminderType: notificationAttributes.reminderType
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -147,23 +151,35 @@ export default class CareCompassClient extends BindingClass {
             return response.data.notification;
         } catch (error) {
             this.handleError(error, errorCallback)
+            throw error;
         }
     }
 
     /**
-     * Add a song to a playlist.
-     * @param id The id of the playlist to add a song to.
-     * @param asin The asin that uniquely identifies the album.
-     * @param trackNumber The track number of the song on the album.
-     * @returns The list of songs on a playlist.
+      * Add vital signs data.
+      * @param {Object} vitalSignsAttributes - Attributes of the vital signs data to add.
+      * @param {Function} errorCallback - Callback function to handle errors.
+      * @returns {Object} The added vital signs data.
      */
     async addVitalSigns(vitalSignsAttributes, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a VitalSigns.");
-            const response = await this.axiosClient.post(`playlists/${id}/songs`, {
-                //id: id,
-                //asin: asin,
-                trackNumber: trackNumber
+            const response = await this.axiosClient.post(`vitalSigns`, {
+                    actualCheckTime: vitalSignsAttributes.actualCheckTime,
+                    temperature: vitalSignsAttributes.temperature,
+                    heartRate: vitalSignsAttributes.heartRate,
+                    pulse: vitalSignsAttributes.pulse,
+                    respiratoryRate: vitalSignsAttributes.respiratoryRate,
+                    systolicPressure: vitalSignsAttributes.systolicPressure,
+                    diastolicPressure: vitalSignsAttributes.diastolicPressure,
+                    meanArterialPressure: vitalSignsAttributes.meanArterialPressure,
+                    weight: vitalSignsAttributes.weight,
+                    patientPosition: vitalSignsAttributes.patientPosition,
+                    bloodOxygenLevel: vitalSignsAttributes.bloodOxygenLevel,
+                    oxygenTherapy: vitalSignsAttributes.oxygenTherapy,
+                    flowDelivered: vitalSignsAttributes.flowDelivered,
+                    patientActivity: vitalSignsAttributes.patientActivity,
+                    comments: vitalSignsAttributes.comments
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -172,30 +188,43 @@ export default class CareCompassClient extends BindingClass {
             return response.data.VitalSigns;
         } catch (error) {
             this.handleError(error, errorCallback)
+            throw error;
         }
     }
 
-
+    /**
+     * Delete a blood glucose measurement.
+     * @param {string} actualCheckTime - The actual check time of the blood glucose measurement to delete.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The deleted blood glucose measurement.
+     */
     async deleteBloodGlucoseMeasurement(actualCheckTime, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can delete a blood glucose measurement.");
+       try {
+           const token = await this.getTokenOrThrow("Only authenticated users can delete a blood glucose measurement.");
 
-                const response = await this.axiosClient.delete(`medications/${actualCheckTime}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                    });
-                return response.data.bloodGlucoseMeasurements;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-                throw error;
-            }
-        }
-    async deleteMedication(medicationName, errorCallback) {
+           const response = await this.axiosClient.delete(`bloodGlucoseMeasurements/${actualCheckTime}`, {
+               headers: {
+                   Authorization: `Bearer ${token}`
+               }
+               });
+           return response.data.bloodGlucoseMeasurement;
+       } catch (error) {
+           this.handleError(error, errorCallback)
+           throw error;
+       }
+    }
+
+    /**
+     * Delete a medication by its ID.
+     * @param {string} medicationId - The ID of the medication to delete.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The deleted medication.
+     */
+    async deleteMedication(medicationId, errorCallback) {
             try {
                 const token = await this.getTokenOrThrow("Only authenticated users can delete a medication.");
 
-                const response = await this.axiosClient.delete(`medications/${actualCheckTime}`, {
+                const response = await this.axiosClient.delete(`medications/${medicationId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -206,103 +235,181 @@ export default class CareCompassClient extends BindingClass {
                 throw error;
             }
         }
-    async deleteNotification(actualCheckTime, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can delete a notification.");
 
-                const response = await this.axiosClient.delete(`notifications/${actualCheckTime}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                    });
-                return response.data.notification;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-                throw error;
-            }
-        }
-    async deleteVitalSigns(actualCheckTime, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can delete a VitalSigns.");
-
-                const response = await this.axiosClient.delete(`VitalSigns/${actualCheckTime}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                    });
-                return response.data.VitalSigns;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-                throw error;
-            }
-        }
-   /**
-     * Gets the playlist for the given ID.
-     * @param id Unique identifier for a playlist
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The playlist's metadata.
+    /**
+     * Delete a notification by its ID.
+     * @param {string} notificationId - The ID of the notification to delete.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The deleted notification.
      */
-    async getAllBloodGlucoseMeasurements(BloodGlucoseMeasurementAttributes or patientId,errorCallback) {
+    async deleteNotification(notificationId, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can see all blood glucose measurements.");
-            const response = await this.axiosClient.get(`playlists/${id}`);
-            return response.data.playlist;
+            const token = await this.getTokenOrThrow("Only authenticated users can delete a notification.");
+
+            const response = await this.axiosClient.delete(`notifications/${notificationId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.notification;
         } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
-    async getAllMedications(errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can see all medicationa.");
-            const response = await this.axiosClient.get(`playlists/${id}`);
-            return response.data.playlist;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
-    async getAllNotifications(errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can see all  notificationa.");
-            const response = await this.axiosClient.get(`playlists/${id}`);
-            return response.data.playlist;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
-    async getAllVitalSigns(errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can see all blood glucose measurementa.");
-            const response = await this.axiosClient.get(`playlists/${id}`);
-            return response.data.playlist;
-        } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
+            throw error;
         }
     }
 
     /**
-     * Search for a soong.
-     * @param criteria A string containing search criteria to pass to the API.
-     * @returns The playlists that match the search criteria.
+     * Delete vital signs data by its actual check time.
+     * @param {string} actualCheckTime - The actual check time of the vital signs data to delete.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The deleted vital signs data.
      */
-    async RetrieveAllUpcomingNotifications(criteria, errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can retrieve all upcoming notifications.");
-            const queryParams = new URLSearchParams({ q: criteria })
-            const queryString = queryParams.toString();
+    async deleteVitalSigns(actualCheckTime, errorCallback) {
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can delete a VitalSigns.");
 
-            const response = await this.axiosClient.get(`playlists/search?${queryString}`);
-
-            return response.data.playlists;
-        } catch (error) {
-            this.handleError(error, errorCallback)
+                const response = await this.axiosClient.delete(`vitalSigns/${actualCheckTime}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                    });
+                return response.data.vitalSigns;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+                throw error;
+            }
         }
 
-    }
-/**
-     * Search for a soong.
-     * @param criteria A string containing search criteria to pass to the API.
-     * @returns The playlists that match the search criteria.
+    /**
+     * Retrieves all blood glucose measurements associated with authenticated users.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The list of blood glucose measurements.
      */
+    async getAllBloodGlucoseMeasurements(errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all blood glucose measurements.");
+            const response = await this.axiosClient.get(`bloodGlucoseMeasurements`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                    }
+            });
+            const result = {
+                      bloodGlucoseMeasurements: response.data.bloodGlucoseMeasurementModelList
+                    };
+                    return result;
+                } catch (error) {
+                    this.handleError(error, errorCallback);
+                    throw error;
+                }
+
+
+    /**
+     * Retrieves all medications associated with authenticated users.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The list of medications.
+     */
+    async getAllMedications(errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all medications.");
+            const response = await this.axiosClient.get(`medications`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                    }
+            });
+
+            const result = {
+              medications: response.data.medicationModelList
+            };
+            return result;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+            throw error;
+        }
+    }
+
+    /**
+     * Retrieves all notifications associated with authenticated users.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The list of notifications.
+     */
+    async getAllNotifications(errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all  notifications.");
+            const response = await this.axiosClient.get(`notifications`,
+            {
+                headers: {
+                     Authorization: `Bearer ${token}`
+                     }
+            });
+
+            const result = {
+              notifications: response.data.notificationModelList
+            };
+            return result;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+            throw error;
+        }
+    }
+
+    /**
+     * Retrieves all vital signs associated with authenticated users.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The list of vital signs.
+     */
+    async getAllVitalSigns(errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can see all blood glucose measurements.");
+            const response = await this.axiosClient.get(`vitalSigns`,
+            {
+                 headers: {
+                     Authorization: `Bearer ${token}`
+                     }
+            });
+
+            const result = {
+              medications: response.data.vitalSignModelList
+            };
+            return result;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+            throw error;
+        }
+    }
+
+//TODO  ???not sure......this is right,cause may do not enter the time may enter the time
+    /**
+     * Retrieves all upcoming notifications based on the provided scheduled time.
+     * @param {string} scheduledTime - The scheduled time to filter upcoming notifications.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The list of upcoming notifications.
+     */
+    async RetrieveAllUpcomingNotifications(scheduledTime, errorCallback) {
+        try {
+        const token = await this.getTokenOrThrow("Only authenticated users can get notifications.");
+
+        const response = await this.axiosClient.get(`upcomingNotifications`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+          scheduledTime: scheduledTime,   //TODO not sure  i should name it in request class like filterByTime
+            },
+          });
+
+          const result = {
+              notifications: response.data.notificationModelList
+          };
+
+          return result;
+    }
+    catch (error) {
+       this.handleError(error, errorCallback);
+       throw error;
+    }
+
     async RetrieveMedicationsByStatus(criteria, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all medications by status.");
@@ -313,7 +420,8 @@ export default class CareCompassClient extends BindingClass {
 
             return response.data.playlists;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
+            throw error;
         }
 
     }
@@ -328,7 +436,8 @@ export default class CareCompassClient extends BindingClass {
 
             return response.data.playlists;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
+            throw error;
         }
 
     }
@@ -347,7 +456,7 @@ export default class CareCompassClient extends BindingClass {
             });
             return response.data.medication;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
             throw error;
         }
     }
@@ -366,7 +475,7 @@ export default class CareCompassClient extends BindingClass {
             });
             return response.data.notification;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
             throw error;
         }
     }
