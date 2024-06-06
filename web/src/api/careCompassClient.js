@@ -121,7 +121,7 @@ export default class CareCompassClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.medications;
+            return response.data.medication;
         } catch (error) {
             this.handleError(error, errorCallback)
             throw error;
@@ -370,7 +370,7 @@ export default class CareCompassClient extends BindingClass {
             });
 
             const result = {
-              medications: response.data.vitalSignModelList
+              vitalSigns: response.data.vitalSignModelList
             };
             return result;
         } catch (error) {
@@ -410,45 +410,88 @@ export default class CareCompassClient extends BindingClass {
        throw error;
     }
 
-    async RetrieveMedicationsByStatus(criteria, errorCallback) {
+    /**
+     * Retrieves medications based on their status.
+     * @param {string} medicationStatus - The status of the medications to retrieve.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The list of medications with the specified status.
+     */
+    async RetrieveMedicationsByStatus(medicationStatus, errorCallback) {
         try {
+            if (!isValidMedicationStatus(medicationStatus)) {
+                throw new Error("Invalid medication status.");
+            }
+
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all medications by status.");
-            const queryParams = new URLSearchParams({ q: criteria })
-            const queryString = queryParams.toString();
+            const response = await this.axiosClient.get(`medicationsByStatus/${medicationStatus}`);
 
-            const response = await this.axiosClient.get(`playlists/search?${queryString}`);
-
-            return response.data.playlists;
-        } catch (error) {
-            this.handleError(error, errorCallback);
+            return response.data.medicationModelList;
+         } catch (error) {
+            this.handleError(error, errorCallback)
             throw error;
-        }
-
+         }
     }
 
-    async RetrieveNotificationsByReminderType(criteria, errorCallback) {
+    /**
+     * Validates the medication status value.
+     * @param {string} status - The medication status value to validate.
+     * @returns {boolean} True if the status is valid, otherwise false.
+     */
+    function isValidMedicationStatus(status) {
+         const allowedStatusValues = ["ACTIVE", "DISCONTINUED", "ON_HOLD", "TEMPORARY_STOP"];
+         const formattedStatus = status.toUpperCase().replace('_', '');
+         return allowedStatusValues.includes(formattedStatus);
+    }
+
+    /**
+     * Retrieves notifications based on the provided reminder type.
+     * @param {string} reminderType - The reminder type to filter notifications.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Array} The list of notifications filtered by the reminder type.
+     */
+    async RetrieveNotificationsByReminderType(reminderType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all notifications by reminder type.");
-            const queryParams = new URLSearchParams({ q: criteria })
-            const queryString = queryParams.toString();
+            const response = await this.axiosClient.get(`notificationsByReminderType/${reminderType}`);
 
-            const response = await this.axiosClient.get(`playlists/search?${queryString}`);
-
-            return response.data.playlists;
-        } catch (error) {
-            this.handleError(error, errorCallback);
+            return response.data,notificationModelList;
+         } catch (error) {
+            this.handleError(error, errorCallback)
             throw error;
-        }
-
+         }
     }
 
-    async UpdateMedicationDetails(medName, medInfo, errorCallback) {
+    /**
+     * Validates the notification reminder type.
+     * @param {string} reminderType - The reminder type to validate.
+     * @returns {boolean} True if the reminder type is valid, otherwise false.
+     */
+    function isValidNotificationsByReminderType(reminderType) {
+        const allowedTypeValues = ["GLUCOSE_MEASUREMENT", "MEDICATION", "VITAL_SIGNS", "APPOINTMENT", "GENERAL"];
+        const formattedType = reminderType.toUpperCase().replace('_', '');
+        return allowedTypeValues.includes(formattedType);
+    }
+
+    /**
+     * Updates the details of a medication.
+     * @param {string} medicationId - The ID of the medication to update.
+     * @param {string} medicationName - The updated name of the medication.
+     * @param {string} prescription - The updated prescription of the medication.
+     * @param {string} medicationStatus - The updated status of the medication.
+     * @param {string} instructions - The updated instructions for the medication.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The updated medication data.
+     */
+    async UpdateMedicationDetails(medicationId, medicationName, prescription, medicationStatus, instructions, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update a medication.");
 
-            const response = await this.axiosClient.put(`medications/${medName}`, {
-                medName: medName,
-                medInfo: medInfo
+            const response = await this.axiosClient.put(`medications/${medicationId}`, {
+                medicationId: medicationId,
+                medicationName: medicationName,
+                prescription: prescription,
+                instructions: instructions,
+                medicationStatus: medicationStatus
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -461,13 +504,26 @@ export default class CareCompassClient extends BindingClass {
         }
     }
 
-    async UpdateNotificationDetails(medName, medInfo, errorCallback) {
+    /**
+     * Updates the details of a notification.
+     * @param {string} notificationId - The ID of the notification to update.
+     * @param {string} notificationTitle - The updated title of the notification.
+     * @param {string} reminderType - The updated reminder type of the notification.
+     * @param {string} reminderContent - The updated reminder content of the notification.
+     * @param {string} scheduledTime - The updated scheduled time of the notification.
+     * @param {Function} errorCallback - Callback function to handle errors.
+     * @returns {Object} The updated notification data.
+     */
+    async UpdateNotificationDetails(notificationId, notificationTitle, reminderType, reminderContent, scheduledTime, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update a notification.");
 
-            const response = await this.axiosClient.put(`medications/${medName}`, {
-                medName: medName,
-                medInfo: medInfo
+            const response = await this.axiosClient.put(`notifications/${notificationId}`, {
+                notificationId: notificationId,
+                notificationTitle: notificationTitle,
+                reminderType: reminderType,
+                reminderContent: reminderContent,
+                scheduledTime: scheduledTime
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
