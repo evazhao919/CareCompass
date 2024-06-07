@@ -58,14 +58,28 @@ export default class CareCompassClient extends BindingClass {
         }
     }
 
+    /**
+     * Asynchronously initiates the login process using the authenticator.
+     * @returns {Promise<void>} A Promise that resolves when the login process is initiated.
+     */
     async login() {
         this.authenticator.login();
     }
 
+    /**
+     * Asynchronously initiates the logout process using the authenticator.
+     * @returns {Promise<void>} A Promise that resolves when the logout process is initiated.
+     */
     async logout() {
         this.authenticator.logout();
     }
 
+    /**
+     * Asynchronously retrieves the user token or throws an error if the user is not authenticated.
+     * @param {string} unauthenticatedErrorMessage - The error message to throw if the user is not authenticated.
+     * @returns {Promise<string>} A Promise that resolves with the user token if the user is authenticated.
+     * @throws {Error} If the user is not authenticated, an error with the specified message is thrown.
+     */
     async getTokenOrThrow(unauthenticatedErrorMessage) {
         const isLoggedIn = await this.authenticator.isUserLoggedIn();
         if (!isLoggedIn) {
@@ -77,18 +91,18 @@ export default class CareCompassClient extends BindingClass {
 
      /**
       * Add blood glucose measurement.
-      * @param {Object} bloodGlucoseMeasurementAttributes - Attributes of the blood glucose measurement to add.
+      * @param {Object} bloodGlucoseMeasurementDetails - Details of the blood glucose measurement to add.
       * @param {Function} errorCallback - Callback function to handle errors.
       * @returns {Object} A blood glucose measurement that is added.
       */
-     async addBloodGlucoseMeasurement(bloodGlucoseMeasurementAttributes, errorCallback) {
+     async addBloodGlucoseMeasurement(bloodGlucoseMeasurementDetails, errorCallback) {
          try {
              const token = await this.getTokenOrThrow("Only authenticated users can add a blood glucose measurement.");
              const response = await this.axiosClient.post(`bloodGlucoseMeasurements`, {
-                  actualCheckTime：bloodGlucoseMeasurementAttributes.actualCheckTime,
-                  glucoseLevel: bloodGlucoseMeasurementAttributes.glucoseLevel,
-                  glucoseContext: bloodGlucoseMeasurementAttributes.glucoseContext,
-                  comments: bloodGlucoseMeasurementAttributes.comments
+                  actualCheckTime: bloodGlucoseMeasurementDetails.actualCheckTime,
+                  glucoseLevel: bloodGlucoseMeasurementDetails.glucoseLevel,
+                  glucoseContext: bloodGlucoseMeasurementDetails.glucoseContext,
+                  comments: bloodGlucoseMeasurementDetails.comments
              }, {
                  headers: {
                      Authorization: `Bearer ${token}`
@@ -103,19 +117,19 @@ export default class CareCompassClient extends BindingClass {
 
     /**
     * Add a new medication.
-     * @param {Object} medicationAttributes - Attributes of the medication to add.
+     * @param {Object} medicationDetails - Details of the medication to add.
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The added medication.
      */
-    async addMedication(medicationAttributes, errorCallback) {
+    async addMedication(medicationDetails, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a medication.");
             const response = await this.axiosClient.post(`medications`, {
                    //  TODO ?  private final String medicationId;
-                   medicationName: medicationAttributes.medicationName,
-                   prescription: medicationAttributes.prescription,
-                   instructions: medicationAttributes.instructions,
-                   medicationStatus: medicationAttributes.medicationStatus
+                   medicationName: medicationDetails.medicationName,
+                   prescription: medicationDetails.prescription,
+                   instructions: medicationDetails.instructions,
+                   medicationStatus: medicationDetails.medicationStatus
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -130,19 +144,19 @@ export default class CareCompassClient extends BindingClass {
 
     /**
      * Add a new notification.
-     * @param {Object} notificationAttributes - Attributes of the notification to add.
+     * @param {Object} notificationDetails - Details of the notification to add.
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The added notification.
      */
-    async addNotification(notificationAttributes, errorCallback) {
+    async addNotification(notificationDetails, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a notification.");
             const response = await this.axiosClient.post(`notifications`, {
-                //TODO    private final String notificationId;
-                    notificationTitle: notificationAttributes.notificationTitle,
-                    reminderContent: notificationAttributes.reminderContent,
-                    scheduledTime: notificationAttributes.scheduledTime,
-                    reminderType: notificationAttributes.reminderType
+                //TODO    private final String notificationId; ?
+                    notificationTitle: notificationDetails.notificationTitle,
+                    reminderContent: notificationDetails.reminderContent,
+                    scheduledTime: notificationDetails.scheduledTime,
+                    reminderType: notificationDetails.reminderType
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -157,29 +171,29 @@ export default class CareCompassClient extends BindingClass {
 
     /**
       * Add vital signs data.
-      * @param {Object} vitalSignsAttributes - Attributes of the vital signs data to add.
+      * @param {Object} vitalSignsDetails - Details of the vital signs data to add.
       * @param {Function} errorCallback - Callback function to handle errors.
       * @returns {Object} The added vital signs data.
      */
-    async addVitalSigns(vitalSignsAttributes, errorCallback) {
+    async addVitalSigns(vitalSignsDetails, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a VitalSigns.");
             const response = await this.axiosClient.post(`vitalSigns`, {
-                    actualCheckTime: vitalSignsAttributes.actualCheckTime,
-                    temperature: vitalSignsAttributes.temperature,
-                    heartRate: vitalSignsAttributes.heartRate,
-                    pulse: vitalSignsAttributes.pulse,
-                    respiratoryRate: vitalSignsAttributes.respiratoryRate,
-                    systolicPressure: vitalSignsAttributes.systolicPressure,
-                    diastolicPressure: vitalSignsAttributes.diastolicPressure,
-                    meanArterialPressure: vitalSignsAttributes.meanArterialPressure,
-                    weight: vitalSignsAttributes.weight,
-                    patientPosition: vitalSignsAttributes.patientPosition,
-                    bloodOxygenLevel: vitalSignsAttributes.bloodOxygenLevel,
-                    oxygenTherapy: vitalSignsAttributes.oxygenTherapy,
-                    flowDelivered: vitalSignsAttributes.flowDelivered,
-                    patientActivity: vitalSignsAttributes.patientActivity,
-                    comments: vitalSignsAttributes.comments
+                    actualCheckTime: vitalSignsDetails.actualCheckTime,
+                    temperature: vitalSignsDetails.temperature,
+                    heartRate: vitalSignsDetails.heartRate,
+                    pulse: vitalSignsDetails.pulse,
+                    respiratoryRate: vitalSignsDetails.respiratoryRate,
+                    systolicPressure: vitalSignsDetails.systolicPressure,
+                    diastolicPressure: vitalSignsDetails.diastolicPressure,
+                    meanArterialPressure: vitalSignsDetails.meanArterialPressure,
+                    weight: vitalSignsDetails.weight,
+                    patientPosition: vitalSignsDetails.patientPosition,
+                    bloodOxygenLevel: vitalSignsDetails.bloodOxygenLevel,
+                    oxygenTherapy: vitalSignsDetails.oxygenTherapy,
+                    flowDelivered: vitalSignsDetails.flowDelivered,
+                    patientActivity: vitalSignsDetails.patientActivity,
+                    comments: vitalSignsDetails.comments
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -386,7 +400,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The list of upcoming notifications.
      */
-    async RetrieveAllUpcomingNotifications(scheduledTime, errorCallback) {
+    async retrieveAllUpcomingNotifications(scheduledTime, errorCallback) {
         try {
         const token = await this.getTokenOrThrow("Only authenticated users can get notifications.");
 
@@ -408,6 +422,7 @@ export default class CareCompassClient extends BindingClass {
     catch (error) {
        this.handleError(error, errorCallback);
        throw error;
+       }
     }
 
     /**
@@ -416,7 +431,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The list of medications with the specified status.
      */
-    async RetrieveMedicationsByStatus(medicationStatus, errorCallback) {
+    async retrieveMedicationsByStatus(medicationStatus, errorCallback) {
         try {
             if (!isValidMedicationStatus(medicationStatus)) {
                 throw new Error("Invalid medication status.");
@@ -453,8 +468,7 @@ export default class CareCompassClient extends BindingClass {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all notifications by reminder type.");
             const response = await this.axiosClient.get(`notificationsByReminderType/${reminderType}`);
-
-            return response.data,notificationModelList;
+            return response.data.notificationModelList;
          } catch (error) {
             this.handleError(error, errorCallback)
             throw error;

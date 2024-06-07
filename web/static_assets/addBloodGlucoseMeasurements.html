@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/addBloodGlucoseMeasurement.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="background">
+<header class="header" id="header"></header>
+<div class="card">
+    <h2>Add Blood Glucose Measurement</h2>
+    <form class="card-content" id="add-bloodGlucoseMeasurement-form'">
+        <p class="hidden error" id="error-message"> </p>
+        <p class="form-field">
+            <label>Actual Check Time</label>
+            <input type="text" required class="validated-field" id="actual-check-time" placeholder="2025-08-25T10:22"
+                   autofocus>
+        </p>
+        <p class="form-field">
+            <label>Glucose Level</label>
+            <input type="text" id="glucoseLevel" class="glucoseLevel">
+        </p>
+        <p>
+
+        <p class="form-field">
+            <label>Glucose Context</label>
+            <input type="text" id="glucoseContext" class="glucoseContext">
+        </p>
+        <p>
+        <p class="form-field">
+        <label for="comments">Comments</label>
+        <textarea id="comments" class="comments" rows="10"></textarea>
+       </p>
+        <p>
+            <a href="#" class="button" id="create">Add Blood Glucose Measurement</a>
+        </p>
+    </form>
+</div>
+</body>
+
+</html>
