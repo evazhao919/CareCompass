@@ -23,6 +23,7 @@ public class UpdateBloodGlucoseMeasurementActivity {
         log.info("Received UpdateBloodGlucoseMeasurementRequest {}", request);
 
         BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.getBloodGlucoseMeasurements(request.getPatientId(),dateTimeConverter.unconvert(request.getActualCheckTime()));
+
         bloodGlucoseMeasurement.setGlucoseLevel(request.getGlucoseLevel());
         bloodGlucoseMeasurement.setGlucoseContext(request.getGlucoseContext());
         bloodGlucoseMeasurement.setComments(request.getComments());

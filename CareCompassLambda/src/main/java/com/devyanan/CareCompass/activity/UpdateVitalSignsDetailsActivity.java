@@ -37,10 +37,8 @@ public class UpdateVitalSignsRequestActivity {
      */
     public UpdateVitalSignsResult handleRequest(final UpdateVitalSignsRequest request) {
         log.info("Received UpdateVitalSignsRequest {}", request);
+        VitalSigns vitalSigns = vitalSignsDao.getVitalSigns(request.getPatientId(),dateTimeConverter.unconvert(request.getActualCheckTime()));
 
-        VitalSigns vitalSigns = new VitalSigns();
-        vitalSigns.setPatientId(request.getPatientId());
-        vitalSigns.setActualCheckTime(dateTimeConverter.unconvert(request.getActualCheckTime()));
         vitalSigns.setTemperature(request.getTemperature());
         vitalSigns.setHeartRate(request.getHeartRate());
         vitalSigns.setPulse(request.getPulse());
@@ -66,4 +64,3 @@ public class UpdateVitalSignsRequestActivity {
                 .build();
     }
 }
-/////TODO not right!
