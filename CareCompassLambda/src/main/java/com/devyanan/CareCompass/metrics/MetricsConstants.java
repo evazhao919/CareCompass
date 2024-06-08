@@ -47,6 +47,9 @@ public class MetricsConstants {
     public static final String GET_ALL_BLOOD_GLUCOSE_MEASUREMENT_FOUND_COUNT = "get_all_blood_glucose_measurement_found_count";
     public static final String GET_ALL_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "get_all_blood_glucose_measurement_null_or_empty_count";
     public static final String GET_ALL_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "get_all_blood_glucose_measurement_total_count";
+    public static final String GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT = "";
+    public static final String GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_BY_PATIENT_AND_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_BY_PATIENT_AND_BLOOD_GLUCOSE_MEASUREMENT_FOUND_COUNT = "";
 
     // Vital Signs Metrics
     public static final String GET_ALL_VITAL_SIGNS_TOTAL_COUNT = "get_all_vital_signs_total_count";
@@ -56,4 +59,6 @@ public class MetricsConstants {
     public static final String ADD_VITAL_SIGNS_SUCCESS_COUNT = "add_vital_signs_success_count";
     public static final String ADD_VITAL_SIGNS_TOTAL_COUNT = "add_vital_signs_total_count";
     public static final String DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT = "delete_single_vital_signs_total_count";
+    public static final String GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_NULL_OR_EMPTY_COUNT = "";
+    public static final String GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_FOUND_COUNT = "";
 }

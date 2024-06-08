@@ -3,29 +3,30 @@ import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
-const VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_CRITERIA_KEY = 'view-allBloodGlucoseMeasurements-criteria';
-const VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_RESULTS_KEY = 'view-allBloodGlucoseMeasurements-results';
-
+const SEARCH_CRITERIA_KEY = 'search-criteria';
+const SEARCH_RESULTS_KEY = 'search-results';
 const EMPTY_DATASTORE_STATE = {
-    [VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_CRITERIA_KEY]: '',
-    [VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_RESULTS_KEY]: [],
+    [SEARCH_CRITERIA_KEY]: '',
+    [SEARCH_RESULTS_KEY]: [],
 };
 
 class BloodGlucoseMeasurements extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewAllBloodGlucoseMeasurements','setAllBloodGlucoseMeasurementsToDataStore', 'displayAllBloodGlucoseMeasurementsResults', 'getHTMLForViewAllBloodGlucoseMeasurementsResults' ], this);
+        this.bindClassMethods(['mount', 'submit', 'redirectToViewAllBloodGlucoseMeasurements','search', 'displaySearchResults', 'getHTMLForSearchResults' ], this);
+        //   this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.displayAllBloodGlucoseMeasurementsResults);
+        this.dataStore.addChangeListener(this.displaySearchResults);
         this.header = new Header(this.dataStore);
+        console.log("BloodGlucoseMeasurements constructor");
     }
 
     async mount() {//初始化
-        document.getElementById('add').addEventListener('click', this.submit);//初始化按钮功能  1
+        document.getElementById('add-bloodGlucoseMeasurement-form').addEventListener('click', this.submit);//初始化按钮功能  1
         await this.header.addHeaderToPage();
         this.client = new CareCompassClient();
 
-        this.viewAllBloodGlucoseMeasurements();
+        this.viewAllBloodGlucoseMeasurements();////?????? not sure????should be here and the naming
     }
 
     async submit(event) {//点击按钮发生的事情 2
@@ -35,7 +36,8 @@ class BloodGlucoseMeasurements extends BindingClass {
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-        const createButton = document.getElementById('add');
+        const createButton = document.getElementById('add-bloodGlucoseMeasurement-form');
+        const createButton = document.getElementById('search-allBloodGlucoseMeasurements-form');
         const origButtonText = createButton.innerText;
         createButton.innerText = 'Loading...';
 
@@ -56,66 +58,70 @@ class BloodGlucoseMeasurements extends BindingClass {
         }
     }
 
-    redirectToViewAllBloodGlucoseMeasurements() { //转到'/bloodGlucoseMeasurements'端点
+    redirectToViewAllBloodGlucoseMeasurements() { //转到'/bloodGlucoseMeasurements'端点      //????????not sure the name right?????
         const allBloodGlucoseMeasurements = this.dataStore.get('allBloodGlucoseMeasurements');
         if (allBloodGlucoseMeasurements !== null && allBloodGlucoseMeasurements !== undefined) {
             window.location.href = '/bloodGlucoseMeasurements';
         }
     }
-
-     //AllBloodGlucoseMeasurementsToDataStore()
-     setAllBloodGlucoseMeasurementsToDataStore(){   //setAll   要改成set，最终目的是setdatastore
-
-        const viewAllBloodGlucoseMeasurementsCriteria = document.getElementById('view-allBloodGlucoseMeasurements-criteria-display').value;
-        const previousViewAllBloodGlucoseMeasurementsCriteria = this.dataStore.get(VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_CRITERIA_KEY);
-
-//        if (previousViewAllBloodGlucoseMeasurementsCriteria === viewAllBloodGlucoseMeasurementsCriteria) {
-//            return;
+//
+//    redirectToViewBloodGlucoseMeasurement() { //????????not sure the name right?????//转到'/bloodGlucoseMeasurements'端点
+//            const allBloodGlucoseMeasurements = this.dataStore.get('bloodGlucoseMeasurement');
+//            if (bloodGlucoseMeasurement !== null) {
+//                window.location.href = '/bloodGlucoseMeasurements';
+//            }
 //        }
 
-        if (viewAllBloodGlucoseMeasurementsCriteria) {
-            try {
-                const results = await this.client.viewAllBloodGlucoseMeasurements(viewAllBloodGlucoseMeasurementsCriteria);
+    async search(evt) {  //setAll   要改成set，最终目的是setdatastore
+            // Prevent submitting the from from reloading the page.
+            evt.preventDefault();
+
+            const searchCriteria = document.getElementById('search-criteria').value;
+            const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
+
+            // If the user didn't change the search criteria, do nothing
+            if (previousSearchCriteria === searchCriteria) {
+                return;
+            }
+
+            if (searchCriteria) {
+                const results = await this.client.search(searchCriteria);
 
                 this.dataStore.setState({
-                    [VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_CRITERIA_KEY]: viewAllBloodGlucoseMeasurementsCriteria,
-                    [VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_RESULTS_KEY]: results,
+                    [SEARCH_CRITERIA_KEY]: searchCriteria,
+                    [SEARCH_RESULTS_KEY]: results,
                 });
-            } catch (error) {
-                console.error("Error fetching blood glucose measurements:", error);
+            } else {
                 this.dataStore.setState(EMPTY_DATASTORE_STATE);
             }
+        }
+
+    displaySearchResults() {    //去掉view    //没人call，这个链接按钮
+        const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
+        const searchResults = this.dataStore.get(SEARCH_RESULTS_KEY);//1
+
+        const searchResultsContainer = document.getElementById('search-results-container');
+        const searchCriteriaDisplay = document.getElementById('search-criteria-display');
+        const searchResultsDisplay = document.getElementById('search-results-display');//1
+
+        if (searchCriteria === '') {
+            searchResultsContainer.classList.add('hidden');
+            searchCriteriaDisplay.innerHTML = '';
+            searchResultsDisplay.innerHTML = '';
         } else {
-            this.dataStore.setState(EMPTY_DATASTORE_STATE);
+            searchResultsContainer.classList.remove('hidden');
+            searchCriteriaDisplay.innerHTML = `"${searchCriteria}"`;  // `"${viewAllBloodGlucoseMeasurementsCriteria}"`
+            searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);//2
         }
     }
 
-        displayAllBloodGlucoseMeasurementsResults() {  //去掉view    //没人call，这个链接按钮
-            const viewAllBloodGlucoseMeasurementsCriteria = this.dataStore.get(VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_CRITERIA_KEY);
-            const viewAllBloodGlucoseMeasurementsResults = this.dataStore.get(VIEW_ALL_BLOOD_GLUCOSE_MEASUREMENTS_RESULTS_KEY);
-
-            const viewAllBloodGlucoseMeasurementsResultsContainer = document.getElementById('view-allBloodGlucoseMeasurements-results-container');
-            const viewAllBloodGlucoseMeasurementsCriteriaDisplay = document.getElementById('view-allBloodGlucoseMeasurements-criteria-display');
-            const viewAllBloodGlucoseMeasurementsResultsDisplay = document.getElementById('view-allBloodGlucoseMeasurements-results-display');
-
-            if (viewAllBloodGlucoseMeasurementsCriteria === '') {
-                viewAllBloodGlucoseMeasurementsResultsContainer.classList.add('hidden');
-                viewAllBloodGlucoseMeasurementsCriteriaDisplay.innerHTML = '';
-                viewAllBloodGlucoseMeasurementsResultsDisplay.innerHTML = '';
-            } else {
-                viewAllBloodGlucoseMeasurementsResultsContainer.classList.remove('hidden');
-                viewAllBloodGlucoseMeasurementsCriteriaDisplay.innerHTML = `"${viewAllBloodGlucoseMeasurementsCriteria}"`;
-                viewAllBloodGlucoseMeasurementsResultsDisplay.innerHTML = this.getHTMLForViewAllBloodGlucoseMeasurementsResults(viewAllBloodGlucoseMeasurementsResults);
-            }
-        }
-
-       getHTMLForViewAllBloodGlucoseMeasurementsResults(viewAllBloodGlucoseMeasurementsResults) {
-           if (viewAllBloodGlucoseMeasurementsResults.length === 0) {
+       getHTMLForSearchResults(searchResults) {
+           if (viewAllBloodGlucoseMeasurementsResults.length === 0) { ////viewAllBloodGlucoseMeasurementsResults????????not sure the name right?????
                return '<h4>No results found</h4>';
            }
 
            let html = '<table><tr><th>Actual Check Time</th><th>Glucose Level</th><th>Glucose Context</th><th>Comments</th></tr>';
-           for (const res of viewAllBloodGlucoseMeasurementsResults) {
+           for (const res of searchResults) {
                html += `
                <tr>
                    <td>${res.actualCheckTime}</td>
@@ -135,9 +141,8 @@ class BloodGlucoseMeasurements extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const bloodGlucoseMeasurement = new BloodGlucoseMeasurements();
-    await bloodGlucoseMeasurement.mount();
+    const bloodGlucoseMeasurements = new BloodGlucoseMeasurements();
+    bloodGlucoseMeasurements.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
-

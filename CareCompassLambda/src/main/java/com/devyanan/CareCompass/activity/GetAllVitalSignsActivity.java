@@ -40,8 +40,7 @@ public class GetAllVitalSignsActivity {
         try{
             vitalSignsList = vitalSignsDao.getAllVitalSigns(request.getPatientId());
         } catch (VitalSignsNotFoundException e){
-            log.error("VitalSigns with PatientId {} is not found in database.",
-                    request.getPatientId());
+            log.error("VitalSigns with PatientId {} are not found in the database. Error: {}", request.getPatientId(), e.getMessage());
             throw new VitalSignsNotFoundException(e.getMessage(),e.getCause());
         }
         return GetAllVitalSignsResult.builder()

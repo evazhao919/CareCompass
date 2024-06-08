@@ -40,8 +40,7 @@ public class GetAllNotificationsActivity {
         try{
             notificationList = notificationDao.getAllNotifications(request.getPatientId());
         } catch (NotificationNotFoundException e){
-            log.error("Notifications with PatientId {} is not found in database.",
-                    request.getPatientId());
+            log.error("Notifications with PatientId {} are not found in the database. Error: {}", request.getPatientId(), e.getMessage());
             throw new NotificationNotFoundException(e.getMessage(),e.getCause());
         }
         return GetAllNotificationsResult.builder()

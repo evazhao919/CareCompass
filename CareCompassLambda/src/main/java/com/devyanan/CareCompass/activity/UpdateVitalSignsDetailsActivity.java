@@ -1,7 +1,7 @@
 package com.devyanan.CareCompass.activity;
 
-import com.devyanan.CareCompass.activity.requests.UpdateVitalSignsRequest;
-import com.devyanan.CareCompass.activity.results.UpdateVitalSignsResult;
+import com.devyanan.CareCompass.activity.requests.UpdateVitalSignsDetailsRequest;
+import com.devyanan.CareCompass.activity.results.UpdateVitalSignsDetailsResult;
 import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.VitalSignsDao;
@@ -15,7 +15,7 @@ import javax.inject.Inject;
 /**
  * This class handles the logic for Updateing vital signs requests.
  */
-public class UpdateVitalSignsRequestActivity {
+public class UpdateVitalSignsDetailsActivity {
     private final Logger log = LogManager.getLogger();
     private final VitalSignsDao vitalSignsDao;
     private final LocalDateTimeConverter dateTimeConverter;
@@ -25,7 +25,7 @@ public class UpdateVitalSignsRequestActivity {
      * @param vitalSignsDao DAO for vital signs
      */
     @Inject
-    public UpdateVitalSignsRequestActivity(final VitalSignsDao vitalSignsDao) {
+    public UpdateVitalSignsDetailsActivity(final VitalSignsDao vitalSignsDao) {
         this.vitalSignsDao = vitalSignsDao;
         dateTimeConverter = new LocalDateTimeConverter();
     }
@@ -35,7 +35,7 @@ public class UpdateVitalSignsRequestActivity {
      * @param request The request containing the vital signs data
      * @return The result of Updateing the vital signs
      */
-    public UpdateVitalSignsResult handleRequest(final UpdateVitalSignsRequest request) {
+    public UpdateVitalSignsDetailsResult handleRequest(final UpdateVitalSignsDetailsRequest request) {
         log.info("Received UpdateVitalSignsRequest {}", request);
         VitalSigns vitalSigns = vitalSignsDao.getVitalSigns(request.getPatientId(),dateTimeConverter.unconvert(request.getActualCheckTime()));
 
@@ -59,7 +59,7 @@ public class UpdateVitalSignsRequestActivity {
         ModelConverter modelConverter = new ModelConverter();
         VitalSignsModel vitalSignsModel = modelConverter.toVitalSignsModel(result);
 
-        return UpdateVitalSignsResult.builder()
+        return UpdateVitalSignsDetailsResult.builder()
                 .withVitalSignModel(vitalSignsModel)
                 .build();
     }

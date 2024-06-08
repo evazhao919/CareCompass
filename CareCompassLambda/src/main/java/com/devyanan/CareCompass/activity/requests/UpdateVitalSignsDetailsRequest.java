@@ -4,8 +4,8 @@ import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = UpdateVitalSignsRequest.Builder.class)
-public class UpdateVitalSignsRequest {
+@JsonDeserialize(builder = UpdateVitalSignsDetailsRequest.Builder.class)
+public class UpdateVitalSignsDetailsRequest {
     private final String patientId;
     private final String actualCheckTime;
     private final double temperature;
@@ -23,7 +23,7 @@ public class UpdateVitalSignsRequest {
     private final VitalSigns.PATIENT_ACTIVITY patientActivity;
     private final String comments;
 
-    public UpdateVitalSignsRequest(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PATIENT_POSITION patientPosition, int bloodOxygenLevel, VitalSigns.OXYGEN_THERAPY oxygenTherapy, VitalSigns.FLOW_DELIVERED  flowDelivered, VitalSigns.PATIENT_ACTIVITY patientActivity, String comments) {
+    public UpdateVitalSignsDetailsRequest(String patientId, String actualCheckTime, double temperature, int heartRate, int pulse, int respiratoryRate, int systolicPressure, int diastolicPressure, int meanArterialPressure, double weight, VitalSigns.PATIENT_POSITION patientPosition, int bloodOxygenLevel, VitalSigns.OXYGEN_THERAPY oxygenTherapy, VitalSigns.FLOW_DELIVERED  flowDelivered, VitalSigns.PATIENT_ACTIVITY patientActivity, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.temperature = temperature;
@@ -231,8 +231,8 @@ public class UpdateVitalSignsRequest {
             return this;
         }
 
-        public UpdateVitalSignsRequest build() {
-            return new UpdateVitalSignsRequest(patientId, actualCheckTime, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
+        public UpdateVitalSignsDetailsRequest build() {
+            return new UpdateVitalSignsDetailsRequest(patientId, actualCheckTime, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments);
         }
     }
 }

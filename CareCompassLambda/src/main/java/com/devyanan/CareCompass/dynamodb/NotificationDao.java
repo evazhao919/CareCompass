@@ -63,7 +63,7 @@ public class NotificationDao {
         metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_TOTAL_COUNT,1);
         try {
             log.info("Attempting to add a notification: {}", notification);
-        dynamoDBMapper.save(notification);
+            dynamoDBMapper.save(notification);
             metricsPublisher.addCount(MetricsConstants.ADD_NOTIFICATION_SUCCESS_COUNT, 1);
             log.info("Notification added successfully for user: {}", notification.getPatientId());
         } catch (AmazonDynamoDBException e) {
@@ -109,11 +109,6 @@ public class NotificationDao {
     public Notification deleteNotification(Notification notification) {
         log.info("Attempting to delete notification with ID: {}", notification.getNotificationId());
 
-        if (notification == null) {
-            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_NOTIFICATION_BY_NOTIFICATION_ID_NOT_FOUND_COUNT, 1);
-            log.warn("No notification ID provided for user: {}", notification.getNotificationId());
-            throw new IllegalArgumentException("Notification ID cannot be empty");
-        }
         dynamoDBMapper.delete(notification);
         metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_NOTIFICATION_ID_FOUND_COUNT, 1);
         return notification;
@@ -182,7 +177,7 @@ public class NotificationDao {
     public List<Notification> RetrieveAllUpcomingNotifications(String patientId, LocalDateTime startDate ) {
 
         try {
-
+            log.info("Attempting to retrieve all upcoming notifications for user: {} starting from: {}", patientId, startDate);
             Map<String, Condition> rangeKeyConditions = new HashMap<>();
             Condition rangeCondition = new Condition()
                     .withComparisonOperator(ComparisonOperator.GE)
@@ -200,16 +195,19 @@ public class NotificationDao {
             QueryResultPage<Notification> results = dynamoDBMapper.queryPage(Notification.class, queryExpression);
 
             if (results.getResults().isEmpty()) {
+                log.warn("No upcoming notifications found for user: {} starting from: {}", patientId, startDate);
                 return Collections.emptyList();
             }
-
+            log.info("Successfully retrieved {} upcoming notifications for user: {} starting from: {}", results.getResults().size(), patientId, startDate);
             return results.getResults();
         } catch (Exception e) {
+            log.error("Failed to retrieve upcoming notifications for user: {} starting from: {}", patientId, startDate, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
 
     public List<Notification> retrieveNotificationsByReminderType(String patientId, Notification.REMINDER_TYPE reminderType) {
+        log.info("Attempting to retrieve notifications for user: {} by reminder type: {}", patientId, reminderType);
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":reminderType", new AttributeValue().withS(reminderType.name()));
 
@@ -218,12 +216,13 @@ public class NotificationDao {
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedScanList<Notification> notifications = dynamoDBMapper.scan(Notification.class, scanExpression);
+        log.info("Successfully retrieved {} notifications for user: {} by reminder type: {}", notifications.size(), patientId, reminderType);
         return notifications;
     }
 
     public Notification getNotification(String patientId, String notificationId) {
         try{
-            log.info("Attempting to get notification: {}", notificationId);
+            log.info("Attempting to get a notification with ID: {}", notificationId);
             Notification singlenotification = this.dynamoDBMapper.load(Notification.class, patientId, notificationId);
 
             if (singlenotification == null) {

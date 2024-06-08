@@ -94,9 +94,8 @@ public class MedicationDao {
      */
     public List<Medication> getAllMedications(String patientId){
        try {
-           log.info("Get medication for patientId with id: {}",patientId);
-           metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_TOTAL_COUNT,1);
            log.info("Attempting to get all medications for user: {}", patientId);
+           metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_TOTAL_COUNT,1);
            Medication medication = new Medication();
            medication.setPatientId(patientId);
 
@@ -146,6 +145,7 @@ public class MedicationDao {
 
 
     public List<Medication> retrieveMedicationsByMedicationStatus(String patientId, Medication.MEDICATION_STATUS medicationStatus) {
+        log.info("Retrieving medications by medication status for patientId: {}, status: {}", patientId, medicationStatus);
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":medicationStatus", new AttributeValue().withS(medicationStatus.name()));
 
@@ -156,6 +156,7 @@ public class MedicationDao {
         PaginatedScanList<Medication> medications = dynamoDBMapper.scan(Medication.class, scanExpression);
         if (medications == null || medications.isEmpty()) {
             metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT, 1, StandardUnit.Count);
+            log.warn("No medications found in database for status: {}", medicationStatus);
             throw new MedicationNotFoundException("No medications found in database for status: " + medicationStatus);
         } else {
             metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT, 1, StandardUnit.Count);

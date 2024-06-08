@@ -35,13 +35,12 @@ public class GetAllBloodGlucoseMeasurementsActivity {
      * @throws BloodGlucoseMeasurementNotFoundException if no measurements are found for the patient
      */
     public GetAllBloodGlucoseMeasurementsResult handleRequest(GetAllBloodGlucoseMeasurementsRequest request){
-        log.info("GetAllBloodGlucoseMeasurementsRequest received {}.",request);
+        log.info("GetAllBloodGlucoseMeasurementsRequest received {}.", request);
         List<BloodGlucoseMeasurement> bloodGlucoseMeasurementList;
         try{
             bloodGlucoseMeasurementList = bloodGlucoseMeasurementDao.getAllBloodGlucoseMeasurements(request.getPatientId());
         } catch (BloodGlucoseMeasurementNotFoundException e){
-            log.error("BloodGlucoseMeasurements with PatientId {} is not found in database.",
-                    request.getPatientId());
+            log.error("BloodGlucoseMeasurements with PatientId {} are not found in the database. Error: {}", request.getPatientId(), e.getMessage());
             throw new BloodGlucoseMeasurementNotFoundException(e.getMessage(), e.getCause());
         }
         return GetAllBloodGlucoseMeasurementsResult.builder()

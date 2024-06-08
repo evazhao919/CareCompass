@@ -1,7 +1,7 @@
 package com.devyanan.CareCompass.activity;
 
-import com.devyanan.CareCompass.activity.requests.UpdateBloodGlucoseMeasurementRequest;
-import com.devyanan.CareCompass.activity.results.UpdateBloodGlucoseMeasurementResult;
+import com.devyanan.CareCompass.activity.requests.UpdateBloodGlucoseMeasurementDetailsRequest;
+import com.devyanan.CareCompass.activity.results.UpdateBloodGlucoseMeasurementDetailsResult;
 import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.BloodGlucoseMeasurementDao;
@@ -10,16 +10,18 @@ import com.devyanan.CareCompass.models.BloodGlucoseMeasurementModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class UpdateBloodGlucoseMeasurementActivity {
+import javax.inject.Inject;
+
+public class UpdateBloodGlucoseMeasurementDetailsActivity {
     private final Logger log = LogManager.getLogger();
     private final BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao;
     private final LocalDateTimeConverter dateTimeConverter;
-
-    public UpdateBloodGlucoseMeasurementActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
+    @Inject
+    public UpdateBloodGlucoseMeasurementDetailsActivity(BloodGlucoseMeasurementDao bloodGlucoseMeasurementDao) {
         this.bloodGlucoseMeasurementDao = bloodGlucoseMeasurementDao;
         this.dateTimeConverter = new LocalDateTimeConverter();
     }
-    public UpdateBloodGlucoseMeasurementResult handleRequest(final UpdateBloodGlucoseMeasurementRequest request){
+    public UpdateBloodGlucoseMeasurementDetailsResult handleRequest(final UpdateBloodGlucoseMeasurementDetailsRequest request){
         log.info("Received UpdateBloodGlucoseMeasurementRequest {}", request);
 
         BloodGlucoseMeasurement bloodGlucoseMeasurement = bloodGlucoseMeasurementDao.getBloodGlucoseMeasurements(request.getPatientId(),dateTimeConverter.unconvert(request.getActualCheckTime()));
@@ -32,7 +34,7 @@ public class UpdateBloodGlucoseMeasurementActivity {
         ModelConverter modelConverter = new ModelConverter();
         BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel = modelConverter.toBloodGlucoseMeasurementModel(result);
 
-        return UpdateBloodGlucoseMeasurementResult.builder()
+        return UpdateBloodGlucoseMeasurementDetailsResult.builder()
                  .withBloodGlucoseMeasurementModel(bloodGlucoseMeasurementModel)
                 .build();
     }

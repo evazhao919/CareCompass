@@ -4,15 +4,15 @@ import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-@JsonDeserialize(builder = UpdateBloodGlucoseMeasurementRequest.Builder.class)
-public class UpdateBloodGlucoseMeasurementRequest {
+@JsonDeserialize(builder = UpdateBloodGlucoseMeasurementDetailsRequest.Builder.class)
+public class UpdateBloodGlucoseMeasurementDetailsRequest {
     private final String patientId;
     private final String actualCheckTime;
     private final double glucoseLevel;
     private final BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext;
     private final String comments;
 
-    public UpdateBloodGlucoseMeasurementRequest(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext, String comments) {
+    public UpdateBloodGlucoseMeasurementDetailsRequest(String patientId, String actualCheckTime, double glucoseLevel, BloodGlucoseMeasurement.GLUCOSE_MEASUREMENT_CONTEXT glucoseContext, String comments) {
         this.patientId = patientId;
         this.actualCheckTime = actualCheckTime;
         this.glucoseLevel = glucoseLevel;
@@ -88,8 +88,8 @@ public class UpdateBloodGlucoseMeasurementRequest {
             return this;
         }
 
-        public UpdateBloodGlucoseMeasurementRequest build() {
-            return new UpdateBloodGlucoseMeasurementRequest(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
+        public UpdateBloodGlucoseMeasurementDetailsRequest build() {
+            return new UpdateBloodGlucoseMeasurementDetailsRequest(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
         }
     }
 }

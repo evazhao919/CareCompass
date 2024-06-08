@@ -58,7 +58,7 @@ public class BloodGlucoseMeasurementDao {
             log.error("DynamoDB-specific error occurred while adding bloodGlucoseMeasurement: {}", bloodGlucoseMeasurement, e);
             throw new CustomDynamoDBException("Failed to add blood glucose measurement to the database due to DynamoDB-specific error", e);
         }catch (Exception e) {
-            log.error("Failed to add bloodGlucoseMeasurement for user: {}", bloodGlucoseMeasurement.getPatientId(), e);
+            log.error("Failed to add bloodGlucoseMeasurement for user: {}", bloodGlucoseMeasurement.getPatientId(),e);
             throw new DatabaseAccessException("Failed to add blood glucose measurement to the database", e);
         }
 
@@ -75,13 +75,13 @@ public class BloodGlucoseMeasurementDao {
      */
     public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurementByActualCheckTime(String patientId, LocalDateTime actualCheckTime){//TODO   ？？？？？？应该是LocalDateTime
         log.info("Attempting to delete na single blood glucose measurement with ID: {} and actualCheckTime: {}", patientId,actualCheckTime);
+        BloodGlucoseMeasurement bloodGlucoseMeasurementToDelete = new BloodGlucoseMeasurement();
+        bloodGlucoseMeasurementToDelete.setPatientId(patientId);
+        bloodGlucoseMeasurementToDelete.setActualCheckTime(actualCheckTime);
 
-            BloodGlucoseMeasurement bloodGlucoseMeasurementToDelete = new BloodGlucoseMeasurement();
-            bloodGlucoseMeasurementToDelete.setPatientId(patientId);
-            bloodGlucoseMeasurementToDelete.setActualCheckTime(actualCheckTime);
-
-                dynamoDBMapper.delete(bloodGlucoseMeasurementToDelete);
-                metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT, 1);
+        dynamoDBMapper.delete(bloodGlucoseMeasurementToDelete);
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_SUCCESS_COUNT, 1);
+        log.info("Blood glucose measurement deleted successfully for patientId: {} and actualCheckTime: {}", patientId, actualCheckTime);
         return bloodGlucoseMeasurementToDelete;
     }
 
@@ -95,7 +95,6 @@ public class BloodGlucoseMeasurementDao {
      */
     public List<BloodGlucoseMeasurement> getAllBloodGlucoseMeasurements(String patientId) {
         try {
-            log.info("Get blood glucose measurements for patientId with id: {}",patientId);
             metricsPublisher.addCount(MetricsConstants.GET_ALL_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
             log.info("Attempting to get all blood glucose measurements for user: {}", patientId);
             BloodGlucoseMeasurement bloodGlucoseMeasurement = new BloodGlucoseMeasurement();
@@ -120,7 +119,25 @@ public class BloodGlucoseMeasurementDao {
     }
 
     public BloodGlucoseMeasurement getBloodGlucoseMeasurements(String patientId, LocalDateTime actualCheckTime){
-        return null;
+        try{
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
+            log.info("Attempting to get a blood glucose measurement for patientId: {} with actualCheckTime: {}", patientId, actualCheckTime);
+            BloodGlucoseMeasurement singleBloodGlucoseMeasurement = this.dynamoDBMapper.load(BloodGlucoseMeasurement.class, actualCheckTime);
+
+            if (singleBloodGlucoseMeasurement == null) {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_BY_PATIENT_AND_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No single blood glucose measurement found for user: {} and actualCheckTime: {}", patientId, actualCheckTime);
+                throw new BloodGlucoseMeasurementNotFoundException("No single blood glucose measurement found for user: " + patientId + " and actualCheckTime : " + actualCheckTime);
+            } else {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_BY_PATIENT_AND_BLOOD_GLUCOSE_MEASUREMENT_FOUND_COUNT, 1);
+                log.info("Retrieved a single blood glucose measurement successfully for actualCheckTime: {}", actualCheckTime);
+                return singleBloodGlucoseMeasurement;
+            }
+        } catch (DatabaseAccessException e){
+            log.error("Failed to access the database for user: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
+            throw new DatabaseAccessException("Failed to access the database", e);
+        }
+    }
     }
 
 //    /**
@@ -224,4 +241,4 @@ public class BloodGlucoseMeasurementDao {
 //        }
 //    }
 
-}
+
