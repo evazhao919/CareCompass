@@ -119,6 +119,10 @@ public class BloodGlucoseMeasurementDao {
         }
     }
 
+    public BloodGlucoseMeasurement getBloodGlucoseMeasurements(String patientId, LocalDateTime actualCheckTime){
+        return null;
+    }
+
 //    /**
 //     * Retrieves the blood glucose masurement recorded for the last three days for a specified patient.
 //     *

@@ -18,11 +18,11 @@ export default class CareCompassClient extends BindingClass {
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'addBloodGlucoseMeasurement',
         'addMedication', 'addNotification', 'addVitalSigns', 'deleteBloodGlucoseMeasurement', 'deleteMedication',
         'deleteNotification', 'deleteVitalSigns', 'getAllBloodGlucoseMeasurements','getAllMedications',
-        'getAllNotifications','getAllVitalSigns','retrieveAllUpcomingNotifications','RetrieveMedicationsByStatus',
+        'getAllNotifications','getAllVitalSigns','retrieveAllUpcomingNotifications','retrieveMedicationsByStatus',
         'retrieveNotificationsByReminderType', 'updateMedicationDetails', 'updateNotificationDetails'];
         this.bindClassMethods(methodsToBind, this);
 
-        this.authenticator = new Authenticator();;
+        this.authenticator = new Authenticator();
         this.props = props;
 
         axios.defaults.baseURL = process.env.API_BASE_URL;
@@ -95,14 +95,14 @@ export default class CareCompassClient extends BindingClass {
       * @param {Function} errorCallback - Callback function to handle errors.
       * @returns {Object} A blood glucose measurement that is added.
       */
-     async addBloodGlucoseMeasurement(bloodGlucoseMeasurementDetails, errorCallback) {
+     async addBloodGlucoseMeasurement(actualCheckTime, glucoseLevel, glucoseContext, comments, errorCallback) {
          try {
              const token = await this.getTokenOrThrow("Only authenticated users can add a blood glucose measurement.");
              const response = await this.axiosClient.post(`bloodGlucoseMeasurements`, {
-                  actualCheckTime: bloodGlucoseMeasurementDetails.actualCheckTime,
-                  glucoseLevel: bloodGlucoseMeasurementDetails.glucoseLevel,
-                  glucoseContext: bloodGlucoseMeasurementDetails.glucoseContext,
-                  comments: bloodGlucoseMeasurementDetails.comments
+                  actualCheckTime: actualCheckTime,
+                  glucoseLevel: glucoseLevel,
+                  glucoseContext: glucoseContext,
+                  comments: comments
              }, {
                  headers: {
                      Authorization: `Bearer ${token}`
@@ -121,15 +121,15 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The added medication.
      */
-    async addMedication(medicationDetails, errorCallback) {
+    async addMedication(medicationName, prescription, instructions, medicationStatus, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a medication.");
             const response = await this.axiosClient.post(`medications`, {
                    //  TODO ?  private final String medicationId;
-                   medicationName: medicationDetails.medicationName,
-                   prescription: medicationDetails.prescription,
-                   instructions: medicationDetails.instructions,
-                   medicationStatus: medicationDetails.medicationStatus
+                   medicationName: medicationName,
+                   prescription: prescription,
+                   instructions: instructions,
+                   medicationStatus: medicationStatus
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -148,15 +148,15 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The added notification.
      */
-    async addNotification(notificationDetails, errorCallback) {
+    async addNotification(notificationTitle, reminderContent, scheduledTime, reminderType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a notification.");
             const response = await this.axiosClient.post(`notifications`, {
                 //TODO    private final String notificationId; ?
-                    notificationTitle: notificationDetails.notificationTitle,
-                    reminderContent: notificationDetails.reminderContent,
-                    scheduledTime: notificationDetails.scheduledTime,
-                    reminderType: notificationDetails.reminderType
+                    notificationTitle: notificationTitle,
+                    reminderContent: reminderContent,
+                    scheduledTime: scheduledTime,
+                    reminderType: reminderType
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -316,6 +316,7 @@ export default class CareCompassClient extends BindingClass {
                     this.handleError(error, errorCallback);
                     throw error;
                 }
+                }
 
 
     /**
@@ -452,7 +453,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {string} status - The medication status value to validate.
      * @returns {boolean} True if the status is valid, otherwise false.
      */
-    function isValidMedicationStatus(status) {
+     isValidMedicationStatus(medicationStatus) {
          const allowedStatusValues = ["ACTIVE", "DISCONTINUED", "ON_HOLD", "TEMPORARY_STOP"];
          const formattedStatus = status.toUpperCase().replace('_', '');
          return allowedStatusValues.includes(formattedStatus);
@@ -464,7 +465,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Array} The list of notifications filtered by the reminder type.
      */
-    async RetrieveNotificationsByReminderType(reminderType, errorCallback) {
+    async retrieveNotificationsByReminderType(reminderType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all notifications by reminder type.");
             const response = await this.axiosClient.get(`notificationsByReminderType/${reminderType}`);
@@ -480,7 +481,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {string} reminderType - The reminder type to validate.
      * @returns {boolean} True if the reminder type is valid, otherwise false.
      */
-    function isValidNotificationsByReminderType(reminderType) {
+    isValidNotificationsByReminderType(reminderType) {
         const allowedTypeValues = ["GLUCOSE_MEASUREMENT", "MEDICATION", "VITAL_SIGNS", "APPOINTMENT", "GENERAL"];
         const formattedType = reminderType.toUpperCase().replace('_', '');
         return allowedTypeValues.includes(formattedType);
@@ -496,7 +497,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The updated medication data.
      */
-    async UpdateMedicationDetails(medicationId, medicationName, prescription, medicationStatus, instructions, errorCallback) {
+    async updateMedicationDetails(medicationId, medicationName, prescription, medicationStatus, instructions, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update a medication.");
 
@@ -528,7 +529,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The updated notification data.
      */
-    async UpdateNotificationDetails(notificationId, notificationTitle, reminderType, reminderContent, scheduledTime, errorCallback) {
+    async updateNotificationDetails(notificationId, notificationTitle, reminderType, reminderContent, scheduledTime, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update a notification.");
 

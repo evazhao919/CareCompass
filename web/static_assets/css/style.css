@@ -1,112 +1,161 @@
 :root {
-    /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
-    --primary-color: #1E56A0;
-    --secondary-color: #D6E4F0;
-    --tertiary-color: #005691;
-    --error-color: #005691;  c4d8a5   #81a969 d3ddc1   ebecf1灰色
+    --primary-color: #1E56A0;  /* 主色调: 蓝色 */
+    --secondary-color: #D6E4F0;  /* 次要色调: 浅蓝色 */
+    --tertiary-color: #5893D4;  /* 第三色调: 深蓝色 */
+    --error-color: #C7EEFF;  /* 错误色调: 亮蓝色 */
 }
 
 .Comments {
-    height: 100px; /* Adjust the height as needed */
+    height: 100px; /* 根据需要调整高度 */
 }
 
 .background {
-    background-color: #004A7C;
     margin: 0;
-    counter-reset: section;
-    font-family: Verdana, Geneva, sans-serif;
+    counter-reset: section;  /* 重置计数器，用于后续的计数 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
-
 .header {
     /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 4px 20px;
+    display: flex;  /* 使用 Flexbox 布局 */
+    justify-content: space-between;  /* 在弹性容器内平均分配额外的空间，放置在主轴两端 */
+    align-items: center;  /* 在交叉轴上居中对齐 */
+    background-color: var(--primary-color);  /* 背景颜色取自变量 --primary-color网页和app的过度 */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    padding: 40px 20px;  /* 上下各 4px，左右各 20px 的内边距 */
 }
 
 .button {
-  background-color: var(--tertiary-color);
-  border: none;
-  color: var(--secondary-color);
-  padding: 6px 8px 4px 8px;
-  text-align: center;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    padding: 9px 9px 9px 9px;  /* 上 6px，右 8px，下 4px，左 8px 的内边距 */
+    text-align: center;  /* 文字居中对齐 */
+    font-weight: bold;  /* 文字加粗 */
+    text-decoration: none;  /* 去除下划线 */
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+    border-radius: 10px;  /* 将按钮变为圆形 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+}
+.mainButton {
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    padding: 9px 18px;  /* 上下各 15px，左右各 9px 的内边距 */
+    text-align: center;  /* 文字居中对齐 */
+    font-size: 30px;  /* 字体大小为 36px */
+    line-height: 40px;  /* 行高为 40px */
+    height: 80px;  /* 高度为 100px */
+    text-decoration: none;  /* 去除下划线 */
+
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+
+    letter-spacing: -1px;  /* 设置字母间距为 -1px，使文本更加紧凑 */
+    border-radius: 10px;  /* 将按钮变为圆形 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
+.secondaryButton {
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    padding: 9px 18px;  /* 上下各 15px，左右各 9px 的内边距 */
+    text-align: center;  /* 文字居中对齐 */
+    font-size: 30px;  /* 字体大小为 36px */
+    line-height: 40px;  /* 行高为 40px */
+    height: 80px;  /* 高度为 100px */
+    text-decoration: none;  /* 去除下划线 */
+
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+
+    letter-spacing: -1px;  /* 设置字母间距为 -1px，使文本更加紧凑 */
+    border-radius: 10px;  /* 将按钮变为圆形 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+}
+
+
+
 .button-group {
-    display: flex;
-    justify-content: space-between;
+    display: flex;  /* 使用 Flexbox 布局 */
+    justify-content: space-between;  /* 在弹性容器内平均分配额外的空间，放置在主轴两端 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+}
+
+.buttonOne-group {
+    display: flex;  /* 使用 Flexbox 布局 */
+    justify-content: center;  /* 在弹性容器内居中对齐 */
+    align-items: center;  /* 在交叉轴上居中对齐 */
+    gap: 10px;  /* 调整按钮之间的间距为 10px */
+    margin: 20px 0;  /* 上下各添加 20px 的外边距，左右为 0 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .header_home {
-    font-size: 36px;
-    line-height: 40px;
-    height: 100px;
-    text-decoration: none;
-    color: var(--secondary-color);
+    font-size: 36px;  /* 字体大小为 36px */
+    line-height: 40px;  /* 行高为 40px */
+    height: 50px;  /* 高度为 100px */
+    text-decoration: none;  /* 去除下划线 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .card {
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
-    margin: 20px;
-    padding: 10px 20px;
+    color: var(--primary-color);  /* 文字颜色取自变量 --primary-color */
+    background-color: var(--secondary-color);  /* 背景颜色取自变量 --secondary-color */
+    margin: 20px;  /* 设置外边距为 20px */
+    padding: 10px 20px;  /* 上下各 10px，左右各 20px 的内边距 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .error {
-    color: var(--error-color);
-    border: 1px solid var(--error-color);
-    padding: 8px;
+    color: var(--error-color);  /* 文字颜色取自变量 --error-color */
+    border: 1px solid var(--error-color);  /* 边框颜色为变量 --error-color 的实色边框 */
+    padding: 8px;  /* 设置内边距为 8px */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .validated-field:invalid {
-    outline: 2px solid var(--error-color);
+    outline: 2px solid var(--error-color);  /* 错误输入框的外边框为 2px 实色边框，颜色取自变量 --error-color */
 }
 .validated-field:focus:invalid {
-    color: var(--error-color);
+    color: var(--error-color);  /* 错误输入框的文字颜色取自变量 --error-color */
 }
 
 .card-content {
-    max-width: 500px;
+    max-width: 500px;  /* 设置最大宽度为 500px */
 }
 
 .card-content .form-field {
-    display: flex;
-    flex-direction: column;
+    display: flex;  /* 使用 Flexbox 布局 */
+    flex-direction: column;  /* 在主轴上设置为纵向排列 */
+        font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .tags {
-    display: flex;
-    flex-direction: row;
+    display: flex;  /* 使用 Flexbox 布局 */
+    flex-direction: row;  /* 在主轴上设置为横向排列 */
 }
 
 .tag {
-    font-size: 12px;
-    margin: 0 10px;
-    padding: 4px 8px;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    position: relative;
-    border-radius: 16px;
+    font-size: 12px;  /* 字体大小为 12px */
+    margin: 0 10px;  /* 上下为 0，左右为 10px 的外边距 */
+    padding: 4px 8px;  /* 上下为 4px，左右为 8px 的内边距 */
+    background-color: var(--primary-color);  /* 背景颜色取自变量 --primary-color */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    position: relative;  /* 相对定位 */
+    border-radius: 10px;  /* 圆角半径为 16px */
 }
 
 .song {
-    padding: 2px;
-    display: flex;
+    padding: 2px;  /* 设置内边距为 2px */
+    display: flex;  /* 使用 Flexbox 布局 */
 }
 
+
 .song .title {
-    flex: 20%;
+    flex: 20%;  /* 占据父容器的 20% 宽度 */
 }
 
 .song .album {
-    flex: 80%;
+    flex: 80%;  /* 占据父容器的 80% 宽度 */
 }
+
 
 /*
 Flexbox on a lists removes the numbers. We use a counter here to add them back.
@@ -114,45 +163,42 @@ https://stackoverflow.com/a/34316093
 https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters
 */
 .song:before {
-    counter-increment: section;
-    content: counter(section) ".";
-    position: absolute;
-    margin-left: -40px;
+    counter-increment: section;  /* 使用计数器增加当前元素前的章节数 */
+    content: counter(section) ".";  /* 在元素前插入章节数及点号 */
+    position: absolute;  /* 绝对定位 */
+    margin-left: -40px;  /* 左侧偏移 -40px */
 }
 
 .hidden {
-    display: none;
+    display: none;  /* 不显示该元素及其内容 */
 }
 
-/* table styles */
+/* 表格样式 */
 
 th, td {
-    padding: 15px;
-    text-align: left;
+    padding: 15px;  /* 设置内边距为 15px */
+    text-align: left;  /* 文本左对齐 */
 }
 
 th {
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);  /* 底部边框为 1px 实色边框，颜色取自变量 --primary-color */
 }
 
 a {
-    color: var(--tertiary-color);
-    text-decoration: none;
+    color: var(--tertiary-color);  /* 文字颜色取自变量 --tertiary-color */
+    text-decoration: none;  /* 去除下划线 */
 }
 
 /* Increase font size for all input fields */
 input[type="text"], textarea {
     font-size: 16px; /* Adjust the font size as needed */
+     font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 /* Increase width for all input fields */
 input[type="text"], textarea {
     width: 300px; /* Adjust the width as needed */
 }
-
-
-
-
 
 
 

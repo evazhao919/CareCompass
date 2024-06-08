@@ -2,14 +2,19 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="assets/addBloodGlucoseMeasurement.js"></script>
+    <script type="text/javascript" src="assets/bloodGlucoseMeasurements.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body class="background">
-<header class="header" id="header"></header>
+<div class="header">
+    <div class="header_home">CareCompass</div>
+    <div class="user-info">
+        <button class="button">LOG OUT</button>
+    </div>
+</div>
 <div class="card">
-    <h2>Add Blood Glucose Measurement</h2>
+    <h2 class="form-field">Add Blood Glucose Measurement</h2>
     <form class="card-content" id="add-bloodGlucoseMeasurement-form'">
         <p class="hidden error" id="error-message"> </p>
         <p class="form-field">
@@ -29,13 +34,28 @@
         </p>
         <p>
         <p class="form-field">
-        <label for="comments">Comments</label>
+        <label for="comments">Comments:</label>
         <textarea id="comments" class="comments" rows="10"></textarea>
        </p>
         <p>
-            <a href="#" class="button" id="create">Add Blood Glucose Measurement</a>
+            <a href="#" class="button" id="add">Add Blood Glucose Measurement</a>
         </p>
     </form>
+
+
+
+    <div class="card">
+        <h2 class="form-field">View All Blood Glucose Measurement</h2>
+        <form class="card-content" id="view-allBloodGlucoseMeasurements-form">
+        </form>
+    </div>
+    <div class="card" id='view-allBloodGlucoseMeasurements-results-container'>
+        <h3><span id="view-allBloodGlucoseMeasurements-criteria-display"></span></h3>
+        <div id="view-allBloodGlucoseMeasurements-results-display">
+        </div>
+
+
+</div>
 </div>
 </body>
 
