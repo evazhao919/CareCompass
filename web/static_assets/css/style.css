@@ -1,107 +1,556 @@
+/* 将所有元素的默认外边距和内边距设为0，并将box-sizing设置为border-box */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 定义#banner元素的样式 */
+#banner {
+    display: flex; /* 使用flexbox布局 */
+    height: 90vh;  /* 高度为视口高度的90% */
+}
+
+/* 定义#banner中.banner-text类的样式 */
+#banner .banner-text {
+    flex: 1;                    /* 占据flex容器的剩余空间 */
+    background: #203965;        /* 背景颜色为深蓝色 */
+    color: #FFFFFF;             /* 文本颜色为白色 */
+    padding: 20px;              /* 内边距为20px */
+}
+
+/* 定义#banner中.banner-text类下的h1和h4元素的样式 */
+#banner .banner-text h1,
+#banner .banner-text h4 {
+    margin: 0; /* 取消默认的外边距 */
+}
+
+/* 使用伪元素::after在#banner元素的后面创建一个内容为空的元素 */
+#banner::after {
+    content: "";                       /* 伪元素的内容为空 */
+    background: url(front-truck.jpg);  /* 背景图片为front-truck.jpg */
+    background-size: cover;            /* 背景图片覆盖整个元素 */
+    background-position: center;       /* 背景图片居中显示 */
+    height: 90%;                       /* 伪元素的高度为父元素的90% */
+    width: 50%;                        /* 伪元素的宽度为父元素的50% */
+    position: absolute;                /* 绝对定位 */
+    top: 0;                            /* 伪元素顶部对齐父元素顶部 */
+    right: 0;                          /* 伪元素右边对齐父元素右边 */
+    filter: grayscale(100%);           /* 将背景图片设置为灰度模式 */
+}
+
+/* 使用伪元素::before在#banner元素的前面创建一个内容为空的元素 */
+#banner::before {
+    content: "";                         /* 伪元素的内容为空 */
+    background-color: #D6E4F0;           /* 背景颜色为黄色 */
+    width: 12px;                         /* 伪元素的宽度为12px */
+    height: 50%;                         /* 伪元素的高度为父元素高度的50% */
+    position: absolute;                  /* 绝对定位 */
+    top: 50%;                            /* 伪元素顶部对齐父元素高度的50%处 */
+    right: 50%;                          /* 伪元素右边对齐父元素宽度的50%处 */
+    transform: translate(50%, -50%);     /* 使用变换将伪元素向右和向上平移，以精确定位 */
+    border-radius: 5px;                  /* 设置圆角半径为5px */
+    z-index: 1;                          /* 设置z-index为1，以确保伪元素位于其他内容的前面 */
+}
+
+/* 定义 .logoLanding 类的样式 */
+.logoLanding {
+    width: 140px; /* 设置宽度为 140 像素 */
+    position: absolute; /* 绝对定位 */
+    top: 4%; /* 距离顶部 4% */
+    left: 10%; /* 距离左边 10% */
+    color: #D6E4F0; /* 设置颜色为浅黄色 */
+    font-size: 30px; /* 设置字体大小为 30 像素 */
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* 设置字体系列 */
+}
+
+/* 定义 .banner-text 下的 h1 元素的样式 */
+.banner-text h1 {
+    text-align: left; /* 左对齐文本 */
+    color: #D6E4F0; /* 设置颜色为浅黄色 */
+    padding-top: 300px; /* 设置顶部内边距为 300 像素 */
+    padding-left: 10%; /* 设置左侧内边距为 10% */
+    font-size: 40px; /* 设置字体大小为 40 像素 */
+    line-height: 1.5; /* 设置行高为 1.5 */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; /* 设置字体系列 */
+}
+
+/* 定义 #makes-life-portion 元素的样式 */
+#makes-life-portion {
+    color: #D6E4F0; /* 设置“MAKES LIFE”部分的颜色为黄色 */
+}
+
+/* 定义 .banner-text 下的 p 元素的样式 */
+.banner-text p {
+    text-align: left; /* 左对齐文本 */
+    color: #D6E4F0; /* 设置颜色为浅黄色 */
+    padding-left: 10%; /* 设置左侧内边距为 10% */
+    font-size: 20px; /* 设置字体大小为 20 像素 */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; /* 设置字体系列 */
+}
+
+/* 定义 .button-container 类的样式 */
+.button-container {
+    display: flex; /* 使用 flexbox 布局 */
+    justify-content: flex-start; /* 水平方向上左对齐内容 */
+    padding-left: 10%; /* 设置左侧内边距为 10% */
+    align-items: center; /* 垂直方向上居中对齐内容 */
+    text-decoration: none; /* 去除文本装饰 */
+    outline: none; /* 去除外边框 */
+}
+
+/* 为 .button-container 内的相邻按钮添加左边距 */
+.button-container button + button {
+    margin-left: 30px; /* 相邻按钮之间的左边距为30像素 */
+}
+
+/* 定义 .button-container 内的按钮样式 */
+.button-container button {
+    background-color: #D6E4F0; /* 背景颜色为黄色 */
+    color: #203965; /* 文本颜色为深蓝色 */
+    font-size: 18px; /* 字体大小为18像素 */
+    padding: 8px 35px; /* 内边距为上下8像素，左右35像素 */
+    border-radius: 20px; /* 边框圆角半径为20像素 */
+    width: 150px; /* 按钮宽度为150像素 */
+    text-decoration: none; /* 去除文本装饰 */
+    outline: none; /* 去除外边框 */
+}
+
+/* 定义按钮的悬停样式 */
+.button-container button:hover {
+    background-color: lightgray; /* 背景颜色变为浅灰色 */
+    color: #203965; /* 文本颜色保持深蓝色 */
+}
+
+/* 定义 .navbar 的样式 */
+.navbar {
+    position: absolute; /* 绝对定位 */
+    top: 10px; /* 距离顶部10像素 */
+    right: 10px; /* 距离右侧10像素 */
+}
+
+/* 定义 .navbar 内的 ul 列表样式 */
+.navbar ul {
+    list-style: none; /* 去除列表项的默认样式 */
+    font-family: Arial, Helvetica, sans-serif; /* 设置字体系列 */
+    font-size: 18px; /* 字体大小为18像素 */
+    margin-top: 3%; /* 上边距为3% */
+    padding: 0; /* 内边距为0 */
+}
+
+/* 定义 .navbar 内的 li 列表项样式 */
+.navbar li {
+    display: inline-block; /* 行内块显示 */
+    margin-right: 55px; /* 右边距为55像素 */
+}
+
+/* 定义 .navbar 内最后一个 li 列表项的样式 */
+.navbar li:last-child {
+    margin-right: 25px; /* 右边距为25像素 */
+}
+
+/* 定义 .navbar 内链接的样式 */
+.navbar a {
+    text-decoration: none; /* 去除文本装饰 */
+    color: #203965; /* 链接颜色为深蓝色 */
+}
+
+/* 定义 .about 类的样式 */
+.about {
+    font-size: 35px; /* 字体大小为35像素 */
+    display: flex; /* 使用flexbox布局 */
+    flex-direction: column; /* 垂直方向排列 */
+    justify-content: center; /* 垂直方向居中对齐 */
+    text-align: center; /* 文本居中对齐 */
+}
+
+/* 定义 .section-class 类的样式 */
+.section-class {
+    text-align: center; /* 文本居中对齐 */
+}
+
+/* 定义 .section-class 内 h2 元素的样式 */
+.section-class h2 {
+    background-color: #203965; /* 背景颜色为深蓝色 */
+    color: white; /* 文本颜色为白色 */
+    padding-top: 50px; /* 顶部内边距为50像素 */
+    padding-bottom: 50px; /* 底部内边距为50像素 */
+    font-size: 25px; /* 字体大小为25像素 */
+}
+
+
+
+/* 定义 hr 元素的样式 */
+hr {
+    border: 2px solid #D6E4F0; /* 边框为2像素的黄色实线 */
+    width: 50%; /* 宽度为父元素的50% */
+    margin: auto; /* 水平居中对齐 */
+}
+
+.container {
+  display: flex; /* 使用 Flex 布局 */
+  justify-content: center; /* 在主轴上居中对齐 */
+  gap: 70px; /* 元素之间的间距为 70 像素 */
+  padding: 50px; /* 内边距为 50 像素 */
+}
+
+footer {
+  background-color: #f2f2f2; /* 底部区域背景颜色为灰色 */
+  color: #777; /* 文本颜色为灰色 */
+  padding-top: 50px; /* 顶部内边距为 50 像素 */
+  padding-bottom: 10px; /* 底部内边距为 10 像素 */
+  text-align: center; /* 文本居中对齐 */
+  font-size: 16px; /* 字体大小为 16 像素 */
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%; /* 在屏幕宽度小于等于 600px 时，将宽度设置为 100% */
+  }
+}
+
+
+
+
+
 :root {
-    /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
-    --primary-color: #5D5E5E;
-    --secondary-color: #ffffff;
-    --tertiary-color: #F5881F;
-    --error-color: #EE3A23;
+    --primary-color: #1E56A0;  /* 主色调: 蓝色 */
+    --secondary-color: #D6E4F0;  /* 次要色调: 浅蓝色 */
+    --tertiary-color: #5893D4;  /* 第三色调: 深蓝色 */
+    --error-color: #C7EEFF;  /* 错误色调: 亮蓝色 */
 }
 
 .background {
-    background-color: #8A8C8F;
-    margin: 0;
-    counter-reset: section;
-    font-family: "Helvetica Neue",Helvetica,sans-serif;
+    margin: 10;
+    counter-reset: section;  /* 重置计数器，用于后续的计数 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
-.header {
+.page_header{
+  height: 80px; /* Adjust the height to your desired value */
     /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 4px 20px;
+    display: flex;  /* 使用 Flexbox 布局 */
+    justify-content: space-between;  /* 在弹性容器内平均分配额外的空间，放置在主轴两端 */
+    align-items: center;  /* 在交叉轴上居中对齐 */
+    background-color: var(--primary-color);  /* 背景颜色取自变量 --primary-color网页和app的过度 */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    padding: 40px 40px;  /* 上下各 4px，左右各 20px 的内边距 */
+}
+
+.header_logo {
+margin-left: 5px; /* Adjust the value as needed */
+    font-size: 28px;  /* 字体大小为 36px */
+    line-height: 10px;  /* 行高为 40px */
+    height: 5px;  /* 高度为 100px */
+    text-decoration: none;  /* 去除下划线 */
+    font-family: Helvetica, Arial, sans-serif; /* Use Helvetica font or fallback to Arial or sans-serif */
+
+}
+
+.endpoints_background {
+    color: var(--primary-color);  /* 文字颜色取自变量 --primary-color */
+    background-color: var(--secondary-color);  /* 背景颜色取自变量 --secondary-color */
+    margin: 5px;  /* 设置外边距为 20px */
+    padding: 10px 20px;  /* 上下各 10px，左右各 20px 的内边距 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+}
+
+.card-content {
+    max-width: 500px;  /* 设置最大宽度为 500px */
+}
+
+.card-content .endpoints_name_and_elements_orders {
+    display: flex;  /* 使用 Flexbox 布局 */
+    flex-direction: column;  /* 在主轴上设置为纵向排列 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+}
+
+.card-content .variable-field {  /* 使用 Flexbox 布局  */
+    display: flex;  /* 使用 Flexbox 布局 */
+    flex-direction: column;  /* 在主轴上设置为纵向排列 */
+        font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .button {
-  background-color: var(--tertiary-color);
-  border: none;
-  color: var(--secondary-color);
-  padding: 6px 8px 4px 8px;
-  text-align: center;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    padding: 4px 4px 6px 6px;  /* 上 6px，右 8px，下 4px，左 8px 的内边距 */
+    text-align: center;  /* 文字居中对齐 */
+    font-weight: bold;  /* 文字加粗 */
+    text-decoration: none;  /* 去除下划线 */
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+    border-radius: 5px;  /* 将按钮变为圆形 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+       font-size: 10em;  /* 较小的字体尺寸 */
+        margin-right: 20px; /* Add margin to the right side of the button */
+}
+.button {
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    padding: 4px 4px 6px 6px;  /* 上 6px，右 8px，下 4px，左 8px 的内边距 */
+    text-align: center;  /* 文字居中对齐 */
+    font-weight: bold;  /* 文字加粗 */
+    text-decoration: none;  /* 去除下划线 */
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+    border-radius: 5px;  /* 将按钮变为圆形 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+       font-size: 10em;  /* 较小的字体尺寸 */
+        margin-right: 20px; /* Add margin to the right side of the button */
+}
+.buttonTwo {
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    padding: 4px 4px 4px 4px;
+    text-align: center;  /* 文字居中对齐 */
+    font-weight: bold;  /* 文字加粗 */
+    text-decoration: none;  /* 去除下划线 */
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+    border-radius: 5px;  /* 圆角边框 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+    font-size: 1em;  /* 较小的字体尺寸 */
+    margin-right: -10px; /* Add margin to the right side of the button */
+}
+
+.buttonThree {
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    padding: 4px 4px 4px 4px;
+    text-align: center;  /* 文字居中对齐 */
+    font-weight: bold;  /* 文字加粗 */
+    text-decoration: none;  /* 去除下划线 */
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+    border-radius: 5px;  /* 圆角边框 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+    font-size: 1em;  /* 较小的字体尺寸 */
+    margin-right: 40px; /* Add margin to the right side of the button */
+}
+
+
+.mainButton {
+    background-color: var(--tertiary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    padding: 9px 18px;  /* 上下各 15px，左右各 9px 的内边距 */
+    text-align: center;  /* 文字居中对齐 */
+    font-size: 30px;  /* 字体大小为 36px */
+    line-height: 40px;  /* 行高为 40px */
+    height: 80px;  /* 高度为 100px */
+    text-decoration: none;  /* 去除下划线 */
+
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+
+    letter-spacing: -1px;  /* 设置字母间距为 -1px，使文本更加紧凑 */
+    border-radius: 10px;  /* 将按钮变为圆形 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+}
+
+.secondaryButton {
+    background-color: var(--primary-color);  /* 背景颜色取自变量 --tertiary-color */
+    border: none;  /* 去除边框 */
+    padding: 18px 18px;  /* 上下各 15px，左右各 9px 的内边距 */
+    text-align: center;  /* 文字居中对齐 */
+    font-size: 20px;  /* 字体大小为 36px */
+    line-height: 40px;  /* 行高为 40px */
+    height: 80px;  /* 高度为 100px */
+    text-decoration: none;  /* 去除下划线 */
+    cursor: pointer;  /* 鼠标悬停时显示指针形状 */
+    letter-spacing: -1px;  /* 设置字母间距为 -1px，使文本更加紧凑 */
+    border-radius: 10px;  /* 将按钮变为圆形 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+        color: #ffffff; /* Font color: white */
+
+}
+.secondaryButton:hover {
+    background-color: #FEBF0E; /* 背景颜色保持不变 */
+    color: #203965; /* 文本颜色不变 */
+    cursor: pointer; /* 修改鼠标样式为指针 */
 }
 
 .button-group {
-    display: flex;
-    justify-content: space-between;
+    display: flex;  /* 使用 Flexbox 布局 */
+    justify-content: space-between;  /* 在弹性容器内平均分配额外的空间，放置在主轴两端 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
-.header_home {
-    font-size: 36px;
-    line-height: 40px;
-    height: 100px;
-    text-decoration: none;
-    color: var(--secondary-color);
+.buttonOne-group {
+    display: flex;  /* 使用 Flexbox 布局 */
+    justify-content: center;  /* 在弹性容器内居中对齐 */
+    align-items: center;  /* 在交叉轴上居中对齐 */
+    gap: 10px;  /* 调整按钮之间的间距为 10px */
+    margin: 20px 0;  /* 上下各添加 20px 的外边距，左右为 0 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
+ #Toptable .comments-cell {
+        padding-right: 90x; /* Adjust as needed */
+    }
+ .nav-link {
+        font-size: 2.5em; /* Increase the font size for the tab link */
+    }
+    .button {
+        font-size: 1.5em; /* Increase the font size for the button */
+    }
+    .d-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+ .form-container {
+padding: 20px; /* 增加一些填充来创建空间 */
+margin: 0 10px; /* 左右增加一点空隙 */
+}
+
+.form-group {
+ display: flex;
+align-items: center; /* 垂直居中对齐项目 */
+margin-bottom: 10px;
+}
+
+.form-group label {
+margin-right: 10px; /* 在标签和输入框之间增加一些空隙 */
+white-space: nowrap; /* 防止标签文字换行 */
+ }
+
+.form-group input,
+.form-group textarea {
+padding: 4px; /* 减少填充使输入框变矮 */
+font-size: 1em;
+width: 125px; /* 设置输入框的较窄宽度 */
+height: 28px; /* 设置输入框的较矮高度 */
+}
+
+#commentsContainer textarea {
+width: 250px; /* 设置文本区域的较窄宽度 */
+height: 80px; /* 设置文本区域的较矮高度 */
+ }
+
+
+
+
+
+ body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .table-container {
+            padding: 2px 2px 0 2px; /* Add padding only to the sides (left and right) and top */
+            width: calc(100% - 40px); /* Adjust the width to accommodate the padding */
+            margin: auto; /* Center the table horizontally */
+        }
+        .table {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .header-cell {
+            background-color: lightgray; /* Customize this as needed */
+        }
+        .comments-cell {
+            /* Additional styling if needed */
+        }
+
+.secondaryButton:hover {
+    background-color: inherit; /* Keep the background color unchanged */
+    color: inherit; /* Keep the text color unchanged */
+    cursor: pointer; /* Change the cursor style to pointer */
+}
+.card-content label {
+    margin-bottom: 10px; /* Add margin below each label */
+}
+
+.card-content input,
+.card-content textarea {
+    margin-bottom: 20px; /* Add margin below each input field */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .card {
     color: var(--primary-color);
     background-color: var(--secondary-color);
     margin: 20px;
     padding: 10px 20px;
+}.card {
+     color: var(--primary-color);
+     background-color: var(--secondary-color);
+     margin: 20px;
+     padding: 10px 20px;
+ }
+
+.header_home {
+    font-size: 36px;  /* 字体大小为 36px */
+    line-height: 40px;  /* 行高为 40px */
+    height: 50px;  /* 高度为 100px */
+    text-decoration: none;  /* 去除下划线 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
-.error {
-    color: var(--error-color);
-    border: 1px solid var(--error-color);
-    padding: 8px;
+.card {
+    color: var(--primary-color);  /* 文字颜色取自变量 --primary-color */
+    background-color: var(--secondary-color);  /* 背景颜色取自变量 --secondary-color */
+    margin: 20px;  /* 设置外边距为 20px */
+    padding: 10px 20px;  /* 上下各 10px，左右各 20px 的内边距 */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .validated-field:invalid {
-    outline: 2px solid var(--error-color);
+    outline: 2px solid var(--error-color);  /* 错误输入框的外边框为 2px 实色边框，颜色取自变量 --error-color */
 }
+
 .validated-field:focus:invalid {
-    color: var(--error-color);
+    color: var(--error-color);  /* 错误输入框的文字颜色取自变量 --error-color */
 }
 
-.card-content {
-    max-width: 500px;
-}
-
-.card-content .form-field {
-    display: flex;
-    flex-direction: column;
+.error {
+    color: var(--error-color);  /* 文字颜色取自变量 --error-color */
+    border: 1px solid var(--error-color);  /* 边框颜色为变量 --error-color 的实色边框 */
+    padding: 8px;  /* 设置内边距为 8px */
+    font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
 .tags {
-    display: flex;
-    flex-direction: row;
+    display: flex;  /* 使用 Flexbox 布局 */
+    flex-direction: row;  /* 在主轴上设置为横向排列 */
 }
 
 .tag {
-    font-size: 12px;
-    margin: 0 10px;
-    padding: 4px 8px;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    position: relative;
-    border-radius: 16px;
+    font-size: 12px;  /* 字体大小为 12px */
+    margin: 0 10px;  /* 上下为 0，左右为 10px 的外边距 */
+    padding: 4px 8px;  /* 上下为 4px，左右为 8px 的内边距 */
+    background-color: var(--primary-color);  /* 背景颜色取自变量 --primary-color */
+    color: var(--secondary-color);  /* 文字颜色取自变量 --secondary-color */
+    position: relative;  /* 相对定位 */
+    border-radius: 10px;  /* 圆角半径为 16px */
 }
 
 .song {
-    padding: 2px;
-    display: flex;
+    padding: 2px;  /* 设置内边距为 2px */
+    display: flex;  /* 使用 Flexbox 布局 */
 }
 
 .song .title {
-    flex: 20%;
+    flex: 20%;  /* 占据父容器的 20% 宽度 */
 }
 
 .song .album {
-    flex: 80%;
+    flex: 80%;  /* 占据父容器的 80% 宽度 */
 }
 
 /*
@@ -110,28 +559,63 @@ https://stackoverflow.com/a/34316093
 https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters
 */
 .song:before {
-    counter-increment: section;
-    content: counter(section) ".";
-    position: absolute;
-    margin-left: -40px;
+    counter-increment: section;  /* 使用计数器增加当前元素前的章节数 */
+    content: counter(section) ".";  /* 在元素前插入章节数及点号 */
+    position: absolute;  /* 绝对定位 */
+    margin-left: -40px;  /* 左侧偏移 -40px */
 }
 
 .hidden {
-    display: none;
+    display: none;  /* 不显示该元素及其内容 */
 }
 
-/* table styles */ 
-
+/* 表格样式 */
 th, td {
-    padding: 15px;
-    text-align: left;
+    padding: 15px;  /* 设置内边距为 15px */
+    text-align: left;  /* 文本左对齐 */
 }
 
 th {
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);  /* 底部边框为 1px 实色边框，颜色取自变量 --primary-color */
 }
 
 a {
-    color: var(--tertiary-color);
-    text-decoration: none;
+    color: var(--tertiary-color);  /* 文字颜色取自变量 --tertiary-color */
+    text-decoration: none;  /* 去除下划线 */
 }
+
+/* Increase font size for all input fields */
+input[type="text"], textarea {
+    font-size: 16px; /* Adjust the font size as needed */
+     font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
+}
+
+/* Increase width for all input fields */
+input[type="text"], textarea {
+    width: 300px; /* Adjust the width as needed */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

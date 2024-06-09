@@ -40,8 +40,7 @@ public class GetAllMedicationsActivity {
         try{
             medicationList = medicationDao.getAllMedications(request.getPatientId());
         } catch (MedicationNotFoundException e){
-            log.error("MedicationList with PatientId {} is not found in database.",
-                    request.getPatientId());
+            log.error("MedicationList with PatientId {} is not found in the database. Error: {}", request.getPatientId(), e.getMessage());
             throw new MedicationNotFoundException(e.getMessage(), e.getCause());
         }
         return GetAllMedicationsResult.builder()

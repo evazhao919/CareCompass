@@ -4,9 +4,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
+import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
 import com.devyanan.CareCompass.exceptions.DatabaseAccessException;
+import com.devyanan.CareCompass.exceptions.NotificationNotFoundException;
 import com.devyanan.CareCompass.exceptions.VitalSignsNotFoundException;
 import com.devyanan.CareCompass.metrics.MetricsConstants;
 import com.devyanan.CareCompass.metrics.MetricsPublisher;
@@ -74,21 +76,23 @@ private final DynamoDBMapper dynamoDBMapper;
      * @throws VitalSignsNotFoundException If the vital signs data is not found.
      */
     public VitalSigns deleteSingleVitalSignsByActualCheckTime(String patientId, LocalDateTime actualCheckTime) { //TODO   ？？？？？？应该是LocalDateTime,Dao 里面不应该使用时间
+        log.info("Attempting to delete vital signs with patientId: {} and actualCheckTime: {}", patientId, actualCheckTime);
+        metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
 
-            metricsPublisher.addCount(MetricsConstants.DELETE_SINGLE_VITAL_SIGNS_TOTAL_COUNT, 1);
+        VitalSigns vitalSignsToDelete = new VitalSigns();
+        vitalSignsToDelete.setPatientId(patientId);
+        vitalSignsToDelete.setActualCheckTime(actualCheckTime);
 
-            VitalSigns vitalSignsToDelete = new VitalSigns();
-            vitalSignsToDelete.setPatientId(patientId);
-            vitalSignsToDelete.setActualCheckTime(actualCheckTime);
+        VitalSigns existingVitalSigns = dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
 
-            VitalSigns existingVitalSigns = dynamoDBMapper.load(VitalSigns.class, patientId, actualCheckTime);
-
-            if (existingVitalSigns != null) {
-                dynamoDBMapper.delete(vitalSignsToDelete);
-                return existingVitalSigns;
-            } else {
-                throw new VitalSignsNotFoundException("Vital signs not found for patientId: " + patientId + " and actualCheckTime: " + actualCheckTime);
-            }
+        if (existingVitalSigns != null) {
+            dynamoDBMapper.delete(vitalSignsToDelete);
+            log.info("Vital signs deleted successfully for patientId: {} and actualCheckTime: {}", patientId, actualCheckTime);
+            return existingVitalSigns;
+        } else {
+            log.warn("Vital signs not found for patientId: {} and actualCheckTime: {}", patientId, actualCheckTime);
+            throw new VitalSignsNotFoundException("Vital signs not found for patientId: " + patientId + " and actualCheckTime: " + actualCheckTime);
+        }
     }
 
     /**
@@ -100,7 +104,7 @@ private final DynamoDBMapper dynamoDBMapper;
      */
     public List<VitalSigns> getAllVitalSigns(String patientId) {
         try {
-            log.info("Get vitalSigns for patientId with id: {}", patientId);
+            log.info("Attempting to get all vital signs for user: {}", patientId);
             metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_TOTAL_COUNT, 1);
             log.info("Attempting to get all vitalSigns for user: {}", patientId);
             VitalSigns vitalSigns = new VitalSigns();
@@ -113,7 +117,7 @@ private final DynamoDBMapper dynamoDBMapper;
 
         if (results.getResults().isEmpty()) {
             metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
-            log.warn("No vitalSigns found for user: {}", patientId);
+            log.warn("No vital signs found for user: {}", patientId);
             return Collections.emptyList();
                 }
             metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_FOUND_COUNT, 1);
@@ -123,6 +127,26 @@ private final DynamoDBMapper dynamoDBMapper;
             throw new DatabaseAccessException("Failed to access the database", e);
             }
         }
+
+    public VitalSigns getVitalSigns(String patientId, LocalDateTime actualCheckTime) {
+        try{
+            log.info("Attempting to get a single vitalSigns with actual check time: {}", actualCheckTime);
+            VitalSigns singleVitalSigns = this.dynamoDBMapper.load(VitalSigns.class, patientId,actualCheckTime);
+
+            if (singleVitalSigns == null) {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No VitalSigns found for user: {} and VitalSignsId: {}", patientId, actualCheckTime);
+                throw new VitalSignsNotFoundException("No VitalSigns found for user: " + patientId + " and actualCheckTime: " + actualCheckTime);
+            } else {
+                metricsPublisher.addCount(MetricsConstants.GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_FOUND_COUNT, 1);
+                log.info("Successfully retrieved a single VitalSigns for actual check time: {}", actualCheckTime);
+                return singleVitalSigns;
+            }
+        } catch (DatabaseAccessException e){
+            log.error("Failed to access the database for user: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
+            throw new DatabaseAccessException("Failed to access the database", e);
+        }
+    }
 
 //    /**
 //     * DAO method to retrieve vital signs data for a specified date range.

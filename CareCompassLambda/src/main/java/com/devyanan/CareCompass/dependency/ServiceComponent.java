@@ -114,4 +114,16 @@ public interface ServiceComponent {
      * @return RetrieveNotificationsByReminderTypeActivity
      */
     RetrieveNotificationsByReminderTypeActivity provideRetrieveNotificationsByReminderTypeActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return UpdateBloodGlucoseMeasurementDetailsActivity
+     */
+    UpdateBloodGlucoseMeasurementDetailsActivity provideUpdateBloodGlucoseMeasurementDetailsActivity();
+
+    /**
+     * Provides the relevant activity.
+     * @return UpdateVitalSignsDetailsActivity
+     */
+    UpdateVitalSignsDetailsActivity provideUpdateVitalSignsDetailsActivity();
 }

@@ -12,6 +12,9 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "bloodGlucoseMeasurements")
 public class BloodGlucoseMeasurement {
     private String patientId;
+    /**
+     * Unique id is equal to patientId plus actualCheckTime
+    */
     private LocalDateTime actualCheckTime;
     private double glucoseLevel; // TODO may need use bigDecimal, for limited time will do it later
     private GLUCOSE_MEASUREMENT_CONTEXT glucoseContext;

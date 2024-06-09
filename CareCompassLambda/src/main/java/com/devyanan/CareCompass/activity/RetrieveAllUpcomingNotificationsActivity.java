@@ -42,7 +42,7 @@ public class RetrieveAllUpcomingNotificationsActivity {
         if(request.getScheduledTime() != null && !request.getScheduledTime().isBlank()){
            scheduledTime = dateTimeConverter.unconvert(request.getScheduledTime());
         }
-        log.info("ScheduledTime use blank as null {}", scheduledTime);
+        log.info("ScheduledTime: {}", scheduledTime);
             notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(),scheduledTime);
         return RetrieveAllUpcomingNotificationsResult.builder()
                 .withNotifications(new ModelConverter().toNotificationModelList(notificationList))

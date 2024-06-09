@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- 声明文档类型为 HTML，设置语言为英语 -->
+<head>
+    <meta charset="UTF-8"> <!-- 设置文档的字符编码为 UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 设置视口以进行响应式网页设计 -->
+    <title>CareCompass</title> <!-- 设置网页标题 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> <!-- 引入 Bootstrap CSS 文件 -->
+    <link rel="stylesheet" type="text/css" href="css/style.css"> <!-- 引入自定义 CSS 文件 -->
+    <script type="text/javascript" src="assets/bloodGlucoseMeasurements.js"></script> <!-- 引入 JavaScript 文件 -->
+</head>
+<body class="background"> <!-- 设置背景颜色 -->
+<header class="page_header" id="header"> <!-- 定义头部区域 -->
+    <div class="page_header">
+        <div class="d-flex justify-content-between"></div><!-- 创建一个容器，使用 flex 布局，子元素居中对齐，左右分布 -->
+        <div class="header_logo">CareCompass</div> <!-- 网页标志 -->
+        <div class="user-info"></div> <!-- 用户信息区域 -->
+    </div>
+    <div class="buttonOne-group">
+        <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a> <!-- 图表回顾链接 -->
+        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a> <!-- 药物链接 -->
+        <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a> <!-- 通知链接 -->
+        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a> <!-- 生命体征链接 -->
+        <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurements.html">Blood Glucose</a> <!-- 血糖链接 -->
+    </div>
+    <button type="button" class="buttonTwo" id="layoutEx">Logout</button> <!-- 退出按钮 -->
+</header>
+
+<div class="content"> <!-- 内容区域 -->
+    <div class="col py-3 page-body-background">
+        <div class="d-flex justify-content-between align-items-center">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Blood Glucose Levels</a> <!-- 血糖水平标签 -->
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="glucose" role="tabpanel" aria-labelledby="glucose-tab">
+                <!-- 这里可以放置附加内容 -->
+            </div>
+        </div>
+    </div>
+
+    <div class="endpoints_background">
+        <form class="card-content" id="search-playlists-form">
+            <label for="actualCheckTime">Actual check time: </label> <!-- 实际检查时间 -->
+            <input type="text" class="validated-field" id="actualCheckTime" placeholder="2024-00-00T00:00" autofocus>
+
+            <label for="glucoseLevel">Glucose level: </label> <!-- 血糖水平 -->
+            <input type="text" class="validated-field" id="glucoseLevel" placeholder="" autofocus>
+
+            <label for="glucoseContext">Glucose context: </label> <!-- 血糖上下文 -->
+            <input type="text" class="validated-field" id="glucoseContext" placeholder="" autofocus>
+
+            <label for="comments">comments: </label> <!-- 评论 -->
+            <div id="commentsContainer">
+                <textarea id="comments" rows="4"></textarea>
+            </div>
+        </form>
+        <button type="button" class="buttonThree" id="addEx">Add</button> <!-- 添加按钮 -->
+    </div>
+
+    <div class="card hidden" id='search-results-container'>
+        <h3>Results for <span id="search-criteria-display"></span></h3> <!-- 搜索结果标题 -->
+        <div id="search-results-display"></div> <!-- 搜索结果显示区域 -->
+    </div>
+
+    <div class="table-container">
+        <table class="table table-bordered" id="Toptable">
+            <thead>
+            <tr>
+                <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Check time</th> <!-- 检查时间 -->
+                <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Blood Glucose level</th> <!-- 血糖水平 -->
+                <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Glucose Context</th> <!-- 血糖上下文 -->
+                <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 46%;">Comments</th> <!-- 评论 -->
+            </tr>
+            </thead>
+            <tbody id="BloodGlucose-list"></tbody> <!-- 血糖列表 -->
+        </table>
+    </div>
+</div>
+<script src="path/to/bootstrap.bundle.min.js"></script> <!-- 引入 Bootstrap JS 文件 -->
+</body>
+</html>

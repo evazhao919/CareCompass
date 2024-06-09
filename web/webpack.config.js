@@ -26,6 +26,8 @@ module.exports = {
     createPlaylist: path.resolve(__dirname, 'src', 'pages', 'createPlaylist.js'),
     viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
     searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
+    bloodGlucoseMeasurements: path.resolve(__dirname, 'src', 'pages', 'bloodGlucoseMeasurements.js'),
+    deleteBloodGlucoseMeasurement: path.resolve(__dirname, 'src', 'pages', 'deleteBloodGlucoseMeasurement.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
