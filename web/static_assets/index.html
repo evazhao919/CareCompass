@@ -7,35 +7,26 @@
 </head>
 
 <body class="background">
-<div id="header">
-    <div class="header_home">CareCompass</div>
-    <div class="user-info">
-        <button class="button">LOG OUT</button>
+<header class="header" id="header"></header>
+<div class="card">
+    <h2>Search Playlists</h2>
+    <form class="card-content" id="search-playlists-form">
+        <p class="form-field">
+            <label>Search by name or tag</label>
+            <input type="text" class="validated-field" id="search-criteria" placeholder="smooth-jamz" autofocus>
+            <sub>Search is case-sensitive and tags must match exactly.</sub>
+        </p>
+    </form>
+    <p class="button-group">
+        <a href="#" class="button" id="search-btn">Search</a>
+        <a href="createPlaylist.html" class="button">New Playlist</a>
+    </p>
+</div>
+<div class="card hidden" id='search-results-container'>
+    <h3>Results for <span id="search-criteria-display"></span></h3>
+    <div id="search-results-display">
     </div>
 </div>
-    <div class="card">
-        <h2>Search Playlists</h2>
-        <form class="card-content" id="search-playlists-form">
-            <p class="form-field">
-                <label>Search by name or tag</label>
-                <input type="text" class="validated-field" id="search-criteria" placeholder="smooth-jamz" autofocus>
-                <sub>Search is case-sensitive and tags must match exactly.</sub>
-            </p>
-        </form>
-        <p class="button-group">
-            <a href="#" class="button" id="search-btn">Search</a>
-            <a href="createPlaylist.html" class="button">New Playlist</a>
-
-        </p>
-    </div>
-<p>
-    <a href="#" class="button" id="test">TEST!!!!!!</a>
-</p>
-    <div class="card hidden" id='search-results-container'>
-        <h3>Results for <span id="search-criteria-display"></span></h3>
-        <div id="search-results-display">
-        </div>
-    </div>
 </body>
 
 </html>

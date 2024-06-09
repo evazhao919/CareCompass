@@ -1,61 +1,118 @@
 <!DOCTYPE html>
+<html lang="en"> <!-- 声明文档类型为 HTML，设置语言为英语 -->
 <html>
-
+<meta charset="UTF-8"> <!-- 设置文档的字符编码为 UTF-8 -->
 <head>
-    <script type="text/javascript" src="assets/bloodGlucoseMeasurements.js"></script>
+    <script type="text/javascript" src="assets/searchPlaylists.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-
+<header class="page_header" id="header" > <!-- 定义头部区域，设置背景颜色 -->
 <body class="background">
-<div class="header">
-    <div class="header_home">CareCompass</div>
+<div class="page_header">
+    <div class="d-flex justify-content-between"></div><!-- 创建一个容器，使用 flex 布局，子元素居中对齐，左右分布 -->
+    <div class="header_logo">CareCompass</div>
     <div class="user-info">
-        <button class="button">LOG OUT</button>
+
     </div>
 </div>
-<div class="card">
-    <h2 class="form-field">Add Blood Glucose Measurement</h2>
-    <form class="card-content" id="add-bloodGlucoseMeasurement-form'">
-        <p class="hidden error" id="error-message"> </p>
-        <p class="form-field">
-            <label>Actual Check Time</label>
-            <input type="text" required class="validated-field" id="actual-check-time" placeholder="2025-08-25T10:22"
-                   autofocus>
-        </p>
-        <p class="form-field">
-            <label>Glucose Level</label>
-            <input type="text" id="glucoseLevel" class="glucoseLevel">
-        </p>
-        <p>
+<div class="buttonOne-group">
 
-        <p class="form-field">
-            <label>Glucose Context</label>
-            <input type="text" id="glucoseContext" class="glucoseContext">
-        </p>
-        <p>
-        <p class="form-field">
-        <label for="comments">Comments:</label>
-        <textarea id="comments" class="comments" rows="10"></textarea>
-       </p>
-        <p>
-            <a href="#" class="button" id="add">Add Blood Glucose Measurement</a>
-        </p>
+    <button id="Chart Review-link"  class="secondaryButton" href="VitalSigns.html">Chart Review</button>
+    <button id="Chart Review-link" class="secondaryButton" >Medications</button>
+    <button id="Chart Review-link" class="secondaryButton" >Notifications</button>
+    <button id="Chart Review-link" class="secondaryButton" >Vital Signs</button>
+    <button id="Chart Review-link" class="secondaryButton" >Blood Glucose Levels</button>
+</div>
+<button type="button" class="button" id="logout">Logout</button> <!-- 退出按钮，警告按钮样式 -->
+<div class="content">
+    <!-- Content goes here -->
+</div>
+</body>
+</header>
+</body>
+
+
+
+<div class="col py-3 page-body-background"> <!-- 创建一个列容器，带有内边距和背景样式 -->
+    <h3 > <u><strong>Blood Glucose Levels</strong></u></h3> <!-- 居中显示的标题，文字下划线加粗 -->
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-warning me-2 ms-2" id="addEx">Add</button>
+    </div>
+</div>
+
+<table class="table table-bordered" id="Toptable"> <!-- 创建一个带有边框的表格，ID 为 "Toptable" -->
+    <thead> <!-- 表头部分 -->
+    <tr> <!-- 表头行 -->
+        <th scope="col" class="table-secondary text-center header-cell">Actual check time</th> <!-- 表头单元格，灰色背景，文本居中，内容为 "EXPENSE ID" -->
+        <th scope="col" class="table-secondary text-center header-cell">Glucose level</th> <!-- 表头单元格，灰色背景，文本居中，内容为 "TRUCK ID" -->
+        <th scope="col" class="table-secondary text-center header-cell">Glucose Context</th> <!-- 表头单元格，灰色背景，文本居中，内容为 "VENDOR NAME" -->
+        <th scope="col" class="table-secondary text-center header-cell">Comments</th> <!-- 表头单元格，灰色背景，文本居中，内容为 "CATEGORY" -->
+    </tr>
+    </thead>
+    <tbody id="expense-list"> <!-- 表格主体部分，ID 为 "expense-list" -->
+    </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body class="background">
+<header class="page_header" id="header"></header>
+<div class="endpoints_background">
+    <h2>Add Medication</h2>
+    <form class="card-content" id="search-playlists-form">
+        <label for="medicationName">Medication Name</label>
+        <input type="text" class="validated-field" id="medicationName" placeholder="Enter medication name" autofocus>
+
+        <label for="prescription">Prescription</label>
+        <div id="prescriptionContainer">
+            <textarea id="prescription" rows="4"></textarea>
+        </div>
+
+        <label for="instructions">Instructions</label>
+        <div id="instructionsContainer">
+            <textarea id="instructions" rows="4"></textarea>
+        </div>
+
+        <label for="status">Status</label>
+        <input type="text" class="validated-field" id="status" placeholder="Enter status" autofocus>
     </form>
 
 
 
-    <div class="card">
-        <h2 class="form-field">View All Blood Glucose Measurement</h2>
-        <form class="card-content" id="view-allBloodGlucoseMeasurements-form">
-        </form>
-    </div>
-    <div class="card" id='view-allBloodGlucoseMeasurements-results-container'>
-        <h3><span id="view-allBloodGlucoseMeasurements-criteria-display"></span></h3>
-        <div id="view-allBloodGlucoseMeasurements-results-display">
-        </div>
 
 
+    </p>
+    </form>
+    <p class="button-group">
+        <a href="#" class="button" id="search-btn">Search</a>
+        <a href="createPlaylist.html" class="button">New Playlist</a>
+    </p>
 </div>
+<div class="card hidden" id='search-results-container'>
+    <h3>Results for <span id="search-criteria-display"></span></h3>
+    <div id="search-results-display">
+    </div>
 </div>
 </body>
 
