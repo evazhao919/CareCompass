@@ -250,7 +250,7 @@ margin-left: 5px; /* Adjust the value as needed */
 .endpoints_background {
     color: var(--primary-color);  /* 文字颜色取自变量 --primary-color */
     background-color: var(--secondary-color);  /* 背景颜色取自变量 --secondary-color */
-    margin: 20px;  /* 设置外边距为 20px */
+    margin: 5px;  /* 设置外边距为 20px */
     padding: 10px 20px;  /* 上下各 10px，左右各 20px 的内边距 */
     font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
@@ -265,7 +265,7 @@ margin-left: 5px; /* Adjust the value as needed */
     font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
 }
 
-.card-content .variable-field {  /* 使用 Flexbox 布局 你可能希望在列表横向排列并且输入并且保存！！！！！！！！！！！！！！！！！！！！！ */
+.card-content .variable-field {  /* 使用 Flexbox 布局  */
     display: flex;  /* 使用 Flexbox 布局 */
     flex-direction: column;  /* 在主轴上设置为纵向排列 */
         font-family: Verdana, Geneva, sans-serif;  /* 字体族: Verdana, Geneva, 无衬线 */
@@ -397,6 +397,36 @@ margin-left: 5px; /* Adjust the value as needed */
         justify-content: space-between;
         align-items: center;
     }
+ .form-container {
+padding: 20px; /* 增加一些填充来创建空间 */
+margin: 0 10px; /* 左右增加一点空隙 */
+}
+
+.form-group {
+ display: flex;
+align-items: center; /* 垂直居中对齐项目 */
+margin-bottom: 10px;
+}
+
+.form-group label {
+margin-right: 10px; /* 在标签和输入框之间增加一些空隙 */
+white-space: nowrap; /* 防止标签文字换行 */
+ }
+
+.form-group input,
+.form-group textarea {
+padding: 4px; /* 减少填充使输入框变矮 */
+font-size: 1em;
+width: 125px; /* 设置输入框的较窄宽度 */
+height: 28px; /* 设置输入框的较矮高度 */
+}
+
+#commentsContainer textarea {
+width: 250px; /* 设置文本区域的较窄宽度 */
+height: 80px; /* 设置文本区域的较矮高度 */
+ }
+
+
 
 
 
@@ -428,6 +458,21 @@ margin-left: 5px; /* Adjust the value as needed */
     color: inherit; /* Keep the text color unchanged */
     cursor: pointer; /* Change the cursor style to pointer */
 }
+.card-content label {
+    margin-bottom: 10px; /* Add margin below each label */
+}
+
+.card-content input,
+.card-content textarea {
+    margin-bottom: 20px; /* Add margin below each input field */
+}
+
+
+
+
+
+
+
 
 
 

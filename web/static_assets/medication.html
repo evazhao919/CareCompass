@@ -34,13 +34,11 @@
 </header>
 
 
-
-
 <div class="col py-3 page-body-background">
     <div class="d-flex justify-content-between align-items-center">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Blood Glucose Levels</a>
+                <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Medications</a>
             </li>
         </ul>
 
@@ -55,19 +53,22 @@
 
 <div class="endpoints_background">
     <form class="card-content" id="search-playlists-form">
-        <label for="actualCheckTime">Actual check time: </label>
-        <input type="text" class="validated-field" id="actualCheckTime" placeholder="2024-00-00T00:00" autofocus>
+        <label for="medicationName">Medication name: </label>
+        <input type="text" class="validated-field" id="medicationName" placeholder="2024-00-00T00:00" autofocus>
 
-        <label for="glucoseLevel">Glucose level: </label>
-        <input type="text" class="validated-field" id="glucoseLevel" placeholder="" autofocus>
-
-        <label for="glucoseContext">Glucose context:  </label>
-        <input type="text" class="validated-field" id="glucoseContext" placeholder="" autofocus>
-
-        <label for="comments">comments: </label>
-        <div id="commentsContainer">
-            <textarea id="comments" rows="4"></textarea>
+        <label for="prescription">Prescription: </label>
+        <div id="prescriptionContainer">
+            <textarea id="prescription" rows="4"></textarea>
         </div>
+
+        <label for="Instructions">Instructions: </label>
+        <div id="InstructionsContainer">
+            <textarea id="Instructions" rows="4"></textarea>
+        </div>
+
+        <label for="medicationStatus">Status: </label>
+        <input type="text" class="validated-field" id="medicationStatus" placeholder="ACTIVE" autofocus>
+
 
     </form>
     <button type="button" class="buttonThree" id="addEx">Add</button>
@@ -79,15 +80,18 @@
 </div>
 
 
+
+
 <body>
 <div class="table-container">
     <table class="table table-bordered" id="Toptable">
         <thead>
         <tr>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Check time</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Blood Glucose level</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Glucose Context</th>
-            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 46%;">Comments</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication name</th>
+            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 12%;">Status</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Prescription</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Instructions</th>
+
         </tr>
         </thead>
         <tbody id="BloodGlucose-list">

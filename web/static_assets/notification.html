@@ -36,11 +36,12 @@
 
 
 
+
 <div class="col py-3 page-body-background">
     <div class="d-flex justify-content-between align-items-center">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Blood Glucose Levels</a>
+                <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Notifications</a>
             </li>
         </ul>
 
@@ -55,18 +56,18 @@
 
 <div class="endpoints_background">
     <form class="card-content" id="search-playlists-form">
-        <label for="actualCheckTime">Actual check time: </label>
-        <input type="text" class="validated-field" id="actualCheckTime" placeholder="2024-00-00T00:00" autofocus>
+        <label for="notificationTitle">Notification title: </label>
+        <input type="text" class="validated-field" id="notificationTitle" placeholder="" autofocus>
 
-        <label for="glucoseLevel">Glucose level: </label>
-        <input type="text" class="validated-field" id="glucoseLevel" placeholder="" autofocus>
+        <label for="scheduledTime">Scheduled time: </label>
+        <input type="text" class="validated-field" id="scheduledTime" placeholder="" autofocus>
 
-        <label for="glucoseContext">Glucose context:  </label>
-        <input type="text" class="validated-field" id="glucoseContext" placeholder="" autofocus>
+        <label for="reminderType">Reminder type:  </label>
+        <input type="text" class="validated-field" id="reminderType" placeholder="" autofocus>
 
-        <label for="comments">comments: </label>
-        <div id="commentsContainer">
-            <textarea id="comments" rows="4"></textarea>
+        <label for="reminderContent">Reminder content: </label>
+        <div id="reminderContentContainer">
+            <textarea id="reminderContent" rows="4"></textarea>
         </div>
 
     </form>
@@ -79,15 +80,18 @@
 </div>
 
 
+
+
+
 <body>
 <div class="table-container">
     <table class="table table-bordered" id="Toptable">
         <thead>
         <tr>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Check time</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Blood Glucose level</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Glucose Context</th>
-            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 46%;">Comments</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Notification title</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Scheduled time</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Reminder type</th>
+            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 46%;">Reminder content</th>
         </tr>
         </thead>
         <tbody id="BloodGlucose-list">
@@ -96,4 +100,7 @@
 </div>
 <script src="path/to/bootstrap.bundle.min.js"></script>
 </body>
+
+
+
 </html>
