@@ -497,7 +497,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The updated medication data.
      */
-    async updateMedicationDetails(medicationId, medicationName, prescription, medicationStatus, instructions, errorCallback) {
+    async updateMedicationDetails(medicationId, medicationName, prescription, instructions, medicationStatus, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update a medication.");
 

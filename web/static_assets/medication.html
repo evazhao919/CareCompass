@@ -6,7 +6,7 @@
     <title>CareCompass</title> <!-- 设置网页标题 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> <!-- 引入 Bootstrap CSS 文件 -->
     <link rel="stylesheet" type="text/css" href="css/style.css"> <!-- 引入自定义 CSS 文件 -->
-    <script type="text/javascript" src="assets/bloodGlucoseMeasurements.js"></script> <!-- 引入 JavaScript 文件 -->
+    <script type="text/javascript" src="assets/medication.js"></script> <!-- 引入 JavaScript 文件 -->
 </head>
 <body class="background"> <!-- 设置背景颜色 -->
 
@@ -21,9 +21,9 @@
         <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a> <!-- 药物链接 -->
         <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a> <!-- 通知链接 -->
         <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a> <!-- 生命体征链接 -->
-        <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurements.html">Blood Glucose</a> <!-- 血糖链接 -->
+        <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose</a> <!-- 血糖链接 -->
     </div>
-    <button type="button" class="buttonTwo" id="layoutEx">Logout</button> <!-- 退出按钮 -->
+    <button type="button" class="buttonTwo" id="layout">Logout</button> <!-- 退出按钮 -->
     <div class="content"></div>
 </header>
 
@@ -43,7 +43,7 @@
 </div>
 
 <div class="endpoints_background"> <!-- 表单区域 -->
-    <form class="card-content" id="search-playlists-form">
+    <form class="card-content" id="add-medication-form">
         <label for="medicationName">Medication name: </label>
         <input type="text" class="validated-field" id="medicationName" placeholder="Medication Name" autofocus>
 
@@ -60,8 +60,34 @@
         <label for="medicationStatus">Status: </label>
         <input type="text" class="validated-field" id="medicationStatus" placeholder="ACTIVE" autofocus>
     </form>
-    <button type="button" class="buttonThree" id="addEx">Add</button>
+    <button type="button" class="buttonThree" id="add">Add</button>
 </div>
+
+
+<div class="endpoints_background">
+    <!-- Update Medication Form -->
+    <form id="update-medication-form" class="hidden">
+        <input type="hidden" id="update-medication-id" />
+
+        <label for="update-medicationName">Medication name:</label>
+        <input type="text" id="update-medicationName" />
+
+        <label for="update-prescription">Prescription:</label>
+        <input type="text" id="update-prescription" />
+
+        <label for="update-instructions">Instructions:</label>
+        <input type="text" id="update-instructions" />
+
+        <label for="update-medicationStatus">Medication status:</label>
+        <input type="text" id="update-medicationStatus" />
+
+        <button type="submit">Update Medication</button>
+    </form>
+</div>
+
+
+
+
 
 <div class="card hidden" id='search-results-container'> <!-- 搜索结果区域 -->
     <h3>Results for <span id="search-criteria-display"></span></h3>
@@ -69,10 +95,11 @@
 </div>
 
 <div class="table-container"> <!-- 表格容器 -->
-    <table class="table table-bordered" id="Toptable">
+    <table class="table table-bordered" id="View-Table">
         <thead>
         <tr>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication name</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication Id</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication Name</th>
             <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 12%;">Status</th>
             <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Prescription</th>
             <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Instructions</th>
@@ -82,6 +109,6 @@
     </table>
 </div>
 
-<script src="path/to/bootstrap.bundle.min.js"></script> <!-- 引入 Bootstrap JS 文件 -->
+
 </body>
 </html>
