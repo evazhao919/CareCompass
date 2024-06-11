@@ -247,6 +247,15 @@ margin-left: 5px; /* Adjust the value as needed */
 
 }
 
+.logo {
+   font-family: 'Arial, sans-serif'; /* Choose a professional font */
+   font-size: 38px; /* Adjust the font size as needed */
+   color: #D6E4F0; /* White text color for contrast */
+   text-shadow: 6px 6px 6px rgba(0,0,0,0.4); /* Add a subtle black shadow */
+   transform: skew(-28deg); /* Skew the text for a 3D effect */
+}
+
+
 .endpoints_background {
     color: var(--primary-color);  /* 文字颜色取自变量 --primary-color */
     background-color: var(--secondary-color);  /* 背景颜色取自变量 --secondary-color */
