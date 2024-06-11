@@ -29,6 +29,7 @@ module.exports = {
     bloodGlucoseMeasurement: path.resolve(__dirname, 'src', 'pages', 'bloodGlucoseMeasurement.js'),
     medication: path.resolve(__dirname, 'src', 'pages', 'medication.js'),
     notification: path.resolve(__dirname, 'src', 'pages', 'notification.js'),
+//    chartReview: path.resolve(__dirname, 'src', 'pages', 'chartReview.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

@@ -141,7 +141,7 @@ import DataStore from '../util/DataStore';
 
 const RESULTS_KEY = 'medication-results';
 
-class Medication extends BindingClass {
+class Medication extends BindingClass {//TODO do not touch
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'getMedications', "displayMedicationResults", "getHTMLForMedicationResults", "updateToMedicationForm", "saveUpdatedMedication"], this);
@@ -151,7 +151,7 @@ class Medication extends BindingClass {
         console.log("Medication constructor");
     }
 
-    async mount() {
+    async mount() {//TODO do not touch
         document.getElementById('add-medication-form').addEventListener('click', this.submit);
       //document.getElementById('delete').addEventListener('click', this.deleteMedication);//TODO
         document.getElementById('update-medication-form').addEventListener('click', this.updateMedication);
@@ -160,7 +160,7 @@ class Medication extends BindingClass {
         this.getMedications();
     }
 
-    async submit(event) { //edit add, now we want get things
+    async submit(event) { //edit add, now we want get things//TODO do not touch
         event.preventDefault();
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
@@ -194,7 +194,7 @@ class Medication extends BindingClass {
         }
     }
 
-    async getMedications() {
+    async getMedications() {//TODO do not touch
         console.log("Medications results");
         const results = await this.client.getAllMedications(() => {});  //TODO
         console.log("Medications results", results);
@@ -206,7 +206,7 @@ class Medication extends BindingClass {
         });
     }
 
-    displayMedicationResults() {
+    displayMedicationResults() {//TODO do not touch
         const medicationResults = this.dataStore.get(RESULTS_KEY);
         const medicationResultsDisplay = document.getElementById('View-Table');
         medicationResultsDisplay.innerHTML = this.getHTMLForMedicationResults(medicationResults.medications);
@@ -214,7 +214,7 @@ class Medication extends BindingClass {
         medicationResultsDisplay.addEventListener('click', this.updateToMedicationForm);
     }
 
-    getHTMLForMedicationResults(searchResults) {
+    getHTMLForMedicationResults(searchResults) {//TODO do not touch
         if (searchResults.length === 0) {
             return '<h4>No results found</h4>';
         }
@@ -239,7 +239,7 @@ class Medication extends BindingClass {
         return html;
     }
 
-    updateToMedicationForm(event) {
+    updateToMedicationForm(event) {//TODO do not touch
         if (event.target.classList.contains('update-button')) {
             const row = event.target.closest('tr');
             row.querySelectorAll('.editable').forEach(cell => {
@@ -267,7 +267,7 @@ class Medication extends BindingClass {
         }
     }
 
-    async saveUpdatedMedication(medicationId, updatedData) {
+    async saveUpdatedMedication(medicationId, updatedData) {//TODO do not touch
         try {
             await this.client.updateMedicationDetails(medicationId, updatedData.medicationName, updatedData.prescription, updatedData.instructions, updatedData.medicationStatus);
             console.log(`Medication with ID ${medicationId} updated successfully.`);
@@ -277,7 +277,17 @@ class Medication extends BindingClass {
     }
 }
 
-const main = async () => {
+
+
+
+
+
+
+
+
+
+
+const main = async () => {//TODO do not touch
     const medication = new Medication();
     medication.mount();
 };
