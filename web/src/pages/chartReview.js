@@ -3,118 +3,105 @@ import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
-const RESULTS_KEY = 'blood-results';
+const RESULTS_BY_STATUS_KEY = 'medication-by-status-results';
+const RESULTS_BY_SCHEDULED_TIME_KEY = 'notification-by-scheduled-time-results';
 
-class ChartReview extends BindingClass {  //'retrieveAllUpcomingNotifications','retrieveMedicationsByStatus','retrieveNotificationsByReminderType',
-      constructor() {
-          super();
-          this.bindClassMethods(['mount', 'submit', 'getNotifications', "displayNotificationResults", "getHTMLForNotificationResults"], this);
-//          this.dataStore = new DataStore();
-//          this.dataStore.addChangeListener(this.displayNotificationResults);
-//          this.header = new Header(this.dataStore);
-          console.log("Notification constructor");
-          document.getElementById('notificationTitle').value;
-      }
+class ChartReview extends BindingClass {
+    constructor() {
+        super();
+        this.bindClassMethods([
+            'mount',
+            'getMedicationsByStatus',
+            'displayMedicationResults',
+            'getNotificationsByScheduledTime',
+            'displayNotificationResults'
+        ], this);
+        this.dataStore = new DataStore();
+        this.header = new Header(this.dataStore);
+        this.dataStore.addChangeListener(this.displayMedicationResults);
+        this.dataStore.addChangeListener(this.displayNotificationResults);
 
-      async mount() {
-//          document.getElementById('add-notification-form').addEventListener('click', this.submit);
+        // Instantiate the client and assign it to this.client
+        this.client = new CareCompassClient();
+    }
 
-  //        document.getElementById('delete').addEventListener('click', this.deleteNotification);//TODO
-//          document.getElementById('update-notification-form').addEventListener('click', this.updateNotification);
-//          await this.header.addHeaderToPage();
-//          this.client = new CareCompassClient();  //kind of DAO
-//          this.getNotifications();
-      }
+    async mount() {
+        await this.header.addHeaderToPage();
+        document.getElementById('retrieve-medication-by-status-form').addEventListener('click', this.getMedicationsByStatus);
+        document.getElementById('retrieve-notification-by-scheduled-time-form').addEventListener('click', this.getNotificationsByScheduledTime);
 
-  async submit(event){//edit add, now we want get things
-          event.preventDefault();
-          const errorMessageDisplay = document.getElementById('error-message');
-          errorMessageDisplay.innerText = ``;
-          errorMessageDisplay.classList.add('hidden');
+        this.getMedicationsByStatus();
+        this.getNotificationsByScheduledTime();
+    }
 
-          const addNotificationButton = document.getElementById('add-notification-form');
-          const showAllNotificationButton = document.getElementById('search-allNotifications-form');
-          const origButtonText = addNotificationButton.innerText;
-          const origSearchButtonText = showAllNotificationButton.innerText;
-          addNotificationButton.innerText = 'Loading...';
-          showAllNotificationButton.innerText = 'Loading...';
+    async getMedicationsByStatus() {
+        const medicationStatus = document.getElementById('medicationStatus').value;
 
-          const notificationId = document.getElementById('notificationId').value;
-          const notificationTitle = document.getElementById('notificationTitle').value;
-          const reminderContent = document.getElementById('reminderContent').value;
-          const scheduledTime = document.getElementById('scheduledTime').value;
-          const reminderType = document.getElementById('reminderType').value;
+        try {
+            const results = await this.client.retrieveMedicationsByStatus(medicationStatus);
+            this.dataStore.set(RESULTS_BY_STATUS_KEY, results);
+        } catch (error) {
+            console.error("Error fetching medications:", error);
+        }
+    }
 
+    displayMedicationResults() {
+        const medicationResults = this.dataStore.get(RESULTS_BY_STATUS_KEY);
+        const medicationResultsDisplay = document.getElementById('Status-Table');
+        if (medicationResults && medicationResults.medications) {
+            medicationResultsDisplay.innerHTML = this.getHTMLForMedicationResults(medicationResults.medications);
+        } else {
+            medicationResultsDisplay.innerHTML = '<tr><td colspan="4">No medications found.</td></tr>';
+        }
+    }
 
-          try {
-              const notification = await this.client.addNotification(notificationTitle, reminderContent, scheduledTime, reminderType);
-              this.dataStore.set('notification', notification);
-          } catch (error) {
-              addNotificationButton.innerText = origButtonText;
-              showAllNotificationButton.innerText = origSearchButtonText;
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
-              errorMessageDisplay.classList.remove('hidden');
-          } finally {
-              addNotificationButton.innerText = origButtonText;
-              showAllNotificationButton.innerText = origSearchButtonText;
-          }
-      }
+    getHTMLForMedicationResults(medications) {
+        return medications.map(med => `
+            <tr>
+                <td>${med.medicationName}</td>
+                <td>${med.prescription}</td>
+                <td>${med.instructions}</td>
+                <td>${med.medicationStatus}</td>
+            </tr>
+        `).join('');
+    }
 
-  async getNotifications() {  //make a call to API download some result, the write to the datastore
-      //      const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY).value; //only you want typing things to search box
-          console.log("Notifications results");
-          const results = await this.client.getAllNotifications(()=>{}) //TODO
-          console.log("Notifications results",results);
-      //             createButton.innerText = origButtonText; // 恢复按钮原始文本
-      //             errorMessageDisplay.innerText = `Error: ${error.message}`; // 设置错误消息文本
-      //             errorMessageDisplay.classList.remove('hidden'); // 显示错误消息区域});  //empty
-             this.dataStore.setState({
-                      [RESULTS_KEY]: results,
-             });
-      }
+    async getNotificationsByScheduledTime() {
+        const scheduledTime = document.getElementById('scheduledTime').value;
 
-  displayNotificationResults() {
+        try {
+            const results = await this.client.retrieveAllUpcomingNotifications(scheduledTime);
+            this.dataStore.set(RESULTS_BY_SCHEDULED_TIME_KEY, results);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    }
 
-          const notificationResults = this.dataStore.get(RESULTS_KEY);
-          const notificationResultsDisplay = document.getElementById('View-Table');//table
-          notificationResultsDisplay.innerHTML = this.getHTMLForNotificationResults(notificationResults.notifications);//
+    displayNotificationResults() {
+        const notificationResults = this.dataStore.get(RESULTS_BY_SCHEDULED_TIME_KEY);
+        const notificationResultsDisplay = document.getElementById('scheduledTime-Table');
+        if (notificationResults && notificationResults.notifications) {
+            notificationResultsDisplay.innerHTML = this.getHTMLForNotificationResults(notificationResults.notifications);
+        } else {
+            notificationResultsDisplay.innerHTML = '<tr><td colspan="4">No notifications found.</td></tr>';
+        }
+    }
 
-      }
+    getHTMLForNotificationResults(notifications) {
+        return notifications.map(notif => `
+            <tr>
+                <td>${notif.notificationTitle}</td>
+                <td>${notif.reminderContent}</td>
+                <td>${notif.scheduledTime}</td>
+                <td>${notif.reminderType}</td>
+            </tr>
+        `).join('');
+    }
+}
 
-  getHTMLForNotificationResults(searchResults) {
-         if (searchResults.length === 0) {
-              return '<h4>No results found</h4>';
-         }
+const main = async () => {
+    const chartReview = new ChartReview();
+    chartReview.mount();
+};
 
-         let html = '<table><tr><th>Notification Id</th><th>Notification title</th><th>Scheduled time</th><th>Reminder type</th><th>Reminder content</th></th></tr>';
-         for (const res of searchResults) {
-         html += `
-         <tr>
-            <td>${res.notificationId}</td>
-            <td>${res.notificationTitle}</td>
-            <td>${res.scheduledTime}</td>
-            <td>${res.reminderType}</td>
-            <td>${res.reminderContent}</td>
-            <td>
-            <button class="update-button" data-id="${res.notificationId}">Update</button>
-            <button class="delete-button" data-id="${res.notificationId}">Delete</button>
-            </td>
-         </tr>`;
-     }
-     html += '</table>';
-
-     return html;
-  }
-  }
-
-
-
-
-
-
-  const main = async () => {
-      const chartReview = new ChartReview();
-      chartReview.mount();
-  };
-
-  window.addEventListener('DOMContentLoaded', main);
+window.addEventListener('DOMContentLoaded', main);
