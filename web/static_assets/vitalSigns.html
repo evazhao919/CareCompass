@@ -84,12 +84,9 @@
             <div class="mb-3">
                 <label for="patientPosition" class="form-label">Patient position:</label>
                 <select id="patientPosition" class="form-select">
-                    <option value="SUPINE">Supine</option>
-                    <option value="PRONE">Prone</option>
-                    <option value="LEFT_LATERAL">Left Lateral</option>
-                    <option value="RIGHT_LATERAL">Right Lateral</option>
                     <option value="SITTING">Sitting</option>
                     <option value="STANDING">Standing</option>
+                    <option value="LAYING">laying</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -99,6 +96,7 @@
             <div class="mb-3">
                 <label for="oxygenTherapy" class="form-label">Oxygen therapy:</label>
                 <select id="oxygenTherapy" class="form-select">
+                    <option value="NONE">None</option>
                     <option value="NASAL_CANNULA">Nasal Cannula</option>
                     <option value="SIMPLE_FACE_MASK">Simple Face Mask</option>
                     <option value="NON_REBREATHER_MASK">Non-Rebreather Mask</option>
@@ -109,6 +107,7 @@
             <div class="mb-3">
                 <label for="flowDelivered" class="form-label">Flow delivered:</label>
                 <select id="flowDelivered" class="form-select">
+                    <option value="NONE">None</option>
                     <option value="LOW_FLOW">Low Flow</option>
                     <option value="MEDIUM_FLOW">Medium Flow</option>
                     <option value="HIGH_FLOW">High Flow</option>
