@@ -12,24 +12,26 @@ class VitalSigns extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayVitalSignsResults);
         this.header = new Header(this.dataStore);
+        this.client = new CareCompassClient();
         console.log("VitalSigns constructor");
     }
 
     async mount() {
-        document.getElementById('add-vitalSigns-form').addEventListener('click', this.submit);
+          document.getElementById('add').addEventListener('click', this.addVitalSigns);
         await this.header.addHeaderToPage();
         this.client = new CareCompassClient();
         this.getVitalSigns();
 
-       document.getElementById('View-Table').addEventListener('click', (event) => {
-          if (event.target.classList.contains('delete-button')) {
-             console.log('Delete button clicked');
-             this.deleteVitalSigns(event);
-          }
-      if (event.target.classList.contains('update-button') || event.target.classList.contains('save-button')) {
-          this.updateToVitalSignsForm(event);
-      }
-     });
+document.getElementById('add').addEventListener('submit', this.addVitalSigns);
+document.getElementById('View-Table').addEventListener('click', (event) => {
+    if (event.target.classList.contains('delete-button')) {
+        this.deleteVitalSigns(event);
+    }
+    if (event.target.classList.contains('update-button') || event.target.classList.contains('save-button')) {
+        this.updateToVitalSignsForm(event);
+    }
+});
+
     }
 
     async submit(event) {
@@ -65,8 +67,11 @@ class VitalSigns extends BindingClass {
 
         try {
             const vitalSigns = await this.client.addVitalSigns(vitalSignsDetails);
+
             this.dataStore.set('vitalSigns', vitalSigns);
         } catch (error) {
+            addVitalSigns.innerText = origButtonText;
+            showAllVitalSignsButton.innerText = origSearchButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         } finally {
@@ -77,7 +82,7 @@ class VitalSigns extends BindingClass {
 
     async addVitalSigns(evt) {
         evt.preventDefault();
-
+debugger;
         const addButton = document.getElementById('add');
         const origButtonText = addButton.innerText;
 
@@ -103,31 +108,17 @@ class VitalSigns extends BindingClass {
             comments: document.getElementById('comments').value
         };
 
-        if (
-            !vitalSignsDetails.actualCheckTime ||
-            !vitalSignsDetails.temperature ||
-            !vitalSignsDetails.heartRate ||
-            !vitalSignsDetails.pulse ||
-            !vitalSignsDetails.respiratoryRate ||
-            !vitalSignsDetails.systolicPressure ||
-            !vitalSignsDetails.diastolicPressure ||
-            !vitalSignsDetails.meanArterialPressure ||
-            !vitalSignsDetails.weight ||
-            !vitalSignsDetails.patientPosition ||
-            !vitalSignsDetails.bloodOxygenLevel ||
-            !vitalSignsDetails.oxygenTherapy ||
-            !vitalSignsDetails.flowDelivered ||
-            !vitalSignsDetails.patientActivity ||
-            !vitalSignsDetails.comments
-        ) {
+        if (actualCheckTime.length === 0 ||temperature.length === 0 ||heartRate.length === 0 ||pulse.length === 0||respiratoryRate.length === 0 ||systolicPressure.length === 0 ||diastolicPressure.length === 0 ||meanArterialPressure.length === 0 ||weight.length === 0 ||patientPosition.length === 0 ||bloodOxygenLevel.length === 0 ||oxygenTherapy.length === 0 ||flowDelivered.length === 0 ||patientActivity.length === 0 ||comments.length === 0) {
             return;
         }
 
         addButton.innerText = 'Loading...';
 
         try {
+
             const vitalSigns = await this.client.addVitalSigns(vitalSignsDetails,(()=>{}));
             this.dataStore.set('vitalSigns', vitalSigns);
+              this.getVitalSigns();  // Refresh the list
 
         } catch (error) {
             console.error('Error adding vitalSigns:', error);
@@ -139,9 +130,9 @@ class VitalSigns extends BindingClass {
     }
 
     async getVitalSigns() {
-        console.log("VitalSigns results");
+        console.log("Fetching vitalSigns...");
         const results = await this.client.getAllVitalSigns();
-        console.log("VitalSigns results", results);
+        console.log("Fetched vitalSigns:", results);
         this.dataStore.setState({
             [RESULTS_KEY]: results,
         });
@@ -150,12 +141,7 @@ class VitalSigns extends BindingClass {
     displayVitalSignsResults() {
         const vitalSignsResults = this.dataStore.get(RESULTS_KEY);
         const vitalSignsResultsDisplay = document.getElementById('View-Table');
-        if (!vitalSignsResultsDisplay) {
-            console.error('Element with ID "View-Table" not found!');
-            return;
-        }
         vitalSignsResultsDisplay.innerHTML = this.getHTMLForVitalSignsResults(vitalSignsResults.vitalSigns);
-        vitalSignsResultsDisplay.addEventListener('click', this.updateToVitalSignsForm);
     }
 
    getHTMLForVitalSignsResults(searchResults) {
@@ -263,6 +249,7 @@ class VitalSigns extends BindingClass {
                 console.error(`Error deleting vitalSigns with ID ${actualCheckTime}:`, error);
             }
         }
+
 }
 
 const main = async () => {

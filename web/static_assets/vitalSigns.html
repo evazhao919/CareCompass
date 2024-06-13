@@ -42,6 +42,7 @@
 </div>
 
 <div class="endpoints_background">
+    <p class="hidden error" id="error-message"></p>
     <div class="form-container">
         <form id="add-vitalSigns-form">
             <div class="mb-3">
@@ -50,7 +51,7 @@
             </div>
             <div class="mb-3">
                 <label for="temperature" class="form-label">Temperature:</label>
-                <input type="text" class="form-control" id="temperature" autofocus>
+                <input type="text" class="form-control" id="temperature" placeholder="e.g., 00.0 or 000.0" autofocus>
             </div>
             <div class="mb-3">
                 <label for="heartRate" class="form-label">Heart rate:</label>
@@ -78,7 +79,7 @@
             </div>
             <div class="mb-3">
                 <label for="weight" class="form-label">Weight:</label>
-                <input type="text" class="form-control" id="weight" autofocus>
+                <input type="text" class="form-control" id="weight" placeholder="e.g., 00.0 or 000.0" autofocus>
             </div>
             <div class="mb-3">
                 <label for="patientPosition" class="form-label">Patient position:</label>
@@ -141,4 +142,21 @@
             <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">Pulse</th>
             <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">RespiratoryRate</th>
             <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">SysBP</th>
-            <th scope="col" class="table-secondary text-center
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">DiaBP</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">MAP</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">Weight</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">PatientPosition</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">SpO2 (%)</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">OxygenTherapy</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">FlowDelivered</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">PatientActivity</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 20%;">Comments</th>
+        </tr>
+        </thead>
+        <tbody id="vitalSigns-results-table">
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+

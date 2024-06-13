@@ -531,7 +531,6 @@ export default class CareCompassClient extends BindingClass {
                 actualCheckTime: actualCheckTime,
                 glucoseLevel: glucoseLevel,
                 glucoseContext: glucoseContext,
-                instructions: instructions,
                 comments: comments
             }, {
                 headers: {

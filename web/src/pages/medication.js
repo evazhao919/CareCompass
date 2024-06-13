@@ -12,8 +12,9 @@ class Medication extends BindingClass {
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayMedicationResults);
         this.header = new Header(this.dataStore);
+        this.client = new CareCompassClient();
         console.log("Medication constructor");
-         this.client = new CareCompassClient();
+
     }
 
     async mount() {

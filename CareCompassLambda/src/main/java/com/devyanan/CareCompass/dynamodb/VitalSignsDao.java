@@ -129,24 +129,32 @@ private final DynamoDBMapper dynamoDBMapper;
         }
 
     public VitalSigns getVitalSigns(String patientId, LocalDateTime actualCheckTime) {
-        try{
+        try {
             log.info("Attempting to get a single vitalSigns with actual check time: {}", actualCheckTime);
-            VitalSigns singleVitalSigns = this.dynamoDBMapper.load(VitalSigns.class, patientId,actualCheckTime);
+
+            // Create a key object with patientId and actualCheckTime
+            VitalSigns vitalSigns = new VitalSigns();
+            vitalSigns.setPatientId(patientId);
+           vitalSigns.setActualCheckTime(actualCheckTime);
+
+            // Use the key object to load from DynamoDB
+            VitalSigns singleVitalSigns = this.dynamoDBMapper.load(vitalSigns);
 
             if (singleVitalSigns == null) {
                 metricsPublisher.addCount(MetricsConstants.GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No VitalSigns found for user: {} and VitalSignsId: {}", patientId, actualCheckTime);
+                log.warn("No VitalSigns found for user: {} and actualCheckTime: {}", patientId, actualCheckTime);
                 throw new VitalSignsNotFoundException("No VitalSigns found for user: " + patientId + " and actualCheckTime: " + actualCheckTime);
             } else {
                 metricsPublisher.addCount(MetricsConstants.GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_FOUND_COUNT, 1);
                 log.info("Successfully retrieved a single VitalSigns for actual check time: {}", actualCheckTime);
                 return singleVitalSigns;
             }
-        } catch (DatabaseAccessException e){
+        } catch (DatabaseAccessException e) {
             log.error("Failed to access the database for user: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
+
 
 //    /**
 //     * DAO method to retrieve vital signs data for a specified date range.

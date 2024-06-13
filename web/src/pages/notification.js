@@ -8,7 +8,7 @@ const RESULTS_KEY = 'notification-results';
 class Notification extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'getNotifications', 'addNotification', 'getNotifications', 'displayNotificationResults', 'getHTMLForNotificationResults', 'updateToNotificationForm', 'saveUpdatedNotification'], this);
+        this.bindClassMethods(['mount', 'submit', 'addNotification', 'getNotifications', 'getNotifications', 'displayNotificationResults', 'getHTMLForNotificationResults', 'updateToNotificationForm', 'saveUpdatedNotification'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayNotificationResults);
         this.header = new Header(this.dataStore);
@@ -16,7 +16,7 @@ class Notification extends BindingClass {
     }
 
     async mount() {
-        document.getElementById('add-notification-form').addEventListener('click', this.submit);
+        document.getElementById('add').addEventListener('click', this.addNotification);
         await this.header.addHeaderToPage();
         this.client = new CareCompassClient();  //kind of DAO
         this.getNotifications();
@@ -177,6 +177,17 @@ async addNotification(evt) {
             console.error(`Error updating notification with ID ${notificationId}:`, error);
         }
     }
+
+        async deleteNotification(event) {
+            console.log("Deleting notification...");
+            const notificationId = event.target.getAttribute('data-id');
+            try {
+                await this.client.deleteNotification(notificationId);
+                this.getNotifications();  // Refresh the list after deletion
+            } catch (error) {
+                console.error(`Error deleting notification with ID ${notificationId}:`, error);
+            }
+        }
 }
 
 const main = async () => {
