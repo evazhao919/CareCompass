@@ -2,83 +2,71 @@
 
 ## 1. Problem Statement
 
-CareCompass is a healthcare coordination platform designed to empower patients, caregivers, and healthcare providers with seamless access to essential healthcare tools, resources, and support. 
-Many discharged patients, especially adults with long-term care needs, require ongoing monitoring and documentation of their health conditions after leaving the hospital. 
-Caregivers or family members often play a crucial role in managing the patient's health information, including medication, notifications, vital signs, and blood glucose measurements.
+Care Compass is a healthcare coordination platform designed to empower patients, caregivers, and healthcare providers with seamless access to essential healthcare tools, resources, and support.
+Many discharged patients, especially older adults with long-term care needs, require ongoing monitoring and documentation of their health condition after leaving the hospital. Caregivers or family members often play a crucial role in managing the patient's health information, including medication schedules, vital signs, symptoms, appointments, and daily activities.
+
 ## 2. Top Questions to Resolve in Review
 
 1. How can we create a unified platform that integrates various aspects of healthcare navigation, coordination, and support?
-2. What features and functionalities should CareCompass include to address the diverse needs of patients, caregivers, and healthcare providers?
-3. How can we ensure that CareCompass is user-friendly, accessible, and secure for all stakeholders?
+2. What features and functionalities should the Care Compass include to address the diverse needs of patients, caregivers, and healthcare providers?
+3. How can we ensure that the Care Compass is user-friendly, accessible, and secure for all stakeholders?
 
 ## 3. Use Cases
 
 U1. As a user, I would like to create a new medication record, so I can manage the medication schedule efficiently.
 
-U2. As a user, I would like to update a medication record, so I can ensure the information is current.
+U2. As a user, I would like to delete a medication record, so I can keep the medication list up-to-date.
 
-U3. As a user, I would like to delete a medication record, so I can keep the medication list up-to-date.
+U3. As a user, I would like to view all medications for a specific user, so I can monitor and manage their medication intake.
 
-U4. As a user, I would like to view all medications, so I can monitor medication intake.
+U4. As a user, I would like to log a new set of vital signs, so I can track the patient’s health metrics over time.
 
-U5. As a user, I would like to retrieve medications by status, so I can easily check which medications are active, completed, on hold, or discontinued.
+U5. As a user, I would like to delete a specific vital signs record, so I can correct errors or remove outdated information.
 
-U6. As a user, I would like to create a new set of vital signs, so I can track health metrics over time.
+U6. As a user, I would like to retrieve all vital signs entries for a specific user, so I can review their historical health data.
 
-U7. As a user, I would like to update a specific vital signs record, so I can correct or update the information.
+U7. As a user, I would like to set up new reminders for medication or vital signs monitoring, so I can ensure adherence to health management protocols.
 
-U8. As a user, I would like to delete a specific vital signs record, so I can correct errors or remove outdated information.
+U8. As a user, I would like to remove a specified reminder, so I can adjust notifications to current care requirements.
 
-U9. As a user, I would like to retrieve all vital signs entries, so I can review historical health data.
+U9. As a user, I would like to retrieve all notifications set up for a specific user, so I can overview and manage all set reminders and alerts.
 
-U10. As a user, I would like to set up a new notification for medication or vital signs monitoring, so I can ensure adherence to health management protocols.
+U10. As a user, I would like to update notifications for medication and vital signs monitoring, so I can keep the patient's care schedule timely and accurate.
 
-U11. As a user, I would like to remove a specified notification, so I can adjust notifications to current care requirements.
+U11. As a user, I would like to create a new blood glucose measurement to regularly monitor and manage the patient’s glucose levels.
 
-U12. As a user, I would like to update notifications for medication and vital signs monitoring, so I can keep the patient's care schedule timely and accurate.
+U12. as a user, I would like to delete a blood glucose measurement to correct any errors or when it's no longer needed.
 
-U13. As a user, I would like to retrieve all notifications, so I can overview and manage all set notifications and alerts.
+U13. as a user, I would like to view all blood glucose measurements for a specific user to analyze trends and adjust treatments.
 
-U14. As a user, I would like to retrieve all upcoming notifications, so I can stay informed about upcoming tasks and alerts.
-
-U15. As a user, I would like to retrieve notifications by reminder type, so I can manage and prioritize them effectively.
-
-U16. As a user, I would like to create a new blood glucose measurement to regularly monitor and manage the patient’s glucose levels.
-
-U17. As a user, I would like to update a blood glucose measurement, so I can ensure accurate and current data.
-
-U18. As a user, I would like to delete a blood glucose measurement to correct any errors or when it's no longer needed.
-
-U19. As a user, I would like to view all blood glucose measurements to analyze trends and adjust treatments.
 
 ## 4. Project Scope
 
 ### 4.1. In Scope
 
-* Medication management
-* Vital signs management
-* Blood glucose management
-* Notification management
+* Medication management and reminders
+* Vital signs tracking and monitoring
+* Notifications
 
 ### 4.2. Out of Scope
-
+* Appointment scheduling and management
 * Daily activity tracking and monitoring
 * Symptom tracking and logging
+* Integration with electronic health record (EHR) systems
 * Real-time communication with healthcare providers
 * Automated analysis of health data for diagnosis or treatment recommendations
 * Automatic generation of reports and email delivery to doctors
-* Educations
 
 Several potential features are currently designated as "out of scope" for the initial development phase of CareCompass. The decision to exclude these features was made primarily based on the following considerations:
-The initial phase focuses on establishing a robust foundation with key functionalities that address the most pressing needs of our users. 
-More complex features are planned for future updates, where additional time and resources can be dedicated to their development and integration.
-
+The initial phase focuses on establishing a robust foundation with key functionalities that address the most pressing needs of our users. More complex features such as appointment scheduling, symptom tracking, and automated analysis of health data are planned for future updates, where additional time and resources can be dedicated to their development and integration.
 
 ## 5. Proposed Architecture Overview
 
-The CareCompass application will be developed as a web-based platform accessible via web browsers on desktop. 
-It will utilize a serverless architecture using AWS Lambda functions and Amazon DynamoDB for data storage. 
-The front end will be built using modern web technologies such as HTML, CSS, and JavaScript for dynamic user interfaces.
+The CareCompass application will be developed as a web-based platform,
+accessible via web browsers on desktop. It will utilize a serverless
+architecture using AWS Lambda functions and Amazon DynamoDB for data storage.
+The front end will be built using modern web technologies such as HTML, CSS,
+and JavaScript for dynamic user interfaces.
 
 ## 6. API
 
@@ -88,7 +76,6 @@ The front end will be built using modern web technologies such as HTML, CSS, and
 // MedicationModel
 
 String patientId;
-String medicationId;
 String medicationName;
 String prescription;
 String instructions;  
@@ -126,122 +113,99 @@ String comments;
 // NotificationModel
 
 String patientId;
-String notificationId;
 String notificationTitle;
 String reminderContent;
 LocalDateTime scheduledTime;
 REMINDER_TYPE reminderType;  // enum
 ```
 
-### 6.2. Medication Management Reminder Endpoints
-#### 1. Add Medication Endpoint
+### Medication Management Reminder Endpoints
+### 6.2. Create Medication Record Endpoint
 * POST /medications
 * Body: MedicationModel
+* Description: Create a new medication entry for a patient.
 * Response: Returns the newly created MedicationModel.
   ![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
 
-#### 2. Update Medication Endpoint
-* PUT /medications/{medicationId}
-* Body: MedicationModel
-* Response: Returns the newly created MedicationModel.
+### 6.3. Delete Medication Endpoint
++ DELETE /medications/{patientId}
+* Description: Deletes a specified medication entry based on the patientId, medicationName, and medicationTime..
+* Response: Json object return success and message.
 
-#### 3. Delete Medication Endpoint
-* DELETE /medications/{medicationId}
-* Body: MedicationModel
-* Response: return success and message.
+### 6.4. List All Medications Endpoint
+* GET /medications/user/{patientId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
+* Description: Retrieves all medications for a specific user.
+* Response: List of medications with pagination data.
 
-#### 4. Get All Medications Endpoint
-* GET /medications
-* Body: MedicationModelList
-* Response: List of medications.
-
-#### 5. Retrieve Medications By Status Endpoint
-* GET /medicationsByStatus/{medicationStatus}
-* Body: MedicationModelList
-* Response: List of medications.
-
-### 6.3.Vital Signs Tracking EndpointS
-#### 1. Add Vital Signs Endpoint
-* POST /vitalSigns
+### Vital Signs Tracking Endpoints
+### 6.5. Log Vital Signs Endpoint
+* POST /vitals
 * Body: VitalSignModel
+* Description: Logs a new set of vital signs for a patient.
 * Response: Returns the newly recorded VitalSignsMeasurementModel.
 
-#### 2. Update Vital Signs Endpoint
-* PUT /vitalSigns/{actualCheckTime}
-* Body: VitalSignModel
-* Response: Returns the newly recorded VitalSignsMeasurementModel.
-
-#### 3. Delete Vital Signs Endpoint
-* DELETE /vitalSigns/{actualCheckTime}
-* Body: VitalSignModel
-* Response: return success and message.
+### 6.6. Delete Vital Signs Record Endpoint
+* DELETE /vitals/{patientId}
+* Description: Deletes a specified vital signs record based on patientId and timestamp.
+* Response: Success or error message.
   ![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
 *
-#### 4. Get All Vital Signs Endpoint
-* GET /vitalSigns
-* Body: VitalSignModelList
-* Response: List of vital signs.
+### 6.7. List All Vital Signs Endpoint
+* GET /vital-signs/user/{patientId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
+* Description: Retrieves all vital signs entries for a specific user.
+* Response: List of vital signs with pagination data.
 
-### 6.4. Notification Management Endpoints
-#### 1. Add Notification Endpoint
+### Notification Management Endpoints
+### 6.8. Add Notification for Medication
 * POST /notifications
 * Body: NotificationModel
+* Description: Sets up a new reminder for medication or vital signs monitoring.
 * Response: Returns the newly created NotificationModel.
 
-#### 2. Update Notification Endpoint
-* PUT /notifications/{notificationId}
-* Body: NotificationModel
-* Response: Returns the newly created NotificationModel.
-
-#### 3. Delete Notification Endpoint
+### 6.9. Remove Notification Endpoint
 * DELETE /notifications/{notificationId}
-* Body: NotificationModel
-* Response: return success and message.
+* Description: Removes a specified reminder using the notificationId.
+* Response: JSON object return success and message.
 
-#### 4. Get All Notifications Endpoint
-* GET /notifications
-* Body: NotificationModelList
-* Response: List of NotificationModel.
+### 6.10. List All Notifications Endpoint
+* GET /notifications/user/{patientId} 
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc
+* Description: Retrieves all notifications set up for a specific user with pagination, filtering, and sorting.
+* Response: List of NotificationModel entries with pagination data.
   ![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
 
-#### 5. Retrieve All Upcoming Notifications Endpoint
-* GET /upcomingNotifications/
-* Body: NotificationModelList
-* Response: List of NotificationModel. 
+### 6.11. Update Notifications Endpoint
+* PUT /notifications/{notificationId}
+* Parameters: notificationId (URL Parameter): Unique identifier for the notification to be updated.
+* Description: Updates an existing notification for a patient.
+* Response: Success or error message. (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error).
 
-#### 6. Retrieve Notifications By Reminder Type Endpoint
-* GET /notificationsByReminderType/{reminderType}
-* Body: NotificationModelList
-* Response: List of NotificationModel.
-
-### 6.5. Blood Glucose Measurement Management Endpoints
-#### 1. Add Blood Glucose Measurement Endpoint
+### 6.12. Create Blood Glucose Measurement Endpoint
 * POST /bloodGlucoseMeasurements
 * Body: BloodGlucoseMeasurementModel
+* Description: Logs a new blood glucose measurement for a patient.
 * Response: Returns the newly created BloodGlucoseMeasurementModel.
 
-#### 2. Update Blood Glucose Measurement Endpoint
-* PUT /bloodGlucoseMeasurements/{actualCheckTime}
-* Body: BloodGlucoseMeasurementModel
-* Response: Returns the newly created BloodGlucoseMeasurementModel.
+### 6.13. Delete Blood Glucose Measurement Endpoint
+* DELETE /blood-glucose/{patientId}/{measurementTime}
+* Body: { "patientId": String, "measurementTime": LocalDateTime }
+* Description: Deletes a specified blood glucose measurement based on patientId and timestamp.
+* Response: Success or error message.
 
-#### 3. Delete Blood Glucose Measurement Endpoint
-* DELETE /bloodGlucoseMeasurements/{actualCheckTime}
-* Body: BloodGlucoseMeasurementModel
-* Response: return success and message.
-
-#### 4. Get All Blood Glucose Measurement Endpoint
-* GET /bloodGlucoseMeasurements/
-* Body: BloodGlucoseMeasurementModelList
-* Response: List of BloodGlucoseMeasurementModel.
+### 6.14. List All Blood Glucose Measurements Endpoint
+* GET /blood-glucose/user/{patientId}
+* Parameters: ?page=1&limit=30, ?fromDate=2022-01-01&toDate=2022-01-31, ?sortBy=date&order=asc 
+* Description: Retrieves all blood glucose measurements for a specific user with options for pagination, filtering, and sorting. 
+* Response: List of BloodGlucoseMeasurementModel entries with pagination data.
 
 ## 7. Tables
 
 ### 7.1. `medications`
 ```
 patientId // String (Partition Key)
-medicationId // String (Sort Key)
-medicationName // String 
+medicationName // String (Sort Key)
 prescription // String 
 instructions // String 
 medicationStatus // MEDICATION_STATUS (enum)
@@ -252,38 +216,38 @@ medicationStatus // MEDICATION_STATUS (enum)
 patientId // String (Partition Key)
 actualCheckTime // LocalDateTime (Sort Key)
 temperature // double 
-heartRate // int
+heartRate // int 
 pulse // int 
 respiratoryRate // int 
-systolicPressure // int
+systolicPressure // int 
 diastolicPressure // int 
 meanArterialPressure // int 
-weight // double
+weight // double 
 patientPosition // PATIENT_POSITION (enum)
 bloodOxygenLevel // int 
-oxygenTherapy // OXYGEN_THERAPY (enum)
+oxygenTherapy //  OXYGEN_THERAPY (enum)
 flowDelivered // FLOW_DELIVERED (enum)
 patientActivity // PATIENT_ACTIVITY (enum)
-comments // String
+comments // String 
 ```
 ## 7.3. `notifications`
 ```
 patientId // String (Partition Key)
-notificationId // String (Sort Key)
-notificationTitle // String
+notificationTitle // String 
 reminderContent // String 
-scheduledTime // LocalDateTime 
+scheduledTime // LocalDateTime (Sort Key)
 reminderType // REMINDER_TYPE (enum)
 ```
 ## 7.4. `bloodGlucoseMeasurements`
 ```
 patientId // String (Partition Key)
-actualCheckTime // LocalDateTime (Sort Key)
-glucoseLevel // double 
-glucoseContext // GLUCOSE_MEASUREMENT_CONTEXT (enum)
-comments // String
+frequency // String (Sort Key)
+actualCheckTime // LocalTime 
+glucoseLevel // double
+glucoseContext // GLUCOSE_MEASUREMENT_CONTEXT  (enum)
+comments // String 
 ```
-### 7.5. `GSI notificationsIndex`
+### 7.5. `GSI vitalSignsDateIndex`
 ```
 patientId // Partition Key, String
 actualCheckTime // LocalDateTime (Sort Key)
@@ -301,4 +265,4 @@ actualCheckTime // LocalDateTime (Sort Key)
 * Web Technologies: HTML, CSS.
 * Development Tools: Docker, Gradle, Git, GitHub.
 * Software Development Practices: Object-Oriented Programming (OOP), Test-Driven Development (TDD).
-* Additional Libraries/Frameworks: Amazon Cognito, Dagger.
+* Additional Libraries/Frameworks: Google Guava, Amazon Cognito, Dagger.

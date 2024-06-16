@@ -8,7 +8,7 @@ on:
 
 env:
 
-  # STUDENTS: Set these environment variables 
+  # STUDENTS: Set these environment variables
   API_BASE_URL: https://co2vcbgf62.execute-api.us-east-2.amazonaws.com/Prod/
   COGNITO_DOMAIN: project-carecompass-yanan-zhao
   COGNITO_REDIRECT_SIGNIN: https://d32uixdjt5mu84.cloudfront.net
