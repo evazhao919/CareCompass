@@ -23,11 +23,15 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    createPlaylist: path.resolve(__dirname, 'src', 'pages', 'createPlaylist.js'),
-    viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
-    searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
-    bloodGlucoseMeasurements: path.resolve(__dirname, 'src', 'pages', 'bloodGlucoseMeasurements.js'),
-    deleteBloodGlucoseMeasurement: path.resolve(__dirname, 'src', 'pages', 'deleteBloodGlucoseMeasurement.js'),
+//    createPlaylist: path.resolve(__dirname, 'src', 'pages', 'createPlaylist.js'),
+//    viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
+//    searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
+    bloodGlucoseMeasurement: path.resolve(__dirname, 'src', 'pages', 'bloodGlucoseMeasurement.js'),
+    medication: path.resolve(__dirname, 'src', 'pages', 'medication.js'),
+    notification: path.resolve(__dirname, 'src', 'pages', 'notification.js'),
+    vitalSigns: path.resolve(__dirname, 'src', 'pages', 'vitalSigns.js'),
+    chartReview: path.resolve(__dirname, 'src', 'pages', 'chartReview.js'),
+    index: path.resolve(__dirname, 'src', 'pages', 'index.js')
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
