@@ -1,160 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> <!-- 声明文档类型为 HTML，设置语言为英语 -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareCompass</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script type="text/javascript" src="assets/vitalSigns.js" defer></script>
+    <meta charset="UTF-8"> <!-- 设置文档的字符编码为 UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 设置视口以进行响应式网页设计 -->
+    <title>DocumentOne</title> <!-- 设置网页的默认标题 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> <!-- 引入 Bootstrap CSS 文件 -->
+    <link rel="stylesheet" type="text/css" href="css/style.css"> <!-- 引入自定义 CSS 文件 -->
+    <title>CareCompass</title> <!-- 设置网页标题 -->
+    <script type="text/javascript" src="assets/bloodGlucoseMeasurements.js"></script> <!-- 引入 JavaScript 文件 -->
 </head>
 
-<body class="background">
-<header class="page_header" id="header">
+<header class="page_header" id="header" > <!-- 定义头部区域，设置背景颜色 -->
+    <body class="background">
     <div class="page_header">
-        <div class="d-flex justify-content-between"></div>
-        <div class="logo">CareCompass</div>
-        <div class="user-info"></div>
+        <div class="d-flex justify-content-between"></div><!-- 创建一个容器，使用 flex 布局，子元素居中对齐，左右分布 -->
+        <div class="header_logo">CareCompass</div>
+        <div class="user-info">
+
+        </div>
     </div>
     <div class="buttonOne-group">
+
         <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>
-        <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>
         <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
-        <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose</a>
+        <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>
         <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
+        <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurements.html">Blood Glucose</a>
     </div>
-    <div class="content"></div>
+    <button type="button" class="buttonTwo" id="layoutEx">Logout</button> <!-- 退出按钮，警告按钮样式 -->
+    <div class="content">
+    </div>
+    </body>
 </header>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <div class="d-flex justify-content-between align-items-center px-3 py-2">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" >Vital Signs</a>
-                    </li>
-                </ul>
-            </div>
+
+<div class="col py-3 page-body-background">
+    <div class="d-flex justify-content-between align-items-center">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Vital Signs</a>
+            </li>
+        </ul>
+
+    </div>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="glucose" role="tabpanel" aria-labelledby="glucose-tab">
+            <!-- Additional content can go here -->
         </div>
     </div>
 </div>
 
+
+
 <div class="endpoints_background">
-    <p class="hidden error" id="error-message"></p>
     <div class="form-container">
-        <form id="add-vitalSigns-form">
-            <div class="mb-3">
-                <label for="actualCheckTime" class="form-label">Actual check time:</label>
-                <input type="text" class="form-control" id="actualCheckTime" placeholder="YYYY-MM-DD HH:MM" autofocus>
+        <form class="card-content" id="search-playlists-form">
+            <div class="form-group">
+                <label for="actualCheckTime">Actual check time:</label>
+                <input type="text" class="validated-field" id="actualCheckTime" placeholder="2024-00-00T00:00" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="temperature" class="form-label">Temperature:</label>
-                <input type="text" class="form-control" id="temperature" placeholder="e.g., 00.0 or 000.0" autofocus>
+            <div class="form-group">
+                <label for="temperature">Temperature:</label>
+                <input type="text" class="validated-field" id="temperature" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="heartRate" class="form-label">Heart rate:</label>
-                <input type="text" class="form-control" id="heartRate" autofocus>
+            <div class="form-group">
+                <label for="heartRate">Heart rate:</label>
+                <input type="text" class="validated-field" id="heartRate" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="pulse" class="form-label">Pulse:</label>
-                <input type="text" class="form-control" id="pulse"  autofocus>
+            <div class="form-group">
+                <label for="pulse">Pulse:</label>
+                <input type="text" class="validated-field" id="pulse" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="respiratoryRate" class="form-label">Respiratory rate:</label>
-                <input type="text" class="form-control" id="respiratoryRate"  autofocus>
+            <div class="form-group">
+                <label for="respiratoryRate">Respiratory rate:</label>
+                <input type="text" class="validated-field" id="respiratoryRate" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="systolicPressure" class="form-label">Systolic pressure:</label>
-                <input type="text" class="form-control" id="systolicPressure" autofocus>
+            <div class="form-group">
+                <label for="systolicPressure">Systolic pressure:</label>
+                <input type="text" class="validated-field" id="systolicPressure" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="diastolicPressure" class="form-label">Diastolic pressure:</label>
-                <input type="text" class="form-control" id="diastolicPressure"  autofocus>
+            <div class="form-group">
+                <label for="diastolicPressure">Diastolic pressure:</label>
+                <input type="text" class="validated-field" id="diastolicPressure" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="meanArterialPressure" class="form-label">Mean arterial pressure:</label>
-                <input type="text" class="form-control" id="meanArterialPressure"  autofocus>
+            <div class="form-group">
+                <label for="meanArterialPressure">Mean arterial pressure:</label>
+                <input type="text" class="validated-field" id="meanArterialPressure" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="weight" class="form-label">Weight:</label>
-                <input type="text" class="form-control" id="weight" placeholder="e.g., 00.0 or 000.0" autofocus>
+            <div class="form-group">
+                <label for="weight">Weight:</label>
+                <input type="text" class="validated-field" id="weight" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="patientPosition" class="form-label">Patient position:</label>
-                <select id="patientPosition" class="form-select">
-                    <option value="SITTING">Sitting</option>
-                    <option value="STANDING">Standing</option>
-                    <option value="LAYING">laying</option>
-                </select>
+            <div class="form-group">
+                <label for="patientPosition">Patient position:</label>
+                <input type="text" class="validated-field" id="patientPosition" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="bloodOxygenLevel" class="form-label">Blood oxygen level:</label>
-                <input type="text" class="form-control" id="bloodOxygenLevel"  autofocus>
+            <div class="form-group">
+                <label for="bloodOxygenLevel">Blood oxygen level:</label>
+                <input type="text" class="validated-field" id="bloodOxygenLevel" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="oxygenTherapy" class="form-label">Oxygen therapy:</label>
-                <select id="oxygenTherapy" class="form-select">
-                    <option value="NONE">None</option>
-                    <option value="NASAL_CANNULA">Nasal Cannula</option>
-                    <option value="SIMPLE_FACE_MASK">Simple Face Mask</option>
-                    <option value="NON_REBREATHER_MASK">Non-Rebreather Mask</option>
-                    <option value="VENTURI_MASK">Venturi Mask</option>
-                    <option value="HIGH_FLOW_NASAL_CANNULA">High Flow Nasal Cannula</option>
-                </select>
+            <div class="form-group">
+                <label for="oxygenTherapy">Oxygen therapy:</label>
+                <input type="text" class="validated-field" id="oxygenTherapy" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="flowDelivered" class="form-label">Flow delivered:</label>
-                <select id="flowDelivered" class="form-select">
-                    <option value="NONE">None</option>
-                    <option value="LOW_FLOW">Low Flow</option>
-                    <option value="MEDIUM_FLOW">Medium Flow</option>
-                    <option value="HIGH_FLOW">High Flow</option>
-                </select>
+            <div class="form-group">
+                <label for="flowDelivered">Flow delivered:</label>
+                <input type="text" class="validated-field" id="flowDelivered" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="patientActivity" class="form-label">Patient activity:</label>
-                <select id="patientActivity" class="form-select">
-                    <option value="SITTING">Sitting</option>
-                    <option value="STANDING">Standing</option>
-                    <option value="LAYING_DOWN">Laying Down</option>
-                    <option value="POST_EXERCISE">Post Exercise</option>
-                </select>
+            <div class="form-group">
+                <label for="patientActivity">Patient activity:</label>
+                <input type="text" class="validated-field" id="patientActivity" placeholder="" autofocus>
             </div>
-            <div class="mb-3">
-                <label for="comments" class="form-label">Comments:</label>
-                <textarea id="comments" class="form-control" rows="4" ></textarea>
+            <div class="form-group" id="commentsContainer">
+                <label for="comments">Comments:</label>
+                <textarea id="comments" rows="4"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" id="add">Add</button>
+
         </form>
+        <button type="button" class="buttonThree" id="addEx">Add</button>
     </div>
 </div>
 
+
+
+
+<body>
 <div class="table-container">
-    <table class="table table-bordered" id="View-Table">
+    <table class="table table-bordered" id="Toptable">
         <thead>
         <tr>
-            <th scope="col" class="table-secondary text-center header-cell">CheckTime</th>
-            <th scope="col" class="table-secondary text-center header-cell">Temp</th>
-            <th scope="col" class="table-secondary text-center header-cell">HeartRate</th>
-            <th scope="col" class="table-secondary text-center header-cell">Pulse</th>
-            <th scope="col" class="table-secondary text-center header-cell">RespiratoryRate</th>
-            <th scope="col" class="table-secondary text-center header-cell">SysBP</th>
-            <th scope="col" class="table-secondary text-center header-cell">DiaBP</th>
-            <th scope="col" class="table-secondary text-center header-cell">MAP</th>
-            <th scope="col" class="table-secondary text-center header-cell">Weight</th>
-            <th scope="col" class="table-secondary text-center header-cell">PatientPosition</th>
-            <th scope="col" class="table-secondary text-center header-cell">SpO2 (%)</th>
-            <th scope="col" class="table-secondary text-center header-cell">OxygenTherapy</th>
-            <th scope="col" class="table-secondary text-center header-cell">FlowDelivered</th>
-            <th scope="col" class="table-secondary text-center header-cell">PatientActivity</th>
-            <th scope="col" class="table-secondary text-center header-cell">Comments</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">CheckTime</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">temp</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">heartRate</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">pulse</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">respiratoryRate</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">SysBP</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">DiaBP</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">MAP</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">weight</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">patientPosition</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">SpO2</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">oxygenTherapy</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">flowDelivered</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">patientActivity</th>
+            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 15%;">comments</th>
         </tr>
         </thead>
-        <tbody id="vitalSigns-results-table">
+        <tbody id="BloodGlucose-list">
         </tbody>
     </table>
 </div>
+<script src="path/to/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
+
 
