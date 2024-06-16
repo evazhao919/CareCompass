@@ -7,84 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="assets/chartReview.js" ></script>
-    <style>
-
-        /* General styles */
-        .section {
-            background-color: #D6E4F0;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            padding: 20px;
-        }
-
-        #medicationStatus, #reminderType {
-            max-width: 200px;
-        }
-
-        #scheduledTime, #reminderType {
-            width: 100%;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .inline-elements {
-            display: flex;
-            align-items: center;
-        }
-
-        .inline-elements > * {
-            margin-right: 10px;
-        }
-
-        .inline-elements > *:last-child {
-            margin-right: 0;
-        }
-
-        #scheduledTime {
-            width: 160px;
-        }
-
-        /* Button styles */
-        .btn {
-            background-color: #D3D6DB;
-            color: #000000;
-            border-color: #D3D6DB;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #B0B3B8;
-            border-color: #B0B3B8;
-        }
-
-        /* Specific button styles */
-        #retrieve-medications-type-form,
-        #retrieve-notification-form,
-        #retrieve-notification-type-form,
-        #retrieve-notifications-now {
-            background-color: #5893D4;/* 背景颜色*/
-            color: #000000; /* 文字颜色 */
-            border-color: #D3D6DB; /* 边框颜色*/
-        }
-
-        #retrieve-medications-type-form:hover,
-        #retrieve-notification-form:hover,
-        #retrieve-notification-type-form:hover,
-        #retrieve-notifications-now:hover {
-            background-color: #B0B3B8;/* 鼠标悬停时，背景颜色变 */
-              color: #000000; /* 文字颜色为黑色 */
-            border-color: #B0B3B8; /* 鼠标悬停时，边框颜色 */
-        }
-  .table-container {
-        margin-top: 20px; /* Adjust the value as needed */
-    }
-
-
-
-    </style>
 </head>
+
 <body class="background">
 <header class="page_header" id="header">
     <div class="page_header">
@@ -94,13 +18,14 @@
     </div>
     <div class="buttonOne-group">
         <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>
-        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>
-        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
+        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose</a>
+        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
     </div>
     <div class="content"></div>
 </header>
+
 
 
 <div class="container-fluid">
@@ -109,655 +34,89 @@
             <div class="d-flex justify-content-between align-items-center px-3 py-2">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Review your chart</a>
+                        <a class="nav-link active" >Chart Review</a>
                     </li>
                 </ul>
             </div>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="glucose" role="tabpanel" aria-labelledby="glucose-tab">
-                    <!-- Additional content can go here -->
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
-<div class="container-fluid py-3">
-    <form id="retrieve-medication-by-status-form">
-        <div class="row">
-            <div class="col">
-                <div class="section">
-                    <h2>Retrieve Medications By Status</h2>
-                    <div class="form-group">
-                        <div class="inline-elements">
-                            <select id="medicationStatus" class="form-select">
-                                <option value="ACTIVE">Active</option>
-                                <option value="DISCONTINUED">Discontinued</option>
-                                <option value="ON_HOLD">On Hold</option>
-                                <option value="TEMPORARY_STOP">Temporary Stop</option>
-                            </select>
+<div>
+    <div class="container-fluid py-3">
+        <form id="retrieve-medication-by-status-form">
+            <div class="row">
+                <div class="col">
+                    <div class="section">
+                        <h2>Medication status</h2>
+                        <div class="form-group">
+                            <div class="inline-elements">
+                                <select id="medicationStatus" class="form-select">
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="DISCONTINUED">Discontinued</option>
+                                    <option value="ON_HOLD">On Hold</option>
+                                    <option value="TEMPORARY_STOP">Temporary Stop</option>
+                                </select>
+                                <button type="button" class="btn btn-secondary mt-3" id="retrieve-medications-status-form">Search</button>
+                                <div id="Medication-status" class="grid-container"></div>
+                                <div class="card-container" id="View-status-Cards"></div>
+                            </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-secondary mt-3" id="retrieve-medications-type-form">Click</button>
-                    <div class="table-container">
-                        <table class="table table-bordered" id="View-Type-Table">
-                            <thead>
-                            <tr>
-                                <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication Id</th>
-                                <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication Name</th>
-                                <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 12%;">Status</th>
-                                <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Prescription</th>
-                                <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Instructions</th>
-                                <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody id="Medication-list"></tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
-
-
-<div class="container-fluid py-3">
-    <div class="row">
-        <div class="col">
-            <div class="section">
-                <h2>Upcoming Notifications</h2>
-                <input type="datetime-local" id="scheduledTime" class="form-control">
-
-                <button type="button" class="btn btn-secondary mt-3" id="retrieve-notification-form">By Scheduled Time</button>
-<!--                <button type="button" class="btn mt-3" id="retrieve-notifications-now">By Current Time</button>-->
-
-
-                <form id="retrieve-notification-by-type-form" class="mt-4">
-                    <div class="mb-3">
-                        <h2>Retrieve Notifications By Type</h2>
-
-                        <select id="reminderType" class="form-select">
-                            <option value="GLUCOSE_MEASUREMENT">Glucose Measurement</option>
-                            <option value="MEDICATION">Medication</option>
-                            <option value="VITAL_SIGNS">Vital Signs</option>
-                            <option value="APPOINTMENT">Appointment</option>
-                            <option value="GENERAL">General</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-primary" id="retrieve-notification-type-form">Click</button>
-                </form>
-                <div class="table-container">
-                    <table class="table table-bordered" id="View-Table">
-                        <thead>
-                        <tr>
-                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Notification Id</th>
-                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Notification title</th>
-                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Scheduled time</th>
-                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Reminder type</th>
-                            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 28%;">Reminder content</th>
-                        </tr>
-                        </thead>
-                        <tbody id="Notification-list"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
+<div>
+    <div class="container-fluid py-3">
+        <form id="retrieve-notification-by-type-form">
+            <div class="row">
+                <div class="col">
+                    <div class="section">
+                        <h2>Notifications reminder type</h2>
+                        <div class="form-group">
+                            <div class="inline-elements">
+                                <select id="reminderType" class="form-select">
+                                    <option value="APPOINTMENT">Appointment</option>
+                                    <option value="MEDICATION_REFILL">Medication Refill</option>
+                                    <option value="MEDICATION">Medication</option>
+                                    <option value="VITAL_SIGNS">Vital Signs</option>
+                                    <option value="GLUCOSE_MEASUREMENT">Glucose Measurement</option>
+                                    <option value="IMMUNIZATION">Immunization</option>
+                                    <option value="MEDICAL_SUPPLY">Medical Supply</option>
+                                    <option value="CUSTOM_REMINDER">Custom Reminder</option>
+                                </select>
+                                <button type="button" class="btn btn-secondary mt-3" id="retrieve-notifications-type-form">Search</button>
+                            <div id="notification-type" class="grid-container"></div>
+                            <div class="card-container" id="View-Type-Cards"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
+<div>
+    <div class="container-fluid py-3">
+        <form id="retrieve-notification-by-time-form">
+            <div class="row">
+                <div class="col">
+                    <div class="section">
+                        <h2>Upcoming notifications</h2>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary mt-3" id="retrieve-notifications-current-time-form">Searching</button>
+                        </div>
+                        <div class="grid-container" id="notification-by-time"></div>
+                        <div class="card-container" id="View-upcoming-Cards"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>CareCompass</title>-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" type="text/css" href="css/style.css">-->
-<!--    <script type="text/javascript" src="assets/chartReview.js" defer></script>-->
-<!--    <style>-->
-
-<!--/* General styles */-->
-<!--.section {-->
-<!--    background-color: #D6E4F0;-->
-<!--    border-radius: 10px;-->
-<!--    margin-bottom: 20px;-->
-<!--    padding: 20px;-->
-<!--}-->
-
-<!--#medicationStatus, #reminderType {-->
-<!--    max-width: 200px;-->
-<!--}-->
-
-<!--#scheduledTime, #reminderType {-->
-<!--    width: 100%;-->
-<!--}-->
-
-<!--.form-group {-->
-<!--    margin-bottom: 15px;-->
-<!--}-->
-
-<!--.inline-elements {-->
-<!--    display: flex;-->
-<!--    align-items: center;-->
-<!--}-->
-
-<!--.inline-elements > * {-->
-<!--    margin-right: 10px;-->
-<!--}-->
-
-<!--.inline-elements > *:last-child {-->
-<!--    margin-right: 0;-->
-<!--}-->
-
-<!--#scheduledTime {-->
-<!--    width: 160px;-->
-<!--}-->
-
-<!--/* Button styles */-->
-<!--.btn {-->
-<!--    background-color: #D3D6DB;-->
-<!--    color: #000000;-->
-<!--    border-color: #D3D6DB;-->
-<!--    transition: background-color 0.3s ease, border-color 0.3s ease;-->
-<!--}-->
-
-<!--.btn:hover {-->
-<!--    background-color: #B0B3B8;-->
-<!--    border-color: #B0B3B8;-->
-<!--}-->
-
-<!--/* Specific button styles */-->
-<!--#retrieve-medications-type-form,-->
-<!--#retrieve-notification-form,-->
-<!--#retrieve-notification-type-form,-->
-<!--#retrieve-notifications-now {-->
-<!--    background-color: #D3D6DB;-->
-<!--    color: #000000;-->
-<!--    border-color: #D3D6DB;-->
-<!--}-->
-
-<!--#retrieve-medications-type-form:hover,-->
-<!--#retrieve-notification-form:hover,-->
-<!--#retrieve-notification-type-form:hover,-->
-<!--#retrieve-notifications-now:hover {-->
-<!--    background-color: #B0B3B8;-->
-<!--    border-color: #B0B3B8;-->
-<!--}-->
-
-
-<!--    </style>-->
-<!--</head>-->
-<!--<body class="background">-->
-
-<!--<header class="page_header">-->
-<!--    <div class="d-flex justify-content-between align-items-center px-3 py-2">-->
-<!--        <div class="logo">CareCompass</div>-->
-<!--        <div class="user-info"></div>-->
-<!--    </div>-->
-<!--    <div class="buttonOne-group px-3 py-2">-->
-<!--        <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>-->
-<!--        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>-->
-<!--        <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>-->
-<!--        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>-->
-<!--        <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose</a>-->
-<!--    </div>-->
-<!--</header>-->
-
-
-<!--<div class="container-fluid py-3">-->
-<!--    <div class="row">-->
-<!--        <div class="col">-->
-<!--            <div class="d-flex justify-content-between align-items-center px-3 py-2">-->
-<!--                <ul class="nav nav-tabs" id="myTab" role="tablist">-->
-<!--                    <li class="nav-item" role="presentation">-->
-<!--                        <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Chart Review</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="tab-content" id="myTabContent">-->
-<!--                <div class="tab-pane fade show active" id="glucose" role="tabpanel" aria-labelledby="glucose-tab">-->
-<!--                    &lt;!&ndash; Additional content can go here &ndash;&gt;-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div class="container-fluid py-3">-->
-<!--    <form id="retrieve-medication-by-status-form" class="mt-4">-->
-<!--    <div class="row">-->
-<!--        <div class="col">-->
-<!--            <div class="section">-->
-<!--                <h2>Medications</h2>-->
-<!--                <div class="form-group">-->
-<!--                    <div class="inline-elements">-->
-<!--                        <label for="medicationStatus" class="form-label">Retrieve Medications By Status</label>-->
-<!--                        <select id="medicationStatus" class="form-select">-->
-<!--                            <option value="ACTIVE">Active</option>-->
-<!--                            <option value="DISCONTINUED">Discontinued</option>-->
-<!--                            <option value="ON_HOLD">On Hold</option>-->
-<!--                            <option value="TEMPORARY_STOP">Temporary Stop</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                        <button type="button" class="btn btn-secondary mt-3" id="retrieve-medications-type-form">Retrieve medications by Type</button>-->
-<!--               <tr>-->
-<!--                <div class="table-container">-->
-<!--                    <table class="table table-bordered" id="View-Table">-->
-<!--                        <thead>-->
-<!--                        <tr>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication Id</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Medication Name</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 12%;">Status</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Prescription</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 32%;">Instructions</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Actions</th>-->
-<!--                        </tr>-->
-<!--                        </thead>-->
-<!--                        <tbody id="Medication-list"></tbody>-->
-<!--                    </table>-->
-<!--                </div>-->
-<!--                   </tr>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div class="container-fluid py-3">-->
-<!--    <div class="row">-->
-<!--        <div class="col">-->
-<!--            <div class="section">-->
-<!--                <h2>Notifications</h2>-->
-<!--                <label for="scheduledTime" class="form-label">Scheduled Time</label>-->
-<!--                <input type="datetime-local" id="scheduledTime" class="form-control">-->
-
-<!--                <button type="button" class="btn btn-secondary mt-3" id="retrieve-notification-form">Retrieve Notifications Scheduled Time</button>-->
-<!--                <button type="button" class="btn mt-3" id="retrieve-notifications-now">Retrieve By Current Time</button>-->
-
-
-<!--                <form id="retrieve-notification-by-type-form" class="mt-4">-->
-<!--                    <div class="mb-3">-->
-<!--                        <label for="reminderType" class="form-label">Reminder Type</label>-->
-<!--                        <select id="reminderType" class="form-select">-->
-<!--                            <option value="GLUCOSE_MEASUREMENT">Glucose Measurement</option>-->
-<!--                            <option value="MEDICATION">Medication</option>-->
-<!--                            <option value="VITAL_SIGNS">Vital Signs</option>-->
-<!--                            <option value="APPOINTMENT">Appointment</option>-->
-<!--                            <option value="GENERAL">General</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                    <button type="button" class="btn btn-primary" id="retrieve-notification-type-form">Retrieve Notifications by Type</button>-->
-<!--                </form>-->
-<!--                <div class="table-container">-->
-<!--                    <table class="table table-bordered" id="View-Table">-->
-<!--                        <thead>-->
-<!--                        <tr>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Notification Id</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Notification title</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Scheduled time</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Reminder type</th>-->
-<!--                            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 28%;">Reminder content</th>-->
-<!--                        </tr>-->
-<!--                        </thead>-->
-<!--                        <tbody id="Notification-list"></tbody>-->
-<!--                    </table>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-<!--</body>-->
-<!--</html>-->
-
-
-
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>CareCompass</title>-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" type="text/css" href="css/style.css">-->
-<!--    <script type="text/javascript" src="assets/chartReview.js"></script> &lt;!&ndash; 引入 JavaScript 文件 &ndash;&gt;-->
-<!--</head>-->
-
-<!--<body class="background">-->
-<!--<header class="page_header" id="header">-->
-<!--    <div class="page_header">-->
-<!--        <div class="d-flex justify-content-between">-->
-<!--            <div class="logo">CareCompass</div>-->
-<!--            <div class="user-info"></div>-->
-<!--        </div>-->
-<!--        <div class="button-group">-->
-<!--            <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>-->
-<!--            <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>-->
-<!--            <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>-->
-<!--            <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>-->
-<!--            <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose</a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</header>-->
-
-<!--<div class="content container mt-4">-->
-<!--    <div class="row">-->
-<!--        &lt;!&ndash; Medication Section &ndash;&gt;-->
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Medications</h2>-->
-<!--            <form id="retrieve-medication-by-status-form">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="medicationStatus" class="form-label">Medication Status</label>-->
-<!--                    <select id="medicationStatus" class="form-select">-->
-<!--                        <option value="ACTIVE">Active</option>-->
-<!--                        <option value="DISCONTINUED">Discontinued</option>-->
-<!--                        <option value="ON_HOLD">On Hold</option>-->
-<!--                        <option value="TEMPORARY_STOP">Temporary Stop</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-primary" id="retrieve-medication-form">Retrieve Medications</button>-->
-<!--            </form>-->
-<!--            <table class="table mt-3">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Medication Name</th>-->
-<!--                    <th>Prescription</th>-->
-<!--                    <th>Instructions</th>-->
-<!--                    <th>Status</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody id="Status-Table">-->
-<!--                &lt;!&ndash; Medication items will be dynamically inserted here &ndash;&gt;-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Notification Section &ndash;&gt;-->
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Notifications</h2>-->
-<!--            <form id="retrieve-notification-by-scheduled-time-form">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="scheduledTime" class="form-label">Scheduled Time</label>-->
-<!--                    <input type="datetime-local" id="scheduledTime" class="form-control">-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-primary" id="retrieve-notification-form">Retrieve Notifications</button>-->
-<!--                <button type="button" class="btn btn-secondary" id="retrieve-notifications-now">Retrieve Now</button>-->
-<!--            </form>-->
-<!--            <form id="retrieve-notification-by-type-form" class="mt-4">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="reminderType" class="form-label">Reminder Type</label>-->
-<!--                    <select id="reminderType" class="form-select">-->
-<!--                        <option value="GLUCOSE_MEASUREMENT">Glucose Measurement</option>-->
-<!--                        <option value="MEDICATION">Medication</option>-->
-<!--                        <option value="VITAL_SIGNS">Vital Signs</option>-->
-<!--                        <option value="APPOINTMENT">Appointment</option>-->
-<!--                        <option value="GENERAL">General</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-primary" id="retrieve-notification-type-form">Retrieve Notifications by Type</button>-->
-<!--            </form>-->
-<!--            <table class="table mt-3">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Title</th>-->
-<!--                    <th>Content</th>-->
-<!--                    <th>Scheduled Time</th>-->
-<!--                    <th>Type</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody id="scheduledTime-Table">-->
-<!--                &lt;!&ndash; Notification items will be dynamically inserted here &ndash;&gt;-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Vital Signs Section &ndash;&gt;-->
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Previous Vital Signs</h2>-->
-<!--            <div id="vital-signs-display">-->
-<!--                &lt;!&ndash; Vital Signs data will be dynamically inserted here &ndash;&gt;-->
-<!--                <table class="table">-->
-<!--                    <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Check Time</th>-->
-<!--                        <th>Temperature</th>-->
-<!--                        <th>Respiratory Rate</th>-->
-<!--                        <th>Systolic Pressure</th>-->
-<!--                        <th>Mean Arterial Pressure</th>-->
-<!--                        <th>Blood Oxygen Level</th>-->
-<!--                        <th>Flow Delivered</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody id="vital-signs-table">-->
-<!--                    &lt;!&ndash; Vital Signs data will be inserted here &ndash;&gt;-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Blood Glucose Measurements Section &ndash;&gt;-->
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Previous Blood Glucose Measurement</h2>-->
-<!--            <div id="blood-glucose-display">-->
-<!--                &lt;!&ndash; Blood Glucose data will be dynamically inserted here &ndash;&gt;-->
-<!--                <table class="table">-->
-<!--                    <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Check Time</th>-->
-<!--                        <th>Glucose Level</th>-->
-<!--                        <th>Context</th>-->
-<!--                        <th>Comments</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody id="blood-glucose-table">-->
-<!--                    &lt;!&ndash; Blood Glucose data will be inserted here &ndash;&gt;-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-<!--</body>-->
-<!--</html>-->
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>CareCompass</title>-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" type="text/css" href="css/style.css">-->
-<!--    <style>-->
-<!--        body {-->
-<!--            background-color: #f8f9fa; /* Light gray background */-->
-<!--            padding-top: 20px;-->
-<!--        }-->
-
-<!--        .page_header {-->
-<!--            background-color: #ffffff; /* White header background */-->
-<!--            padding: 20px;-->
-<!--            margin-bottom: 20px;-->
-<!--            border-bottom: 1px solid #dee2e6; /* Light gray border */-->
-<!--        }-->
-
-<!--        .logo {-->
-<!--            font-size: 1.5rem;-->
-<!--            font-weight: bold;-->
-<!--        }-->
-
-<!--        .button-group {-->
-<!--            margin-top: 10px;-->
-<!--        }-->
-
-<!--        .content {-->
-<!--            background-color: #ffffff;-->
-<!--            padding: 20px;-->
-<!--            border: 1px solid #dee2e6;-->
-<!--            border-radius: 5px;-->
-<!--        }-->
-
-<!--        h2 {-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        form {-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        .table {-->
-<!--            background-color: #ffffff;-->
-<!--            border: 1px solid #dee2e6;-->
-<!--            border-radius: 5px;-->
-<!--        }-->
-<!--    </style>-->
-<!--    <script type="text/javascript" src="assets/chartReview.js"></script>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--<header class="page_header">-->
-<!--    <div class="container">-->
-<!--        <div class="row justify-content-between align-items-center">-->
-<!--            <div class="col-auto">-->
-<!--                <div class="logo">CareCompass</div>-->
-<!--            </div>-->
-<!--            <div class="col-auto">-->
-<!--                <div class="button-group">-->
-<!--                    <a id="ChartReview-link" class="btn btn-secondary me-2" href="chartReview.html">Chart Review</a>-->
-<!--                    <a id="Medications-link" class="btn btn-secondary me-2" href="medication.html">Medications</a>-->
-<!--                    <a id="Notifications-link" class="btn btn-secondary me-2" href="notification.html">Notifications</a>-->
-<!--                    <a id="VitalSigns-link" class="btn btn-secondary me-2" href="vitalSigns.html">Vital Signs</a>-->
-<!--                    <a id="bloodGlucoseMeasurements-link" class="btn btn-secondary me-2" href="bloodGlucoseMeasurement.html">Blood Glucose</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</header>-->
-
-<!--<div class="container content">-->
-<!--    <div class="row">-->
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Medications</h2>-->
-<!--            <form id="retrieve-medication-by-status-form">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="medicationStatus" class="form-label">Medication Status</label>-->
-<!--                    <select id="medicationStatus" class="form-select">-->
-<!--                        <option value="ACTIVE">Active</option>-->
-<!--                        <option value="DISCONTINUED">Discontinued</option>-->
-<!--                        <option value="ON_HOLD">On Hold</option>-->
-<!--                        <option value="TEMPORARY_STOP">Temporary Stop</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-primary" id="retrieve-medication-form">Retrieve Medications</button>-->
-<!--            </form>-->
-<!--            <table class="table">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Medication Name</th>-->
-<!--                    <th>Prescription</th>-->
-<!--                    <th>Instructions</th>-->
-<!--                    <th>Status</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody id="Status-Table">-->
-<!--                &lt;!&ndash; Medication items will be dynamically inserted here &ndash;&gt;-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Notifications</h2>-->
-<!--            <form id="retrieve-notification-by-scheduled-time-form">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="scheduledTime" class="form-label">Scheduled Time</label>-->
-<!--                    <input type="datetime-local" id="scheduledTime" class="form-control">-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-primary" id="retrieve-notification-form">Retrieve Notifications</button>-->
-<!--                <button type="button" class="btn btn-secondary" id="retrieve-notifications-now">Retrieve Now</button>-->
-<!--            </form>-->
-<!--            <form id="retrieve-notification-by-type-form" class="mt-4">-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="reminderType" class="form-label">Reminder Type</label>-->
-<!--                    <select id="reminderType" class="form-select">-->
-<!--                        <option value="GLUCOSE_MEASUREMENT">Glucose Measurement</option>-->
-<!--                        <option value="MEDICATION">Medication</option>-->
-<!--                        <option value="VITAL_SIGNS">Vital Signs</option>-->
-<!--                        <option value="APPOINTMENT">Appointment</option>-->
-<!--                        <option value="GENERAL">General</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <button type="button" class="btn btn-primary" id="retrieve-notification-type-form">Retrieve Notifications by Type</button>-->
-<!--            </form>-->
-<!--            <table class="table">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Title</th>-->
-<!--                    <th>Content</th>-->
-<!--                    <th>Scheduled Time</th>-->
-<!--                    <th>Type</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody id="scheduledTime-Table">-->
-<!--                &lt;!&ndash; Notification items will be dynamically inserted here &ndash;&gt;-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Previous Vital Signs</h2>-->
-<!--            <div id="vital-signs-display">-->
-<!--                <table class="table">-->
-<!--                    <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Check Time</th>-->
-<!--                        <th>Temperature</th>-->
-<!--                        <th>Respiratory Rate</th>-->
-<!--                        <th>Systolic Pressure</th>-->
-<!--                        <th>Mean Arterial Pressure</th>-->
-<!--                        <th>Blood Oxygen Level</th>-->
-<!--                        <th>Flow Delivered</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody id="vital-signs-table">-->
-<!--                    &lt;!&ndash; Vital Signs data will be inserted here &ndash;&gt;-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-12 mb-4">-->
-<!--            <h2>Previous Blood Glucose Measurement</h2>-->
-<!--            <div id="blood-glucose-display">-->
-<!--                <table class="table">-->
-<!--                    <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Check Time</th>-->
-<!--                        <th>Glucose Level</th>-->
-<!--                        <th>Context</th>-->
-<!--                        <th>Comments</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody id="blood-glucose-table">-->
-<!--                    &lt;!&ndash; Blood Glucose data will be inserted here &ndash;&gt;-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--</body>-->
-<!--</html>-->

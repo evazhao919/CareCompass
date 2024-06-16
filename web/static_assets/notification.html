@@ -17,25 +17,24 @@
     </div>
     <div class="buttonOne-group">
         <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>
-        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>
-        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
+        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose</a>
+        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
     </div>
     <div class="content"></div>
 </header>
 
-<div class="col py-3 page-body-background">
-    <div class="d-flex justify-content-between align-items-center">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Notifications</a>
-            </li>
-        </ul>
-    </div>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="glucose" role="tabpanel" aria-labelledby="glucose-tab">
-            <!-- Additional content can go here -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" >Notifications</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -56,11 +55,14 @@
         <div class="mb-3">
             <label for="reminderType" class="form-label">Reminder type:</label>
             <select id="reminderType" class="form-select">
-                <option value="GLUCOSE_MEASUREMENT">Glucose Measurement</option>
+                <option value="APPOINTMENT">Appointment</option>
+                <option value="MEDICATION_REFILL">Medication Refill</option>
                 <option value="MEDICATION">Medication</option>
                 <option value="VITAL_SIGNS">Vital Signs</option>
-                <option value="APPOINTMENT">Appointment</option>
-                <option value="GENERAL">General</option>
+                <option value="GLUCOSE_MEASUREMENT">Glucose Measurement</option>
+                <option value="IMMUNIZATION">Immunization</option>
+                <option value="MEDICAL_SUPPLY">Medical Supply</option>
+                <option value="CUSTOM_REMINDER">Custom Reminder</option>
             </select>
         </div>
 

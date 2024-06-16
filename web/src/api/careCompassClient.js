@@ -404,15 +404,15 @@ export default class CareCompassClient extends BindingClass {
 
         const response = await this.axiosClient.get(`upcomingNotifications`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
           params: {
-          scheduledTime: scheduledTime,
-            },
+          scheduledTime: scheduledTime
+            }
           });
 
           const result = {
-              notifications: response.data.notificationModelList
+              notifications: response.data.notifications
           };
 
           return result;
@@ -433,14 +433,19 @@ export default class CareCompassClient extends BindingClass {
         try {
 
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all medications by status.");
-            const response = await this.axiosClient.get(`medicationsByStatus/${medicationStatus}`);
+            const response = await this.axiosClient.get(`medicationsByStatus/${medicationStatus}`, {
+             headers: {
+                   Authorization: `Bearer ${token}`,
+                 }
+              });
 
-            return response.data.medicationModelList;
+            return response.data.medications;
          } catch (error) {
             this.handleError(error, errorCallback)
             throw error;
          }
     }
+
 
     /**
      * Retrieves notifications based on the provided reminder type.
@@ -451,8 +456,12 @@ export default class CareCompassClient extends BindingClass {
     async retrieveNotificationsByReminderType(reminderType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all notifications by reminder type.");
-            const response = await this.axiosClient.get(`notificationsByReminderType/${reminderType}`);
-            return response.data.notificationModelList;
+            const response = await this.axiosClient.get(`notificationsByReminderType/${reminderType}`,{
+            headers: {
+                               Authorization: `Bearer ${token}`,
+                             }
+                          });
+            return response.data.notifications;  //TODO?
          } catch (error) {
             this.handleError(error, errorCallback)
             throw error;

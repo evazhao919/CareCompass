@@ -76,10 +76,19 @@ class BloodGlucoseMeasurement extends BindingClass {
         errorMessageDisplay.innerText = '';
         errorMessageDisplay.classList.add('hidden');
 
-        const actualCheckTime = document.getElementById('actualCheckTime').value;
-        const glucoseLevel = document.getElementById('glucoseLevel').value;
-        const glucoseContext = document.getElementById('glucoseContext').value;
-        const comments = document.getElementById('comments').value;
+//        const actualCheckTime = document.getElementById('actualCheckTime').value;
+//        const glucoseLevel = document.getElementById('glucoseLevel').value;
+//        const glucoseContext = document.getElementById('glucoseContext').value;
+//        const comments = document.getElementById('comments').value;
+          const actualCheckTimeInput = document.getElementById('actualCheckTime');
+          const glucoseLevelInput = document.getElementById('glucoseLevel');
+          const glucoseContextInput = document.getElementById('glucoseContext');
+          const commentsInput = document.getElementById('comments');
+
+          const actualCheckTime = actualCheckTimeInput.value;
+          const glucoseLevel = glucoseLevelInput.value;
+          const glucoseContext = glucoseContextInput.value;
+          const comments = commentsInput.value;
 
         if (actualCheckTime.length === 0 || glucoseLevel.length === 0 || glucoseContext.length === 0 || comments.length === 0) {
             return;
@@ -89,6 +98,12 @@ class BloodGlucoseMeasurement extends BindingClass {
 
         try {
             const bloodGlucoseMeasurement = await this.client.addBloodGlucoseMeasurement(actualCheckTime, glucoseLevel, glucoseContext, comments, (() => {}));
+            // Clear input fields after successful addition
+                    actualCheckTimeInput.value = '';
+                    glucoseLevelInput.value = '';
+                    glucoseContextInput.value = '';
+                    commentsInput.value = '';
+              this.getBloodGlucoseMeasurements();
             this.dataStore.set('bloodGlucoseMeasurement', bloodGlucoseMeasurement);
 
         } catch (error) {

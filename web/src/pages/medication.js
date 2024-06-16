@@ -76,11 +76,20 @@ async addMedication(evt) {
     const errorMessageDisplay = document.getElementById('error-message');
     errorMessageDisplay.innerText = '';
     errorMessageDisplay.classList.add('hidden');
+//
+//    const medicationName = document.getElementById('medicationName').value;
+//    const prescription = document.getElementById('prescription').value;
+//    const instructions = document.getElementById('instructions').value;
+//    const medicationStatus = document.getElementById('medicationStatus').value;
+       const medicationNameInput = document.getElementById('medicationName');
+           const prescriptionInput = document.getElementById('prescription');
+           const instructionsInput = document.getElementById('instructions');
+           const medicationStatusInput = document.getElementById('medicationStatus');
 
-    const medicationName = document.getElementById('medicationName').value;
-    const prescription = document.getElementById('prescription').value;
-    const instructions = document.getElementById('instructions').value;
-    const medicationStatus = document.getElementById('medicationStatus').value;
+           const medicationName = medicationNameInput.value;
+           const prescription = prescriptionInput.value;
+           const instructions = instructionsInput.value;
+           const medicationStatus = medicationStatusInput.value;
 
 
     if (medicationName.length === 0 || prescription.length === 0 || instructions.length === 0 || medicationStatus.length === 0) {
@@ -91,6 +100,13 @@ async addMedication(evt) {
 
     try {
         const medication = await this.client.addMedication(medicationName, prescription, instructions, medicationStatus,(()=>{}));
+         // Clear input fields after successful addition
+                medicationNameInput.value = '';
+                prescriptionInput.value = '';
+                instructionsInput.value = '';
+                medicationStatusInput.value = '';
+
+        this.getMedications();
         this.dataStore.set('medication', medication);
 
     } catch (error) {
@@ -124,7 +140,7 @@ async addMedication(evt) {
             return '<h4>No results found</h4>';
         }
 
-        let html = '<table id="medication-results-table"><tr><th>Medication Id</th><th>Medication Name</th><th>Prescription</th><th>Instructions</th><th>Status</th><th>Actions</th></tr>';
+        let html = '<table id="medication-results-table"><tr><th>Medication Id</th><th>Medication Name</th><th>Prescription</th><th>Instructions</th><th>Status</th>></tr>';
         for (const res of searchResults) {
             html += `
             <tr data-id="${res.medicationId}">

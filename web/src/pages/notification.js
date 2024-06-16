@@ -74,10 +74,19 @@ async addNotification(evt) {
     errorMessageDisplay.innerText = '';
     errorMessageDisplay.classList.add('hidden');
 
-    const notificationTitle = document.getElementById('notificationTitle').value;
-    const reminderContent = document.getElementById('reminderContent').value;
-    const scheduledTime = document.getElementById('scheduledTime').value;
-    const reminderType = document.getElementById('reminderType').value;
+//    const notificationTitle = document.getElementById('notificationTitle').value;
+//    const reminderContent = document.getElementById('reminderContent').value;
+//    const scheduledTime = document.getElementById('scheduledTime').value;
+//    const reminderType = document.getElementById('reminderType').value;
+      const notificationTitleInput = document.getElementById('notificationTitle');
+      const reminderContentInput = document.getElementById('reminderContent');
+      const scheduledTimeInput = document.getElementById('scheduledTime');
+      const reminderTypeInput = document.getElementById('reminderType');
+
+      const notificationTitle = notificationTitleInput.value;
+      const reminderContent = reminderContentInput.value;
+      const scheduledTime = scheduledTimeInput.value;
+      const reminderType = reminderTypeInput.value;
 
 
     if (notificationTitle.length === 0 || reminderContent.length === 0 || scheduledTime.length === 0 || reminderType.length === 0) {
@@ -88,6 +97,12 @@ async addNotification(evt) {
 
     try {
         const notification = await this.client.addNotification(notificationTitle, reminderContent, scheduledTime, reminderType,(()=>{}));
+          // Clear input fields after successful addition
+                        notificationTitleInput.value = '';
+                        reminderContentInput.value = '';
+                        scheduledTimeInput.value = '';
+                        reminderTypeInput.value = '';
+        this.getNotifications();  // Refresh the list
         this.dataStore.set('Notification', notification);
 
     } catch (error) {

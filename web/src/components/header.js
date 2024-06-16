@@ -1,6 +1,7 @@
 import MusicPlaylistClient from '../api/musicPlaylistClient';
 import BindingClass from "../util/bindingClass";
 
+
 /**
  * The header component for the website.
  */

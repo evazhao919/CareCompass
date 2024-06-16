@@ -18,25 +18,24 @@
     </div>
     <div class="buttonOne-group">
         <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>
-        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>
-        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
+        <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose</a>
+        <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
     </div>
     <div class="content"></div>
 </header>
 
-<div class="col py-3 page-body-background">
-    <div class="d-flex justify-content-between align-items-center">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="glucose-tab" data-bs-toggle="tab" href="#glucose" role="tab" aria-controls="glucose" aria-selected="true">Vital Signs</a>
-            </li>
-        </ul>
-    </div>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="glucose" role="tabpanel" aria-labelledby="glucose-tab">
-            <!-- Additional content can go here -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" >Vital Signs</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -135,21 +134,21 @@
     <table class="table table-bordered" id="View-Table">
         <thead>
         <tr>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">CheckTime</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">Temp</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">HeartRate</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">Pulse</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">RespiratoryRate</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">SysBP</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">DiaBP</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">MAP</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">Weight</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">PatientPosition</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">SpO2 (%)</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">OxygenTherapy</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">FlowDelivered</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 5%;">PatientActivity</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 20%;">Comments</th>
+            <th scope="col" class="table-secondary text-center header-cell">CheckTime</th>
+            <th scope="col" class="table-secondary text-center header-cell">Temp</th>
+            <th scope="col" class="table-secondary text-center header-cell">HeartRate</th>
+            <th scope="col" class="table-secondary text-center header-cell">Pulse</th>
+            <th scope="col" class="table-secondary text-center header-cell">RespiratoryRate</th>
+            <th scope="col" class="table-secondary text-center header-cell">SysBP</th>
+            <th scope="col" class="table-secondary text-center header-cell">DiaBP</th>
+            <th scope="col" class="table-secondary text-center header-cell">MAP</th>
+            <th scope="col" class="table-secondary text-center header-cell">Weight</th>
+            <th scope="col" class="table-secondary text-center header-cell">PatientPosition</th>
+            <th scope="col" class="table-secondary text-center header-cell">SpO2 (%)</th>
+            <th scope="col" class="table-secondary text-center header-cell">OxygenTherapy</th>
+            <th scope="col" class="table-secondary text-center header-cell">FlowDelivered</th>
+            <th scope="col" class="table-secondary text-center header-cell">PatientActivity</th>
+            <th scope="col" class="table-secondary text-center header-cell">Comments</th>
         </tr>
         </thead>
         <tbody id="vitalSigns-results-table">
