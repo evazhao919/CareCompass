@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = AddNotificationRequest.Builder.class)
 public class AddNotificationRequest {
     private final String patientId;
-//    private final String notificationId;
+    //    private final String notificationId;
     private final String notificationTitle;
     private final String reminderContent;
     private final String scheduledTime;
@@ -65,7 +65,7 @@ public class AddNotificationRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-//        private String notificationId;
+        //        private String notificationId;
         private String notificationTitle;
         private String reminderContent;
         private String scheduledTime;

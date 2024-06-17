@@ -64,7 +64,7 @@ public class LambdaRequest<T> extends APIGatewayProxyRequestEvent {
      * and query string parameters.
      * @param converter Contains the conversion code
      * @return A instance of T that contains data from the request's path parameters
-    */
+     */
     public T fromPathAndQuery(BiFunction<Map<String, String>, Map<String, String>, T> converter) {
         log.info("Attempting to retrieve values from path and query string parameters.");
         Map<String, String> path = ifNull(super.getPathParameters(), Map.of());
@@ -72,4 +72,3 @@ public class LambdaRequest<T> extends APIGatewayProxyRequestEvent {
         return converter.apply(path, query);
     }
 }
-

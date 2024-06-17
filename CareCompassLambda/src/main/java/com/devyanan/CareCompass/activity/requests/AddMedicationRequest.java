@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = AddMedicationRequest.Builder.class)
 public class AddMedicationRequest {
     private final String patientId;
-//    private final String medicationId;
+    //    private final String medicationId;
     private final String medicationName;
     private final String prescription;
     private final String instructions;
@@ -64,7 +64,7 @@ public class AddMedicationRequest {
     @JsonPOJOBuilder
     public static class Builder {
         private String patientId;
-//        private String medicationId;
+        //        private String medicationId;
         private  String medicationName;
         private String prescription;
         private String instructions;

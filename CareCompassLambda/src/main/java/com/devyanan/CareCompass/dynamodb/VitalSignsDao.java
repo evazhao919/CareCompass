@@ -4,11 +4,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
-import com.devyanan.CareCompass.dynamodb.models.Notification;
 import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import com.devyanan.CareCompass.exceptions.CustomDynamoDBException;
 import com.devyanan.CareCompass.exceptions.DatabaseAccessException;
-import com.devyanan.CareCompass.exceptions.NotificationNotFoundException;
 import com.devyanan.CareCompass.exceptions.VitalSignsNotFoundException;
 import com.devyanan.CareCompass.metrics.MetricsConstants;
 import com.devyanan.CareCompass.metrics.MetricsPublisher;
@@ -25,7 +23,7 @@ import java.util.*;
  */
 @Singleton
 public class VitalSignsDao {
-private final DynamoDBMapper dynamoDBMapper;
+    private final DynamoDBMapper dynamoDBMapper;
     private final MetricsPublisher metricsPublisher;
     private final Logger log = LogManager.getLogger();
     @Inject
@@ -45,10 +43,10 @@ private final DynamoDBMapper dynamoDBMapper;
      */
     public VitalSigns saveVitalSigns(VitalSigns vitalSigns){
         if(vitalSigns == null){
-        metricsPublisher.addCount(MetricsConstants.ADD_VITAL_SIGNS_NULL_OR_EMPTY_COUNT,1);
-        log.info("Attempted to add a null vitalSigns.");
-        throw new IllegalArgumentException("VitalSigns object or name cannot be null or empty.");
-    }
+            metricsPublisher.addCount(MetricsConstants.ADD_VITAL_SIGNS_NULL_OR_EMPTY_COUNT,1);
+            log.info("Attempted to add a null vitalSigns.");
+            throw new IllegalArgumentException("VitalSigns object or name cannot be null or empty.");
+        }
         log.info("add vitalSigns for patientId with id: {}",vitalSigns.getPatientId());
         metricsPublisher.addCount(MetricsConstants.ADD_VITAL_SIGNS_TOTAL_COUNT,1);
         try {
@@ -113,40 +111,48 @@ private final DynamoDBMapper dynamoDBMapper;
             DynamoDBQueryExpression<VitalSigns> queryExpression = new DynamoDBQueryExpression<VitalSigns>()
                     .withHashKeyValues(vitalSigns);
             QueryResultPage<VitalSigns> results = dynamoDBMapper
-                     .queryPage(VitalSigns.class, queryExpression);
+                    .queryPage(VitalSigns.class, queryExpression);
 
-        if (results.getResults().isEmpty()) {
-            metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
-            log.warn("No vital signs found for user: {}", patientId);
-            return Collections.emptyList();
-                }
+            if (results.getResults().isEmpty()) {
+                metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No vital signs found for user: {}", patientId);
+                return Collections.emptyList();
+            }
             metricsPublisher.addCount(MetricsConstants.GET_ALL_VITAL_SIGNS_FOUND_COUNT, 1);
             return results.getResults();
-            } catch (Exception e) {
+        } catch (Exception e) {
             log.error("Failed to access the database for user: {}", patientId, e);
             throw new DatabaseAccessException("Failed to access the database", e);
-            }
         }
+    }
 
     public VitalSigns getVitalSigns(String patientId, LocalDateTime actualCheckTime) {
-        try{
+        try {
             log.info("Attempting to get a single vitalSigns with actual check time: {}", actualCheckTime);
-            VitalSigns singleVitalSigns = this.dynamoDBMapper.load(VitalSigns.class, patientId,actualCheckTime);
+
+            // Create a key object with patientId and actualCheckTime
+            VitalSigns vitalSigns = new VitalSigns();
+            vitalSigns.setPatientId(patientId);
+            vitalSigns.setActualCheckTime(actualCheckTime);
+
+            // Use the key object to load from DynamoDB
+            VitalSigns singleVitalSigns = this.dynamoDBMapper.load(vitalSigns);
 
             if (singleVitalSigns == null) {
                 metricsPublisher.addCount(MetricsConstants.GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_NULL_OR_EMPTY_COUNT, 1);
-                log.warn("No VitalSigns found for user: {} and VitalSignsId: {}", patientId, actualCheckTime);
+                log.warn("No VitalSigns found for user: {} and actualCheckTime: {}", patientId, actualCheckTime);
                 throw new VitalSignsNotFoundException("No VitalSigns found for user: " + patientId + " and actualCheckTime: " + actualCheckTime);
             } else {
                 metricsPublisher.addCount(MetricsConstants.GET_SINGLE_VITALSIGNS_BY_PATIENT_ID_AND_ACTUAL_CHECK_TIME_FOUND_COUNT, 1);
                 log.info("Successfully retrieved a single VitalSigns for actual check time: {}", actualCheckTime);
                 return singleVitalSigns;
             }
-        } catch (DatabaseAccessException e){
+        } catch (DatabaseAccessException e) {
             log.error("Failed to access the database for user: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
+
 
 //    /**
 //     * DAO method to retrieve vital signs data for a specified date range.

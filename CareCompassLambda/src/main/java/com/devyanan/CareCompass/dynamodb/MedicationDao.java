@@ -93,22 +93,22 @@ public class MedicationDao {
      * @throws DatabaseAccessException If there is an error accessing the database.
      */
     public List<Medication> getAllMedications(String patientId){
-       try {
-           log.info("Attempting to get all medications for user: {}", patientId);
-           metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_TOTAL_COUNT,1);
-           Medication medication = new Medication();
-           medication.setPatientId(patientId);
+        try {
+            log.info("Attempting to get all medications for user: {}", patientId);
+            metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_TOTAL_COUNT,1);
+            Medication medication = new Medication();
+            medication.setPatientId(patientId);
 
-           DynamoDBQueryExpression<Medication> queryExpression = new DynamoDBQueryExpression<Medication>()
+            DynamoDBQueryExpression<Medication> queryExpression = new DynamoDBQueryExpression<Medication>()
                     .withHashKeyValues(medication);
-           QueryResultPage<Medication> results = dynamoDBMapper
-                   .queryPage(Medication.class, queryExpression);
+            QueryResultPage<Medication> results = dynamoDBMapper
+                    .queryPage(Medication.class, queryExpression);
 
             if (results.getResults().isEmpty()) {
-            metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_NULL_OR_EMPTY_COUNT, 1);
-            log.warn("No medications found for user: {}", patientId);
-            return Collections.emptyList();
-        }
+                metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_NULL_OR_EMPTY_COUNT, 1);
+                log.warn("No medications found for user: {}", patientId);
+                return Collections.emptyList();
+            }
             metricsPublisher.addCount(MetricsConstants.GET_ALL_MEDICATIONS_FOUND_COUNT, 1);
             return results.getResults();
         } catch (Exception e) {

@@ -46,5 +46,5 @@ public class GetAllMedicationsActivity {
         return GetAllMedicationsResult.builder()
                 .withMedicationModelList(new ModelConverter().toMedicationModelList(medicationList))
                 .build();
-        }
     }
+}

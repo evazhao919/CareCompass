@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  * Lambda function handler for deleting blood glucose measurements.
  */
 public class DeleteBloodGlucoseMeasurementLambda extends LambdaActivityRunner<DeleteBloodGlucoseMeasurementRequest, DeleteBloodGlucoseMeasurementResult>
-implements RequestHandler<AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasurementRequest>,LambdaResponse> {
+        implements RequestHandler<AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasurementRequest>,LambdaResponse> {
     private final Logger log = LogManager.getLogger();
 
     /**
@@ -33,8 +33,8 @@ implements RequestHandler<AuthenticatedLambdaRequest<DeleteBloodGlucoseMeasureme
 
                     return input.fromPath(path -> requestBuilder
                             .withPatientId(unauthenticatedRequest.getPatientId())
-                                    .withActualCheckTime(path.get("actualCheckTime"))
-                                    .build());
+                            .withActualCheckTime(path.get("actualCheckTime"))
+                            .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteBloodGlucoseMeasurementActivity().handleRequest(request)));
     }

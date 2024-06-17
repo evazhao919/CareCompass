@@ -92,4 +92,4 @@ public class AddBloodGlucoseMeasurementRequest {
             return new AddBloodGlucoseMeasurementRequest(patientId, actualCheckTime, glucoseLevel, glucoseContext, comments);
         }
     }
-    }
+}

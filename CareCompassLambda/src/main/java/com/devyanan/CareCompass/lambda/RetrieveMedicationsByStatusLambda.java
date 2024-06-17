@@ -8,7 +8,7 @@ import com.devyanan.CareCompass.activity.results.RetrieveMedicationsByStatusResu
 public class RetrieveMedicationsByStatusLambda extends LambdaActivityRunner<RetrieveMedicationsByStatusRequest,
         RetrieveMedicationsByStatusResult> implements RequestHandler<AuthenticatedLambdaRequest<RetrieveMedicationsByStatusRequest>,
         LambdaResponse> {
-        @Override
+    @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<RetrieveMedicationsByStatusRequest> input, Context context) {
         return super.runActivity(
                 () -> {

@@ -47,7 +47,7 @@ public class BloodGlucoseMeasurementDao {
             log.info("Attempted to add a bloodGlucoseMeasurement with null.");
             throw new IllegalArgumentException("bloodGlucoseMeasurement object can not be null.");
         }
-        log.info("add bloodGlucoseMeasurement for patientId with id: {}",bloodGlucoseMeasurement.getPatientId());
+        log.info("add bloodGlucoseMeasurement for patient with id: {}",bloodGlucoseMeasurement.getPatientId());
         metricsPublisher.addCount(MetricsConstants.ADD_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
         try {
             log.info("Attempting to add bloodGlucoseMeasurement : {}", bloodGlucoseMeasurement);
@@ -73,7 +73,7 @@ public class BloodGlucoseMeasurementDao {
      * @return The deleted blood glucose measurement.
      * @throws BloodGlucoseMeasurementNotFoundException If the blood glucose measurement is not found.
      */
-    public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurementByActualCheckTime(String patientId, LocalDateTime actualCheckTime){//TODO   ？？？？？？应该是LocalDateTime
+    public BloodGlucoseMeasurement deleteSingleBloodGlucoseMeasurementByActualCheckTime(String patientId, LocalDateTime actualCheckTime){
         log.info("Attempting to delete na single blood glucose measurement with ID: {} and actualCheckTime: {}", patientId,actualCheckTime);
         BloodGlucoseMeasurement bloodGlucoseMeasurementToDelete = new BloodGlucoseMeasurement();
         bloodGlucoseMeasurementToDelete.setPatientId(patientId);
@@ -118,11 +118,16 @@ public class BloodGlucoseMeasurementDao {
         }
     }
 
-    public BloodGlucoseMeasurement getBloodGlucoseMeasurements(String patientId, LocalDateTime actualCheckTime){
-        try{
-            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT,1);
+    public BloodGlucoseMeasurement getBloodGlucoseMeasurements(String patientId, LocalDateTime actualCheckTime) {
+        try {
+            metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT, 1);
             log.info("Attempting to get a blood glucose measurement for patientId: {} with actualCheckTime: {}", patientId, actualCheckTime);
-            BloodGlucoseMeasurement singleBloodGlucoseMeasurement = this.dynamoDBMapper.load(BloodGlucoseMeasurement.class, actualCheckTime);
+
+            BloodGlucoseMeasurement bloodGlucoseMeasurement = new BloodGlucoseMeasurement();
+            bloodGlucoseMeasurement.setPatientId(patientId);
+            bloodGlucoseMeasurement.setActualCheckTime(actualCheckTime);
+
+            BloodGlucoseMeasurement singleBloodGlucoseMeasurement = this.dynamoDBMapper.load(bloodGlucoseMeasurement);
 
             if (singleBloodGlucoseMeasurement == null) {
                 metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_BY_PATIENT_AND_BLOOD_GLUCOSE_MEASUREMENT_NULL_OR_EMPTY_COUNT, 1);
@@ -133,12 +138,13 @@ public class BloodGlucoseMeasurementDao {
                 log.info("Retrieved a single blood glucose measurement successfully for actualCheckTime: {}", actualCheckTime);
                 return singleBloodGlucoseMeasurement;
             }
-        } catch (DatabaseAccessException e){
+        } catch (DatabaseAccessException e) {
             log.error("Failed to access the database for user: {} and actualCheckTime: {}", patientId, actualCheckTime, e);
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
-    }
+
+}
 
 //    /**
 //     * Retrieves the blood glucose masurement recorded for the last three days for a specified patient.
@@ -166,7 +172,7 @@ public class BloodGlucoseMeasurementDao {
 //    }
 
 
-    //    /**
+//    /**
 //     * DAO method to retrieve blood glucose measurements data for a specified date range.
 //     *
 //     * @param patientId The ID of the patient.
@@ -210,7 +216,7 @@ public class BloodGlucoseMeasurementDao {
 //        }
 //    }
 
-    //    /**
+//    /**
 //     * Method to delete a blood glucose measurement.
 //     *
 //     * @param bloodGlucoseMeasurement The blood glucose measurement to delete.
@@ -240,5 +246,4 @@ public class BloodGlucoseMeasurementDao {
 //            throw new DatabaseAccessException("Failed to delete bloodGlucoseMeasurement from the database", e);
 //        }
 //    }
-
 

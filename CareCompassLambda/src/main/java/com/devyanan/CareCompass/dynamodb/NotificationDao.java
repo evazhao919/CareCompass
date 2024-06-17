@@ -190,7 +190,7 @@ public class NotificationDao {
             DynamoDBQueryExpression<Notification> queryExpression = new DynamoDBQueryExpression<Notification>()
                     .withHashKeyValues(hashKey)
                     .withRangeKeyConditions(rangeKeyConditions);
-                    queryExpression.setConsistentRead(false);
+            queryExpression.setConsistentRead(false);
 
             QueryResultPage<Notification> results = dynamoDBMapper.queryPage(Notification.class, queryExpression);
 
