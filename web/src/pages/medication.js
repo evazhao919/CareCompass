@@ -5,7 +5,7 @@ import DataStore from '../util/DataStore';
 
 const RESULTS_KEY = 'medication-results';
 
-class medication extends BindingClass {
+class Medication extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'getMedications', 'displayMedicationResults', 'getHTMLForMedicationResults', 'updateToMedicationForm', 'saveUpdatedMedication', 'addMedication', 'deleteMedication'], this);
