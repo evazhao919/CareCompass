@@ -15,6 +15,9 @@ this.header = new Header(this.dataStore);
 async mount() {
     await this.header.addHeaderToPage();
     this.client = new CareCompassClient();
+//    if(!(this.client.getIdentity() === undefined)){
+//     window.location.href = `/chartReview.html`;
+//    }
 }
 }
 
