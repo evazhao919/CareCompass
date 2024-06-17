@@ -5,7 +5,7 @@ import DataStore from '../util/DataStore';
 
 const RESULTS_KEY = 'blood-results';
 
-class bloodGlucoseMeasurement extends BindingClass {
+class BloodGlucoseMeasurement extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'addBloodGlucoseMeasurement', 'getBloodGlucoseMeasurements', 'deleteBloodGlucoseMeasurement', 'updateToMeasurementForm', 'saveUpdatedMeasurement', 'displayBloodResults', 'getHTMLForBloodResults'], this);

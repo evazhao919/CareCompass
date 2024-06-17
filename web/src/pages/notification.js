@@ -5,7 +5,7 @@ import DataStore from '../util/DataStore';
 
 const RESULTS_KEY = 'notification-results';
 
-class notification extends BindingClass {
+class Notification extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'addNotification', 'getNotifications', 'getNotifications', 'displayNotificationResults', 'getHTMLForNotificationResults', 'updateToNotificationForm', 'saveUpdatedNotification'], this);
