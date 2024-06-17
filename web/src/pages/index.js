@@ -1,3 +1,4 @@
+import CareCompassClient from '../api/careCompassClient';
 import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';

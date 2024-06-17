@@ -1,4 +1,4 @@
-import MusicPlaylistClient from '../api/musicPlaylistClient';
+import CareCompassClient from '../api/careCompassClient';
 import BindingClass from "../util/bindingClass";
 
 
@@ -15,7 +15,7 @@ export default class Header extends BindingClass {
         ];
         this.bindClassMethods(methodsToBind, this);
 
-        this.client = new MusicPlaylistClient();
+        this.client = new CareCompassClient();
     }
 
     /**

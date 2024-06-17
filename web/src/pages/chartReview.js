@@ -1,7 +1,7 @@
 import CareCompassClient from '../api/careCompassClient';
-    import Header from '../components/header';
-    import BindingClass from '../util/bindingClass';
-    import DataStore from '../util/DataStore';
+import Header from '../components/header';
+import BindingClass from '../util/bindingClass';
+import DataStore from '../util/DataStore';
 
     const RESULTS_BY_TYPE_KEY = 'notification-by-type-results';
  const RESULTS_BY_STATUS_KEY = 'medication-by-status-results';

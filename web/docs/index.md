@@ -33,7 +33,7 @@ The `<head>` section contains metadata and external resource links used in the w
 
 - JavaScript Source:
 ```html
-<script type="text/javascript" src="assets/searchPlaylists.js"></script>
+<script type="text/javascript" src="assets/index.js"></script>
 ```
 This line links an external JavaScript file named "searchPlaylists.js". Notice this file is not located in the "assets" folder. Instead it's under "src/pages". When using [Webpack](https://www.freecodecamp.org/news/an-intro-to-webpack-what-it-is-and-how-to-use-it-8304ecdc3c60/), the references to JavaScript (JS) files from an HTML file might not match the original source path. This discrepancy occurs because Webpack transforms and bundles multiple JavaScript files into a single output file during the build process. This searchPlaylists.js file is responsible for handling the functionality related to searching playlists.
 
