@@ -14,7 +14,6 @@ public class UpdateBloodGlucoseMeasurementDetailsLambda extends LambdaActivityRu
         return super.runActivity(
                 () -> {
                     UpdateBloodGlucoseMeasurementDetailsRequest unauthenticatedRequest = input.fromBody(UpdateBloodGlucoseMeasurementDetailsRequest.class);
-
                     return input.fromUserClaims(claims ->
                             UpdateBloodGlucoseMeasurementDetailsRequest.builder()
                                     .withPatientId(claims.get("email"))
