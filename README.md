@@ -62,4 +62,4 @@ CareCompass offers the following key features:
   Sarah, a caregiver for her elderly mother, uses CareCompass to schedule and manage appointments with healthcare providers and order medical supplies. She also tracks her mother's daily activities and glucose measurements to ensure she maintains an active lifestyle.
 
 ## Acknowledgements
-Million thanks to Jody Alford, Gabe Cziprusz, Jean Soderkvist, Charlie Penner, and the developers of the Amazon Technical Academy curriculum.
+A million thanks to Jody Alford, Gabe Cziprusz, Jean Soderkvist, Charlie Penner, and the developers of the Amazon Technical Academy curriculum.
