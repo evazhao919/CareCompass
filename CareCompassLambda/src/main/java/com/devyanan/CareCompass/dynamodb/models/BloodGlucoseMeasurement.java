@@ -14,14 +14,14 @@ public class BloodGlucoseMeasurement {
     private String patientId;
     /**
      * Unique id is equal to patientId plus actualCheckTime
-    */
+     */
     private LocalDateTime actualCheckTime;
-    private double glucoseLevel; // TODO may need use bigDecimal, for limited time will do it later
+    private double glucoseLevel;
     private GLUCOSE_MEASUREMENT_CONTEXT glucoseContext;
     private String comments;
 
     public enum GLUCOSE_MEASUREMENT_CONTEXT {
-        FASTING, BEFORE_MEAL, AFTER_MEAL, BEDTIME;
+        FASTING, BEFORE_MEAL, AFTER_MEAL, BEDTIME
     }
 
     @DynamoDBHashKey(attributeName = "patientId")

@@ -50,5 +50,5 @@ public class DeleteBloodGlucoseMeasurementRequest {
         public DeleteBloodGlucoseMeasurementRequest build() {
             return new DeleteBloodGlucoseMeasurementRequest(patientId, actualCheckTime);
         }
-}
+    }
 }

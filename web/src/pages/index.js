@@ -23,4 +23,4 @@ const index = new Index();
 index.mount();
 };
 
-window.addEventListener('DOMContentLoaded', main);
+window.addEventListener('DOMContentLoaded', main);', main);

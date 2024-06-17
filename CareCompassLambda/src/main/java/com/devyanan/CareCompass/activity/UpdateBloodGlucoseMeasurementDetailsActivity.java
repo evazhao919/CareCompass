@@ -35,7 +35,7 @@ public class UpdateBloodGlucoseMeasurementDetailsActivity {
         BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel = modelConverter.toBloodGlucoseMeasurementModel(result);
 
         return UpdateBloodGlucoseMeasurementDetailsResult.builder()
-                 .withBloodGlucoseMeasurementModel(bloodGlucoseMeasurementModel)
+                .withBloodGlucoseMeasurementModel(bloodGlucoseMeasurementModel)
                 .build();
     }
 }

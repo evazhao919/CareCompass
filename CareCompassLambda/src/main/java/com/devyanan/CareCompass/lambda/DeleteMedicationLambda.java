@@ -20,13 +20,13 @@ public class DeleteMedicationLambda extends LambdaActivityRunner<DeleteMedicatio
                 () -> {
                     DeleteMedicationRequest.Builder requestBuilder = DeleteMedicationRequest.builder();
                     DeleteMedicationRequest unauthenticatedRequest = input.fromUserClaims(claims -> requestBuilder
-                                    .withPatientId(claims.get("email"))
-                                    .build());
+                            .withPatientId(claims.get("email"))
+                            .build());
 
                     return input.fromPath(path -> requestBuilder
                             .withPatientId(unauthenticatedRequest.getPatientId())
-                                    .withMedicationId(path.get("medicationId"))
-                                    .build());
+                            .withMedicationId(path.get("medicationId"))
+                            .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteMedicationActivity().handleRequest(request)));
     }

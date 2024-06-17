@@ -3,41 +3,49 @@ import Header from '../components/header';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
-const SEARCH_CRITERIA_KEY = 'search-criteria';
-const SEARCH_RESULTS_KEY = 'search-results';
-const EMPTY_DATASTORE_STATE = {
-    [SEARCH_CRITERIA_KEY]: '',
-    [SEARCH_RESULTS_KEY]: [],
-};
+const RESULTS_KEY = 'blood-results';
 
-class BloodGlucoseMeasurements extends BindingClass {
+class BloodGlucoseMeasurement extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewAllBloodGlucoseMeasurements','search', 'displaySearchResults', 'getHTMLForSearchResults' ], this);
-        //   this.dataStore = new DataStore(EMPTY_DATASTORE_STATE);
+        this.bindClassMethods(['mount', 'submit', 'addBloodGlucoseMeasurement', 'getBloodGlucoseMeasurements', 'deleteBloodGlucoseMeasurement', 'updateToMeasurementForm', 'saveUpdatedMeasurement', 'displayBloodResults', 'getHTMLForBloodResults'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.displaySearchResults);
+        this.dataStore.addChangeListener(this.displayBloodResults);
         this.header = new Header(this.dataStore);
-        console.log("BloodGlucoseMeasurements constructor");
+         this.client = new CareCompassClient();
+        console.log("BloodGlucoseMeasurement constructor");
     }
 
-    async mount() {//初始化
-        document.getElementById('add-bloodGlucoseMeasurement-form').addEventListener('click', this.submit);//初始化按钮功能  1
+    async mount() {
+        document.getElementById('add').addEventListener('click', this.addBloodGlucoseMeasurement);
         await this.header.addHeaderToPage();
         this.client = new CareCompassClient();
+        this.getBloodGlucoseMeasurements();
+
+        // Adding event listener to the table for update and delete buttons
+        document.getElementById('View-Table').addEventListener('click', (event) => {
+           if (event.target.classList.contains('delete-button')) {
+               console.log('Delete button clicked');
+               this.deleteBloodGlucoseMeasurement(event);
+           }
+           if (event.target.classList.contains('update-button') || event.target.classList.contains('save-button')) {
+               this.updateToMeasurementForm(event);
+           }
+        });
     }
 
-    async submit(event) {//点击按钮发生的事情 2
+    async submit(event) {
         event.preventDefault();
-
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-        const createButton = document.getElementById('add-bloodGlucoseMeasurement-form');
-        const createButton = document.getElementById('search-allBloodGlucoseMeasurements-form');
-        const origButtonText = createButton.innerText;
-        createButton.innerText = 'Loading...';
+        const addBloodGlucoseButton = document.getElementById('add-bloodGlucoseMeasurement-form');
+        const showAllBloodGlucoseButton = document.getElementById('search-allBloodGlucoseMeasurements-form');
+        const origButtonText = addBloodGlucoseButton.innerText;
+        const origSearchButtonText = showAllBloodGlucoseButton.innerText;
+        addBloodGlucoseButton.innerText = 'Loading...';
+        showAllBloodGlucoseButton.innerText = 'Loading...';
 
         const actualCheckTime = document.getElementById('actualCheckTime').value;
         const glucoseLevel = document.getElementById('glucoseLevel').value;
@@ -48,277 +56,167 @@ class BloodGlucoseMeasurements extends BindingClass {
             const bloodGlucoseMeasurement = await this.client.addBloodGlucoseMeasurement(actualCheckTime, glucoseLevel, glucoseContext, comments);
             this.dataStore.set('bloodGlucoseMeasurement', bloodGlucoseMeasurement);
         } catch (error) {
-            createButton.innerText = origButtonText;
+            addBloodGlucoseButton.innerText = origButtonText;
+            showAllBloodGlucoseButton.innerText = origSearchButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         } finally {
-            createButton.innerText = origButtonText;
+            addBloodGlucoseButton.innerText = origButtonText;
+            showAllBloodGlucoseButton.innerText = origSearchButtonText;
         }
     }
 
-    redirectToViewAllBloodGlucoseMeasurements() { //转到'/bloodGlucoseMeasurements'端点      //????????not sure the name right?????
-        const allBloodGlucoseMeasurements = this.dataStore.get('allBloodGlucoseMeasurements');
-        if (allBloodGlucoseMeasurements !== null && allBloodGlucoseMeasurements !== undefined) {
-            window.location.href = '/bloodGlucoseMeasurements';
-        }
-    }
-//
-//    redirectToViewBloodGlucoseMeasurement() { //????????not sure the name right?????//转到'/bloodGlucoseMeasurements'端点
-//            const allBloodGlucoseMeasurements = this.dataStore.get('bloodGlucoseMeasurement');
-//            if (bloodGlucoseMeasurement !== null) {
-//                window.location.href = '/bloodGlucoseMeasurements';
-//            }
-//        }
+    async addBloodGlucoseMeasurement(evt) {
+        evt.preventDefault();
 
-    async search(evt) {  //setAll   要改成set，最终目的是setdatastore
-            // Prevent submitting the from from reloading the page.
-            evt.preventDefault();
+        const addButton = document.getElementById('add');
+        const origButtonText = addButton.innerText;
 
-            const searchCriteria = document.getElementById('search-criteria').value;
-            const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = '';
+        errorMessageDisplay.classList.add('hidden');
 
-            // If the user didn't change the search criteria, do nothing
-            if (previousSearchCriteria === searchCriteria) {
-                return;
-            }
+//        const actualCheckTime = document.getElementById('actualCheckTime').value;
+//        const glucoseLevel = document.getElementById('glucoseLevel').value;
+//        const glucoseContext = document.getElementById('glucoseContext').value;
+//        const comments = document.getElementById('comments').value;
+          const actualCheckTimeInput = document.getElementById('actualCheckTime');
+          const glucoseLevelInput = document.getElementById('glucoseLevel');
+          const glucoseContextInput = document.getElementById('glucoseContext');
+          const commentsInput = document.getElementById('comments');
 
-            if (searchCriteria) {
-                const results = await this.client.search(searchCriteria);
+          const actualCheckTime = actualCheckTimeInput.value;
+          const glucoseLevel = glucoseLevelInput.value;
+          const glucoseContext = glucoseContextInput.value;
+          const comments = commentsInput.value;
 
-                this.dataStore.setState({
-                    [SEARCH_CRITERIA_KEY]: searchCriteria,
-                    [SEARCH_RESULTS_KEY]: results,
-                });
-            } else {
-                this.dataStore.setState(EMPTY_DATASTORE_STATE);
-            }
+        if (actualCheckTime.length === 0 || glucoseLevel.length === 0 || glucoseContext.length === 0 || comments.length === 0) {
+            return;
         }
 
-    displaySearchResults() {    //去掉view    //没人call，这个链接按钮
-        const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
-        const searchResults = this.dataStore.get(SEARCH_RESULTS_KEY);//1
+        addButton.innerText = 'Loading...';
 
-        const searchResultsContainer = document.getElementById('search-results-container');
-        const searchCriteriaDisplay = document.getElementById('search-criteria-display');
-        const searchResultsDisplay = document.getElementById('search-results-display');//1
+        try {
+            const bloodGlucoseMeasurement = await this.client.addBloodGlucoseMeasurement(actualCheckTime, glucoseLevel, glucoseContext, comments, (() => {}));
+            // Clear input fields after successful addition
+                    actualCheckTimeInput.value = '';
+                    glucoseLevelInput.value = '';
+                    glucoseContextInput.value = '';
+                    commentsInput.value = '';
+              this.getBloodGlucoseMeasurements();
+            this.dataStore.set('bloodGlucoseMeasurement', bloodGlucoseMeasurement);
 
-        if (searchCriteria === '') {
-            searchResultsContainer.classList.add('hidden');
-            searchCriteriaDisplay.innerHTML = '';
-            searchResultsDisplay.innerHTML = '';
-        } else {
-            searchResultsContainer.classList.remove('hidden');
-            searchCriteriaDisplay.innerHTML = `"${searchCriteria}"`;  // `"${viewAllBloodGlucoseMeasurementsCriteria}"`
-            searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);//2
+        } catch (error) {
+            console.error('Error adding bloodGlucoseMeasurement:', error);
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        } finally {
+            addButton.innerText = origButtonText;
         }
     }
 
-       getHTMLForSearchResults(searchResults) {
-           if (viewAllBloodGlucoseMeasurementsResults.length === 0) { ////viewAllBloodGlucoseMeasurementsResults????????not sure the name right?????
-               return '<h4>No results found</h4>';
-           }
-
-           let html = '<table><tr><th>Actual Check Time</th><th>Glucose Level</th><th>Glucose Context</th><th>Comments</th></tr>';
-           for (const res of searchResults) {
-               html += `
-               <tr>
-                   <td>${res.actualCheckTime}</td>
-                   <td>${res.glucoseLevel}</td>
-                   <td>${res.glucoseContext}</td>
-                   <td>${res.comments}</td>
-               </tr>`;
-           }
-           html += '</table>';
-
-           return html;
-       }
-
-}
-
-/**
- * Main method to run when the page contents have loaded.
- */
-const main = async () => {
-    const bloodGlucoseMeasurements = new BloodGlucoseMeasurements();
-    bloodGlucoseMeasurements.mount();
-};
-
-window.addEventListener('DOMContentLoaded', main);
-
-
-
-import CareCompassClient from '../api/careCompassClient';
-import Header from '../components/header';
-import BindingClass from '../util/bindingClass';
-import DataStore from '../util/DataStore';
-
-const SEARCH_CRITERIA_KEY = 'search-criteria';  // 定义搜索条件的键名
-const SEARCH_RESULTS_KEY = 'search-results';   // 定义搜索结果的键名
-const EMPTY_DATASTORE_STATE = {                // 定义空的数据存储状态
-    [SEARCH_CRITERIA_KEY]: '',                  // 初始搜索条件为空字符串
-    [SEARCH_RESULTS_KEY]: [],                   // 初始搜索结果为空数组
-};
-
-class BloodGlucoseMeasurements extends BindingClass {
-    constructor() {
-        super();
-        // 绑定类方法
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewAllBloodGlucoseMeasurements', 'search', 'displaySearchResults', 'getHTMLForSearchResults'], this);
-        // 创建 DataStore 实例
-        this.dataStore = new DataStore();
-        // 添加数据变化监听器
-        this.dataStore.addChangeListener(this.displaySearchResults);
-        // 创建 Header 实例并传入 DataStore 实例
-        this.header = new Header(this.dataStore);
-        console.log("BloodGlucoseMeasurements 构造函数");
-    }
-
-    async mount() {//初始化
-        // 添加点击事件监听器，用于处理添加血糖测量的表单提交
-        document.getElementById('add-bloodGlucoseMeasurement-form').addEventListener('click', this.submit);
-        // 添加页眉到页面
-        await this.header.addHeaderToPage();
-        // 创建 CareCompassClient 实例
-        this.client = new CareCompassClient();
-    }
-}
-
-async submit(event) {//点击按钮发生的事情 2
-    // 阻止表单默认提交行为
-    event.preventDefault();
-
-    // 获取错误信息显示元素并清空显示内容
-    const errorMessageDisplay = document.getElementById('error-message');
-    errorMessageDisplay.innerText = ``;
-    // 隐藏错误信息显示元素
-    errorMessageDisplay.classList.add('hidden');
-
-    // 获取添加血糖测量按钮元素，并获取其原始文本内容
-    const createButton = document.getElementById('add-bloodGlucoseMeasurement-form');
-    // 获取搜索所有血糖测量按钮元素，并获取其原始文本内容
-    const createButton = document.getElementById('search-allBloodGlucoseMeasurements-form');
-    const origButtonText = createButton.innerText;
-    // 将按钮文本设置为 'Loading...'
-    createButton.innerText = 'Loading...';
-
-    // 获取实际检查时间、血糖水平、血糖情境和备注输入框中的值
-    const actualCheckTime = document.getElementById('actualCheckTime').value;
-    const glucoseLevel = document.getElementById('glucoseLevel').value;
-    const glucoseContext = document.getElementById('glucoseContext').value;
-    const comments = document.getElementById('comments').value;
-
-    try {
-        // 调用 CareCompassClient 实例的 addBloodGlucoseMeasurement 方法添加血糖测量
-        const bloodGlucoseMeasurement = await this.client.addBloodGlucoseMeasurement(actualCheckTime, glucoseLevel, glucoseContext, comments);
-        // 将添加的血糖测量信息存储到数据存储中
-        this.dataStore.set('bloodGlucoseMeasurement', bloodGlucoseMeasurement);
-    } catch (error) {
-        // 如果出现错误，恢复按钮原始文本内容，并显示错误信息
-        createButton.innerText = origButtonText;
-        errorMessageDisplay.innerText = `错误: ${error.message}`;
-        errorMessageDisplay.classList.remove('hidden');
-    } finally {
-        // 最终将按钮文本恢复为原始文本内容
-        createButton.innerText = origButtonText;
-    }
-}
-
-redirectToViewAllBloodGlucoseMeasurements() { //转到'/bloodGlucoseMeasurements'端点      //????????not sure the name right?????
-    // 获取所有血糖测量数据
-    const allBloodGlucoseMeasurements = this.dataStore.get('allBloodGlucoseMeasurements');
-    // 如果数据不为空或未定义
-    if (allBloodGlucoseMeasurements !== null && allBloodGlucoseMeasurements !== undefined) {
-        // 跳转到 '/bloodGlucoseMeasurements' 端点
-        window.location.href = '/bloodGlucoseMeasurements';
-    }
-}
-
-async search(evt) {  // 设置搜索条件并更新数据存储
-    // 阻止表单默认提交行为
-    evt.preventDefault();
-
-    // 获取搜索条件
-    const searchCriteria = document.getElementById('search-criteria').value;
-    // 获取先前的搜索条件
-    const previousSearchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
-
-    // 如果用户未更改搜索条件，则不执行任何操作
-    if (previousSearchCriteria === searchCriteria) {
-        return;
-    }
-
-    if (searchCriteria) {
-        // 如果存在搜索条件，则执行搜索操作，并将结果设置到数据存储中
-        const results = await this.client.search(searchCriteria);
-
+    async getBloodGlucoseMeasurements() {
+        console.log("Fetching bloodGlucoseMeasurements...");
+        const results = await this.client.getAllBloodGlucoseMeasurements();
+        console.log("Fetched bloodGlucoseMeasurement:", results);
         this.dataStore.setState({
-            [SEARCH_CRITERIA_KEY]: searchCriteria,
-            [SEARCH_RESULTS_KEY]: results,
+            [RESULTS_KEY]: results,
         });
-    } else {
-        // 如果搜索条件为空，则将数据存储状态设置为空
-        this.dataStore.setState(EMPTY_DATASTORE_STATE);
+    }
+
+displayBloodResults() {
+        const bloodResults = this.dataStore.get(RESULTS_KEY);
+        const bloodResultsDisplay = document.getElementById('View-Table');
+        bloodResultsDisplay.innerHTML = this.getHTMLForBloodResults(bloodResults.bloodGlucoseMeasurements);
+    }
+
+    getHTMLForBloodResults(searchResults) {
+        if (searchResults.length === 0) {
+            return '<h4>No results found</h4>';
+        }
+
+        let html = '<table><tr><th>Actual Check Time</th><th>Glucose Level</th><th>Glucose Context</th><th>Comments</th></tr>';
+        for (const res of searchResults) {
+            html += `
+            <tr data-id="${res.actualCheckTime}">
+                <td>${res.actualCheckTime}</td>
+                <td class="editable" data-field="glucoseLevel">${res.glucoseLevel}</td>
+                <td class="editable" data-field="glucoseContext">${res.glucoseContext}</td>
+                <td class="editable" data-field="comments">${res.comments}</td>
+                <td>
+                    <button class="update-button" data-id="${res.actualCheckTime}">Update</button>
+                    <button class="save-button" data-id="${res.actualCheckTime}" style="display:none;">Save</button>
+                    <button class="delete-button" data-id="${res.actualCheckTime}">Delete</button>
+                </td>
+            </tr>`;
+        }
+        html += '</table>';
+
+        return html;
+    }
+
+        updateToMeasurementForm(event) {
+            if (event.target.classList.contains('update-button')) {
+                const row = event.target.closest('tr');
+                row.querySelectorAll('.editable').forEach(cell => {
+                    const field = cell.getAttribute('data-field');
+                    const value = cell.innerText; // Use textContent for reading initial value
+                    cell.innerHTML = `<input type="text" name="${field}" value="${value}" />`; // Use value attribute for input fields
+                });
+                row.querySelector('.update-button').style.display = 'none';
+                row.querySelector('.save-button').style.display = 'inline-block';
+            }
+
+
+
+        if (event.target.classList.contains('save-button')) {
+            const row = event.target.closest('tr');
+            const actualCheckTime = event.target.getAttribute('data-id');
+            const updatedData = {};
+            row.querySelectorAll('.editable').forEach(cell => {
+                const field = cell.getAttribute('data-field');
+                const input = cell.querySelector('input');
+                updatedData[field] = input.value;
+                cell.innerHTML = input.value;
+            });
+            row.querySelector('.update-button').style.display = 'inline-block';
+            row.querySelector('.save-button').style.display = 'none';
+            this.saveUpdatedMeasurement(actualCheckTime, updatedData);
+        }
+    }
+
+    async saveUpdatedMeasurement(actualCheckTime, updatedData) {
+        try {
+            await this.client.updateBloodGlucoseMeasurementDetails(actualCheckTime, updatedData.glucoseLevel, updatedData.glucoseContext, updatedData.comments);
+            console.log(`Measurement with Actual Check Time ${actualCheckTime} updated successfully.`);
+        } catch (error) {
+            console.error(`Error updating measurement with Actual Check Time ${actualCheckTime}:`, error);
+        }
+    }
+
+
+
+async deleteBloodGlucoseMeasurement(event) {
+        console.log("Deleting BloodGlucoseMeasurement...");
+        const actualCheckTime = event.target.getAttribute('data-id');
+        console.log(`Actual Check Time to delete: ${actualCheckTime}`);
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        try {
+            await this.client.deleteBloodGlucoseMeasurement(actualCheckTime);
+            console.log(`BloodGlucoseMeasurement with ID ${actualCheckTime} deleted successfully.`);
+            this.getBloodGlucoseMeasurements();  // Refresh the list
+        } catch (error) {
+            console.error(`Error deleting BloodGlucoseMeasurement with actualCheckTime ${actualCheckTime}:`, error);
+        }
     }
 }
 
-displaySearchResults() {    // 显示搜索结果
-    // 获取搜索条件和搜索结果
-    const searchCriteria = this.dataStore.get(SEARCH_CRITERIA_KEY);
-    const searchResults = this.dataStore.get(SEARCH_RESULTS_KEY);
-
-    // 获取搜索结果的显示容器和搜索条件的显示元素
-    const searchResultsContainer = document.getElementById('search-results-container');
-    const searchCriteriaDisplay = document.getElementById('search-criteria-display');
-    const searchResultsDisplay = document.getElementById('search-results-display');
-
-    if (searchCriteria === '') {
-        // 如果搜索条件为空，则隐藏搜索结果容器并清空搜索条件和搜索结果的显示内容
-        searchResultsContainer.classList.add('hidden');
-        searchCriteriaDisplay.innerHTML = '';
-        searchResultsDisplay.innerHTML = '';
-    } else {
-        // 如果搜索条件不为空，则显示搜索结果
-        searchResultsContainer.classList.remove('hidden');
-        // 在页面上显示搜索条件，并显示搜索结果的 HTML 内容
-        searchCriteriaDisplay.innerHTML = `"${searchCriteria}"`;
-        searchResultsDisplay.innerHTML = this.getHTMLForSearchResults(searchResults);
-    }
-}
-
-getHTMLForSearchResults(searchResults) {  // 获取用于显示搜索结果的 HTML
-    if (searchResults.length === 0) {
-        // 如果搜索结果为空，则显示未找到结果的提示
-        return '<h4>No results found</h4>';
-    }
-
-    // 构建包含搜索结果的 HTML 表格
-    let html = '<table><tr><th>实际检查时间</th><th>血糖水平</th><th>血糖情境</th><th>备注</th></tr>';
-    for (const res of searchResults) {
-        // 遍历搜索结果，构建表格行
-        html += `
-        <tr>
-            <td>${res.actualCheckTime}</td>
-            <td>${res.glucoseLevel}</td>
-            <td>${res.glucoseContext}</td>
-            <td>${res.comments}</td>
-        </tr>`;
-    }
-    html += '</table>';
-
-    return html;
-}
-
-/**
- * 页面内容加载完成后要运行的主要方法。
- */
 const main = async () => {
-    // 创建 BloodGlucoseMeasurements 实例
-    const bloodGlucoseMeasurements = new BloodGlucoseMeasurements();
-    // 初始化页面
-    bloodGlucoseMeasurements.mount();
+    const bloodGlucoseMeasurement = new BloodGlucoseMeasurement();
+    bloodGlucoseMeasurement.mount();
 };
 
-// 在 DOMContentLoaded 事件触发时运行主方法
 window.addEventListener('DOMContentLoaded', main);
-
-

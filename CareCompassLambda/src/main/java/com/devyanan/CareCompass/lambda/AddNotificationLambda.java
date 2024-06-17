@@ -41,4 +41,3 @@ public class AddNotificationLambda extends LambdaActivityRunner<AddNotificationR
         );
     }
 }
-

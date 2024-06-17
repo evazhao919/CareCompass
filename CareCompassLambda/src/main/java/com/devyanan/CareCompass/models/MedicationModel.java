@@ -78,38 +78,38 @@ public class MedicationModel {
         private String instructions;
         private Medication.MEDICATION_STATUS medicationStatus;
 
-           public Builder withPatientId(String patientId) {
-               this.patientId = patientId;
-               return this;
-            }
+        public Builder withPatientId(String patientId) {
+            this.patientId = patientId;
+            return this;
+        }
 
-           public Builder withMedicationId(String medicationId) {
-               this.medicationId = medicationId;
-               return this;
-           }
+        public Builder withMedicationId(String medicationId) {
+            this.medicationId = medicationId;
+            return this;
+        }
 
-            public Builder withMedicationName(String medicationName) {
-                this.medicationName = medicationName;
-                return this;
-            }
+        public Builder withMedicationName(String medicationName) {
+            this.medicationName = medicationName;
+            return this;
+        }
 
-            public Builder withPrescription(String prescription) {
-                this.prescription = prescription;
-                return this;
-            }
+        public Builder withPrescription(String prescription) {
+            this.prescription = prescription;
+            return this;
+        }
 
-            public Builder withInstructions(String instructions) {
-                this.instructions= instructions;
-                return this;
-            }
+        public Builder withInstructions(String instructions) {
+            this.instructions= instructions;
+            return this;
+        }
 
-           public Builder withMedicationStatus(Medication.MEDICATION_STATUS medicationStatus) {
-                this.medicationStatus = medicationStatus;
-                return this;
-            }
+        public Builder withMedicationStatus(Medication.MEDICATION_STATUS medicationStatus) {
+            this.medicationStatus = medicationStatus;
+            return this;
+        }
 
-            public MedicationModel build() {
-                return new MedicationModel(patientId, medicationId, medicationName, prescription, instructions, medicationStatus);
-            }
+        public MedicationModel build() {
+            return new MedicationModel(patientId, medicationId, medicationName, prescription, instructions, medicationStatus);
         }
     }
+}

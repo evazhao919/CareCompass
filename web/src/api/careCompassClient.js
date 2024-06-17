@@ -125,7 +125,6 @@ export default class CareCompassClient extends BindingClass {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a medication.");
             const response = await this.axiosClient.post(`medications`, {
-                   //  TODO ?  private final String medicationId;
                    medicationName: medicationName,
                    prescription: prescription,
                    instructions: instructions,
@@ -152,7 +151,6 @@ export default class CareCompassClient extends BindingClass {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a notification.");
             const response = await this.axiosClient.post(`notifications`, {
-                //TODO    private final String notificationId; ?
                     notificationTitle: notificationTitle,
                     reminderContent: reminderContent,
                     scheduledTime: scheduledTime,
@@ -394,7 +392,6 @@ export default class CareCompassClient extends BindingClass {
         }
     }
 
-//TODO  ???not sure......this is right,cause may do not enter the time may enter the time
     /**
      * Retrieves all upcoming notifications based on the provided scheduled time.
      * @param {string} scheduledTime - The scheduled time to filter upcoming notifications.
@@ -407,15 +404,15 @@ export default class CareCompassClient extends BindingClass {
 
         const response = await this.axiosClient.get(`upcomingNotifications`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
           params: {
-          scheduledTime: scheduledTime,   //TODO not sure  i should name it in request class like filterByTime
-            },
+          scheduledTime: scheduledTime
+            }
           });
 
           const result = {
-              notifications: response.data.notificationModelList
+              notifications: response.data.notifications
           };
 
           return result;
@@ -434,30 +431,21 @@ export default class CareCompassClient extends BindingClass {
      */
     async retrieveMedicationsByStatus(medicationStatus, errorCallback) {
         try {
-            if (!isValidMedicationStatus(medicationStatus)) {
-                throw new Error("Invalid medication status.");
-            }
 
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all medications by status.");
-            const response = await this.axiosClient.get(`medicationsByStatus/${medicationStatus}`);
+            const response = await this.axiosClient.get(`medicationsByStatus/${medicationStatus}`, {
+             headers: {
+                   Authorization: `Bearer ${token}`,
+                 }
+              });
 
-            return response.data.medicationModelList;
+            return response.data.medications;
          } catch (error) {
             this.handleError(error, errorCallback)
             throw error;
          }
     }
 
-    /**
-     * Validates the medication status value.
-     * @param {string} status - The medication status value to validate.
-     * @returns {boolean} True if the status is valid, otherwise false.
-     */
-     isValidMedicationStatus(medicationStatus) {
-         const allowedStatusValues = ["ACTIVE", "DISCONTINUED", "ON_HOLD", "TEMPORARY_STOP"];
-         const formattedStatus = status.toUpperCase().replace('_', '');
-         return allowedStatusValues.includes(formattedStatus);
-    }
 
     /**
      * Retrieves notifications based on the provided reminder type.
@@ -468,23 +456,16 @@ export default class CareCompassClient extends BindingClass {
     async retrieveNotificationsByReminderType(reminderType, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can retrieve all notifications by reminder type.");
-            const response = await this.axiosClient.get(`notificationsByReminderType/${reminderType}`);
-            return response.data.notificationModelList;
+            const response = await this.axiosClient.get(`notificationsByReminderType/${reminderType}`,{
+            headers: {
+                               Authorization: `Bearer ${token}`,
+                             }
+                          });
+            return response.data.notifications;  //TODO?
          } catch (error) {
             this.handleError(error, errorCallback)
             throw error;
          }
-    }
-
-    /**
-     * Validates the notification reminder type.
-     * @param {string} reminderType - The reminder type to validate.
-     * @returns {boolean} True if the reminder type is valid, otherwise false.
-     */
-    isValidNotificationsByReminderType(reminderType) {
-        const allowedTypeValues = ["GLUCOSE_MEASUREMENT", "MEDICATION", "VITAL_SIGNS", "APPOINTMENT", "GENERAL"];
-        const formattedType = reminderType.toUpperCase().replace('_', '');
-        return allowedTypeValues.includes(formattedType);
     }
 
     /**
@@ -497,7 +478,7 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The updated medication data.
      */
-    async updateMedicationDetails(medicationId, medicationName, prescription, medicationStatus, instructions, errorCallback) {
+    async updateMedicationDetails(medicationId, medicationName, prescription, instructions, medicationStatus, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update a medication.");
 
@@ -529,22 +510,74 @@ export default class CareCompassClient extends BindingClass {
      * @param {Function} errorCallback - Callback function to handle errors.
      * @returns {Object} The updated notification data.
      */
-    async updateNotificationDetails(notificationId, notificationTitle, reminderType, reminderContent, scheduledTime, errorCallback) {
+    async updateNotificationDetails(notificationId, notificationTitle, scheduledTime, reminderType, reminderContent) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can update a notification.");
 
             const response = await this.axiosClient.put(`notifications/${notificationId}`, {
                 notificationId: notificationId,
                 notificationTitle: notificationTitle,
-                reminderType: reminderType,
                 reminderContent: reminderContent,
-                scheduledTime: scheduledTime
+                scheduledTime: scheduledTime,
+                reminderType: reminderType
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             return response.data.notification;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+            throw error;
+        }
+    }
+
+    async updateBloodGlucoseMeasurementDetails(actualCheckTime, glucoseLevel, glucoseContext, comments, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can update a blood glucose measurement.");
+
+            const response = await this.axiosClient.put(`bloodGlucoseMeasurements/${actualCheckTime}`, {
+                actualCheckTime: actualCheckTime,
+                glucoseLevel: glucoseLevel,
+                glucoseContext: glucoseContext,
+                comments: comments
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.bloodGlucoseMeasurement;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+            throw error;
+        }
+    }
+
+    async updateVitalSignsDetails(actualCheckTime, temperature, heartRate, pulse, respiratoryRate, systolicPressure, diastolicPressure, meanArterialPressure, weight, patientPosition, bloodOxygenLevel, oxygenTherapy, flowDelivered, patientActivity, comments, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can update a blood glucose measurement.");
+            const response = await this.axiosClient.put(`vitalSigns/${actualCheckTime}`, {
+                actualCheckTime: actualCheckTime,
+                temperature: temperature,
+                heartRate: heartRate,
+                pulse: pulse,
+                respiratoryRate: respiratoryRate,
+                systolicPressure: systolicPressure,
+                diastolicPressure: diastolicPressure,
+                meanArterialPressure: meanArterialPressure,
+                weight: weight,
+                patientPosition: patientPosition,
+                bloodOxygenLevel: bloodOxygenLevel,
+                oxygenTherapy: oxygenTherapy,
+                flowDelivered: flowDelivered,
+                patientActivity: patientActivity,
+                comments: comments
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.vitalSigns;
         } catch (error) {
             this.handleError(error, errorCallback);
             throw error;

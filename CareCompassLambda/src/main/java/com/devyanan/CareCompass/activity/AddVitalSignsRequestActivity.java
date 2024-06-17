@@ -61,8 +61,8 @@ public class AddVitalSignsRequestActivity {
         ModelConverter modelConverter = new ModelConverter();
         VitalSignsModel vitalSignsModel = modelConverter.toVitalSignsModel(result);
 
-       return AddVitalSignsResult.builder()
-               .withVitalSignModel(vitalSignsModel)
-               .build();
+        return AddVitalSignsResult.builder()
+                .withVitalSignModel(vitalSignsModel)
+                .build();
     }
 }

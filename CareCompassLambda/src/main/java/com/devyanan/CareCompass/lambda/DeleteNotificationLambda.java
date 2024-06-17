@@ -33,8 +33,8 @@ public class DeleteNotificationLambda extends LambdaActivityRunner<DeleteNotific
 
                     return input.fromPath(path -> requestBuilder
                             .withPatientId(unauthenticatedRequest.getPatientId())
-                                    .withNotificationId(path.get("notificationId"))
-                                    .build());
+                            .withNotificationId(path.get("notificationId"))
+                            .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteNotificationActivity().handleRequest(request)));
     }

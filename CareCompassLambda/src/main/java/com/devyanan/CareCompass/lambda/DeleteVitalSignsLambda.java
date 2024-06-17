@@ -29,12 +29,12 @@ public class DeleteVitalSignsLambda extends LambdaActivityRunner<DeleteVitalSign
                 () -> {
                     DeleteVitalSignsRequest.Builder requestBuilder = DeleteVitalSignsRequest.builder();
                     DeleteVitalSignsRequest unauthenticatedRequest = input.fromUserClaims(claims -> requestBuilder
-                                    .withPatientId(claims.get("email"))
-                                    .build());
+                            .withPatientId(claims.get("email"))
+                            .build());
                     return input.fromPath(path -> requestBuilder
                             .withPatientId(unauthenticatedRequest.getPatientId())
-                                    .withActualCheckTime(path.get("actualCheckTime"))
-                                    .build());
+                            .withActualCheckTime(path.get("actualCheckTime"))
+                            .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideDeleteVitalSignsActivity().handleRequest(request)));
     }

@@ -77,4 +77,3 @@ public class LambdaResponse extends APIGatewayProxyResponseEvent {
         return error(e.getMessage());
     }
 }
-

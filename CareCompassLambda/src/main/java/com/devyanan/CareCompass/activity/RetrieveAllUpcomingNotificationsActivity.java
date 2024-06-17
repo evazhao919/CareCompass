@@ -40,10 +40,10 @@ public class RetrieveAllUpcomingNotificationsActivity {
         List<Notification> notificationList;
         LocalDateTime scheduledTime = LocalDateTime.now().withSecond(0).withNano(0);
         if(request.getScheduledTime() != null && !request.getScheduledTime().isBlank()){
-           scheduledTime = dateTimeConverter.unconvert(request.getScheduledTime());
+            scheduledTime = dateTimeConverter.unconvert(request.getScheduledTime());
         }
         log.info("ScheduledTime: {}", scheduledTime);
-            notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(),scheduledTime);
+        notificationList = notificationDao.RetrieveAllUpcomingNotifications(request.getPatientId(),scheduledTime);
         return RetrieveAllUpcomingNotificationsResult.builder()
                 .withNotifications(new ModelConverter().toNotificationModelList(notificationList))
                 .build();

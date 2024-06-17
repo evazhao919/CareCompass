@@ -3,7 +3,7 @@ package com.devyanan.CareCompass.activity.results;
 import com.devyanan.CareCompass.models.BloodGlucoseMeasurementModel;
 
 public class DeleteBloodGlucoseMeasurementResult {
-   private final BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel;
+    private final BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel;
 
     public DeleteBloodGlucoseMeasurementResult(BloodGlucoseMeasurementModel bloodGlucoseMeasurementModel) {
         this.bloodGlucoseMeasurementModel = bloodGlucoseMeasurementModel;
