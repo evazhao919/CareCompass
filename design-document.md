@@ -1,16 +1,21 @@
-# Project Design Document - CareCompass Design
+# CareCompass
 
+---------
 ## 1. Problem Statement
+
 
 CareCompass is a healthcare coordination platform designed to empower patients, caregivers, and healthcare providers with seamless access to essential healthcare tools, resources, and support.
 Many discharged patients, especially adults with long-term care needs, require ongoing monitoring and documentation of their health conditions after leaving the hospital.
 Caregivers or family members often play a crucial role in managing the patient's health information, including medication, notifications, vital signs, and blood glucose measurements.
+
+---------
 ## 2. Top Questions to Resolve in Review
 
 1. How can we create a unified platform that integrates various aspects of healthcare navigation, coordination, and support?
 2. What features and functionalities should CareCompass include to address the diverse needs of patients, caregivers, and healthcare providers?
 3. How can we ensure that CareCompass is user-friendly, accessible, and secure for all stakeholders?
 
+---------
 ## 3. Use Cases
 
 U1. As a user, I would like to create a new medication record, so I can manage the medication schedule efficiently.
@@ -51,6 +56,7 @@ U18. As a user, I would like to delete a blood glucose measurement to correct an
 
 U19. As a user, I would like to view all blood glucose measurements to analyze trends and adjust treatments.
 
+---------
 ## 4. Project Scope
 
 ### 4.1. In Scope
@@ -73,13 +79,13 @@ Several potential features are currently designated as "out of scope" for the in
 The initial phase focuses on establishing a robust foundation with key functionalities that address the most pressing needs of our users.
 More complex features are planned for future updates, where additional time and resources can be dedicated to their development and integration.
 
-
+---------
 ## 5. Proposed Architecture Overview
 
 The CareCompass application will be developed as a web-based platform accessible via web browsers on desktop.
 It will utilize a serverless architecture using AWS Lambda functions and Amazon DynamoDB for data storage.
 The front end will be built using modern web technologies such as HTML, CSS, and JavaScript for dynamic user interfaces.
-
+---------
 ## 6. API
 
 ### 6.1. Public Models
@@ -235,6 +241,7 @@ REMINDER_TYPE reminderType;  // enum
 * Body: BloodGlucoseMeasurementModelList
 * Response: List of BloodGlucoseMeasurementModel.
 
+---------
 ## 7. Tables
 
 ### 7.1. `medications`
@@ -288,12 +295,12 @@ comments // String
 patientId // Partition Key, String
 actualCheckTime // LocalDateTime (Sort Key)
 ```
-
+---------
 ## 8. Pages
 
 ![(Design_CareCompass_.png)](resources/images/OverallWorkflow.png)
 
-
+---------
 ## Technologies Used
 
 * Programming Languages: Java, JavaScript.
