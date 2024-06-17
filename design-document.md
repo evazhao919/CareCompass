@@ -3,7 +3,6 @@
 ---------
 ## 1. Problem Statement
 
-
 CareCompass is a healthcare coordination platform designed to empower patients, caregivers, and healthcare providers with seamless access to essential healthcare tools, resources, and support.
 Many discharged patients, especially adults with long-term care needs, require ongoing monitoring and documentation of their health conditions after leaving the hospital.
 Caregivers or family members often play a crucial role in managing the patient's health information, including medication, notifications, vital signs, and blood glucose measurements.
@@ -82,9 +81,9 @@ More complex features are planned for future updates, where additional time and 
 ---------
 ## 5. Proposed Architecture Overview
 
-The CareCompass application will be developed as a web-based platform accessible via web browsers on desktop.
-It will utilize a serverless architecture using AWS Lambda functions and Amazon DynamoDB for data storage.
-The front end will be built using modern web technologies such as HTML, CSS, and JavaScript for dynamic user interfaces.
+* The CareCompass application will be developed as a web-based platform accessible via web browsers on desktop. 
+* It will utilize a serverless architecture using AWS Lambda functions and Amazon DynamoDB for data storage. 
+* The front end will be built using modern web technologies such as HTML, CSS, and JavaScript for dynamic user interfaces.
 ---------
 ## 6. API
 
