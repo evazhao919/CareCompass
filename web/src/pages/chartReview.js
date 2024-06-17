@@ -97,26 +97,26 @@ async getNotificationByCurrentTime() { // 异步获取通知方法
     }
 
   displayNotificationByReminderTypeResults() {
-            const notificationResults = this.dataStore.get(RESULTS_BY_TYPE_KEY);    // 从 dataStore 中获取药物数据
-            const notificationResultsDisplay = document.getElementById('View-Type-Cards');    // 获取页面上 ID 为 View-Cards 的元素，用于显示药物数据
+            const notificationResults = this.dataStore.get(RESULTS_BY_TYPE_KEY);
+            const notificationResultsDisplay = document.getElementById('View-Type-Cards');
 
   if (notificationResults) {    // 如果获取到了药物数据
-            this.getHTMLForNotificationByReminderTypeResults(notificationResults).then(html => {        // 调用 getHTMLForNotificationByReminderTypeResults 方法获取药物数据的 HTML 内容，并将其显示在页面上
+            this.getHTMLForNotificationByReminderTypeResults(notificationResults).then(html => {
                 notificationResultsDisplay.innerHTML = html;
             });
         } else {
-          //  notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected type.</p>';        // 如果没有获取到药物数据，显示一条错误信息
-               notificationResultsDisplay.innerHTML = '<p></p>';        // 如果没有获取到药物数据，显示一条错误信息
+          //  notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected type.</p>';
+               notificationResultsDisplay.innerHTML = '<p></p>';
         }
 
         }
 
 displayMedicationByMedicationStatusResults() {
-            const medicationResults = this.dataStore.get(RESULTS_BY_STATUS_KEY);    // 从 dataStore 中获取药物数据
-            const medicationResultsDisplay = document.getElementById('View-status-Cards');    // 获取页面上 ID 为 View-Cards 的元素，用于显示药物数据
+            const medicationResults = this.dataStore.get(RESULTS_BY_STATUS_KEY);
+            const medicationResultsDisplay = document.getElementById('View-status-Cards');
 
   if (medicationResults) {    // 如果获取到了药物数据
-            this.getHTMLForMedicationResults(medicationResults).then(html => {        // 调用 getHTMLForMedicationResults 方法获取药物数据的 HTML 内容，并将其显示在页面上
+            this.getHTMLForMedicationResults(medicationResults).then(html => {
                 medicationResultsDisplay.innerHTML = html;
             });
         } else {
@@ -126,21 +126,21 @@ displayMedicationByMedicationStatusResults() {
 
         }
 
-displayNotificationByCurrentTimeResults() { // 显示通知结果方法
-        const notificationResults = this.dataStore.get(CURRENT_TIME_RESULTS_KEY); // 从 dataStore 获取通知结果
+displayNotificationByCurrentTimeResults() {
+        const notificationResults = this.dataStore.get(CURRENT_TIME_RESULTS_KEY);
         const notificationResultsDisplay = document.getElementById('View-upcoming-Cards');
-        if (notificationResults) { // 如果获取到了通知数据
-            const html = this.getHTMLForNotificationCurrentTimeResults(notificationResults); // 调用 getHTMLForNotificationCurrentTimeResults 方法获取通知数据的 HTML 内容
-            notificationResultsDisplay.innerHTML = html; // 直接设置 HTML 内容
+        if (notificationResults) {
+            const html = this.getHTMLForNotificationCurrentTimeResults(notificationResults);
+            notificationResultsDisplay.innerHTML = html;
         } else {
-           // notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected status.</p>'; // 如果没有获取到通知数据，显示一条错误信息
+           // notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected status.</p>';
               notificationResultsDisplay.innerHTML = '<p></p>'; // 如果没有获取到通知数据，显示一条错误信息
         }
     }
 
     async getHTMLForNotificationByReminderTypeResults(notificationResults) {
         try {
-            let reminderTypeHTML = "";     // 遍历药物数据数组，生成每个药物的 HTML 卡片内容
+            let reminderTypeHTML = "";
             notificationResults.forEach(notification => {
                 const cardHtml = `
                     <div class="card mb-3">
@@ -167,7 +167,7 @@ displayNotificationByCurrentTimeResults() { // 显示通知结果方法
 
     async getHTMLForMedicationResults(medicationResults) {
         try {
-            let medicationStatusHTML = "";     // 遍历药物数据数组，生成每个药物的 HTML 卡片内容
+            let medicationStatusHTML = "";
             medicationResults.forEach(medication => {
                 const cardHtml = `
                     <div class="card mb-3">
@@ -192,10 +192,10 @@ displayNotificationByCurrentTimeResults() { // 显示通知结果方法
 
 
 
-    getHTMLForNotificationCurrentTimeResults(notificationResults) { // 获取通知结果的 HTML 方法
+    getHTMLForNotificationCurrentTimeResults(notificationResults) {
 
          try {
-             let notificationUpcomingHTML = "";     // 遍历药物数据数组，生成每个药物的 HTML 卡片内容
+             let notificationUpcomingHTML = "";
              notificationResults.forEach(notification => {
                  const cardHtml = `
                      <div class="card mb-3">
