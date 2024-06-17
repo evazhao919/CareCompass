@@ -138,7 +138,7 @@ REMINDER_TYPE reminderType;  // enum
 * POST /medications
 * Body: MedicationModel
 * Response: Returns the newly created MedicationModel.
-  ![CreateMedicationRecord.png](images/CreateMedicationRecord.png)
+  ![CreateMedicationRecord.png](resources/images/CreateMedicationRecord.png)
 
 #### 2. Update Medication Endpoint
 * PUT /medications/{medicationId}
@@ -175,7 +175,7 @@ REMINDER_TYPE reminderType;  // enum
 * DELETE /vitalSigns/{actualCheckTime}
 * Body: VitalSignModel
 * Response: return success and message.
-  ![DeleteVitalSignsRecord.png](images/DeleteVitalSignsRecord.png)
+  ![DeleteVitalSignsRecord.png](resources/images/DeleteVitalSignsRecord.png)
 *
 #### 4. Get All Vital Signs Endpoint
 * GET /vitalSigns
@@ -202,7 +202,7 @@ REMINDER_TYPE reminderType;  // enum
 * GET /notifications
 * Body: NotificationModelList
 * Response: List of NotificationModel.
-  ![ListAllNotificationsVitalSignsRecords.png](images/ListAllNotificationsVitalSignsRecords.png)
+  ![ListAllNotificationsVitalSignsRecords.png](resources/images/ListAllNotificationsVitalSignsRecords.png)
 
 #### 5. Retrieve All Upcoming Notifications Endpoint
 * GET /upcomingNotifications/
@@ -291,7 +291,7 @@ actualCheckTime // LocalDateTime (Sort Key)
 
 ## 8. Pages
 
-![(Design_CareCompass_.png)](images/OverallWorkflow.png)
+![(Design_CareCompass_.png)](resources/images/OverallWorkflow.png)
 
 
 ## Technologies Used
