@@ -8,7 +8,7 @@ const RESULTS_KEY = 'vitalSigns-results';
 class VitalSigns extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addVitalSigns', 'getVitalSigns', 'displayVitalSignsResults', 'getHTMLForVitalSignsResults', 'updateToVitalSignsForm', 'saveUpdatedVitalSigns','deleteVitalSigns'], this);
+        this.bindClassMethods(['mount', 'submit', 'addVitalSigns', 'getVitalSigns', 'displayVitalSignsResults', 'getHTMLForVitalSignsResults', 'updateToVitalSignsForm', 'saveUpdatedVitalSigns','deleteVitalSigns','confirmDelete'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayVitalSignsResults);
         this.header = new Header(this.dataStore);
@@ -22,10 +22,11 @@ class VitalSigns extends BindingClass {
         this.client = new CareCompassClient();
         this.getVitalSigns();
 
-document.getElementById('add').addEventListener('submit', this.addVitalSigns);
-document.getElementById('View-Table').addEventListener('click', (event) => {
+    document.getElementById('add').addEventListener('submit', this.addVitalSigns);
+    document.getElementById('View-Table').addEventListener('click', (event) => {
     if (event.target.classList.contains('delete-button')) {
-        this.deleteVitalSigns(event);
+        this.confirmDelete(event);
+//        this.deleteVitalSigns(event);
     }
     if (event.target.classList.contains('update-button') || event.target.classList.contains('save-button')) {
         this.updateToVitalSignsForm(event);
@@ -44,8 +45,8 @@ document.getElementById('View-Table').addEventListener('click', (event) => {
         const showAllVitalSignsButton = document.getElementById('search-allVitalSigns-form');
         const origButtonText = addVitalSignsButton.innerText;
         const origSearchButtonText = showAllVitalSignsButton.innerText;
-        addVitalSignsButton.innerText = 'Loading...';
-        showAllVitalSignsButton.innerText = 'Loading...';
+        addVitalSignsButton.innerText = 'Adding...';
+        showAllVitalSignsButton.innerText = 'Adding...';
 
         const vitalSignsDetails = {
             actualCheckTime: document.getElementById('actualCheckTime').value,
@@ -144,7 +145,7 @@ debugger;
             return;
         }
 
-        addButton.innerText = 'Loading...';
+        addButton.innerText = 'Adding...';
 
         try {
 
@@ -238,7 +239,7 @@ debugger;
 //            row.querySelector('.update-button').style.display = 'none';
 //            row.querySelector('.save-button').style.display = 'inline-block';
 //        }
-if (event.target.classList.contains('update-button')) {
+     if (event.target.classList.contains('update-button')) {
         const row = event.target.closest('tr');
         row.querySelectorAll('.editable').forEach(cell => {
             const field = cell.getAttribute('data-field');
@@ -294,23 +295,24 @@ if (event.target.classList.contains('update-button')) {
         }
     }
 
-        async deleteVitalSigns(event) {
-            console.log("Deleting vitalSigns...");
-            const actualCheckTime = event.target.getAttribute('data-id');
-            console.log(`actualCheckTime to delete: ${actualCheckTime}`);
-            const errorMessageDisplay = document.getElementById('error-message');
-            errorMessageDisplay.innerText = ``;
-            errorMessageDisplay.classList.add('hidden');
+     confirmDelete(event) {
+     const deleteButton = event.target;
+     const actualCheckTime = deleteButton.getAttribute('data-id');
 
-            try {
-                await this.client.deleteVitalSigns(actualCheckTime);
-                console.log(`VitalSigns with actualCheckTime ${actualCheckTime} deleted successfully.`);
-                this.getVitalSigns();  // Refresh the list
-            } catch (error) {
-                console.error(`Error deleting vitalSigns with ID ${actualCheckTime}:`, error);
-            }
-        }
-
+     if (window.confirm(`Are you sure you want to delete vitalSigns with actualCheckTime ${actualCheckTime}?`)) {
+                 this.deleteVitalSigns(actualCheckTime);
+             }else {
+                    return;
+                   }
+             }
+      async deleteVitalSigns(actualCheckTime) {
+              try {
+                 await this.client.deleteVitalSigns(actualCheckTime);
+                 this.getVitalSigns();   // Refresh the list after deletion
+              } catch (error) {
+                   console.error(`Error deleting delete vitalSigns with actualCheckTime ${actualCheckTime}:`, error);
+              }
+           }
 }
 
 const main = async () => {

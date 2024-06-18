@@ -8,7 +8,7 @@ const RESULTS_KEY = 'notification-results';
 class Notification extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addNotification', 'getNotifications', 'getNotifications', 'displayNotificationResults', 'getHTMLForNotificationResults', 'updateToNotificationForm', 'saveUpdatedNotification'], this);
+        this.bindClassMethods(['mount', 'submit', 'addNotification', 'getNotifications', 'getNotifications', 'displayNotificationResults', 'getHTMLForNotificationResults', 'updateToNotificationForm', 'saveUpdatedNotification','confirmDelete'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayNotificationResults);
         this.header = new Header(this.dataStore);
@@ -24,7 +24,8 @@ class Notification extends BindingClass {
         document.getElementById('View-Table').addEventListener('click', (event) => {
             if (event.target.classList.contains('delete-button')) {
                 console.log('Delete button clicked');
-                this.deleteNotification(event);
+                 this.confirmDelete(event);
+               // this.deleteNotification(event);
             }
             if (event.target.classList.contains('update-button') || event.target.classList.contains('save-button')) {
                 this.updateToNotificationForm(event);
@@ -42,8 +43,8 @@ class Notification extends BindingClass {
         const showAllNotificationButton = document.getElementById('search-allNotifications-form');
         const origButtonText = addNotificationButton.innerText;
         const origSearchButtonText = showAllNotificationButton.innerText;
-        addNotificationButton.innerText = 'Loading...';
-        showAllNotificationButton.innerText = 'Loading...';
+        addNotificationButton.innerText = 'Adding...';
+        showAllNotificationButton.innerText = 'Adding...';
 
         const notificationTitle = document.getElementById('notificationTitle').value;
         const reminderContent = document.getElementById('reminderContent').value;
@@ -64,55 +65,55 @@ class Notification extends BindingClass {
         }
     }
 
-async addNotification(evt) {
-    evt.preventDefault();
+        async addNotification(evt) {
+        evt.preventDefault();
 
-    const addButton = document.getElementById('add');
-    const origButtonText = addButton.innerText;
+        const addButton = document.getElementById('add');
+        const origButtonText = addButton.innerText;
 
-    const errorMessageDisplay = document.getElementById('error-message');
-    errorMessageDisplay.innerText = '';
-    errorMessageDisplay.classList.add('hidden');
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = '';
+        errorMessageDisplay.classList.add('hidden');
 
-//    const notificationTitle = document.getElementById('notificationTitle').value;
-//    const reminderContent = document.getElementById('reminderContent').value;
-//    const scheduledTime = document.getElementById('scheduledTime').value;
-//    const reminderType = document.getElementById('reminderType').value;
-      const notificationTitleInput = document.getElementById('notificationTitle');
-      const reminderContentInput = document.getElementById('reminderContent');
-      const scheduledTimeInput = document.getElementById('scheduledTime');
-      const reminderTypeInput = document.getElementById('reminderType');
+    //    const notificationTitle = document.getElementById('notificationTitle').value;
+    //    const reminderContent = document.getElementById('reminderContent').value;
+    //    const scheduledTime = document.getElementById('scheduledTime').value;
+    //    const reminderType = document.getElementById('reminderType').value;
+          const notificationTitleInput = document.getElementById('notificationTitle');
+          const reminderContentInput = document.getElementById('reminderContent');
+          const scheduledTimeInput = document.getElementById('scheduledTime');
+          const reminderTypeInput = document.getElementById('reminderType');
 
-      const notificationTitle = notificationTitleInput.value;
-      const reminderContent = reminderContentInput.value;
-      const scheduledTime = scheduledTimeInput.value;
-      const reminderType = reminderTypeInput.value;
+          const notificationTitle = notificationTitleInput.value;
+          const reminderContent = reminderContentInput.value;
+          const scheduledTime = scheduledTimeInput.value;
+          const reminderType = reminderTypeInput.value;
 
 
-    if (notificationTitle.length === 0 || reminderContent.length === 0 || scheduledTime.length === 0 || reminderType.length === 0) {
-        return;
-    }
+        if (notificationTitle.length === 0 || reminderContent.length === 0 || scheduledTime.length === 0 || reminderType.length === 0) {
+            return;
+        }
 
-    addButton.innerText = 'Loading...';
+        addButton.innerText = 'Adding...';
 
-    try {
-        const notification = await this.client.addNotification(notificationTitle, reminderContent, scheduledTime, reminderType,(()=>{}));
-          // Clear input fields after successful addition
+        try {
+            const notification = await this.client.addNotification(notificationTitle, reminderContent, scheduledTime, reminderType,(()=>{}));
+              // Clear input fields after successful addition
                         notificationTitleInput.value = '';
                         reminderContentInput.value = '';
                         scheduledTimeInput.value = '';
                         reminderTypeInput.value = '';
-        this.getNotifications();  // Refresh the list
-        this.dataStore.set('Notification', notification);
+            this.getNotifications();  // Refresh the list
+            this.dataStore.set('Notification', notification);
 
-    } catch (error) {
-        console.error('Error adding notification:', error);
-        errorMessageDisplay.innerText = `Error: ${error.message}`;
-        errorMessageDisplay.classList.remove('hidden');
-    } finally {
-        addButton.innerText = origButtonText;
+        } catch (error) {
+            console.error('Error adding notification:', error);
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        } finally {
+            addButton.innerText = origButtonText;
+        }
     }
-}
 
 
     async getNotifications() {  //make a call to API download some result, then write to the datastore
@@ -193,16 +194,38 @@ async addNotification(evt) {
         }
     }
 
-        async deleteNotification(event) {
-            console.log("Deleting notification...");
-            const notificationId = event.target.getAttribute('data-id');
-            try {
-                await this.client.deleteNotification(notificationId);
-                this.getNotifications();  // Refresh the list after deletion
-            } catch (error) {
-                console.error(`Error deleting notification with ID ${notificationId}:`, error);
-            }
-        }
+     confirmDelete(event) {
+     const deleteButton = event.target;
+     const notificationId = deleteButton.getAttribute('data-id');
+
+     if (window.confirm(`Are you sure you want to delete notification with ID ${notificationId}?`)) {
+                 this.deleteNotification(notificationId);
+             }else {
+                    return;
+                   }
+             }
+      async deleteNotification(notificationId) {
+              try {
+                 await this.client.deleteNotification(notificationId);
+                 this.getNotifications();  // Refresh the list after deletion
+              } catch (error) {
+                   console.error(`Error deleting notification with ID ${notificationId}:`, error);
+              }
+           }
+
+//        async deleteNotification(event) {
+////            const deleteButton = event.target;   // Cause table overflow, not so bad, but better to the other way
+////            const origDeleteText = deleteButton.innerText;
+////            deleteButton.innerText = 'Deleting...';
+//            console.log("Deleting notification...");
+//            const notificationId = event.target.getAttribute('data-id');
+//            try {
+//                await this.client.deleteNotification(notificationId);
+//                this.getNotifications();  // Refresh the list after deletion
+//            } catch (error) {
+//                console.error(`Error deleting notification with ID ${notificationId}:`, error);
+//            }
+//        }
 }
 
 const main = async () => {
