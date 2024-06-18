@@ -25,10 +25,17 @@ import DataStore from '../util/DataStore';
                 'displayNotificationByCurrentTimeResults',
                 'getHTMLForNotificationCurrentTimeResults'
             ], this);
-            this.dataStore = new DataStore(); // 创建一个数据存储实例
-            this.dataStore.addChangeListener(this.displayNotificationByReminderTypeResults);     // 当数据发生变化时，调用 displayNotificationByReminderTypeResults 方法
-            this.dataStore.addChangeListener(this.displayMedicationByMedicationStatusResults);     // 当数据发生变化时，调用 displayMedicationByMedicationStatusResults 方法
-            this.dataStore.addChangeListener(this.displayNotificationByCurrentTimeResults); // 添加数据变化监听器
+
+            this.dataStoreType = new DataStore();
+            this.dataStoreStatus = new DataStore();
+            this.dataStoreCurrentTime = new DataStore();
+            this.dataStoreType.addChangeListener(this.displayNotificationByReminderTypeResults);
+            this.dataStoreStatus.addChangeListener(this.displayMedicationByMedicationStatusResults);
+            this.dataStoreCurrentTime.addChangeListener(this.displayNotificationByCurrentTimeResults);
+//            this.dataStore = new DataStore(); // 创建一个数据存储实例
+//            this.dataStore.addChangeListener(this.displayNotificationByReminderTypeResults);     // 当数据发生变化时，调用 displayNotificationByReminderTypeResults 方法
+//            this.dataStore.addChangeListener(this.displayMedicationByMedicationStatusResults);     // 当数据发生变化时，调用 displayMedicationByMedicationStatusResults 方法
+//            this.dataStore.addChangeListener(this.displayNotificationByCurrentTimeResults); // 添加数据变化监听器
             this.header = new Header(this.dataStore);     // 创建一个 Header 实例，可能用于管理页面的头部
             this.client = new CareCompassClient();   // 创建一个 CareCompassClient 实例，用于与后端 API 进行通信
         }
@@ -98,7 +105,7 @@ import DataStore from '../util/DataStore';
 
             try {
                 const results = await this.client.retrieveNotificationsByReminderType(reminderType);   // 通过 CareCompassClient 实例获取特定状态的药物数据
-                this.dataStore.set(RESULTS_BY_TYPE_KEY, results);  // 将获取到的药物数据存储到 dataStore 中
+                this.dataStoreType.set(RESULTS_BY_TYPE_KEY, results);  // 将获取到的药物数据存储到 dataStore 中
             } catch (error) {
                 console.error("Error fetching notifications:", error);
                 if (error.response) {
@@ -122,7 +129,7 @@ import DataStore from '../util/DataStore';
 
             try {
                 const results = await this.client.retrieveMedicationsByStatus(medicationStatus);   // 通过 CareCompassClient 实例获取特定状态的药物数据
-                this.dataStore.set(RESULTS_BY_STATUS_KEY, results);  // 将获取到的药物数据存储到 dataStore 中
+                this.dataStoreStatus.set(RESULTS_BY_STATUS_KEY, results);  // 将获取到的药物数据存储到 dataStore 中
             } catch (error) {
                 console.error("Error fetching medications:", error);
                 if (error.response) {
@@ -141,13 +148,13 @@ import DataStore from '../util/DataStore';
                 console.log("Notifications results"); // 输出获取通知日志
                 const results = await this.client.retrieveAllUpcomingNotifications(Date.now()); // 调用 client 的 getAllNotifications 方法，获取所有通知
                 console.log("Notifications results", results); // 打印获取到的通知结果
-                this.dataStore.setState({
+                this.dataStoreCurrentTime.setState({
                     [CURRENT_TIME_RESULTS_KEY]: results.notifications// 将获取到的通知结果存储到 dataStore
                 });
             }
 
         displayNotificationByReminderTypeResults() {
-                const notificationResults = this.dataStore.get(RESULTS_BY_TYPE_KEY);    // 从 dataStore 中获取药物数据
+                const notificationResults = this.dataStoreType.get(RESULTS_BY_TYPE_KEY);    // 从 dataStore 中获取药物数据
                 const notificationResultsDisplay = document.getElementById('View-Type-Cards');    // 获取页面上 ID 为 View-Cards 的元素，用于显示药物数据
 
         if (notificationResults) {    // 如果获取到了药物数据
@@ -155,14 +162,14 @@ import DataStore from '../util/DataStore';
                     notificationResultsDisplay.innerHTML = html;
                 });
               } else {
-              //  notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected type.</p>';        // 如果没有获取到药物数据，显示一条错误信息
-                   notificationResultsDisplay.innerHTML = '<p></p>';        // 如果没有获取到药物数据，显示一条错误信息
+                notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected type.</p>';        // 如果没有获取到药物数据，显示一条错误信息
+//                   notificationResultsDisplay.innerHTML = '<p></p>';        // 如果没有获取到药物数据，显示一条错误信息
               }
 
               }
 
         displayMedicationByMedicationStatusResults() {
-              const medicationResults = this.dataStore.get(RESULTS_BY_STATUS_KEY);    // 从 dataStore 中获取药物数据
+              const medicationResults = this.dataStoreStatus.get(RESULTS_BY_STATUS_KEY);    // 从 dataStore 中获取药物数据
               const medicationResultsDisplay = document.getElementById('View-status-Cards');    // 获取页面上 ID 为 View-Cards 的元素，用于显示药物数据
 
           if (medicationResults) {    // 如果获取到了药物数据
@@ -170,21 +177,21 @@ import DataStore from '../util/DataStore';
                   medicationResultsDisplay.innerHTML = html;
               });
                 } else {
-             // medicationResultsDisplay.innerHTML = '<p>No medications found for the selected status.</p>';        // 如果没有获取到药物数据，显示一条错误信息
-                medicationResultsDisplay.innerHTML = '<p></p>';        // 如果没有获取到药物数据，显示一条错误信息
+             medicationResultsDisplay.innerHTML = '<p>No medications found for the selected status.</p>';        // 如果没有获取到药物数据，显示一条错误信息
+//                medicationResultsDisplay.innerHTML = '<p></p>';        // 如果没有获取到药物数据，显示一条错误信息
         }
 
         }
 
         displayNotificationByCurrentTimeResults() { // 显示通知结果方法
-              const notificationResults = this.dataStore.get(CURRENT_TIME_RESULTS_KEY); // 从 dataStore 获取通知结果
+              const notificationResults = this.dataStoreCurrentTime.get(CURRENT_TIME_RESULTS_KEY); // 从 dataStore 获取通知结果
               const notificationResultsDisplay = document.getElementById('View-upcoming-Cards');
               if (notificationResults) { // 如果获取到了通知数据
               const html = this.getHTMLForNotificationCurrentTimeResults(notificationResults); // 调用 getHTMLForNotificationCurrentTimeResults 方法获取通知数据的 HTML 内容
               notificationResultsDisplay.innerHTML = html; // 直接设置 HTML 内容
               } else {
-           // notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected status.</p>'; // 如果没有获取到通知数据，显示一条错误信息
-              notificationResultsDisplay.innerHTML = '<p></p>'; // 如果没有获取到通知数据，显示一条错误信息
+          notificationResultsDisplay.innerHTML = '<p>No notifications found for the selected status.</p>'; // 如果没有获取到通知数据，显示一条错误信息
+//              notificationResultsDisplay.innerHTML = '<p></p>'; // 如果没有获取到通知数据，显示一条错误信息
               }
           }
 

@@ -28,6 +28,10 @@ export default class DataStore extends BindingClass {
     get(attribute) {
         return this.state[attribute];
     }
+//
+//    has(attribute) {
+//        return this.state.has(attribute);
+//    }
 
     /**
      * Merge the current state of the DataStore with the new state. If there are any overlapping keys, overwrite the
