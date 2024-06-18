@@ -8,7 +8,7 @@ const RESULTS_KEY = 'medication-results';
 class Medication extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'getMedications', 'displayMedicationResults', 'getHTMLForMedicationResults', 'updateToMedicationForm', 'saveUpdatedMedication', 'addMedication', 'deleteMedication'], this);
+        this.bindClassMethods(['mount', 'submit', 'getMedications', 'displayMedicationResults', 'getHTMLForMedicationResults', 'updateToMedicationForm', 'saveUpdatedMedication', 'addMedication', 'deleteMedication','confirmDelete'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayMedicationResults);
         this.header = new Header(this.dataStore);
@@ -27,7 +27,8 @@ class Medication extends BindingClass {
         document.getElementById('View-Table').addEventListener('click', (event) => {
             if (event.target.classList.contains('delete-button')) {
                 console.log('Delete button clicked');
-                this.deleteMedication(event);
+                //this.deleteMedication(event);
+                this.confirmDelete(event);
             }
             if (event.target.classList.contains('update-button') || event.target.classList.contains('save-button')) {
                 this.updateToMedicationForm(event);
@@ -45,8 +46,8 @@ class Medication extends BindingClass {
         const showAllMedicationButton = document.getElementById('search-allMedications-form');
         const origButtonText = addMedicationButton.innerText;
         const origSearchButtonText = showAllMedicationButton.innerText;
-        addMedicationButton.innerText = 'Loading...';
-        showAllMedicationButton.innerText = 'Loading...';
+        addMedicationButton.innerText = 'Adding...';
+        showAllMedicationButton.innerText = 'Adding...';
 
         const medicationName = document.getElementById('medicationName').value;
         const prescription = document.getElementById('prescription').value;
@@ -96,7 +97,7 @@ async addMedication(evt) {
         return;
     }
 
-    addButton.innerText = 'Loading...';
+    addButton.innerText = 'Adding...';
 
     try {
         const medication = await this.client.addMedication(medicationName, prescription, instructions, medicationStatus,(()=>{}));
@@ -198,22 +199,24 @@ async addMedication(evt) {
         }
     }
 
-    async deleteMedication(event) {
-        console.log("Deleting medication...");
-        const medicationId = event.target.getAttribute('data-id');
-        console.log(`Medication ID to delete: ${medicationId}`);
-        const errorMessageDisplay = document.getElementById('error-message');
-        errorMessageDisplay.innerText = ``;
-        errorMessageDisplay.classList.add('hidden');
+     confirmDelete(event) {
+        const deleteButton = event.target;
+        const medicationId = deleteButton.getAttribute('data-id');
 
+        if (window.confirm(`Are you sure you want to delete medication with ID ${medicationId}?`)) {
+                     this.deleteMedication(medicationId);
+                 }else {
+                        return;
+                       }
+                 }
+     async deleteMedication(medicationId) {
         try {
             await this.client.deleteMedication(medicationId);
-            console.log(`Medication with ID ${medicationId} deleted successfully.`);
-            this.getMedications();  // Refresh the list
-        } catch (error) {
-            console.error(`Error deleting medication with ID ${medicationId}:`, error);
-        }
-    }
+                  this.getMedications();  // Refresh the list
+            } catch (error) {
+                  console.error(`Error deleting medication with ID ${medicationId}:`, error);
+          }
+     }
 }
 
 const main = async () => {

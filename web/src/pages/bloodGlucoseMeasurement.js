@@ -8,7 +8,7 @@ const RESULTS_KEY = 'blood-results';
 class BloodGlucoseMeasurement extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addBloodGlucoseMeasurement', 'getBloodGlucoseMeasurements', 'deleteBloodGlucoseMeasurement', 'updateToMeasurementForm', 'saveUpdatedMeasurement', 'displayBloodResults', 'getHTMLForBloodResults'], this);
+        this.bindClassMethods(['mount', 'submit', 'addBloodGlucoseMeasurement', 'getBloodGlucoseMeasurements', 'deleteBloodGlucoseMeasurement', 'updateToMeasurementForm', 'saveUpdatedMeasurement', 'displayBloodResults', 'getHTMLForBloodResults','confirmDelete'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.displayBloodResults);
         this.header = new Header(this.dataStore);
@@ -26,7 +26,8 @@ class BloodGlucoseMeasurement extends BindingClass {
         document.getElementById('View-Table').addEventListener('click', (event) => {
            if (event.target.classList.contains('delete-button')) {
                console.log('Delete button clicked');
-               this.deleteBloodGlucoseMeasurement(event);
+                this.confirmDelete(event);
+//               this.deleteBloodGlucoseMeasurement(event);
            }
            if (event.target.classList.contains('update-button') || event.target.classList.contains('save-button')) {
                this.updateToMeasurementForm(event);
@@ -44,8 +45,8 @@ class BloodGlucoseMeasurement extends BindingClass {
         const showAllBloodGlucoseButton = document.getElementById('search-allBloodGlucoseMeasurements-form');
         const origButtonText = addBloodGlucoseButton.innerText;
         const origSearchButtonText = showAllBloodGlucoseButton.innerText;
-        addBloodGlucoseButton.innerText = 'Loading...';
-        showAllBloodGlucoseButton.innerText = 'Loading...';
+        addBloodGlucoseButton.innerText = 'Adding...';
+        showAllBloodGlucoseButton.innerText = 'Adding...';
 
         const actualCheckTime = document.getElementById('actualCheckTime').value;
         const glucoseLevel = document.getElementById('glucoseLevel').value;
@@ -94,7 +95,7 @@ class BloodGlucoseMeasurement extends BindingClass {
             return;
         }
 
-        addButton.innerText = 'Loading...';
+        addButton.innerText = 'Adding...';
 
         try {
             const bloodGlucoseMeasurement = await this.client.addBloodGlucoseMeasurement(actualCheckTime, glucoseLevel, glucoseContext, comments, (() => {}));
@@ -124,7 +125,7 @@ class BloodGlucoseMeasurement extends BindingClass {
         });
     }
 
-displayBloodResults() {
+    displayBloodResults() {
         const bloodResults = this.dataStore.get(RESULTS_KEY);
         const bloodResultsDisplay = document.getElementById('View-Table');
         bloodResultsDisplay.innerHTML = this.getHTMLForBloodResults(bloodResults.bloodGlucoseMeasurements);
@@ -194,19 +195,21 @@ displayBloodResults() {
         }
     }
 
+    confirmDelete(event) {
+     const deleteButton = event.target;
+     const actualCheckTime = deleteButton.getAttribute('data-id');
 
+     if (window.confirm(`Are you sure you want to delete actualCheckTime with actualCheckTime     ${actualCheckTime}?`)) {
+                 this.deleteBloodGlucoseMeasurement(actualCheckTime);
+             }else {
+                    return;
+                   }
+             }
 
-async deleteBloodGlucoseMeasurement(event) {
-        console.log("Deleting BloodGlucoseMeasurement...");
-        const actualCheckTime = event.target.getAttribute('data-id');
-        console.log(`Actual Check Time to delete: ${actualCheckTime}`);
-        const errorMessageDisplay = document.getElementById('error-message');
-        errorMessageDisplay.innerText = ``;
-        errorMessageDisplay.classList.add('hidden');
-
+    async deleteBloodGlucoseMeasurement(actualCheckTime) {
         try {
             await this.client.deleteBloodGlucoseMeasurement(actualCheckTime);
-            console.log(`BloodGlucoseMeasurement with ID ${actualCheckTime} deleted successfully.`);
+            console.log(`BloodGlucoseMeasurement with actualCheckTime ${actualCheckTime} deleted successfully.`);
             this.getBloodGlucoseMeasurements();  // Refresh the list
         } catch (error) {
             console.error(`Error deleting BloodGlucoseMeasurement with actualCheckTime ${actualCheckTime}:`, error);
