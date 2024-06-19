@@ -142,15 +142,15 @@ public class MedicationDao {
             return singleMedication;
         }
     }
-
-
     public List<Medication> retrieveMedicationsByMedicationStatus(String patientId, Medication.MEDICATION_STATUS medicationStatus) {
         log.info("Retrieving medications by medication status for patientId: {}, status: {}", patientId, medicationStatus);
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":medicationStatus", new AttributeValue().withS(medicationStatus.name()));
+        valueMap.put(":patientId", new AttributeValue().withS(patientId));
 
+        String filterExpression = "patientId = :patientId AND medicationStatus = :medicationStatus";
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression("medicationStatus = :medicationStatus")
+                .withFilterExpression(filterExpression)
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedScanList<Medication> medications = dynamoDBMapper.scan(Medication.class, scanExpression);
@@ -163,4 +163,26 @@ public class MedicationDao {
         }
         return medications;
     }
+
+//    public List<Medication> retrieveMedicationsByMedicationStatus(String patientId, Medication.MEDICATION_STATUS medicationStatus) {
+//        log.info("Retrieving medications by medication status for patientId: {}, status: {}", patientId, medicationStatus);
+//        Map<String, AttributeValue> valueMap = new HashMap<>();
+//        valueMap.put(":medicationStatus", new AttributeValue().withS(medicationStatus.name()));
+//        valueMap.put(":patientId", new AttributeValue().withS(patientId));
+//
+//        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+//                .withFilterExpression("patientId = :patientId")
+//                .withFilterExpression("medicationStatus = :medicationStatus")
+//                .withExpressionAttributeValues(valueMap);
+//
+//        PaginatedScanList<Medication> medications = dynamoDBMapper.scan(Medication.class, scanExpression);
+//        if (medications == null || medications.isEmpty()) {
+//            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_NOT_FOUND_COUNT, 1, StandardUnit.Count);
+//            log.warn("No medications found in database for status: {}", medicationStatus);
+//            throw new MedicationNotFoundException("No medications found in database for status: " + medicationStatus);
+//        } else {
+//            metricsPublisher.addMetric(RETRIEVE_BY_MEDICATION_STATUS_MEDICATION_FOUND_COUNT, 1, StandardUnit.Count);
+//        }
+//        return medications;
+//    }
 }
