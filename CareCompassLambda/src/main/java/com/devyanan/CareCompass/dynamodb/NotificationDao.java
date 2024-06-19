@@ -188,6 +188,7 @@ public class NotificationDao {
             hashKey.setPatientId(patientId);
 
             DynamoDBQueryExpression<Notification> queryExpression = new DynamoDBQueryExpression<Notification>()
+                    .withIndexName("notificationsIndex")
                     .withHashKeyValues(hashKey)
                     .withRangeKeyConditions(rangeKeyConditions);
             queryExpression.setConsistentRead(false);
@@ -209,10 +210,12 @@ public class NotificationDao {
     public List<Notification> retrieveNotificationsByReminderType(String patientId, Notification.REMINDER_TYPE reminderType) {
         log.info("Attempting to retrieve notifications for user: {} by reminder type: {}", patientId, reminderType);
         Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":patientId", new AttributeValue().withS(patientId));
         valueMap.put(":reminderType", new AttributeValue().withS(reminderType.name()));
 
+        String filterExpression = "patientId = :patientId AND reminderType = :reminderType";
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression("reminderType = :reminderType")
+                .withFilterExpression(filterExpression)
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedScanList<Notification> notifications = dynamoDBMapper.scan(Notification.class, scanExpression);
