@@ -1,0 +1,158 @@
+@startuml
+class AddBloodGlucoseMeasurementActivity {
++handleRequest(addBloodGlucoseMeasurementRequest: AddBloodGlucoseMeasurementRequest) : AddBloodGlucoseMeasurementResult
+}
+class AddMedicationActivity {
++handleRequest(addMedicationRequest : AddMedicationRequest) : AddMedicationResult
+}
+class AddNotificationActivity {
++handleRequest(addNotificationActivity : AddNotificationActivity) : AddNotificationResult
+}
+class AddVitalSignsRequestActivity {
++handleRequest(addVitalSignsRequestActivity : AddVitalSignsRequestActivity) : AddVitalSignsRequestResult
+}
+class DeleteBloodGlucoseMeasurementActivity {
++handleRequest(deleteBloodGlucoseMeasurementActivity : DeleteBloodGlucoseMeasurementActivity) : DeleteBloodGlucoseMeasurementResult
+}
+class DeleteMedicationActivity {
++handleRequest(deleteMedicationActivity : DeleteMedicationActivity) : DeleteMedicationResult
+}
+class DeleteNotificationActivity {
++handleRequest(DeleteNotificationActivity : DeleteNotificationActivity} : DeleteNotificationResult
+}
+class DeleteVitalSignsActivity {
++handleRequest(deleteVitalSignsActivity : DeleteVitalSignsActivity} : DeleteVitalSignsResult
+}
+class GetAllBloodGlucoseMeasurementsActivity {
++handleRequest(getAllBloodGlucoseMeasurementsActivity : GetAllBloodGlucoseMeasurementsActivity} : GetAllBloodGlucoseMeasurementsResult
+}
+class GetAllMedicationsActivity {
++handleRequest(getAllMedicationsActivity : GetAllMedicationsActivity} : GetAllMedicationsResult
+}
+class GetAllNotificationsActivity {
++handleRequest(getAllNotificationsActivity : GetAllNotificationsActivity} : GetAllNotificationsResult
+}
+class GetAllVitalSignsActivity {
++handleRequest(getAllVitalSignsActivity : GetAllVitalSignsActivity} : GetAllVitalSignsResult
+}
+class RetrieveAllUpcomingNotificationsActivity {
++handleRequest(retrieveAllUpcomingNotificationsActivity : RetrieveAllUpcomingNotificationsActivity} : RetrieveAllUpcomingNotificationsResult
+}
+class RetrieveMedicationsByStatusActivity {
++handleRequest(retrieveMedicationsByStatusActivity : RetrieveMedicationsByStatusActivity} : RetrieveMedicationsByStatusResult
+}
+class RetrieveNotificationsByReminderTypeActivity {
++handleRequest(retrieveNotificationsByReminderTypeActivity  : RetrieveNotificationsByReminderTypeActivity} : RetrieveNotificationsByReminderTypeResult
+}
+class UpdateBloodGlucoseMeasurementDetailsActivity {
++handleRequest(updateBloodGlucoseMeasurementDetailsActivity : UpdateBloodGlucoseMeasurementDetailsActivity} : UpdateBloodGlucoseMeasurementDetailsResult
+}
+class UpdateMedicationDetailsActivity {
++handleRequest(updateMedicationDetailsActivity : UpdateMedicationDetailsActivity} : UpdateMedicationDetailsResult
+}
+class UpdateNotificationDetailsActivity {
++handleRequest(updateNotificationDetailsActivity : UpdateNotificationDetailsActivity} : UpdateNotificationDetailsResult
+}
+class UpdateVitalSignsDetailsActivity {
++handleRequest(updateVitalSignsDetailsActivity : UpdateVitalSignsDetailsActivity} : UpdateVitalSignsDetailsResult
+}
+
+class BloodGlucoseMeasurementDao {
+-dynamoDbMapper : DynamoDBMapper
+}
+class MedicationDao {
+-dynamoDbMapper : DynamoDBMapper
+}
+class NotificationDao {
+-dynamoDbMapper : DynamoDBMapper
+}
+class VitalSignsDao {
+-dynamoDbMapper : DynamoDBMapper
+}
+
+AddBloodGlucoseMeasurementActivity o-- BloodGlucoseMeasurementDao
+AddMedicationActivity o-- MedicationDao
+AddNotificationActivity o-- NotificationDao
+AddVitalSignsRequestActivity o-- VitalSignsDao
+DeleteBloodGlucoseMeasurementActivity o-- BloodGlucoseMeasurementDao
+DeleteMedicationActivity o-- MedicationDao
+DeleteNotificationActivity o-- NotificationDao
+DeleteVitalSignsActivity o-- VitalSignsDao
+GetAllBloodGlucoseMeasurementsActivity o-- BloodGlucoseMeasurementDao
+GetAllMedicationsActivity o-- MedicationDao
+GetAllNotificationsActivity o-- NotificationDao
+GetAllVitalSignsActivity o-- VitalSignsDao
+UpdateBloodGlucoseMeasurementDetailsActivity o-- BloodGlucoseMeasurementDao
+UpdateMedicationDetailsActivity o-- MedicationDao
+UpdateNotificationDetailsActivity o-- NotificationDao
+UpdateVitalSignsDetailsActivity o-- VitalSignsDao
+RetrieveNotificationsByReminderTypeActivity o-- NotificationDao
+RetrieveAllUpcomingNotificationsActivity o-- NotificationDao
+RetrieveMedicationsByStatusActivity o-- MedicationDao
+
+
+class LambdaActivityRunner<TRequest, TResult> {
++ServiceComponent service
++LambdaResponse runActivity(Supplier<TRequest> requestSupplier, BiFunction<TRequest, ServiceComponent, TResult> handleRequest)
+-ServiceComponent getService()
+}
+
+class DaggerServiceComponent {
++ServiceComponent create()
+}
+class ServiceComponent {
++AddBloodGlucoseMeasurementActivity provideAddBloodGlucoseMeasurementActivity()
++AddMedicationActivity provideAddMedicationActivity()
++AddNotificationActivity provideAddNotificationActivity()
++AddVitalSignsRequestActivity provideAddVitalSignsRequestActivity()
++DeleteBloodGlucoseMeasurementActivity provideDeleteBloodGlucoseMeasurementActivity()
++DeleteMedicationActivity provideDeleteMedicationActivity()
++DeleteNotificationActivity provideDeleteNotificationActivity()
++DeleteVitalSignsActivity provideDeleteVitalSignsActivity()
++GetAllBloodGlucoseMeasurementsActivity provideGetAllBloodGlucoseMeasurementsActivity()
++GetAllMedicationsActivity provideGetAllMedicationsActivity()
++GetAllNotificationsActivity provideGetAllNotificationsActivity()
++GetAllVitalSignsActivity provideGetAllVitalSignsActivity()
++UpdateNotificationDetailsActivity provideUpdateNotificationDetailsActivity()
++UpdateMedicationDetailsActivity provideUpdateMedicationDetailsActivity()
++RetrieveMedicationsByStatusActivity provideRetrieveMedicationsByStatusActivity()
++RetrieveAllUpcomingNotificationsActivity provideRetrieveAllUpcomingNotificationsActivity()
++RetrieveNotificationsByReminderTypeActivity provideRetrieveNotificationsByReminderTypeActivity()
++UpdateBloodGlucoseMeasurementDetailsActivity provideUpdateBloodGlucoseMeasurementDetailsActivity()
++UpdateVitalSignsDetailsActivity provideUpdateVitalSignsDetailsActivity()
+}
+
+class DaoModule {
++provideDynamoDBMapper() : DynamoDBMapper
+}
+class MetricsModule {
++provideCloudWatch() : AmazonCloudWatch
+}
+
+LambdaActivityRunner o-- DaggerServiceComponent : uses
+LambdaActivityRunner o-- ServiceComponent : depends on
+DaggerServiceComponent ..|> ServiceComponent : creates
+
+ServiceComponent o-- AddBloodGlucoseMeasurementActivity
+ServiceComponent o-- AddMedicationActivity
+ServiceComponent o-- AddNotificationActivity
+ServiceComponent o-- AddVitalSignsRequestActivity
+ServiceComponent o-- DeleteBloodGlucoseMeasurementActivity
+ServiceComponent o-- DeleteMedicationActivity
+ServiceComponent o-- DeleteNotificationActivity
+ServiceComponent o-- DeleteVitalSignsActivity
+ServiceComponent o-- GetAllBloodGlucoseMeasurementsActivity
+ServiceComponent o-- GetAllMedicationsActivity
+ServiceComponent o-- GetAllNotificationsActivity
+ServiceComponent o-- GetAllVitalSignsActivity
+ServiceComponent o-- UpdateNotificationDetailsActivity
+ServiceComponent o-- UpdateMedicationDetailsActivity
+ServiceComponent o-- RetrieveMedicationsByStatusActivity
+ServiceComponent o-- RetrieveAllUpcomingNotificationsActivity
+ServiceComponent o-- RetrieveNotificationsByReminderTypeActivity
+ServiceComponent o-- UpdateBloodGlucoseMeasurementDetailsActivity
+ServiceComponent o-- UpdateVitalSignsDetailsActivity
+
+DaoModule ..|> ServiceComponent : provides
+MetricsModule ..|> ServiceComponent : provides
+@enduml
