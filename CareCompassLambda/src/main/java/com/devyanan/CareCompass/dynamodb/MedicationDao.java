@@ -66,6 +66,13 @@ public class MedicationDao {
         }
         return medication;
     }
+
+    /**
+     * Deletes a medication record from DynamoDB.
+     *
+     * @param medication The medication object to delete.
+     * @return The deleted medication object.
+     */
     public Medication deleteMedication(Medication medication) {
         log.info("Attempting to delete medication with medicationId: {}", medication.getMedicationId());
 
@@ -74,16 +81,6 @@ public class MedicationDao {
         log.info("Medication deleted successfully for user: {}", medication.getPatientId());
         return medication;
     }
-
-    /**
-     * Retrieves a single medication record for a specified patient and medication name.
-     *
-     * @param patientId      The ID of the patient.
-     * @param medicationId The name of the medication.
-     * @return The medication object.
-     * @throws MedicationNotFoundException If no medication is found for the specified patient and medication name.
-     * @throws DatabaseAccessException    If there is an error accessing the database.
-     */
 
     /**
      * Retrieves all medications for a specified patient.
@@ -142,6 +139,15 @@ public class MedicationDao {
             return singleMedication;
         }
     }
+
+    /**
+     * Retrieves medications by medication status for a specified patient.
+     *
+     * @param patientId         The ID of the patient.
+     * @param medicationStatus  The status of medications to retrieve.
+     * @return A list of medications matching the specified status for the patient.
+     * @throws MedicationNotFoundException If no medications are found for the given status.
+     */
     public List<Medication> retrieveMedicationsByMedicationStatus(String patientId, Medication.MEDICATION_STATUS medicationStatus) {
         log.info("Retrieving medications by medication status for patientId: {}, status: {}", patientId, medicationStatus);
         Map<String, AttributeValue> valueMap = new HashMap<>();

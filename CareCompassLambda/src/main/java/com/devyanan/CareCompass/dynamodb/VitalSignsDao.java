@@ -130,12 +130,10 @@ public class VitalSignsDao {
         try {
             log.info("Attempting to get a single vitalSigns with actual check time: {}", actualCheckTime);
 
-            // Create a key object with patientId and actualCheckTime
             VitalSigns vitalSigns = new VitalSigns();
             vitalSigns.setPatientId(patientId);
             vitalSigns.setActualCheckTime(actualCheckTime);
 
-            // Use the key object to load from DynamoDB
             VitalSigns singleVitalSigns = this.dynamoDBMapper.load(vitalSigns);
 
             if (singleVitalSigns == null) {
