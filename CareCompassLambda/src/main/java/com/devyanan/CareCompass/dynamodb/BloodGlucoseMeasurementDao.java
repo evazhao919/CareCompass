@@ -118,6 +118,15 @@ public class BloodGlucoseMeasurementDao {
         }
     }
 
+    /**
+     * DAO method to retrieve a single BloodGlucoseMeasurement for a patient.
+     *
+     * @param patientId       The ID of the patient.
+     * @param actualCheckTime The actual check time of the blood glucose measurement.
+     * @return The retrieved BloodGlucoseMeasurement object.
+     * @throws BloodGlucoseMeasurementNotFoundException If no blood glucose measurement is found for the specified parameters.
+     * @throws DatabaseAccessException                   If there is an error accessing the database.
+     */
     public BloodGlucoseMeasurement getBloodGlucoseMeasurements(String patientId, LocalDateTime actualCheckTime) {
         try {
             metricsPublisher.addCount(MetricsConstants.GET_SINGLE_BLOOD_GLUCOSE_MEASUREMENT_TOTAL_COUNT, 1);
@@ -143,7 +152,6 @@ public class BloodGlucoseMeasurementDao {
             throw new DatabaseAccessException("Failed to access the database", e);
         }
     }
-
 }
 
 //    /**

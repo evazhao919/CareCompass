@@ -27,7 +27,6 @@ public class AddMedicationActivityTest {
         openMocks(this);
         addMedicationActivity = new AddMedicationActivity(medicationDao);
     }
-
     @Test
     public void handleRequest_withValidAttributes_addMedicationSuccessfully() {
         // Given

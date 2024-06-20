@@ -27,7 +27,6 @@ public class DeleteNotificationActivityTest {
 
     @Test
     public void handleRequest_withValidPatientIdAndNotificationId_removesAndReturnsNotification() {
-        // Given
         String patientId = "patient123";
         String notificationId =  "2023-06-19T16:51";
 
@@ -38,7 +37,6 @@ public class DeleteNotificationActivityTest {
         when(notificationDao.deleteNotification(notificationToDelete))
                 .thenReturn(notificationToDelete);
 
-        // When
         DeleteNotificationRequest request = DeleteNotificationRequest.builder()
                 .withPatientId(patientId)
                 .withNotificationId(notificationId)

@@ -8,12 +8,12 @@ import com.devyanan.CareCompass.dynamodb.models.BloodGlucoseMeasurement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class UpdateBloodGlucoseMeasurementDetailsActivityTest {
     @Mock
@@ -23,7 +23,7 @@ public class UpdateBloodGlucoseMeasurementDetailsActivityTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
+        openMocks(this);
         updateBloodGlucoseMeasurementDetailsActivity = new UpdateBloodGlucoseMeasurementDetailsActivity(bloodGlucoseMeasurementDao);
     }
 

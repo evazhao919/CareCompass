@@ -2,7 +2,6 @@ package com.devyanan.CareCompass.activity;
 
 import com.devyanan.CareCompass.activity.requests.GetAllMedicationsRequest;
 import com.devyanan.CareCompass.activity.results.GetAllMedicationsResult;
-import com.devyanan.CareCompass.converters.LocalDateTimeConverter;
 import com.devyanan.CareCompass.converters.ModelConverter;
 import com.devyanan.CareCompass.dynamodb.MedicationDao;
 import com.devyanan.CareCompass.dynamodb.models.Medication;
@@ -10,7 +9,6 @@ import com.devyanan.CareCompass.models.MedicationModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;

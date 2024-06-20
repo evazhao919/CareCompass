@@ -10,7 +10,6 @@ import com.devyanan.CareCompass.models.BloodGlucoseMeasurementModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;

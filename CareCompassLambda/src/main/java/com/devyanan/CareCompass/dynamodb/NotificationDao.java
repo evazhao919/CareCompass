@@ -86,7 +86,7 @@ public class NotificationDao {
      * @throws NotificationNotFoundException If the notification is not found.
      * @throws DatabaseAccessException       If there is an error accessing the database.
      */
-    public Notification updateSingleNotificationByScheduledTime(String patientId, String scheduledTime) {//TODO   ？？？？？？应该是LocalDateTime
+    public Notification updateSingleNotificationByScheduledTime(String patientId, String scheduledTime) {
         try {
             log.info("Attempting to get notification: {}", scheduledTime);
             Notification singleNotification = this.dynamoDBMapper.load(Notification.class, patientId, scheduledTime);
@@ -106,6 +106,12 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * DAO method to delete a single Notification from DynamoDB.
+     *
+     * @param notification The Notification object to delete.
+     * @return The deleted Notification object.
+     */
     public Notification deleteNotification(Notification notification) {
         log.info("Attempting to delete notification with ID: {}", notification.getNotificationId());
 
@@ -174,6 +180,14 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * Retrieves all upcoming notifications for a specified patient starting from a given start date.
+     *
+     * @param patientId The ID of the patient.
+     * @param startDate The start date from which to retrieve notifications.
+     * @return A list of upcoming notifications for the specified patient.
+     * @throws DatabaseAccessException If there is an error accessing the database.
+     */
     public List<Notification> RetrieveAllUpcomingNotifications(String patientId, LocalDateTime startDate ) {
 
         try {
@@ -207,6 +221,13 @@ public class NotificationDao {
         }
     }
 
+    /**
+     * Retrieves notifications for a specified patient by reminder type.
+     *
+     * @param patientId    The ID of the patient.
+     * @param reminderType The type of reminder to filter notifications.
+     * @return A list of notifications for the specified patient and reminder type.
+     */
     public List<Notification> retrieveNotificationsByReminderType(String patientId, Notification.REMINDER_TYPE reminderType) {
         log.info("Attempting to retrieve notifications for user: {} by reminder type: {}", patientId, reminderType);
         Map<String, AttributeValue> valueMap = new HashMap<>();
@@ -223,6 +244,15 @@ public class NotificationDao {
         return notifications;
     }
 
+    /**
+     * Retrieves a notification for a specified patient by notification ID.
+     *
+     * @param patientId     The ID of the patient.
+     * @param notificationId The ID of the notification to retrieve.
+     * @return The notification object.
+     * @throws NotificationNotFoundException If the notification is not found.
+     * @throws DatabaseAccessException     If there is an error accessing the database.
+     */
     public Notification getNotification(String patientId, String notificationId) {
         try{
             log.info("Attempting to get a notification with ID: {}", notificationId);

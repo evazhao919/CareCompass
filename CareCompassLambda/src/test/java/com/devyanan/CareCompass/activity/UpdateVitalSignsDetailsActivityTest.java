@@ -8,10 +8,10 @@ import com.devyanan.CareCompass.dynamodb.models.VitalSigns;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class UpdateVitalSignsDetailsActivityTest {
 
@@ -22,7 +22,7 @@ public class UpdateVitalSignsDetailsActivityTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
+        openMocks(this);
         updateVitalSignsDetailsActivity = new UpdateVitalSignsDetailsActivity(vitalSignsDao);
     }
 
