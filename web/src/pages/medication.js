@@ -141,7 +141,7 @@ async addMedication(evt) {
             return '<h4>No results found</h4>';
         }
 
-        let html = '<table id="medication-results-table"><tr><th>Medication Id</th><th>Medication Name</th><th>Prescription</th><th>Instructions</th><th>Status</th>></tr>';
+        let html = '<table id="medication-results-table"><tr><th>Medication Id</th><th>Medication Name</th><th>Prescription</th><th>Instructions</th><th>Status</th></tr>';
         for (const res of searchResults) {
             html += `
             <tr data-id="${res.medicationId}">
