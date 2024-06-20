@@ -35,7 +35,6 @@ public class DeleteNotificationActivityTest {
         notificationToDelete.setPatientId(patientId);
         notificationToDelete.setNotificationId(notificationId);
 
-        // Mock behavior
         when(notificationDao.deleteNotification(notificationToDelete))
                 .thenReturn(notificationToDelete);
 

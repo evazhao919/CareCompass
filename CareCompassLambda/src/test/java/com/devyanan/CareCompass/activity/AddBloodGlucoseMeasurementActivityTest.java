@@ -67,7 +67,7 @@ public class AddBloodGlucoseMeasurementActivityTest {
     }
     @Test
     public void handleRequest_databaseAccessException_throwsDatabaseAccessException() {
-        // Given
+
         String patientId = "patientId456";
         String actualCheckTime = "2024-06-19T09:50";
         double glucoseLevel = 100.0;

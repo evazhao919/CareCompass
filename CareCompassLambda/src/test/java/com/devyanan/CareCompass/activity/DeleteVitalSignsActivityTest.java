@@ -41,7 +41,6 @@ public class DeleteVitalSignsActivityTest {
         vitalSignsToDelete.setPatientId(patientId);
         vitalSignsToDelete.setActualCheckTime(timeConverter.unconvert(actualCheckTime));
 
-        // Mock behavior
         when(vitalSignsDao.deleteSingleVitalSignsByActualCheckTime(anyString(), any(LocalDateTime.class)))
                 .thenReturn(vitalSignsToDelete);
 
