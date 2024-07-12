@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,6 +40,12 @@ public class GetAllNotificationsActivity {
         List<Notification> notificationList;
         try{
             notificationList = notificationDao.getAllNotifications(request.getPatientId());
+            notificationList.sort(new Comparator<Notification>() {
+                @Override
+                public int compare(Notification n1, Notification n2) {
+                    return n1.getScheduledTime().compareTo(n2.getScheduledTime());
+                }
+            });
         } catch (NotificationNotFoundException e){
             log.error("Notifications with PatientId {} are not found in the database. Error: {}", request.getPatientId(), e.getMessage());
             throw new NotificationNotFoundException(e.getMessage(),e.getCause());

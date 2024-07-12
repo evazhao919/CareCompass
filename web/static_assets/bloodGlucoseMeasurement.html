@@ -44,7 +44,7 @@
     <form id="add-bloodGlucoseMeasurement-form">
         <div class="mb-3">
             <label for="actualCheckTime" class="form-label">Actual check time:</label>
-            <input type="text" class="form-control" id="actualCheckTime" placeholder="YYYY-MM-DD HH:MM" autofocus>
+            <input type="datetime-local" class="form-control form-control-datetime" id="actualCheckTime" style="width: 19rem;">
         </div>
 
         <div class="mb-3">
@@ -54,7 +54,7 @@
 
         <div class="mb-3">
             <label for="glucoseContext" class="form-label">Glucose context:</label>
-            <select id="glucoseContext" class="form-select">
+            <select id="glucoseContext" class="form-select" style="width: 19rem;">
                 <option value="FASTING">Fasting</option>
                 <option value="BEFORE_MEAL">Before Meal</option>
                 <option value="AFTER_MEAL">After Meal</option>

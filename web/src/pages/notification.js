@@ -136,7 +136,7 @@ class Notification extends BindingClass {
             return '<h4>No results found</h4>';
         }
 
-        let html = '<table><tr><th>Notification Id</th><th>Notification title</th><th>Scheduled time</th><th>Reminder type</th><th>Reminder content</th></tr>';
+        let html = '<table><tr><th>Reminder Id</th><th>Reminder title</th><th>Scheduled time</th><th>Reminder type</th><th>Reminder content</th></tr>';
         for (const res of searchResults) {
             html += `
             <tr>
