@@ -17,7 +17,7 @@
     </div>
     <div class="buttonOne-group">
         <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>
-        <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>
+        <a id="Notifications-link" class="secondaryButton" href="notification.html">Reminders</a>
         <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose Levels</a>
         <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
@@ -31,7 +31,7 @@
             <div class="d-flex justify-content-between align-items-center px-3 py-2">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" >Notifications</a>
+                        <a class="nav-link active">Reminders</a>
                     </li>
                 </ul>
             </div>
@@ -43,14 +43,17 @@
     <p class="hidden error" id="error-message"></p>
     <form id="add-notification-form">
         <div class="mb-3">
-            <label for="notificationTitle" class="form-label">Notification title:</label>
-            <input type="text" class="form-control" id="notificationTitle"  autofocus>
+            <label for="notificationTitle" class="form-label">Reminder title:</label>
+            <input type="text" class="form-control" id="notificationTitle" autofocus style="width: 19rem;">
         </div>
 
+<!--        <div class="mb-3">-->
+<!--            <label for="scheduledTime" class="form-label">Scheduled time:</label>-->
+<!--            <input type="datetime-local" class="form-control form-control-datetime" id="scheduledTime">-->
+<!--        </div>-->
         <div class="mb-3">
             <label for="scheduledTime" class="form-label">Scheduled time:</label>
-<!--            <input type="text" class="form-control" id="scheduledTime" placeholder="YYYY-MM-DD HH:MM" autofocus>-->
-            <input type="text" class="form-control" id="scheduledTime" placeholder="YYYY-MM-DD HH:MM" style="width: 200px;" autofocus>
+            <input type="datetime-local" class="form-control form-control-datetime" id="scheduledTime" style="width: 19rem;">
         </div>
 
         <div class="mb-3">
@@ -78,16 +81,16 @@
 
 <!-- Update Notification Form -->
 <form id="update-notification-form" class="hidden">
-    <input type="hidden" id="update-notification-id" />
+    <input type="hidden" id="update-notification-id">
 
     <div class="mb-3">
-        <label for="update-notificationTitle" class="form-label">Notification title:</label>
+        <label for="update-notificationTitle" class="form-label">Reminder title:</label>
         <input type="text" class="form-control" id="update-notificationTitle" placeholder="Notification Title">
     </div>
 
     <div class="mb-3">
         <label for="update-scheduledTime" class="form-label">Scheduled time:</label>
-        <input type="datetime-local" class="form-control" id="update-scheduledTime">
+        <input type="datetime-local" class="form-control form-control-datetime" id="update-scheduledTime">
     </div>
 
     <div class="mb-3">
@@ -100,7 +103,7 @@
         <textarea id="update-reminderContent" class="form-control" rows="4" placeholder="Reminder Content"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Update Notification</button>
+    <button type="submit" class="btn btn-primary">Update Reminder</button>
 </form>
 
 <div class="card hidden" id="search-results-container">
@@ -112,11 +115,11 @@
     <table class="table table-bordered" id="View-Table">
         <thead>
         <tr>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Notification Id</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Notification title</th>
-            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Scheduled time</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Reminder Id</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Reminder title</th>
+            <th scope="col" class="table-secondary text-center header-cell" style="width: 30%;">Scheduled time</th>
             <th scope="col" class="table-secondary text-center header-cell" style="width: 18%;">Reminder type</th>
-            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 28%;">Reminder content</th>
+            <th scope="col" class="table-secondary text-center header-cell comments-cell" style="width: 16%;">Reminder content</th>
         </tr>
         </thead>
         <tbody id="Notification-list"></tbody>

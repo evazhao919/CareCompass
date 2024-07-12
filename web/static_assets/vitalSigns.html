@@ -18,7 +18,7 @@
     </div>
     <div class="buttonOne-group">
         <a id="ChartReview-link" class="secondaryButton" href="chartReview.html">Chart Review</a>
-        <a id="Notifications-link" class="secondaryButton" href="notification.html">Notifications</a>
+        <a id="Notifications-link" class="secondaryButton" href="notification.html">Reminders</a>
         <a id="Medications-link" class="secondaryButton" href="medication.html">Medications</a>
         <a id="bloodGlucoseMeasurements-link" class="secondaryButton" href="bloodGlucoseMeasurement.html">Blood Glucose Levels</a>
         <a id="VitalSigns-link" class="secondaryButton" href="vitalSigns.html">Vital Signs</a>
@@ -46,7 +46,7 @@
         <form id="add-vitalSigns-form">
             <div class="mb-3">
                 <label for="actualCheckTime" class="form-label">Actual check time:</label>
-                <input type="text" class="form-control" id="actualCheckTime" placeholder="YYYY-MM-DD HH:MM" autofocus>
+                <input type="datetime-local" class="form-control form-control-datetime" id="actualCheckTime" style="width: 19rem;">
             </div>
             <div class="mb-3">
                 <label for="temperature" class="form-label">Temperature:</label>
@@ -82,7 +82,7 @@
             </div>
             <div class="mb-3">
                 <label for="patientPosition" class="form-label">Patient position:</label>
-                <select id="patientPosition" class="form-select">
+                <select id="patientPosition" class="form-select" style="width: 19rem;">
                     <option value="SITTING">Sitting</option>
                     <option value="STANDING">Standing</option>
                     <option value="LAYING">laying</option>
@@ -94,7 +94,7 @@
             </div>
             <div class="mb-3">
                 <label for="oxygenTherapy" class="form-label">Oxygen therapy:</label>
-                <select id="oxygenTherapy" class="form-select">
+                <select id="oxygenTherapy" class="form-select" style="width: 19rem;">
                     <option value="NONE">None</option>
                     <option value="NASAL_CANNULA">Nasal Cannula</option>
                     <option value="SIMPLE_FACE_MASK">Simple Face Mask</option>
@@ -105,7 +105,7 @@
             </div>
             <div class="mb-3">
                 <label for="flowDelivered" class="form-label">Flow delivered:</label>
-                <select id="flowDelivered" class="form-select">
+                <select id="flowDelivered" class="form-select" style="width: 19rem;">
                     <option value="NONE">None</option>
                     <option value="LOW_FLOW">Low Flow</option>
                     <option value="MEDIUM_FLOW">Medium Flow</option>
@@ -114,7 +114,7 @@
             </div>
             <div class="mb-3">
                 <label for="patientActivity" class="form-label">Patient activity:</label>
-                <select id="patientActivity" class="form-select">
+                <select id="patientActivity" class="form-select" style="width: 19rem;">
                     <option value="SITTING">Sitting</option>
                     <option value="STANDING">Standing</option>
                     <option value="LAYING_DOWN">Laying Down</option>

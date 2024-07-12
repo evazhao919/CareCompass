@@ -23,7 +23,7 @@ Overview
 
 CareCompass serves as a centralized platform for healthcare navigation, coordination, and support. It provides patients, caregivers, and healthcare providers with convenient access to essential healthcare tools.
 
-The platform addresses the challenges faced by discharged patients, particularly adults with long-term care needs, by facilitating ongoing monitoring and documentation of their health conditions post-hospitalization. Caregivers and family members can efficiently manage medications, track vital signs, and measure blood glucose levels. Additionally, the notification feature can manage appointments, medication refills, glucose measurements, immunizations, medical supplies, and custom reminders. These features are designed to assist patients in the day-to-day management of their medical schedules with clear documentation and planning.
+The platform addresses the challenges faced by discharged patients, particularly adults with long-term care needs, by facilitating ongoing monitoring and documentation of their health conditions post-hospitalization. Caregivers and family members can efficiently manage medications, track vital signs, and measure blood glucose levels. Additionally, the reminders feature can manage appointments, medication refills, glucose measurements, immunizations, medical supplies, and custom reminders. These features are designed to assist patients in the day-to-day management of their medical schedules with clear documentation and planning.
 
 By integrating various healthcare services and data sources, CareCompass streamlines the process of accessing healthcare information, enhancing the overall experience for patients and caregivers.
 
@@ -39,8 +39,8 @@ CareCompass offers the following key features:
     - Instructions
     - Medication status (active, discontinued, on hold, temporary stop)
 
-* **Notification Management**
-    - Notification title
+* **Reminder Management**
+    - Reminders title
     - Reminder content
     - Scheduled time
     - Reminder type (appointment, medication refill, medication, vital signs, blood glucose measurement, immunization, medical supply, custom reminder)
