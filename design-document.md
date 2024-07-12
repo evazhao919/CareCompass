@@ -5,7 +5,7 @@
 
 CareCompass is a healthcare coordination platform designed to empower patients, caregivers, and healthcare providers with seamless access to essential healthcare tools, resources, and support.
 Many discharged patients, especially adults with long-term care needs, require ongoing monitoring and documentation of their health conditions after leaving the hospital.
-Caregivers or family members often play a crucial role in managing the patient's health information, including medication, notifications, vital signs, and blood glucose measurements.
+Caregivers or family members often play a crucial role in managing the patient's health information, including medication, reminders(notifications), vital signs, and blood glucose measurements.
 
 ---------
 ## 2. Top Questions to Resolve in Review
