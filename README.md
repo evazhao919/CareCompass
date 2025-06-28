@@ -1,5 +1,5 @@
 <h1>
-    <a href="https://d32uixdjt5mu84.cloudfront.net/">
+    <a href="https://dd4xqyoueg3d5.cloudfront.net">
         CareCompass
     </a>
 </h1>
